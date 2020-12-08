@@ -1,0 +1,14 @@
+{
+  "defaultProject": "photostore-ionic2",
+  "projects": {
+    "photostore-ionic2": {
+      "name": "photostore-ionic2",
+      "integrations": {
+        "capacitor": {}
+      },
+      "type": "angular",
+      "root": ".",
+      "id": "photostore-ionic2"
+    }
+  }
+}

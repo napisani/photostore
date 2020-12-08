@@ -1,0 +1,39 @@
+<!--<div #container-->
+<!--     class="search-results"-->
+<!--     style="height: 100vh; width: 100%; overflow: scroll;"-->
+<!--     [scrollWindow]="false"-->
+<!--     infinite-scroll-->
+<!--     [infiniteScrollDistance]="2"-->
+<!--     [immediateCheck]="true"-->
+<!--     (scroll)="handleRegularScroll()"-->
+<!--     (scrolled)="handleInfiniteScroll()">-->
+<!--    <ng-container *ngFor="let photoSlice of pagination?.itemSlices; let i = index">-->
+<!--        &lt;!&ndash;            <photostore2-thumbnail [photoId]="photo.id"></photostore2-thumbnail>&ndash;&gt;-->
+<!--        <photostore2-photo-section-->
+<!--            [items]="photoSlice"-->
+<!--            [maxPhotoHeight]="maxPhotoHeight">-->
+
+<!--        </photostore2-photo-section>-->
+<!--    </ng-container>-->
+<!--</div>-->
+
+<ion-content [scrollEvents]="true" (ionScrollEnd)="handleCheckMaxDataIsShown()" #content>
+
+    <ng-container *ngFor="let photoSlice of pagination?.itemSlices; let i = index">
+        <!--            <photostore2-thumbnail [photoId]="photo.id"></photostore2-thumbnail>-->
+        <photostore2-photo-section
+            [items]="photoSlice"
+            [maxPhotoHeight]="maxPhotoHeight"
+            (photoClicked)="handlePhotoClicked($event, i)">
+        </photostore2-photo-section>
+    </ng-container>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="handleInfiniteScroll($event)"
+                         #container
+                         [disabled]="pagination?.remainingPages <= 0">
+        <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Loading more photos...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

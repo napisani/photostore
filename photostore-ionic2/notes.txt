@@ -1,0 +1,8 @@
+ionic cap run ios -l --external --consolelogs
+
+
+
+ ionic cap build ios
+
+
+ ionic serve -- --proxy-config proxy.conf.json --host 0.0.0.0

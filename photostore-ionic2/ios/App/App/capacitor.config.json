@@ -1,0 +1,13 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "photostore-ionic2",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist/photostore-ionic2",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

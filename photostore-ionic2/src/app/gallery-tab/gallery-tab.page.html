@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            Gallery
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-range [min]="minPhotoHeight" [max]="maxPhotoHeight" [(ngModel)]="photoHeight" color="secondary" style="width: 125px">
+                <ion-icon size="small" slot="start" name="square-outline"></ion-icon>
+                <ion-icon slot="end" name="square-outline"></ion-icon>
+            </ion-range>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Gallery</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <photostore2-gallery [maxPhotoHeight]="photoHeight"></photostore2-gallery>
+    <!--  <app-explore-container name="Gallery page"></app-explore-container>-->
+</ion-content>
