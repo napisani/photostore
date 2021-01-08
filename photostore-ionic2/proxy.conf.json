@@ -1,6 +1,6 @@
 {
     "/proxy/*": {
-        "target": "http://192.168.1.128:5000",
+        "target": "http://192.168.1.134:5000",
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug",

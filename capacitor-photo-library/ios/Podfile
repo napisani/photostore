@@ -14,3 +14,7 @@ end
 target 'PluginTests' do
   capacitor_pods
 end
+
+target 'test_app_try1' do
+  capacitor_pods
+end

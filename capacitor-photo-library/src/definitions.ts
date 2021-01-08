@@ -9,8 +9,12 @@ export interface GetPhotosParams {
   limit: number; // fetch limit
   width: number; // thumbnail width
   height: number; // thumbnail height
-  quality: number; // thumbnail quality
-  mode: string; // fetch mode: "fast" | "exact"
+  quality: number; // thumbnail quality - only used for JPEG
+  mode: "fast" | "exact"; // fetch mode: "fast" | "exact"
+  orderAsc: boolean;
+  orderBy: string;
+  imageType: 'png' | 'jpeg',
+  ids: string[] // only return specific ids
 }
 
 export interface GetPhotosResponse {
@@ -21,6 +25,9 @@ export interface GetPhotosResponse {
 export interface Photo {
   id: string;
   createTime: number;
+  modificationTime: number;
+  height: number;
+  width: number;
   location: {
     latitude: number;
     longitude: number;
