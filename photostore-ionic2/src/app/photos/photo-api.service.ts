@@ -20,6 +20,7 @@ export class PhotoApiService extends PhotoService {
       const thumbCalls = page.items.map(item => this.getPhotoFile(this.getThumbnailUrl(item)));
       return forkJoin([...thumbCalls])
         .pipe(map((thumbCallResults: PhotoFile[]) => {
+          console.log('inside PhotoApiService.getPhotos pipe(map');
           page.items.forEach((item: Photo, idx: number) => {
             item.thumbnailPhotoFile = thumbCallResults[idx];
             if (!populateThumbs) {
@@ -34,7 +35,7 @@ export class PhotoApiService extends PhotoService {
     const photos$ = this.httpClient.get(`/api/photos/${page}`)
       .pipe(
         map((resp: any) => {
-          const page = {
+          const p = {
             page: resp.page,
             perPage: resp.per_page,
             total: resp.total,
@@ -50,9 +51,9 @@ export class PhotoApiService extends PhotoService {
               } as Photo;
             })
           } as Pagination<Photo>;
-          page.itemSlices = [page.items];
+          p.itemSlices = [p.items];
 
-          return page;
+          return p;
         }),
         thumbnailSwitchMap
       );

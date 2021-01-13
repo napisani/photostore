@@ -3,7 +3,7 @@ import { PhotoApiService } from './photo-api.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Photo } from './photo';
 import { Pagination, reducePagination } from './pagination';
-import { mergeMap, scan } from 'rxjs/operators';
+import {mergeMap, scan, throttleTime} from 'rxjs/operators';
 
 @Injectable()
 export class PhotosStoreService {

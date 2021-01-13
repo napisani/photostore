@@ -32,7 +32,7 @@ export interface Photo {
     latitude: number;
     longitude: number;
   };
-  base64: string;
+  dataUrl: string;
 }
 
 export interface PhotoLibraryPlugin {

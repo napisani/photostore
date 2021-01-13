@@ -11,7 +11,7 @@ import {Plugins} from '@capacitor/core';
 export class GalleryLocalTabPage {
 
   maxPhotoHeight = Math.floor(window.innerHeight / 2);
-  photoHeight = Math.floor(window.innerHeight / 8);
+  photoHeight = Math.floor(window.innerHeight / 3);
   minPhotoHeight = 25;
   galleryType = GalleryType;
 

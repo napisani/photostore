@@ -21,7 +21,7 @@ export class HttpApiService {
   getFile<T>(url: string, options: any = {method: 'get'}): Observable<any> {
     if (this.isNative()) {
       console.log('using NATIVE http');
-      return from(this.cordovaHttpClient.sendRequest(`http://192.168.1.128:5000${url}`, options))
+      return from(this.cordovaHttpClient.sendRequest(`http://192.168.1.134:5000${url}`, options))
         .pipe(map((resp: HTTPResponse) => {
           console.log('inside map ' + (typeof resp.data));
           return resp.data;
@@ -35,7 +35,7 @@ export class HttpApiService {
   get<T>(url: string, options: any = {method: 'get'}): Observable<any> {
     if (this.isNative()) {
       console.log('using NATIVE http');
-      return from(this.cordovaHttpClient.sendRequest(`http://192.168.1.128:5000${url}`, options))
+      return from(this.cordovaHttpClient.sendRequest(`http://192.168.1.134:5000${url}`, options))
         .pipe(map((resp: HTTPResponse) => {
           try {
             return JSON.parse(resp.data);

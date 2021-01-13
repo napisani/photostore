@@ -9,7 +9,8 @@ import { PhotosStoreService } from '../photos/photos-store.service';
 export class GalleryTabPage {
 
     maxPhotoHeight = Math.floor(window.innerHeight / 2);
-    photoHeight = Math.floor(window.innerHeight / 8);
+    photoHeight = Math.floor(window.innerHeight / 6);
+
     minPhotoHeight = 25;
 
     constructor() {

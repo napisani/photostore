@@ -18,7 +18,7 @@ export class Tab3Page {
     this.photoApi.getPhotoFile(`/api/photos/thumbnail/1`).subscribe({
       next: (photoFile) => {
         console.log('photoFile', JSON.stringify(photoFile));
-        console.log('photoFile.base64URL', photoFile.base64URL);
+        //console.log('photoFile.base64URL', photoFile.base64URL);
       },
       complete: () => {
         console.log('complete');
