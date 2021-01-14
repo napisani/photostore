@@ -13,11 +13,11 @@ class Pagination<T> extends Equatable {
   final int perPage;
   final int total;
   final int page;
-  final int remainingPages;
 
-  const Pagination(
-      {this.items, this.perPage, this.total, this.page, this.remainingPages});
+  int get remainingPages => ((total - (page * perPage)) / perPage).ceil();
+
+  const Pagination({this.items, this.perPage, this.total, this.page});
 
   @override
-  List<Object> get props => [items, perPage, total, page, remainingPages];
+  List<Object> get props => [items, perPage, total, page];
 }

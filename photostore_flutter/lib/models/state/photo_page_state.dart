@@ -18,11 +18,15 @@ class PhotoPageStateSuccess extends PhotoPageState {
 
   const PhotoPageStateSuccess({this.photos});
 
-  PhotoPageStateSuccess copyWith({List<Photo> photos}) {
+  PhotoPageStateSuccess copyWith({Pagination<Photo> photos}) {
     return PhotoPageStateSuccess(
       photos: photos ?? this.photos,
     );
   }
+
+
+
+  bool reachedEnd() => photos.page * photos.perPage >= photos.total;
 
   @override
   List<Object> get props => [photos];

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:photostore_flutter/screens/photo_list_widget.dart';
-import 'package:photostore_flutter/services/photo_page_api_repository.dart';
+import 'package:photostore_flutter/services/media_api_repository.dart';
 
 void main() {
   runApp(App());
@@ -19,7 +19,7 @@ class App extends StatelessWidget {
             ),
             body: RepositoryProvider(
               create: (context) =>
-                  PhotoPageAPIRepository(httpClient: http.Client()),
+                  MediaAPIRepository(httpClient: http.Client()),
               child: PhotoListTabWidget(),
             )));
   }

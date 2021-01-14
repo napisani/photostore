@@ -35,7 +35,7 @@ def view_get_thumbnail(photo_id):
 @blueprint.route('/api/photos/<page>', methods=('GET',))
 # @marshal_with(paginated_photos)
 def view_get_photos(page):
-    photos = get_photos(int(page), 10)
+    photos = get_photos(int(page), 20)
     del photos.query
     logger.debug('view_get_photos {}', photos)
     logger.debug('view_get_photos {}', photos.__dict__)

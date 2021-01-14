@@ -34,8 +34,9 @@ dependencies:
   rxdart: ^0.25.0
   http: ^0.12.2
   equatable: ^1.2.5
-
+  bloc_test: ^7.1.0
 dev_dependencies:
+
   flutter_test:
     sdk: flutter
 

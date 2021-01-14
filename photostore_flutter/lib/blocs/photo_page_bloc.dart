@@ -1,14 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photostore_flutter/models/event/photo_page_event.dart';
 import 'package:photostore_flutter/models/pagination.dart';
 import 'package:photostore_flutter/models/photo.dart';
-import 'package:photostore_flutter/models/event/photo_page_event.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
-import 'package:photostore_flutter/services/photo_page_repository.dart';
+import 'package:photostore_flutter/services/media_repository.dart';
 
 class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
-  final PhotoPageRepository photoPageRepo;
+  final MediaRepository mediaRepo;
 
-  PhotoPageBloc(this.photoPageRepo) : super(PhotoPageStateInitial());
+  PhotoPageBloc(this.mediaRepo) : super(PhotoPageStateInitial());
 
   // @override
   // Stream<Transition<PhotoPageEvent, PhotoPageState>> transformEvents(
@@ -21,35 +21,34 @@ class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
   //   );
   // }
   bool _hasEndBeenReached(PhotoPageState state) =>
-      state is PhotoPageStateSuccess &&
-          state.photos.page * state.photos.perPage >= state.photos.total;
-
+      state is PhotoPageStateSuccess && state.reachedEnd();
 
   @override
   Stream<PhotoPageState> mapEventToState(PhotoPageEvent event) async* {
     final currentState = state;
+    print("in mapEventToState $event ${_hasEndBeenReached(currentState)}");
     if (event is PhotoPageFetchEvent && !_hasEndBeenReached(currentState)) {
       try {
         if (currentState is PhotoPageStateInitial) {
-          final Pagination<Photo> photoPage = await this.photoPageRepo
-              .getPhotosByPage(1);
+          final Pagination<Photo> photoPage =
+              await this.mediaRepo.getPhotosByPage(1);
+          print("got first photoPage: $photoPage");
           yield PhotoPageStateSuccess(photos: photoPage);
-          return;
         }
         if (currentState is PhotoPageStateSuccess) {
-          final photos = await await this.photoPageRepo.getPhotosByPage(
-              currentState.photos.page + 1);
+          final photos = await this
+              .mediaRepo
+              .getPhotosByPage(currentState.photos.page + 1);
+          print("got photos: $photos");
           yield photos.items.isEmpty
               ? currentState.copyWith()
-              : PhotoPageStateSuccess(
-              photos: photos
-          );
+              : currentState.copyWith(photos: photos);
         }
-      } catch (_) {
+      } catch (err) {
+        print("error getting Photo Page err: $err");
         yield PhotoPageStateFailure();
       }
     }
-
 
 // @override
 // Stream<S> transform(StreamTransformer<PhotoPageState, S> streamTransformer) {

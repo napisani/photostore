@@ -5,4 +5,6 @@ abstract class PhotoPageEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class PhotoPageFetchEvent extends PhotoPageEvent {}
+class PhotoPageFetchEvent extends PhotoPageEvent {
+  PhotoPageFetchEvent();
+}

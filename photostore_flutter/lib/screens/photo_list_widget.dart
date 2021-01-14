@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:photostore_flutter/services/photo_page_api_repository.dart';
 import 'package:photostore_flutter/blocs/photo_page_bloc.dart';
+import 'package:photostore_flutter/components/photo_widget.dart';
 import 'package:photostore_flutter/models/event/photo_page_event.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
-import 'package:photostore_flutter/components/photo_widget.dart';
+import 'package:photostore_flutter/services/media_api_repository.dart';
 
 import '../components/bottom_loader_widget.dart';
 
@@ -14,8 +14,8 @@ class PhotoListTabWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-      PhotoPageBloc(RepositoryProvider.of<PhotoPageAPIRepository>(context))
-        ..add(PhotoPageFetchEvent()),
+          PhotoPageBloc(RepositoryProvider.of<MediaAPIRepository>(context))
+            ..add(PhotoPageFetchEvent()),
       child: PhotoListWidget(),
     );
   }
