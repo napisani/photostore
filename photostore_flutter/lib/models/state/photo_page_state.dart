@@ -3,39 +3,48 @@ import 'package:photostore_flutter/models/pagination.dart';
 import 'package:photostore_flutter/models/photo.dart';
 
 abstract class PhotoPageState extends Equatable {
-  const PhotoPageState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class PhotoPageStateInitial extends PhotoPageState {}
-
-class PhotoPageStateFailure extends PhotoPageState {}
-
-class PhotoPageStateSuccess extends PhotoPageState {
   final Pagination<Photo> photos;
 
-  const PhotoPageStateSuccess({this.photos});
+  const PhotoPageState({this.photos = const Pagination<Photo>()});
 
-  PhotoPageStateSuccess copyWith({Pagination<Photo> photos}) {
+  bool reachedEnd() => photos.page * photos.perPage >= photos.total;
+
+  //
+  _copyPageWith(Pagination<Photo> photos) {
     Pagination<Photo> newPage = Pagination<Photo>(
         perPage: photos.perPage,
         total: photos.total,
         page: photos.page,
-        items: this.photos.items..addAll(photos.items));
+        items: this.photos?.items == null ? photos.items : this.photos.items
+          ..addAll(photos.items));
 
-    return PhotoPageStateSuccess(
-      photos: newPage,
-    );
+    return newPage;
   }
-
-  bool reachedEnd() => photos.page * photos.perPage >= photos.total;
 
   @override
   List<Object> get props => [photos];
 
   @override
   String toString() =>
-      'PhotoStateSuccess { photos.items.length: ${photos?.items?.length}, page: ${photos?.page} }';
+      'PhotoStateSuccess type: ${this.runtimeType} { photos.items.length: ${photos?.items?.length}, page: ${photos?.page} }';
+}
+
+class PhotoPageStateInitial extends PhotoPageState {}
+
+class PhotoPageStateLoading extends PhotoPageState {
+  PhotoPageStateLoading({photos}) : super(photos: photos);
+}
+
+class PhotoPageStateFailure extends PhotoPageState {
+  final String errorMessage;
+
+  PhotoPageStateFailure({this.errorMessage, photos}) : super(photos: photos);
+}
+
+class PhotoPageStateSuccess extends PhotoPageState {
+  PhotoPageStateSuccess({photos}) : super(photos: photos);
+
+  PhotoPageStateSuccess copyWith({Pagination<Photo> newPhotos}) {
+    return PhotoPageStateSuccess(photos: super._copyPageWith(newPhotos));
+  }
 }

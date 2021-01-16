@@ -22,7 +22,7 @@ class MediaAPIRepository extends MediaRepository {
           total: data['total'],
           items: (data['items'] as List<dynamic>).map((item) {
             return Photo(
-                id: item['id'],
+                id: item['id'].toString(),
                 checksum: item['checksum'],
                 gphotoId: item['gphoto_id'],
                 filename: item['filename'],

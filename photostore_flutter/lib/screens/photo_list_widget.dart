@@ -2,12 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photostore_flutter/blocs/photo_page_bloc.dart';
-import 'package:photostore_flutter/components/photo_widget.dart';
+import 'package:photostore_flutter/components/photo_grid_widget.dart';
 import 'package:photostore_flutter/models/event/photo_page_event.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
-
-import '../components/bottom_loader_widget.dart';
 
 class PhotoListTabWidget extends StatelessWidget {
   @override
@@ -65,23 +63,14 @@ class _PhotoListWidgetState extends State<PhotoListWidget> {
             child: Text('failed to fetch posts'),
           );
         }
-        if (state is PhotoPageStateSuccess) {
-          if (state.photos.items.isEmpty) {
+        if (state is PhotoPageStateSuccess || state is PhotoPageStateLoading) {
+          if (state.photos?.items == null || state.photos.items.isEmpty) {
             return Center(
-              child: Text('no posts'),
+              child: Text('no photos'),
             );
           }
-          return ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return index >= state.photos.items.length
-                  ? BottomLoaderWidget()
-                  : PhotoWidget(photo: state.photos.items[index]);
-            },
-            itemCount: state.photos.remainingPages > 0
-                ? state.photos.items.length
-                : state.photos.items.length + 1,
-            controller: _scrollController,
-          );
+          return PhotoGridWidget(
+              photos: state.photos, scrollController: _scrollController);
         } else {
           throw Exception("invalid PhotoPageState type");
         }

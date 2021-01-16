@@ -20,7 +20,7 @@ class MockMediaRepository extends MediaRepository {
           filename: _randString(5) + ".png",
           gphotoId: _randString(7),
           checksum: _randString(16),
-          id: i);
+          id: i.toString());
 
       i++;
     }
@@ -34,9 +34,7 @@ class MockMediaRepository extends MediaRepository {
       final frame = Pagination<Photo>(
           perPage: perPage,
           page: page,
-          items: Iterable<int>.generate(10)
-              .toList()
-              .map((e) {
+          items: Iterable<int>.generate(10).toList().map((e) {
             photoGen.moveNext();
             return photoGen.current;
           }).toList(),
@@ -50,8 +48,9 @@ class MockMediaRepository extends MediaRepository {
   }
 
   Iterator<Pagination<Photo>> pageGen;
+  final simulatedWait;
 
-  MockMediaRepository() {
+  MockMediaRepository({this.simulatedWait = 0}) {
     this.pageGen = _generatePage(200).iterator;
   }
 
@@ -59,6 +58,7 @@ class MockMediaRepository extends MediaRepository {
   Future<Pagination<Photo>> getPhotosByPage(int page) async {
     this.pageGen.moveNext();
     Pagination<Photo> page = this.pageGen.current;
-    return page;
+    // sleep(Duration(seconds: simulatedWait));
+    return Future.delayed(Duration(seconds: simulatedWait), () => page);
   }
 }

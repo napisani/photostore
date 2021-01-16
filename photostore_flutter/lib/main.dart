@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photostore_flutter/screens/photo_list_widget.dart';
+import 'package:photostore_flutter/services/media_mobile_repository.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
 import 'package:photostore_flutter/services/mock_media_repository.dart';
 
@@ -15,10 +16,10 @@ class App extends StatelessWidget {
         title: 'Flutter Infinite Scroll',
         home: Scaffold(
             appBar: AppBar(
-              title: Text('Posts'),
+              title: Text('Photos'),
             ),
             body: RepositoryProvider<MediaRepository>(
-              create: (context) => MockMediaRepository(),
+              create: (context) => MediaMobileRepository(),
               child: PhotoListTabWidget(),
             )));
   }
