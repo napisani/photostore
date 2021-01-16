@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:photostore_flutter/models/agnostic_media.dart';
+import 'package:photostore_flutter/models/media_contents.dart';
 import 'package:photostore_flutter/models/pagination.dart';
 import 'package:photostore_flutter/models/photo.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
@@ -28,6 +28,8 @@ class MediaAPIRepository extends MediaRepository<Photo> {
                 gphotoId: item['gphoto_id'],
                 filename: item['filename'],
                 creationDate: null,
+                thumbnail: Future.value(MediaContents.url(
+                    "http://192.168.1.134:5000/api/photos/thumbnail/${item.id}")),
                 mimeType: item['mime_type']);
           }).toList());
     } else {

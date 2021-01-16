@@ -1,12 +1,13 @@
 import 'package:photo_manager/photo_manager.dart';
+import 'package:photostore_flutter/models/media_contents.dart';
+import 'package:photostore_flutter/models/mobile_photo.dart';
 import 'package:photostore_flutter/models/pagination.dart';
-import 'package:photostore_flutter/models/photo.dart';
 
 import 'media_repository.dart';
 
 const int _ITEMS_PER_AGE = 10;
 
-class MediaMobileRepositoryV2 extends MediaRepository<Photo> {
+class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
   AssetPathEntity _allPath;
 
   MediaMobileRepositoryV2({requestPermissions = true}) {
@@ -28,22 +29,26 @@ class MediaMobileRepositoryV2 extends MediaRepository<Photo> {
     return this._allPath;
   }
 
-  Future<Pagination<Photo>> getPhotosByPage(int page) async {
+  Future<Pagination<MobilePhoto>> getPhotosByPage(int page) async {
     AssetPathEntity allAlbum = await this.getAllAlbum();
     List<AssetEntity> assets =
         await allAlbum.getAssetListPaged(page, _ITEMS_PER_AGE);
 
-    return Pagination<Photo>(
+    return Pagination<MobilePhoto>(
         page: page,
         perPage: _ITEMS_PER_AGE,
         total: allAlbum.assetCount,
         items: assets.map((item) {
-          return Photo(
+          return MobilePhoto(
               id: item.id,
               checksum: '',
               gphotoId: '',
               filename: item.title,
               creationDate: item.createDateTime,
+              thumbnail: item.thumbData
+                  .asStream()
+                  .map((bin) => MediaContents.memory(bin))
+                  .first,
               mimeType: '');
         }).toList());
     //.getMedium(

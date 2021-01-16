@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:photostore_flutter/models/agnostic_media.dart';
+import 'package:photostore_flutter/models/media_contents.dart';
 import 'package:photostore_flutter/models/pagination.dart';
 import 'package:photostore_flutter/models/photo.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
@@ -21,6 +21,8 @@ class MockMediaRepository extends MediaRepository<Photo> {
           filename: _randString(5) + ".png",
           gphotoId: _randString(7),
           checksum: _randString(16),
+          thumbnail: Future.value(MediaContents.url(
+              "https://upload.wikimedia.org/wikipedia/en/9/95/Test_image.jpg")),
           id: i.toString());
       i++;
     }
@@ -60,5 +62,10 @@ class MockMediaRepository extends MediaRepository<Photo> {
     Pagination<Photo> page = this.pageGen.current;
     // sleep(Duration(seconds: simulatedWait));
     return Future.delayed(Duration(seconds: simulatedWait), () => page);
+  }
+
+  Future<MediaContents> getThumbnail(Photo media) async {
+    return MediaContents.url(
+        "https://upload.wikimedia.org/wikipedia/en/9/95/Test_image.jpg");
   }
 }
