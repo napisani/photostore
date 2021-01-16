@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:photostore_flutter/blocs/photo_page_bloc.dart';
 import 'package:photostore_flutter/models/event/photo_page_event.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
 
-import 'utils/mock_media_repository.dart';
+import '../lib/services/mock_media_repository.dart';
 
 void main() {
   MockMediaRepository repo;
@@ -17,22 +19,25 @@ void main() {
     blocTest(
       "emits a single success when a single Fetch event is added",
       build: () => PhotoPageBloc(repo),
-      act: (bloc) => bloc.add(PhotoPageFetchEvent()),
+      act: (bloc) {
+        bloc.add(PhotoPageFetchEvent());
+      },
+      wait: const Duration(milliseconds: 500),
       expect: [isA<PhotoPageStateSuccess>()],
     );
 
     blocTest(
-      "emits a multiple success when two Fetch event are added",
+      "emits a one success when three Fetch events are added",
       build: () => PhotoPageBloc(repo),
-      act: (bloc) async => bloc
-        ..add(PhotoPageFetchEvent())
-        ..add(PhotoPageFetchEvent())
-        ..add(PhotoPageFetchEvent()),
-      expect: [
-        isA<PhotoPageStateSuccess>(),
-        isA<PhotoPageStateSuccess>(),
-        isA<PhotoPageStateSuccess>()
-      ],
+      act: (bloc) {
+        bloc
+          ..add(PhotoPageFetchEvent())
+          ..add(PhotoPageFetchEvent())
+          ..add(PhotoPageFetchEvent());
+        sleep(Duration(seconds: 1));
+      },
+      wait: const Duration(milliseconds: 500),
+      expect: [isA<PhotoPageStateSuccess>()],
     );
 
     // group('whenListen', () {

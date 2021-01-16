@@ -5,7 +5,7 @@ import 'package:photostore_flutter/blocs/photo_page_bloc.dart';
 import 'package:photostore_flutter/components/photo_widget.dart';
 import 'package:photostore_flutter/models/event/photo_page_event.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
-import 'package:photostore_flutter/services/media_api_repository.dart';
+import 'package:photostore_flutter/services/media_repository.dart';
 
 import '../components/bottom_loader_widget.dart';
 
@@ -14,7 +14,7 @@ class PhotoListTabWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          PhotoPageBloc(RepositoryProvider.of<MediaAPIRepository>(context))
+          PhotoPageBloc(RepositoryProvider.of<MediaRepository>(context))
             ..add(PhotoPageFetchEvent()),
       child: PhotoListWidget(),
     );
@@ -36,6 +36,19 @@ class _PhotoListWidgetState extends State<PhotoListWidget> {
     super.initState();
     _scrollController.addListener(_onScroll);
     _photoPageBloc = BlocProvider.of<PhotoPageBloc>(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadedEnoughYet());
+  }
+
+  void _loadedEnoughYet() {
+    print('after first paint');
+    try {
+      _scrollController.position;
+      print('we are already attached to a scroll view');
+      _onScroll();
+    } catch (_) {
+      _photoPageBloc.add(PhotoPageFetchEvent());
+      print('adding fetch!');
+    }
   }
 
   @override
@@ -85,6 +98,8 @@ class _PhotoListWidgetState extends State<PhotoListWidget> {
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
+    print(
+        "in _onScroll maxScroll: $maxScroll currentScroll: $currentScroll _scrollThreshold: $_scrollThreshold");
     if (maxScroll - currentScroll <= _scrollThreshold) {
       _photoPageBloc.add(PhotoPageFetchEvent());
     }

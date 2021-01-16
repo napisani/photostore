@@ -18,6 +18,13 @@ class Pagination<T> extends Equatable {
 
   const Pagination({this.items, this.perPage, this.total, this.page});
 
+  Pagination<T> combineWith(Pagination<T> p2) {
+    return new Pagination(
+        items: this.items..addAll(p2.items),
+        perPage: p2.perPage,
+        page: p2.page);
+  }
+
   @override
   List<Object> get props => [items, perPage, total, page];
 }

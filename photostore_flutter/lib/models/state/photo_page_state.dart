@@ -19,12 +19,16 @@ class PhotoPageStateSuccess extends PhotoPageState {
   const PhotoPageStateSuccess({this.photos});
 
   PhotoPageStateSuccess copyWith({Pagination<Photo> photos}) {
+    Pagination<Photo> newPage = Pagination<Photo>(
+        perPage: photos.perPage,
+        total: photos.total,
+        page: photos.page,
+        items: this.photos.items..addAll(photos.items));
+
     return PhotoPageStateSuccess(
-      photos: photos ?? this.photos,
+      photos: newPage,
     );
   }
-
-
 
   bool reachedEnd() => photos.page * photos.perPage >= photos.total;
 

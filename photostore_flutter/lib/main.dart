@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:photostore_flutter/screens/photo_list_widget.dart';
-import 'package:photostore_flutter/services/media_api_repository.dart';
+import 'package:photostore_flutter/services/media_repository.dart';
+import 'package:photostore_flutter/services/mock_media_repository.dart';
 
 void main() {
   runApp(App());
@@ -17,9 +17,8 @@ class App extends StatelessWidget {
             appBar: AppBar(
               title: Text('Posts'),
             ),
-            body: RepositoryProvider(
-              create: (context) =>
-                  MediaAPIRepository(httpClient: http.Client()),
+            body: RepositoryProvider<MediaRepository>(
+              create: (context) => MockMediaRepository(),
               child: PhotoListTabWidget(),
             )));
   }

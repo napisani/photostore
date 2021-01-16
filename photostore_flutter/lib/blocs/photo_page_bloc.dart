@@ -4,22 +4,13 @@ import 'package:photostore_flutter/models/pagination.dart';
 import 'package:photostore_flutter/models/photo.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
+import 'package:rxdart/rxdart.dart';
 
 class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
   final MediaRepository mediaRepo;
 
   PhotoPageBloc(this.mediaRepo) : super(PhotoPageStateInitial());
 
-  // @override
-  // Stream<Transition<PhotoPageEvent, PhotoPageState>> transformEvents(
-  //   Stream<PhotoPageEvent> events,
-  //   TransitionFunction<PhotoPageEvent, PhotoPageState> transitionFn,
-  // ) {
-  //   return super.transformEvents(
-  //     events.debounceTime(const Duration(milliseconds: 500)),
-  //     transitionFn,
-  //   );
-  // }
   bool _hasEndBeenReached(PhotoPageState state) =>
       state is PhotoPageStateSuccess && state.reachedEnd();
 
@@ -40,6 +31,7 @@ class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
               .mediaRepo
               .getPhotosByPage(currentState.photos.page + 1);
           print("got photos: $photos");
+
           yield photos.items.isEmpty
               ? currentState.copyWith()
               : currentState.copyWith(photos: photos);
@@ -49,10 +41,14 @@ class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
         yield PhotoPageStateFailure();
       }
     }
-
-// @override
-// Stream<S> transform(StreamTransformer<PhotoPageState, S> streamTransformer) {
-//
-// }
   }
+
+  // @override
+  // Stream<Transition<PhotoPageEvent, PhotoPageState>> transformEvents(
+  //     Stream<PhotoPageEvent> events,
+  //     TransitionFunction<PhotoPageEvent, PhotoPageState> transitionFn) {
+  //   return events
+  //       .debounceTime(const Duration(milliseconds: 300))
+  //       .switchMap((transitionFn));
+  // }
 }
