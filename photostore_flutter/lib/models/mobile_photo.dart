@@ -1,6 +1,7 @@
-import 'package:photostore_flutter/models/agnostic_photo.dart';
 
-class MobilePhoto extends AgnosticPhoto{
+import 'agnostic_media.dart';
+
+class MobilePhoto extends AgnosticMedia{
   final String id;
   final String checksum;
   final String gphotoId;
@@ -8,7 +9,7 @@ class MobilePhoto extends AgnosticPhoto{
   final DateTime creationDate;
   final String filename;
 
-  const Photo(
+  const MobilePhoto(
       {this.id,
         this.checksum,
         this.gphotoId,

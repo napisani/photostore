@@ -1,10 +1,11 @@
 import 'dart:math';
 
+import 'package:photostore_flutter/models/agnostic_media.dart';
 import 'package:photostore_flutter/models/pagination.dart';
 import 'package:photostore_flutter/models/photo.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
 
-class MockMediaRepository extends MediaRepository {
+class MockMediaRepository extends MediaRepository<Photo> {
   String _randString(int len) {
     var r = Random();
     return String.fromCharCodes(
@@ -21,7 +22,6 @@ class MockMediaRepository extends MediaRepository {
           gphotoId: _randString(7),
           checksum: _randString(16),
           id: i.toString());
-
       i++;
     }
   }

@@ -1,15 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:photostore_flutter/models/agnostic_photo.dart';
+import 'package:photostore_flutter/models/agnostic_media.dart';
 
-/*
-  id?: number;
-  checksum?: string;
-  gphotoId?: string;
-  mimeType?: string;
-  creationDate?: Date;
-  filename?: string;
- */
-class Photo extends AgnosticPhoto {
+class Photo extends AgnosticMedia {
   final String id;
   final String checksum;
   final String gphotoId;

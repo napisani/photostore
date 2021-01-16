@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photostore_flutter/models/agnostic_media.dart';
 import 'package:photostore_flutter/models/event/photo_page_event.dart';
 import 'package:photostore_flutter/models/pagination.dart';
-import 'package:photostore_flutter/models/photo.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
 
@@ -22,8 +22,8 @@ class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
 
       try {
         if (currentState is PhotoPageStateInitial) {
-          final Pagination<Photo> photoPage =
-              await this.mediaRepo.getPhotosByPage(1);
+          final Pagination<AgnosticMedia> photoPage =
+          (await this.mediaRepo.getPhotosByPage(1));
           print("got first photoPage: $photoPage");
           yield PhotoPageStateSuccess(photos: photoPage);
         }

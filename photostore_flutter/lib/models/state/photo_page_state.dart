@@ -1,17 +1,16 @@
 import 'package:equatable/equatable.dart';
+import 'package:photostore_flutter/models/agnostic_media.dart';
 import 'package:photostore_flutter/models/pagination.dart';
-import 'package:photostore_flutter/models/photo.dart';
 
 abstract class PhotoPageState extends Equatable {
-  final Pagination<Photo> photos;
+  final Pagination<AgnosticMedia> photos;
 
-  const PhotoPageState({this.photos = const Pagination<Photo>()});
+  const PhotoPageState({this.photos = const Pagination<AgnosticMedia>()});
 
   bool reachedEnd() => photos.page * photos.perPage >= photos.total;
 
-  //
-  _copyPageWith(Pagination<Photo> photos) {
-    Pagination<Photo> newPage = Pagination<Photo>(
+  _copyPageWith(Pagination<AgnosticMedia> photos) {
+    Pagination<AgnosticMedia> newPage = Pagination<AgnosticMedia>(
         perPage: photos.perPage,
         total: photos.total,
         page: photos.page,
@@ -44,7 +43,7 @@ class PhotoPageStateFailure extends PhotoPageState {
 class PhotoPageStateSuccess extends PhotoPageState {
   PhotoPageStateSuccess({photos}) : super(photos: photos);
 
-  PhotoPageStateSuccess copyWith({Pagination<Photo> newPhotos}) {
+  PhotoPageStateSuccess copyWith({Pagination<AgnosticMedia> newPhotos}) {
     return PhotoPageStateSuccess(photos: super._copyPageWith(newPhotos));
   }
 }

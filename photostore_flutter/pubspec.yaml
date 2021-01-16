@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.0
 
   photo_gallery: ^0.3.0
+  photo_manager: ^0.5.8
   flutter_bloc: ^6.1.1
   rxdart: ^0.25.0
   http: ^0.12.2

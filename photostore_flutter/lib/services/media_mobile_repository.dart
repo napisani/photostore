@@ -1,4 +1,6 @@
 import 'package:photo_gallery/photo_gallery.dart';
+import 'package:photostore_flutter/models/agnostic_media.dart';
+import 'package:photostore_flutter/models/mobile_photo.dart';
 import 'package:photostore_flutter/models/pagination.dart';
 import 'package:photostore_flutter/models/photo.dart';
 
@@ -6,7 +8,7 @@ import 'media_repository.dart';
 
 const int _ITEMS_PER_AGE = 10;
 
-class MediaMobileRepository extends MediaRepository {
+class MediaMobileRepository extends MediaRepository<Photo> {
   Album _allAlbum;
 
   Future<List<Album>> getPhotoAlbums() async {
@@ -16,7 +18,7 @@ class MediaMobileRepository extends MediaRepository {
     return imageAlbums;
   }
 
-  Future<Pagination<Photo>> getPhotosByPageAndAlbum(int page) async {}
+  Future<Pagination<AgnosticMedia>> getPhotosByPageAndAlbum(int page) async {}
 
   Future<Pagination<Photo>> getPhotosByPage(int page) async {
     if (this._allAlbum == null) {

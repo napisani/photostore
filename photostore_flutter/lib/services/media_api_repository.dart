@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:photostore_flutter/models/agnostic_media.dart';
 import 'package:photostore_flutter/models/pagination.dart';
 import 'package:photostore_flutter/models/photo.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
 
-class MediaAPIRepository extends MediaRepository {
+class MediaAPIRepository extends MediaRepository<Photo> {
   final String baseUrl = "http://192.168.1.134:5000/api/photos";
   final http.Client httpClient;
 

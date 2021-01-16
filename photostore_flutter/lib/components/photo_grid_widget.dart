@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:photostore_flutter/models/agnostic_media.dart';
 import 'package:photostore_flutter/models/pagination.dart';
-import 'package:photostore_flutter/models/photo.dart';
 
 class PhotoGridWidget extends StatelessWidget {
-  final Pagination<Photo> photos;
+  final Pagination<dynamic> photos;
   final ScrollController _scrollController;
 
   const PhotoGridWidget({Key key, @required this.photos, scrollController})
@@ -26,7 +26,8 @@ class PhotoGridWidget extends StatelessWidget {
             child: new Text(this
                 .photos
                 .items[index]
-                .filename)), //just for testing, will fill with image later
+                .id
+                .toString())), //just for testing, will fill with image later
       ),
       controller: _scrollController,
     );
