@@ -7,7 +7,7 @@ import 'package:photostore_flutter/models/photo.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
 
 class MediaAPIRepository extends MediaRepository<Photo> {
-  final String baseUrl = "http://192.168.1.134:5000/api/photos";
+  final String baseUrl = "http://192.168.1.140:5000/api/photos";
   final http.Client httpClient;
 
   MediaAPIRepository({this.httpClient}) : super();
@@ -29,11 +29,13 @@ class MediaAPIRepository extends MediaRepository<Photo> {
                 filename: item['filename'],
                 creationDate: null,
                 thumbnail: Future.value(MediaContents.url(
-                    "http://192.168.1.134:5000/api/photos/thumbnail/${item.id}")),
+                    "http://192.168.1.140:5000/api/photos/thumbnail/${item['id']}")),
                 mimeType: item['mime_type']);
           }).toList());
     } else {
-      throw Exception('error fetching photos');
+      final Exception ex = Exception('error fetching photos');
+      print("MediaAPIRepository.getPhotosByPage $ex");
+      throw ex;
     }
   }
 }

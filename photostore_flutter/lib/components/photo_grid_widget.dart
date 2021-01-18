@@ -24,14 +24,22 @@ class PhotoGridWidget extends StatelessWidget {
       itemBuilder: (context, index) => new Card(
         child: new GridTile(
             footer: new Text(this.photos.items[index].id.toString()),
-            child: FutureBuilder<String>(
-              future: photos.items[index].thumbnail
-                  .asStream()
-                  .map((event) => (event as MediaURLContents).url)
-                  .first,
-              builder: (context, AsyncSnapshot<String> snapshot) {
+            child: FutureBuilder<MediaContents>(
+              future: photos.items[index].thumbnail,
+              builder: (context, AsyncSnapshot<MediaContents> snapshot) {
                 if (snapshot.hasData) {
-                  return Image.network(snapshot.data);
+                  print('grid tile build - hasData');
+                  if (snapshot.data is MediaURLContents) {
+                    print('grid tile build - returning image.network');
+
+                    return Image.network(
+                        (snapshot.data as MediaURLContents).url);
+                  } else {
+                    print('grid tile build - returning image.memory');
+
+                    return Image.memory(
+                        (snapshot.data as MediaMemoryContents).binary);
+                  }
                 } else {
                   return CircularProgressIndicator();
                 }

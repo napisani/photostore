@@ -24,33 +24,41 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
 
   Future<AssetPathEntity> getAllAlbum() async {
     if (this._allPath == null) {
-      this._allPath = (await PhotoManager.getAssetPathList(hasAll: true)).first;
+      this._allPath = (await PhotoManager.getAssetPathList(
+              onlyAll: true, type: RequestType.image))
+          .first;
     }
     return this._allPath;
   }
 
   Future<Pagination<MobilePhoto>> getPhotosByPage(int page) async {
     AssetPathEntity allAlbum = await this.getAllAlbum();
-    List<AssetEntity> assets =
-        await allAlbum.getAssetListPaged(page, _ITEMS_PER_AGE);
-
+    int perPageOrRemaining =
+        allAlbum.assetCount - ((page - 1) * _ITEMS_PER_AGE);
+    if (perPageOrRemaining > _ITEMS_PER_AGE) {
+      perPageOrRemaining = _ITEMS_PER_AGE;
+    }
+    final int skip = _ITEMS_PER_AGE * (page - 1);
+    List<AssetEntity> assets = await allAlbum.getAssetListRange(
+        start: skip, end: skip + perPageOrRemaining);
+    print('getPhotosByPage allAlbum : $allAlbum assets: ${assets.length}');
     return Pagination<MobilePhoto>(
         page: page,
         perPage: _ITEMS_PER_AGE,
         total: allAlbum.assetCount,
-        items: assets.map((item) {
-          return MobilePhoto(
-              id: item.id,
-              checksum: '',
-              gphotoId: '',
-              filename: item.title,
-              creationDate: item.createDateTime,
-              thumbnail: item.thumbData
-                  .asStream()
-                  .map((bin) => MediaContents.memory(bin))
-                  .first,
-              mimeType: '');
-        }).toList());
+        items: assets
+            .map((item) => MobilePhoto(
+                id: item.id,
+                checksum: '',
+                gphotoId: '',
+                filename: item.title,
+                creationDate: item.createDateTime,
+                thumbnail: item.thumbData
+                    .asStream()
+                    .map((bin) => MediaContents.memory(bin))
+                    .first,
+                mimeType: ''))
+            .toList());
     //.getMedium(
     //mediumId: this._allAlbum.id, mediumType: MediumType.image);
   }
