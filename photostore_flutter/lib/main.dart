@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:photostore_flutter/screens/photo_list_widget.dart';
-import 'package:photostore_flutter/services/media_api_repository.dart';
-import 'package:photostore_flutter/services/media_mobile_repositoryV2.dart';
-import 'package:photostore_flutter/services/media_repository.dart';
+import 'package:photostore_flutter/serviceprovs/app_repository_provider.dart';
+import 'package:photostore_flutter/tab_item.dart';
+import 'package:photostore_flutter/tab_navigator.dart';
+
+import 'bottom_navigation.dart';
 
 void main() {
   runApp(App());
@@ -13,14 +13,81 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Infinite Scroll',
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text('Photos'),
-            ),
-            body: RepositoryProvider<MediaRepository>(
-              create: (context) => MediaMobileRepositoryV2(),
-              child: PhotoListTabWidget(),
-            )));
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: AppRepositoryProvider(child: _PhotoStoreApp()),
+    );
+    ;
+  }
+}
+
+class _PhotoStoreApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _PhotoStoreAppState();
+}
+
+class _PhotoStoreAppState extends State<_PhotoStoreApp> {
+  var _currentTab = TabItem.home;
+  final _navigatorKeys = {
+    TabItem.home: GlobalKey<NavigatorState>(),
+    TabItem.mobile: GlobalKey<NavigatorState>(),
+    TabItem.server: GlobalKey<NavigatorState>(),
+  };
+
+  void _selectTab(TabItem tabItem) {
+    print("main:_PhotoStoreApp:_selectTab tabItem: $tabItem");
+    if (tabItem == _currentTab) {
+      // pop to first route
+      // _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
+    } else {
+      setState(() => _currentTab = tabItem);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        final isFirstRouteInCurrentTab =
+            !await _navigatorKeys[_currentTab].currentState.maybePop();
+        if (isFirstRouteInCurrentTab) {
+          // if not on the 'main' tab
+          if (_currentTab != TabItem.home) {
+            // select 'main' tab
+            _selectTab(TabItem.home);
+            // back button handled by app
+            return false;
+          }
+        }
+        // let system handle back button if we're on the first route
+        return isFirstRouteInCurrentTab;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Photos'),
+        ),
+        body: Stack(children: <Widget>[
+          _buildOffstageNavigator(TabItem.home),
+          _buildOffstageNavigator(TabItem.mobile),
+          _buildOffstageNavigator(TabItem.server),
+        ]),
+        bottomNavigationBar: BottomNavigation(
+          currentTab: _currentTab,
+          onSelectTab: _selectTab,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOffstageNavigator(TabItem tabItem) {
+    return Offstage(
+      offstage: _currentTab != tabItem,
+      child: TabNavigator(
+        navigatorKey: _navigatorKeys[tabItem],
+        tabItem: tabItem,
+      ),
+    );
   }
 }
