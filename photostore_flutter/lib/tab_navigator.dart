@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:photostore_flutter/screens/home_screen.dart';
 import 'package:photostore_flutter/screens/photo_list_widget.dart';
+import 'package:photostore_flutter/screens/settings_screen.dart';
 import 'package:photostore_flutter/tab_item.dart';
 
 class TabNavigatorRoutes {
   static const String root = '/';
   static const String server = '/server';
   static const String mobile = '/mobile';
+  static const String settings = '/settings';
 }
 
 class TabNavigator extends StatelessWidget {

@@ -6,9 +6,9 @@ import 'package:photostore_flutter/models/state/photo_page_state.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
 
 class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
-  final MediaRepository mediaRepo;
+  final MediaRepository _mediaRepo;
 
-  PhotoPageBloc(this.mediaRepo) : super(PhotoPageStateInitial());
+  PhotoPageBloc(this._mediaRepo) : super(PhotoPageStateInitial());
 
   bool _hasEndBeenReached(PhotoPageState state) =>
       state is PhotoPageStateSuccess && state.reachedEnd();
@@ -23,13 +23,13 @@ class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
       try {
         if (currentState is PhotoPageStateInitial) {
           final Pagination<AgnosticMedia> photoPage =
-          (await this.mediaRepo.getPhotosByPage(1));
+          (await this._mediaRepo.getPhotosByPage(1));
           print("got first photoPage: $photoPage");
           yield PhotoPageStateSuccess(photos: photoPage);
         }
         if (currentState is PhotoPageStateSuccess) {
           final photos = await this
-              .mediaRepo
+              ._mediaRepo
               .getPhotosByPage(currentState.photos.page + 1);
           print("got photos: $photos");
 

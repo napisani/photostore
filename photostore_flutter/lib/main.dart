@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:photostore_flutter/screens/settings_screen.dart';
 import 'package:photostore_flutter/serviceprovs/app_repository_provider.dart';
 import 'package:photostore_flutter/tab_item.dart';
 import 'package:photostore_flutter/tab_navigator.dart';
@@ -13,7 +14,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Photo Store',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -67,6 +68,22 @@ class _PhotoStoreAppState extends State<_PhotoStoreApp> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Photos'),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            SettingsScreen()
+                      ),
+                    );
+                  },
+                  child: Icon(Icons.settings),
+                )),
+          ],
         ),
         body: Stack(children: <Widget>[
           _buildOffstageNavigator(TabItem.home),

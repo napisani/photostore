@@ -1,27 +1,27 @@
 PODS:
   - Flutter (1.0.0)
-  - photo_gallery (0.0.1):
-    - Flutter
   - photo_manager (0.0.1):
+    - Flutter
+  - shared_preferences (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - photo_gallery (from `.symlinks/plugins/photo_gallery/ios`)
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  photo_gallery:
-    :path: ".symlinks/plugins/photo_gallery/ios"
   photo_manager:
     :path: ".symlinks/plugins/photo_manager/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  photo_gallery: 9f95e57747cd22c10676ece3660d1ffe6c603ee5
   photo_manager: f7c619c2cc8c2adb8d85c63363babac477de9c67
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
