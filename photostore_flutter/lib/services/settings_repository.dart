@@ -31,8 +31,8 @@ class SettingsRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return AppSettings(
-        prefs.getString(_AppSettingKeys.serverIP),
-        prefs.getInt(_AppSettingKeys.serverPort),
-        prefs.getBool(_AppSettingKeys.https));
+        prefs.getString(_AppSettingKeys.serverIP) ?? '192.168.1.100',
+        prefs.getInt(_AppSettingKeys.serverPort) ?? 5000,
+        prefs.getBool(_AppSettingKeys.https) ?? false);
   }
 }

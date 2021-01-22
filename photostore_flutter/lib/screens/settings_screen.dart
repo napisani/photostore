@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photostore_flutter/blocs/app_settings_bloc.dart';
+import 'package:photostore_flutter/components/settings/settings_hostname_input_widget.dart';
+import 'package:photostore_flutter/components/settings/settings_port_input_widget.dart';
+import 'package:photostore_flutter/models/app_settings.dart';
 import 'package:photostore_flutter/models/state/app_settings_state.dart';
 import 'package:photostore_flutter/serviceprovs/app_repository_provider.dart';
-import 'package:photostore_flutter/services/settings_repository.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AppRepositoryProvider(
-        child: BlocProvider(
-      create: (context) =>
-          AppSettingsBloc(RepositoryProvider.of<SettingsRepository>(context)),
-      child: _SettingsWidget(),
-    ));
+    return AppRepositoryProvider(child: _SettingsWidget());
   }
 }
 
@@ -32,6 +29,7 @@ class _SettingsWidgetState extends State<_SettingsWidget> {
     super.initState();
     _appSettingsBloc = BlocProvider.of<AppSettingsBloc>(context);
     _appSettingsBloc.loadSettings();
+
   }
 
   @override
@@ -52,19 +50,44 @@ class _SettingsWidgetState extends State<_SettingsWidget> {
               tiles: [
                 SettingsTile(
                   title: 'Hostname/IP',
-                  subtitle: successState.appSettings?.serverIP ?? '',
+                  subtitle: successState.appSettings.serverIP ?? '',
                   onPressed: (BuildContext context) {
                     showDialog(
                         context: context,
-                        builder: (context) => AlertDialog(
-                              content: Text("Enter Server Hostname/IP"),
-                            ));
+                        builder: (context) => SettingsHostnameInputWidget(
+                            serverIP: successState.appSettings.serverIP,
+                            savePressed: (newIPHostname) {
+                              final AppSettings newAppSettings = successState
+                                  .appSettings
+                                  .cloneWith(serverIP: newIPHostname);
+                              _appSettingsBloc.saveSettings(newAppSettings);
+                            }));
+                  },
+                ),
+                SettingsTile(
+                  title: 'Port Number',
+                  subtitle: "${successState.appSettings.serverPort ?? 5000}",
+                  onPressed: (BuildContext context) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => SettingsPortInputWidget(
+                            port: successState.appSettings.serverPort,
+                            savePressed: (newPort) {
+                              final AppSettings newAppSettings = successState
+                                  .appSettings
+                                  .cloneWith(serverPort: newPort);
+                              _appSettingsBloc.saveSettings(newAppSettings);
+                            }));
                   },
                 ),
                 SettingsTile.switchTile(
-                  title: 'Use fingerprint',
-                  switchValue: false,
-                  onToggle: (bool value) {},
+                  title: 'Use https',
+                  switchValue: successState.appSettings.https,
+                  onToggle: (bool newHttps) {
+                    final AppSettings newAppSettings =
+                        successState.appSettings.cloneWith(https: newHttps);
+                    _appSettingsBloc.saveSettings(newAppSettings);
+                  },
                 ),
               ],
             ),

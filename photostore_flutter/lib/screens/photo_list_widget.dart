@@ -1,27 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photostore_flutter/blocs/app_settings_bloc.dart';
 import 'package:photostore_flutter/blocs/photo_page_bloc.dart';
 import 'package:photostore_flutter/components/photo_grid_widget.dart';
 import 'package:photostore_flutter/models/event/photo_page_event.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
 import 'package:photostore_flutter/services/media_api_repository.dart';
 import 'package:photostore_flutter/services/media_mobile_repositoryV2.dart';
-import 'package:photostore_flutter/services/media_repository.dart';
 
 class PhotoListTabWidget extends StatelessWidget {
   final String mediaSource;
   final ValueChanged<int> onPush;
 
-  const PhotoListTabWidget({Key key, this.mediaSource, this.onPush}) : super(key: key);
+  const PhotoListTabWidget({Key key, this.mediaSource, this.onPush})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-      PhotoPageBloc(this.mediaSource == 'MOBILE' ?
-      RepositoryProvider.of<MediaMobileRepositoryV2>(context) :
-      RepositoryProvider.of<MediaAPIRepository>(context))
+      create: (context) => PhotoPageBloc(
+          mediaRepo: (this.mediaSource == 'MOBILE'
+              ? RepositoryProvider.of<MediaMobileRepositoryV2>(context)
+              : RepositoryProvider.of<MediaAPIRepository>(context)),
+          appSettingsBloc: BlocProvider.of<AppSettingsBloc>(context))
         ..add(PhotoPageFetchEvent()),
       child: PhotoListWidget(),
     );

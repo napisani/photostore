@@ -28,14 +28,14 @@ class PhotoGridWidget extends StatelessWidget {
               future: photos.items[index].thumbnail,
               builder: (context, AsyncSnapshot<MediaContents> snapshot) {
                 if (snapshot.hasData) {
-                  print('grid tile build - hasData');
+                  // print('grid tile build - hasData');
                   if (snapshot.data is MediaURLContents) {
-                    print('grid tile build - returning image.network');
+                    // print('grid tile build - returning image.network');
 
                     return Image.network(
                         (snapshot.data as MediaURLContents).url);
                   } else {
-                    print('grid tile build - returning image.memory');
+                    // print('grid tile build - returning image.memory');
 
                     return Image.memory(
                         (snapshot.data as MediaMemoryContents).binary);

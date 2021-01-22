@@ -8,3 +8,7 @@ abstract class PhotoPageEvent extends Equatable {
 class PhotoPageFetchEvent extends PhotoPageEvent {
   PhotoPageFetchEvent();
 }
+
+class PhotoPageResetEvent extends PhotoPageEvent {
+  PhotoPageResetEvent();
+}

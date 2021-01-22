@@ -31,6 +31,12 @@ class _PhotoStoreApp extends StatefulWidget {
 
 class _PhotoStoreAppState extends State<_PhotoStoreApp> {
   var _currentTab = TabItem.home;
+  var _currentWidget;
+
+  _PhotoStoreAppState() {
+    this._currentWidget = _buildAdHocNavigator(TabItem.home);
+  }
+
   final _navigatorKeys = {
     TabItem.home: GlobalKey<NavigatorState>(),
     TabItem.mobile: GlobalKey<NavigatorState>(),
@@ -43,7 +49,10 @@ class _PhotoStoreAppState extends State<_PhotoStoreApp> {
       // pop to first route
       // _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
     } else {
-      setState(() => _currentTab = tabItem);
+      setState(() {
+        _currentTab = tabItem;
+        this._currentWidget = _buildAdHocNavigator(_currentTab);
+      });
     }
   }
 
@@ -75,21 +84,14 @@ class _PhotoStoreAppState extends State<_PhotoStoreApp> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            SettingsScreen()
-                      ),
+                      MaterialPageRoute(builder: (context) => SettingsScreen()),
                     );
                   },
                   child: Icon(Icons.settings),
                 )),
           ],
         ),
-        body: Stack(children: <Widget>[
-          _buildOffstageNavigator(TabItem.home),
-          _buildOffstageNavigator(TabItem.mobile),
-          _buildOffstageNavigator(TabItem.server),
-        ]),
+        body: _currentWidget,
         bottomNavigationBar: BottomNavigation(
           currentTab: _currentTab,
           onSelectTab: _selectTab,
@@ -98,13 +100,28 @@ class _PhotoStoreAppState extends State<_PhotoStoreApp> {
     );
   }
 
-  Widget _buildOffstageNavigator(TabItem tabItem) {
-    return Offstage(
-      offstage: _currentTab != tabItem,
-      child: TabNavigator(
-        navigatorKey: _navigatorKeys[tabItem],
-        tabItem: tabItem,
-      ),
+  /*
+  Stack(children: <Widget>[
+          _buildOffstageNavigator(TabItem.home),
+          _buildOffstageNavigator(TabItem.mobile),
+          _buildOffstageNavigator(TabItem.server),
+        ]),
+   */
+
+  Widget _buildAdHocNavigator(TabItem tabItem) {
+    return TabNavigator(
+      navigatorKey: _navigatorKeys[tabItem],
+      tabItem: tabItem,
     );
   }
+
+  // Widget _buildOffstageNavigator(TabItem tabItem) {
+  //   return Offstage(
+  //     offstage: _currentTab != tabItem,
+  //     child: TabNavigator(
+  //       navigatorKey: _navigatorKeys[tabItem],
+  //       tabItem: tabItem,
+  //     ),
+  //   );
+  // }
 }

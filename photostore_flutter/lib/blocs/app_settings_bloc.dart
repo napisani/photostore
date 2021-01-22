@@ -9,6 +9,8 @@ class AppSettingsBloc extends Cubit<AppSettingsState> {
   AppSettingsBloc(this._settingsRepository) : super(AppSettingsInitial());
 
   loadSettings() async {
+    print("in loadSettings");
+
     emit(AppSettingsLoading());
     try {
       final AppSettings settings = await this._settingsRepository.getSettings();
@@ -20,6 +22,7 @@ class AppSettingsBloc extends Cubit<AppSettingsState> {
   }
 
   saveSettings(AppSettings settings) async {
+    print("in saveSettings");
     emit(AppSettingsLoading());
     try {
       final AppSettings settingsSaved =

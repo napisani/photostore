@@ -1,14 +1,30 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photostore_flutter/blocs/app_settings_bloc.dart';
 import 'package:photostore_flutter/models/agnostic_media.dart';
+import 'package:photostore_flutter/models/app_settings.dart';
 import 'package:photostore_flutter/models/event/photo_page_event.dart';
 import 'package:photostore_flutter/models/pagination.dart';
+import 'package:photostore_flutter/models/state/app_settings_state.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
 
 class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
-  final MediaRepository _mediaRepo;
+  final MediaRepository mediaRepo;
+  final AppSettingsBloc appSettingsBloc;
+  AppSettings _appSettings;
 
-  PhotoPageBloc(this._mediaRepo) : super(PhotoPageStateInitial());
+  PhotoPageBloc({@required this.mediaRepo, @required this.appSettingsBloc }) : super(PhotoPageStateInitial()) {
+    this.appSettingsBloc.listen((AppSettingsState  appSettingsState) {
+      if(appSettingsState is AppSettingsSuccess){
+        _appSettings = appSettingsState.appSettings;
+        this.mediaRepo.setAppSettings(_appSettings);
+        if(!(state is PhotoPageStateInitial)){
+          add(PhotoPageResetEvent());
+        }
+      }
+    });
+  }
 
   bool _hasEndBeenReached(PhotoPageState state) =>
       state is PhotoPageStateSuccess && state.reachedEnd();
@@ -23,13 +39,13 @@ class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
       try {
         if (currentState is PhotoPageStateInitial) {
           final Pagination<AgnosticMedia> photoPage =
-          (await this._mediaRepo.getPhotosByPage(1));
+          (await this.mediaRepo.getPhotosByPage(1));
           print("got first photoPage: $photoPage");
           yield PhotoPageStateSuccess(photos: photoPage);
         }
         if (currentState is PhotoPageStateSuccess) {
           final photos = await this
-              ._mediaRepo
+              .mediaRepo
               .getPhotosByPage(currentState.photos.page + 1);
           print("got photos: $photos");
 
@@ -41,6 +57,8 @@ class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
         print("error getting Photo Page err: $err");
         yield PhotoPageStateFailure(errorMessage: err.toString());
       }
+    }else if (event is PhotoPageResetEvent){
+      yield PhotoPageStateInitial();
     }
   }
 
