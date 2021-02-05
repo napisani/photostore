@@ -12,7 +12,7 @@ import 'package:settings_ui/settings_ui.dart';
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AppRepositoryProvider(child: _SettingsWidget());
+    return _SettingsWidget();
   }
 }
 

@@ -18,6 +18,7 @@ class PhotoListTabWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('working on mediaSource: $mediaSource');
     return BlocProvider(
       create: (context) => PhotoPageBloc(
           mediaRepo: (this.mediaSource == 'MOBILE'
@@ -49,14 +50,16 @@ class _PhotoListWidgetState extends State<PhotoListWidget> {
   }
 
   void _loadedEnoughYet() {
-    print('after first paint');
-    try {
-      _scrollController.position;
-      print('we are already attached to a scroll view');
-      _onScroll();
-    } catch (_) {
-      _photoPageBloc.add(PhotoPageFetchEvent());
-      print('adding fetch!');
+    if (_photoPageBloc.state is PhotoPageStateSuccess || _photoPageBloc.state is PhotoPageStateInitial) {
+      print('after first paint');
+      try {
+        _scrollController.position;
+        print('we are already attached to a scroll view');
+        _onScroll();
+      } catch (_) {
+        _photoPageBloc.add(PhotoPageFetchEvent());
+        print('adding fetch!');
+      }
     }
   }
 
@@ -64,17 +67,28 @@ class _PhotoListWidgetState extends State<PhotoListWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<PhotoPageBloc, PhotoPageState>(
       builder: (context, state) {
+        print('building state type of: ${state.runtimeType}');
+        print('scroll stats: ${_scrollController}');
+
         if (state is PhotoPageStateInitial) {
+          _photoPageBloc.add(PhotoPageFetchEvent());
+          return Center(
+            child: RaisedButton(child: Text(
+              "Load",
+            ), onPressed: () {
+              _photoPageBloc.add(PhotoPageFetchEvent());
+            },),
+          );
+        } else if (state is PhotoPageStateLoading) {
           return Center(
             child: CircularProgressIndicator(),
           );
-        }
-        if (state is PhotoPageStateFailure) {
+        } else if (state is PhotoPageStateFailure) {
           return Center(
-            child: Text('failed to fetch posts'),
+            child: Text("Error occurred: ${state.errorMessage}"),
           );
-        }
-        if (state is PhotoPageStateSuccess || state is PhotoPageStateLoading) {
+        } else if (state is PhotoPageStateSuccess ||
+            state is PhotoPageStateLoading) {
           if (state.photos?.items == null || state.photos.items.isEmpty) {
             return Center(
               child: Text('no photos'),
@@ -92,6 +106,7 @@ class _PhotoListWidgetState extends State<PhotoListWidget> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _photoPageBloc.close();
     super.dispose();
   }
 

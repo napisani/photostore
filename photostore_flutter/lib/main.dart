@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photostore_flutter/screens/settings_screen.dart';
 import 'package:photostore_flutter/serviceprovs/app_repository_provider.dart';
-import 'package:photostore_flutter/tab_item.dart';
-import 'package:photostore_flutter/tab_navigator.dart';
-
-import 'bottom_navigation.dart';
+import 'package:photostore_flutter/tab_navigation_item.dart';
 
 void main() {
   runApp(App());
@@ -13,14 +10,14 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return AppRepositoryProvider(
+        child: MaterialApp(
       title: 'Photo Store',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AppRepositoryProvider(child: _PhotoStoreApp()),
-    );
-    ;
+      home: _PhotoStoreApp(),
+    ));
   }
 }
 
@@ -30,98 +27,84 @@ class _PhotoStoreApp extends StatefulWidget {
 }
 
 class _PhotoStoreAppState extends State<_PhotoStoreApp> {
-  var _currentTab = TabItem.home;
-  var _currentWidget;
+  int _currentIndex = 0;
+  List<TabNavigationItem> tabItems;
 
   _PhotoStoreAppState() {
-    this._currentWidget = _buildAdHocNavigator(TabItem.home);
+    this.tabItems = TabNavigationItem.items;
+
   }
 
-  final _navigatorKeys = {
-    TabItem.home: GlobalKey<NavigatorState>(),
-    TabItem.mobile: GlobalKey<NavigatorState>(),
-    TabItem.server: GlobalKey<NavigatorState>(),
-  };
-
-  void _selectTab(TabItem tabItem) {
-    print("main:_PhotoStoreApp:_selectTab tabItem: $tabItem");
-    if (tabItem == _currentTab) {
-      // pop to first route
-      // _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
-    } else {
-      setState(() {
-        _currentTab = tabItem;
-        this._currentWidget = _buildAdHocNavigator(_currentTab);
-      });
-    }
-  }
+  // // This is the trick!
+  // void _reset() {
+  //   Navigator.pushReplacement(
+  //     context,
+  //     PageRouteBuilder(
+  //       transitionDuration: Duration.zero,
+  //       pageBuilder: (_, __, ___) => DummyWidget(),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        final isFirstRouteInCurrentTab =
-            !await _navigatorKeys[_currentTab].currentState.maybePop();
-        if (isFirstRouteInCurrentTab) {
-          // if not on the 'main' tab
-          if (_currentTab != TabItem.home) {
-            // select 'main' tab
-            _selectTab(TabItem.home);
-            // back button handled by app
-            return false;
-          }
-        }
-        // let system handle back button if we're on the first route
-        return isFirstRouteInCurrentTab;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Photos'),
-          actions: <Widget>[
-            Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingsScreen()),
-                    );
-                  },
-                  child: Icon(Icons.settings),
-                )),
-          ],
-        ),
-        body: _currentWidget,
-        bottomNavigationBar: BottomNavigation(
-          currentTab: _currentTab,
-          onSelectTab: _selectTab,
-        ),
+    print('inside main build');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Photos'),
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsScreen()),
+                  ).then((_) {
+                    print('resetting tab items');
+                    this.setState(() {
+                      tabItems = TabNavigationItem.items;
+                    });
+                  });
+                },
+                child: Icon(Icons.settings),
+              )),
+        ],
+      ),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          for (final tabItem in this.tabItems) tabItem.page,
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (int index) => setState(() => _currentIndex = index),
+        items: [
+          for (final tabItem in this.tabItems)
+            BottomNavigationBarItem(
+              icon: tabItem.icon,
+              label: tabItem.title,
+            )
+        ],
       ),
     );
   }
 
-  /*
-  Stack(children: <Widget>[
-          _buildOffstageNavigator(TabItem.home),
-          _buildOffstageNavigator(TabItem.mobile),
-          _buildOffstageNavigator(TabItem.server),
-        ]),
-   */
-
-  Widget _buildAdHocNavigator(TabItem tabItem) {
-    return TabNavigator(
-      navigatorKey: _navigatorKeys[tabItem],
-      tabItem: tabItem,
-    );
-  }
-
-  // Widget _buildOffstageNavigator(TabItem tabItem) {
-  //   return Offstage(
-  //     offstage: _currentTab != tabItem,
-  //     child: TabNavigator(
-  //       navigatorKey: _navigatorKeys[tabItem],
-  //       tabItem: tabItem,
-  //     ),
-  //   );
-  // }
+// Widget _buildAdHocNavigator(TabItem tabItem) {
+//   return TabNavigator(
+//     navigatorKey: _navigatorKeys[tabItem],
+//     tabItem: tabItem,
+//   );
+// }
+//
+// Widget _buildOffstageNavigator(TabItem tabItem) {
+//   return Offstage(
+//     offstage: _currentTab != tabItem,
+//     child: TabNavigator(
+//       navigatorKey: _navigatorKeys[tabItem],
+//       tabItem: tabItem,
+//     ),
+//   );
+// }
 }

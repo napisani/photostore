@@ -4,8 +4,15 @@ import 'package:photostore_flutter/models/pagination.dart';
 
 abstract class PhotoPageState extends Equatable {
   final Pagination<AgnosticMedia> photos;
+  final int stateId;
+  static int _maxStateId = 1;
 
-  const PhotoPageState({this.photos = const Pagination<AgnosticMedia>()});
+  PhotoPageState({this.photos = const Pagination<AgnosticMedia>()})
+      : stateId = _maxStateId + 1 {
+    _maxStateId++;
+  }
+
+  PhotoPageState clone();
 
   bool reachedEnd() => photos.page * photos.perPage >= photos.total;
 
@@ -21,23 +28,39 @@ abstract class PhotoPageState extends Equatable {
   }
 
   @override
-  List<Object> get props => [photos];
+  List<Object> get props => [photos, stateId];
 
   @override
   String toString() =>
       'PhotoStateSuccess type: ${this.runtimeType} { photos.items.length: ${photos?.items?.length}, page: ${photos?.page} }';
 }
 
-class PhotoPageStateInitial extends PhotoPageState {}
+class PhotoPageStateInitial extends PhotoPageState {
+  @override
+  PhotoPageState clone() {
+    return PhotoPageStateInitial();
+  }
+}
 
 class PhotoPageStateLoading extends PhotoPageState {
   PhotoPageStateLoading({photos}) : super(photos: photos);
+
+  @override
+  PhotoPageState clone() {
+    return PhotoPageStateLoading(photos: this.photos);
+  }
 }
 
 class PhotoPageStateFailure extends PhotoPageState {
   final String errorMessage;
 
   PhotoPageStateFailure({this.errorMessage, photos}) : super(photos: photos);
+
+  @override
+  PhotoPageState clone() {
+    return PhotoPageStateFailure(
+        errorMessage: this.errorMessage, photos: this.photos);
+  }
 }
 
 class PhotoPageStateSuccess extends PhotoPageState {
@@ -45,5 +68,10 @@ class PhotoPageStateSuccess extends PhotoPageState {
 
   PhotoPageStateSuccess copyWith({Pagination<AgnosticMedia> newPhotos}) {
     return PhotoPageStateSuccess(photos: super._copyPageWith(newPhotos));
+  }
+
+  @override
+  PhotoPageState clone() {
+    return PhotoPageStateSuccess(photos: this.photos);
   }
 }

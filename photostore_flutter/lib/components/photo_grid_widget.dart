@@ -16,6 +16,8 @@ class PhotoGridWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       itemCount: this.photos.items.length,
+      // reverse: true,
+      // shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount:
               (MediaQuery.of(context).orientation == Orientation.portrait)

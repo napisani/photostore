@@ -8,16 +8,17 @@ class AppSettingsBloc extends Cubit<AppSettingsState> {
 
   AppSettingsBloc(this._settingsRepository) : super(AppSettingsInitial());
 
-  loadSettings() async {
+  Future<AppSettings> loadSettings() async {
     print("in loadSettings");
-
     emit(AppSettingsLoading());
     try {
       final AppSettings settings = await this._settingsRepository.getSettings();
       emit(AppSettingsSuccess(appSettings: settings));
+      return settings;
     } catch (ex) {
       print('loadSettings hit error: $ex ');
       emit(AppSettingsFailed(error: ex.toString()));
+      return null;
     }
   }
 
@@ -33,4 +34,13 @@ class AppSettingsBloc extends Cubit<AppSettingsState> {
       emit(AppSettingsFailed(error: ex.toString()));
     }
   }
+
+  Future<AppSettings> getCurrentSettings() async{
+    if(state is AppSettingsSuccess){
+      return (state as AppSettingsSuccess).appSettings;
+    }
+    return this.loadSettings();
+  }
+
+
 }
