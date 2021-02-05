@@ -5,10 +5,6 @@ abstract class AppSettingsState extends Equatable {
   const AppSettingsState();
 }
 
-class AppSettingsLoading extends AppSettingsState {
-  @override
-  List<Object> get props => [];
-}
 
 class AppSettingsInitial extends AppSettingsState {
   @override

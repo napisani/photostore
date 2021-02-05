@@ -42,15 +42,6 @@ class PhotoPageStateInitial extends PhotoPageState {
   }
 }
 
-class PhotoPageStateLoading extends PhotoPageState {
-  PhotoPageStateLoading({photos}) : super(photos: photos);
-
-  @override
-  PhotoPageState clone() {
-    return PhotoPageStateLoading(photos: this.photos);
-  }
-}
-
 class PhotoPageStateFailure extends PhotoPageState {
   final String errorMessage;
 

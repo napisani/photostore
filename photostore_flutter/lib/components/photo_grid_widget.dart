@@ -15,6 +15,7 @@ class PhotoGridWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      physics: AlwaysScrollableScrollPhysics(),
       itemCount: this.photos.items.length,
       // reverse: true,
       // shrinkWrap: true,

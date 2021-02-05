@@ -37,7 +37,7 @@ class _SettingsWidgetState extends State<_SettingsWidget> {
     return BlocBuilder<AppSettingsBloc, AppSettingsState>(
         builder: (context, state) {
       Widget inner;
-      if (state is AppSettingsInitial || state is AppSettingsLoading) {
+      if (state is AppSettingsInitial) {
         inner = Text("Loading");
       } else if (state is AppSettingsFailed) {
         inner = Text(state.error);

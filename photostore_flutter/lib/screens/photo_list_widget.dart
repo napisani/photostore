@@ -40,6 +40,7 @@ class _PhotoListWidgetState extends State<PhotoListWidget> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
   PhotoPageBloc _photoPageBloc;
+  double _curOffset = 0;
 
   @override
   void initState() {
@@ -63,6 +64,10 @@ class _PhotoListWidgetState extends State<PhotoListWidget> {
     }
   }
 
+  void _adjustScrollOffset(){
+    _scrollController.jumpTo(_curOffset);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PhotoPageBloc, PhotoPageState>(
@@ -79,21 +84,17 @@ class _PhotoListWidgetState extends State<PhotoListWidget> {
               _photoPageBloc.add(PhotoPageFetchEvent());
             },),
           );
-        } else if (state is PhotoPageStateLoading) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
         } else if (state is PhotoPageStateFailure) {
           return Center(
             child: Text("Error occurred: ${state.errorMessage}"),
           );
-        } else if (state is PhotoPageStateSuccess ||
-            state is PhotoPageStateLoading) {
+        } else if (state is PhotoPageStateSuccess) {
           if (state.photos?.items == null || state.photos.items.isEmpty) {
             return Center(
               child: Text('no photos'),
             );
           }
+          // Future.delayed(Duration.zero, () => _adjustScrollOffset());
           return PhotoGridWidget(
               photos: state.photos, scrollController: _scrollController);
         } else {
@@ -116,6 +117,7 @@ class _PhotoListWidgetState extends State<PhotoListWidget> {
     print(
         "in _onScroll maxScroll: $maxScroll currentScroll: $currentScroll _scrollThreshold: $_scrollThreshold");
     if (maxScroll - currentScroll <= _scrollThreshold) {
+      _curOffset = currentScroll;
       _photoPageBloc.add(PhotoPageFetchEvent());
     }
   }

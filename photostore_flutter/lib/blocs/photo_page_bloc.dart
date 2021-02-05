@@ -51,7 +51,7 @@ class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
     final currentState = state.clone();
     print("in mapEventToState $event ${_hasEndBeenReached(currentState)}");
     if (event is PhotoPageFetchEvent && !_hasEndBeenReached(currentState)) {
-      yield PhotoPageStateLoading(photos: currentState.photos);
+      // yield PhotoPageStateLoading(photos: currentState.photos);
       print('made it here');
       try {
         if (currentState is PhotoPageStateInitial) {
