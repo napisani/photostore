@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photostore_flutter/screens/settings_screen.dart';
-import 'package:photostore_flutter/serviceprovs/app_repository_provider.dart';
+import 'package:photostore_flutter/serviceprovs/app_level_provider.dart';
 import 'package:photostore_flutter/tab_navigation_item.dart';
 
 void main() {
@@ -10,13 +10,14 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AppRepositoryProvider(
+    return AppLevelProviders(
         child: MaterialApp(
       title: 'Photo Store',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: _PhotoStoreApp(),
+      // routes: {'/gallery': (context) => PhotoGalleryScreen()},
     ));
   }
 }
@@ -32,7 +33,6 @@ class _PhotoStoreAppState extends State<_PhotoStoreApp> {
 
   _PhotoStoreAppState() {
     this.tabItems = TabNavigationItem.items;
-
   }
 
   // // This is the trick!

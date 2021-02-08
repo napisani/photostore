@@ -11,12 +11,12 @@ import 'package:photostore_flutter/models/state/app_settings_state.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
 
-class PhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
+abstract class AbstractPhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
   final MediaRepository mediaRepo;
   final AppSettingsBloc appSettingsBloc;
   AppSettings _appSettings;
 
-  PhotoPageBloc({@required this.mediaRepo, @required this.appSettingsBloc})
+  AbstractPhotoPageBloc({@required this.mediaRepo, @required this.appSettingsBloc})
       : super(PhotoPageStateInitial()) {
     this.appSettingsBloc.listen((AppSettingsState appSettingsState) {
       if (appSettingsState is AppSettingsSuccess) {

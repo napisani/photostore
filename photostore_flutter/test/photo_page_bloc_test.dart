@@ -18,7 +18,7 @@ void main() {
   group("PhotoPageBloc tests", () {
     blocTest(
       "emits a single success when a single Fetch event is added",
-      build: () => PhotoPageBloc(mediaRepo: repo),
+      build: () => AbstractPhotoPageBloc(mediaRepo: repo),
       act: (bloc) {
         bloc.add(PhotoPageFetchEvent());
       },
@@ -28,7 +28,7 @@ void main() {
 
     blocTest(
       "emits a one success when three Fetch events are added",
-      build: () => PhotoPageBloc(mediaRepo: repo),
+      build: () => AbstractPhotoPageBloc(mediaRepo: repo),
       act: (bloc) {
         bloc
           ..add(PhotoPageFetchEvent())

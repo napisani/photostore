@@ -7,9 +7,12 @@ import 'package:photostore_flutter/models/pagination.dart';
 class PhotoGridWidget extends StatelessWidget {
   final Pagination<AgnosticMedia> photos;
   final ScrollController _scrollController;
+  final ValueChanged<AgnosticMedia> _onPress;
 
-  const PhotoGridWidget({Key key, @required this.photos, scrollController})
+  const PhotoGridWidget(
+      {Key key, @required this.photos, scrollController, onPress})
       : this._scrollController = scrollController,
+        this._onPress = onPress,
         super(key: key);
 
   @override
@@ -27,27 +30,33 @@ class PhotoGridWidget extends StatelessWidget {
       itemBuilder: (context, index) => new Card(
         child: new GridTile(
             footer: new Text(this.photos.items[index].id.toString()),
-            child: FutureBuilder<MediaContents>(
-              future: photos.items[index].thumbnail,
-              builder: (context, AsyncSnapshot<MediaContents> snapshot) {
-                if (snapshot.hasData) {
-                  // print('grid tile build - hasData');
-                  if (snapshot.data is MediaURLContents) {
-                    // print('grid tile build - returning image.network');
+            child: GestureDetector(
+              onTap: () => _onPress(photos.items[index]),
+              child: FutureBuilder<MediaContents>(
+                future: photos.items[index].thumbnail,
+                builder: (context, AsyncSnapshot<MediaContents> snapshot) {
+                  if (snapshot.hasData) {
+                    // print('grid tile build - hasData');
+                    if (snapshot.data is MediaURLContents) {
+                      // print('grid tile build - returning image.network');
 
-                    return Image.network(
-                        (snapshot.data as MediaURLContents).url);
+                      return Image.network(
+                          (snapshot.data as MediaURLContents).url,
+
+                      );
+                    } else {
+                      // print('grid tile build - returning image.memory');
+
+                      return Image.memory(
+                          (snapshot.data as MediaMemoryContents).binary);
+                    }
                   } else {
-                    // print('grid tile build - returning image.memory');
-
-                    return Image.memory(
-                        (snapshot.data as MediaMemoryContents).binary);
+                    return CircularProgressIndicator();
                   }
-                } else {
-                  return CircularProgressIndicator();
-                }
-              },
-            )), //just for testing, will fill with image later
+                },
+              ),
+            ),
+        ),
       ),
       controller: _scrollController,
     );

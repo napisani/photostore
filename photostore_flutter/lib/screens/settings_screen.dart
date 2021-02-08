@@ -6,7 +6,6 @@ import 'package:photostore_flutter/components/settings/settings_hostname_input_w
 import 'package:photostore_flutter/components/settings/settings_port_input_widget.dart';
 import 'package:photostore_flutter/models/app_settings.dart';
 import 'package:photostore_flutter/models/state/app_settings_state.dart';
-import 'package:photostore_flutter/serviceprovs/app_repository_provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsScreen extends StatelessWidget {
