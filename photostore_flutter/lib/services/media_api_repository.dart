@@ -33,14 +33,16 @@ class MediaAPIRepository extends MediaRepository<Photo> {
           perPage: data['per_page'],
           total: data['total'],
           items: (data['items'] as List<dynamic>).map((item) {
+            final String url = "${_getBaseURL()}/thumbnail/${item['id']}";
             return Photo(
                 id: item['id'].toString(),
                 checksum: item['checksum'],
                 gphotoId: item['gphoto_id'],
                 filename: item['filename'],
                 creationDate: null,
+                thumbnailProvider: NetworkImage(url),
                 thumbnail: Future.value(
-                    MediaContents.url("${_getBaseURL()}/thumbnail/${item['id']}")),
+                    MediaContents.url(url)),
                 mimeType: item['mime_type']);
           }).toList());
     } else {

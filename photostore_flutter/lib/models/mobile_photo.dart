@@ -13,8 +13,13 @@ class MobilePhoto extends AgnosticMedia {
       this.mimeType,
       creationDate,
       this.filename,
-      thumbnail})
-      : super(id: id, creationDate: creationDate, thumbnail: thumbnail);
+      thumbnail,
+      thumbnailProvider})
+      : super(
+            id: id,
+            creationDate: creationDate,
+            thumbnail: thumbnail,
+            thumbnailProvider: thumbnailProvider);
 
   @override
   List<Object> get props =>

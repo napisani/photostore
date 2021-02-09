@@ -122,7 +122,7 @@ class _PhotoListWidgetState extends State<PhotoListWidget> with PhotoBlocMixins 
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PhotoGalleryScreen(),
+        builder: (context) => PhotoGalleryScreen(mediaSource: this.getMediaSource()),
       ),
     );
 

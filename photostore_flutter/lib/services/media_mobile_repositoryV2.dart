@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:photostore_flutter/models/future_memory_image.dart';
 import 'package:photostore_flutter/models/media_contents.dart';
 import 'package:photostore_flutter/models/mobile_photo.dart';
 import 'package:photostore_flutter/models/pagination.dart';
@@ -53,6 +55,9 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
                 gphotoId: '',
                 filename: item.title,
                 creationDate: item.createDateTime,
+                thumbnailProvider:FutureMemoryImage(item.thumbData
+                    .asStream()
+                    .first),
                 thumbnail: item.thumbData
                     .asStream()
                     .map((bin) => MediaContents.memory(bin))
