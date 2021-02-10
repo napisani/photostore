@@ -40,6 +40,7 @@ class MediaAPIRepository extends MediaRepository<Photo> {
                 gphotoId: item['gphoto_id'],
                 filename: item['filename'],
                 creationDate: null,
+                getThumbnailProviderOfSize: (int width, int height) => NetworkImage(url),
                 thumbnailProvider: NetworkImage(url),
                 thumbnail: Future.value(
                     MediaContents.url(url)),

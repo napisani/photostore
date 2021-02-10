@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photostore_flutter/models/future_memory_image.dart';
 import 'package:photostore_flutter/models/media_contents.dart';
@@ -27,7 +26,7 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
   Future<AssetPathEntity> getAllAlbum() async {
     if (this._allPath == null) {
       this._allPath = (await PhotoManager.getAssetPathList(
-              onlyAll: true, type: RequestType.image))
+          onlyAll: true, type: RequestType.image))
           .first;
     }
     return this._allPath;
@@ -49,13 +48,19 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
         perPage: _ITEMS_PER_AGE,
         total: allAlbum.assetCount,
         items: assets
-            .map((item) => MobilePhoto(
+            .map((item) =>
+            MobilePhoto(
                 id: item.id,
                 checksum: '',
                 gphotoId: '',
                 filename: item.title,
                 creationDate: item.createDateTime,
-                thumbnailProvider:FutureMemoryImage(item.thumbData
+                getThumbnailProviderOfSize: (double width, double height) =>
+                    FutureMemoryImage(item
+                        .thumbDataWithSize(width.round(), height.round())
+                        .asStream()
+                        .first),
+                thumbnailProvider: FutureMemoryImage(item.thumbData
                     .asStream()
                     .first),
                 thumbnail: item.thumbData

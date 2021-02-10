@@ -7,8 +7,8 @@ abstract class AgnosticMedia extends Equatable {
   final creationDate;
   final Future<MediaContents> thumbnail;
   final ImageProvider thumbnailProvider;
-
-  const AgnosticMedia({this.id, this.creationDate, this.thumbnail, this.thumbnailProvider}) : super();
+  final Function getThumbnailProviderOfSize;
+  const AgnosticMedia({this.id, this.creationDate, this.thumbnail, this.thumbnailProvider, this.getThumbnailProviderOfSize}) : super();
 
   @override
   List<Object> get props => [id, creationDate];

@@ -14,12 +14,14 @@ class Photo extends AgnosticMedia {
       creationDate,
       this.filename,
       thumbnail,
-      thumbnailProvider})
+      thumbnailProvider,
+      getThumbnailProviderOfSize})
       : super(
             id: id,
             creationDate: creationDate,
             thumbnail: thumbnail,
-            thumbnailProvider: thumbnailProvider);
+            thumbnailProvider: thumbnailProvider,
+            getThumbnailProviderOfSize: getThumbnailProviderOfSize);
 
   @override
   List<Object> get props =>

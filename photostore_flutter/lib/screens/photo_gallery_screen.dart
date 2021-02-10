@@ -85,15 +85,16 @@ class _PhotoGalleryScreenWidgetState extends State<_PhotoGalleryScreenWidget>
             onPageChanged: (newPage) {
               _idx = newPage;
               if (_idx >= state.photos.items.length - 1) {
-                this
-                    ._photoPageBloc
-                    .add(PhotoPageFetchEvent(_nextPageNumber()));
+                this._photoPageBloc.add(PhotoPageFetchEvent(_nextPageNumber()));
               }
             },
             itemCount: state.photos.total,
             builder: (context, index) {
               return PhotoViewGalleryPageOptions(
-                imageProvider: state.photos.items[index].thumbnailProvider,
+                imageProvider: state.photos.items[index]
+                    .getThumbnailProviderOfSize(
+                        (MediaQuery.of(context).size.width),
+                        (MediaQuery.of(context).size.height)),
                 minScale: PhotoViewComputedScale.contained * 0.8,
                 maxScale: PhotoViewComputedScale.covered * 2,
               );
