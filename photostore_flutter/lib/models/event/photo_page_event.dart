@@ -1,14 +1,23 @@
 import 'package:equatable/equatable.dart';
 
 abstract class PhotoPageEvent extends Equatable {
+  final int timeEmitted;
+
+  PhotoPageEvent() : timeEmitted = DateTime.now().millisecondsSinceEpoch;
+
   @override
   List<Object> get props => [];
 }
 
 class PhotoPageFetchEvent extends PhotoPageEvent {
-  PhotoPageFetchEvent();
+  final int page;
+
+  PhotoPageFetchEvent(this.page) : super();
+
+  @override
+  List<Object> get props => [page];
 }
 
 class PhotoPageResetEvent extends PhotoPageEvent {
-  PhotoPageResetEvent();
+  PhotoPageResetEvent() : super();
 }

@@ -7,7 +7,7 @@ import 'package:photostore_flutter/models/pagination.dart';
 class PhotoGridWidget extends StatelessWidget {
   final Pagination<AgnosticMedia> photos;
   final ScrollController _scrollController;
-  final ValueChanged<AgnosticMedia> _onPress;
+  final ValueChanged<int> _onPress;
 
   const PhotoGridWidget(
       {Key key, @required this.photos, scrollController, onPress})
@@ -31,7 +31,7 @@ class PhotoGridWidget extends StatelessWidget {
         child: new GridTile(
             footer: new Text(this.photos.items[index].id.toString()),
             child: GestureDetector(
-              onTap: () => _onPress(photos.items[index]),
+              onTap: () => _onPress(index),
               child: FutureBuilder<MediaContents>(
                 future: photos.items[index].thumbnail,
                 builder: (context, AsyncSnapshot<MediaContents> snapshot) {

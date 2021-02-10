@@ -1,6 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:rxdart/rxdart.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photostore_flutter/blocs/app_settings_bloc.dart';
 import 'package:photostore_flutter/models/agnostic_media.dart';
@@ -10,13 +8,16 @@ import 'package:photostore_flutter/models/pagination.dart';
 import 'package:photostore_flutter/models/state/app_settings_state.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
+import 'package:rxdart/rxdart.dart';
 
-abstract class AbstractPhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState> {
+abstract class AbstractPhotoPageBloc
+    extends Bloc<PhotoPageEvent, PhotoPageState> {
   final MediaRepository mediaRepo;
   final AppSettingsBloc appSettingsBloc;
   AppSettings _appSettings;
 
-  AbstractPhotoPageBloc({@required this.mediaRepo, @required this.appSettingsBloc})
+  AbstractPhotoPageBloc(
+      {@required this.mediaRepo, @required this.appSettingsBloc})
       : super(PhotoPageStateInitial()) {
     this.appSettingsBloc.listen((AppSettingsState appSettingsState) {
       if (appSettingsState is AppSettingsSuccess) {
@@ -52,22 +53,27 @@ abstract class AbstractPhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState
     print("in mapEventToState $event ${_hasEndBeenReached(currentState)}");
     if (event is PhotoPageFetchEvent && !_hasEndBeenReached(currentState)) {
       // yield PhotoPageStateLoading(photos: currentState.photos);
-      print('made it here');
+      print('working on PhotoPageFetchEvent page: ${event.page}');
       try {
         if (currentState is PhotoPageStateInitial) {
           final Pagination<AgnosticMedia> photoPage =
-              (await this.mediaRepo.getPhotosByPage(1));
+              (await this.mediaRepo.getPhotosByPage(event.page));
           print("got first photoPage: $photoPage");
           yield PhotoPageStateSuccess(photos: photoPage);
         } else if (currentState is PhotoPageStateSuccess) {
-          final photos = await this
-              .mediaRepo
-              .getPhotosByPage(currentState.photos.page + 1);
-          print("got photos: $photos");
+          if(currentState.photos.page >= event.page){
+            print("page already loaded - yielding same state");
+            yield currentState;
+          }else{
+            final photos = await this.mediaRepo.getPhotosByPage(event.page);
+            print("got photos: $photos");
 
-          yield photos.items.isEmpty
-              ? currentState.copyWith()
-              : currentState.copyWith(newPhotos: photos);
+            yield photos.items.isEmpty
+                ? currentState.copyWith()
+                : currentState.copyWith(newPhotos: photos);
+          }
+
+
         }
       } catch (err) {
         print("error getting Photo Page err: $err");
@@ -79,8 +85,20 @@ abstract class AbstractPhotoPageBloc extends Bloc<PhotoPageEvent, PhotoPageState
   }
 
   @override
-  Stream<Transition<PhotoPageEvent, PhotoPageState>> transformEvents(events, transitionFn) {
-    return events.switchMap(transitionFn);
+  Stream<Transition<PhotoPageEvent, PhotoPageState>> transformEvents(
+      events, transitionFn) {
+    return events
+        .distinct((PhotoPageEvent previous, PhotoPageEvent next) {
+          if (previous == next) {
+            if (next.timeEmitted - previous.timeEmitted > 100) {
+              return false;
+            }
+            return true;
+          }
+          return false;
+        })
+        .debounceTime(const Duration(milliseconds: 50))
+        .switchMap(transitionFn);
   }
 
 // @override

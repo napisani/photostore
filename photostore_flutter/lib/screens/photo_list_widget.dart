@@ -1,12 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photostore_flutter/blocs/abstract_photo_page_bloc.dart';
-import 'package:photostore_flutter/blocs/mobile_photo_page_bloc.dart';
-import 'package:photostore_flutter/blocs/server_photo_page_bloc.dart';
-import 'package:photostore_flutter/components/photo_gallery_widget.dart';
 import 'package:photostore_flutter/components/photo_grid_widget.dart';
-import 'package:photostore_flutter/models/agnostic_media.dart';
 import 'package:photostore_flutter/models/event/photo_page_event.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
 import 'package:photostore_flutter/screens/photo_bloc_mixins.dart';
@@ -23,26 +18,25 @@ class PhotoListTabWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     print('working on mediaSource: $mediaSource');
     return PhotoListWidget(mediaSource: mediaSource);
-
   }
 }
 
 class PhotoListWidget extends StatefulWidget {
   final String mediaSource;
-  const PhotoListWidget({Key key, @required this.mediaSource}) : super(key: key);
+
+  const PhotoListWidget({Key key, @required this.mediaSource})
+      : super(key: key);
 
   @override
-  State<StatefulWidget> createState() =>
-      _PhotoListWidgetState();
+  State<StatefulWidget> createState() => _PhotoListWidgetState();
 }
 
-class _PhotoListWidgetState extends State<PhotoListWidget> with PhotoBlocMixins {
+class _PhotoListWidgetState extends State<PhotoListWidget>
+    with PhotoBlocMixins {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
   AbstractPhotoPageBloc _photoPageBloc;
   double _curOffset = 0;
-
-
 
   @override
   void initState() {
@@ -53,8 +47,6 @@ class _PhotoListWidgetState extends State<PhotoListWidget> with PhotoBlocMixins 
     WidgetsBinding.instance.addPostFrameCallback((_) => _loadedEnoughYet());
   }
 
-
-
   void _loadedEnoughYet() {
     if (_photoPageBloc.state is PhotoPageStateSuccess ||
         _photoPageBloc.state is PhotoPageStateInitial) {
@@ -64,7 +56,7 @@ class _PhotoListWidgetState extends State<PhotoListWidget> with PhotoBlocMixins 
         print('we are already attached to a scroll view');
         _onScroll();
       } catch (_) {
-        _photoPageBloc.add(PhotoPageFetchEvent());
+        _photoPageBloc.add(PhotoPageFetchEvent(_nextPageNumber()));
         print('adding fetch!');
       }
     }
@@ -78,18 +70,20 @@ class _PhotoListWidgetState extends State<PhotoListWidget> with PhotoBlocMixins 
   Widget build(BuildContext context) {
     return getBlockBuilder(
       builder: (context, state) {
-        print('this: $this mediaSource: ${widget.mediaSource} building state type of: ${state.runtimeType}');
+        print(
+            'this: $this mediaSource: ${widget
+                .mediaSource} building state type of: ${state.runtimeType}');
         print('scroll stats: $_scrollController');
 
         if (state is PhotoPageStateInitial) {
-          _photoPageBloc.add(PhotoPageFetchEvent());
+          _photoPageBloc.add(PhotoPageFetchEvent(_nextPageNumber()));
           return Center(
             child: RaisedButton(
               child: Text(
                 "Load",
               ),
               onPressed: () {
-                _photoPageBloc.add(PhotoPageFetchEvent());
+                _photoPageBloc.add(PhotoPageFetchEvent(_nextPageNumber()));
               },
             ),
           );
@@ -116,13 +110,14 @@ class _PhotoListWidgetState extends State<PhotoListWidget> with PhotoBlocMixins 
     );
   }
 
-
-  void _handlePhotoSelected(AgnosticMedia photo) {
-
+  void _handlePhotoSelected(int index) {
+    print('loading index: $index');
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PhotoGalleryScreen(mediaSource: this.getMediaSource()),
+        builder: (context) =>
+            PhotoGalleryScreen(
+                mediaSource: this.getMediaSource(), photoIndex: index),
       ),
     );
 
@@ -143,8 +138,13 @@ class _PhotoListWidgetState extends State<PhotoListWidget> with PhotoBlocMixins 
         "in _onScroll maxScroll: $maxScroll currentScroll: $currentScroll _scrollThreshold: $_scrollThreshold");
     if (maxScroll - currentScroll <= _scrollThreshold) {
       _curOffset = currentScroll;
-      _photoPageBloc.add(PhotoPageFetchEvent());
+      _photoPageBloc.add(
+          PhotoPageFetchEvent(_nextPageNumber()));
     }
+  }
+
+  int _nextPageNumber() {
+    return (_photoPageBloc?.state?.photos?.page ?? 0) + 1;
   }
 
   @override
