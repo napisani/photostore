@@ -5,6 +5,6 @@ import 'app_settings_bloc.dart';
 
 class MobilePhotoPageBloc extends AbstractPhotoPageBloc {
   MobilePhotoPageBloc(
-      MediaRepository mediaRepo, AppSettingsBloc appSettingsBloc)
-      : super(mediaRepo: mediaRepo, appSettingsBloc: appSettingsBloc);
+      MediaRepository mediaRepo)
+      : super(mediaRepo: mediaRepo);
 }

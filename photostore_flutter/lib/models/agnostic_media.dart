@@ -4,7 +4,7 @@ import 'package:photostore_flutter/models/media_contents.dart';
 
 abstract class AgnosticMedia extends Equatable {
   final String id;
-  final creationDate;
+  final DateTime creationDate;
   final Future<MediaContents> thumbnail;
   final ImageProvider thumbnailProvider;
   final Function getThumbnailProviderOfSize;

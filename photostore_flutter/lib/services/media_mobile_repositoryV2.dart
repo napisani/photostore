@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:photostore_flutter/blocs/app_settings_bloc.dart';
 import 'package:photostore_flutter/models/future_memory_image.dart';
 import 'package:photostore_flutter/models/media_contents.dart';
 import 'package:photostore_flutter/models/mobile_photo.dart';
@@ -11,7 +13,9 @@ const int _ITEMS_PER_AGE = 10;
 class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
   AssetPathEntity _allPath;
 
-  MediaMobileRepositoryV2({requestPermissions = true}) {
+  MediaMobileRepositoryV2(
+      {requestPermissions = true, @required AppSettingsBloc appSettingsBloc})
+      : super(appSettingsBloc: appSettingsBloc) {
     this.requestPermission();
   }
 
@@ -26,11 +30,12 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
   Future<AssetPathEntity> getAllAlbum() async {
     if (this._allPath == null) {
       this._allPath = (await PhotoManager.getAssetPathList(
-          onlyAll: true, type: RequestType.image))
+              onlyAll: true, type: RequestType.image))
           .first;
     }
     return this._allPath;
   }
+
 
   Future<Pagination<MobilePhoto>> getPhotosByPage(int page) async {
     AssetPathEntity allAlbum = await this.getAllAlbum();
@@ -48,8 +53,7 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
         perPage: _ITEMS_PER_AGE,
         total: allAlbum.assetCount,
         items: assets
-            .map((item) =>
-            MobilePhoto(
+            .map((item) => MobilePhoto(
                 id: item.id,
                 checksum: '',
                 gphotoId: '',
@@ -60,9 +64,8 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
                         .thumbDataWithSize(width.round(), height.round())
                         .asStream()
                         .first),
-                thumbnailProvider: FutureMemoryImage(item.thumbData
-                    .asStream()
-                    .first),
+                thumbnailProvider:
+                    FutureMemoryImage(item.thumbData.asStream().first),
                 thumbnail: item.thumbData
                     .asStream()
                     .map((bin) => MediaContents.memory(bin))

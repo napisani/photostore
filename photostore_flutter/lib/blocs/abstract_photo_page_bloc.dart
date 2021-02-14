@@ -1,11 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:photostore_flutter/blocs/app_settings_bloc.dart';
 import 'package:photostore_flutter/models/agnostic_media.dart';
-import 'package:photostore_flutter/models/app_settings.dart';
 import 'package:photostore_flutter/models/event/photo_page_event.dart';
 import 'package:photostore_flutter/models/pagination.dart';
-import 'package:photostore_flutter/models/state/app_settings_state.dart';
 import 'package:photostore_flutter/models/state/photo_page_state.dart';
 import 'package:photostore_flutter/services/media_repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -13,35 +10,39 @@ import 'package:rxdart/rxdart.dart';
 abstract class AbstractPhotoPageBloc
     extends Bloc<PhotoPageEvent, PhotoPageState> {
   final MediaRepository mediaRepo;
-  final AppSettingsBloc appSettingsBloc;
-  AppSettings _appSettings;
 
-  AbstractPhotoPageBloc(
-      {@required this.mediaRepo, @required this.appSettingsBloc})
+  AbstractPhotoPageBloc({@required this.mediaRepo})
       : super(PhotoPageStateInitial()) {
-    this.appSettingsBloc.listen((AppSettingsState appSettingsState) {
-      if (appSettingsState is AppSettingsSuccess) {
-        print("PhotoPageBloc received new app settings!");
-        _appSettings = appSettingsState.appSettings;
-        this.mediaRepo.setAppSettings(_appSettings);
-        if (!(state is PhotoPageStateInitial)) {
-          print("PhotoPageBloc adding reset event");
-          this.add(PhotoPageResetEvent());
-        }
+    this.mediaRepo.appSettingsBloc.listen((state) {
+      if (!(state is PhotoPageStateInitial)) {
+        print("PhotoPageBloc adding reset event");
+        this.add(PhotoPageResetEvent());
       }
     });
-    if (this.appSettingsBloc.state is AppSettingsInitial) {
-      this.appSettingsBloc.loadSettings();
-    } else if (this.appSettingsBloc.state is AppSettingsSuccess) {
-      print('using preexisting bloc state');
-      if (_appSettings !=
-          (this.appSettingsBloc.state as AppSettingsSuccess).appSettings) {
-        _appSettings =
-            (this.appSettingsBloc.state as AppSettingsSuccess).appSettings;
-        this.mediaRepo.setAppSettings(_appSettings);
-        add(PhotoPageResetEvent());
-      }
-    }
+
+    // this.appSettingsBloc.listen((AppSettingsState appSettingsState) {
+    //   if (appSettingsState is AppSettingsSuccess) {
+    //     print("PhotoPageBloc received new app settings!");
+    //     _appSettings = appSettingsState.appSettings;
+    //     this.mediaRepo.setAppSettings(_appSettings);
+    //     if (!(state is PhotoPageStateInitial)) {
+    //       print("PhotoPageBloc adding reset event");
+    //       this.add(PhotoPageResetEvent());
+    //     }
+    //   }
+    // });
+    // if (this.appSettingsBloc.state is AppSettingsInitial) {
+    //   this.appSettingsBloc.loadSettings();
+    // } else if (this.appSettingsBloc.state is AppSettingsSuccess) {
+    //   print('using preexisting bloc state');
+    //   if (_appSettings !=
+    //       (this.appSettingsBloc.state as AppSettingsSuccess).appSettings) {
+    //     _appSettings =
+    //         (this.appSettingsBloc.state as AppSettingsSuccess).appSettings;
+    //     this.mediaRepo.setAppSettings(_appSettings);
+    //     add(PhotoPageResetEvent());
+    //   }
+    // }
   }
 
   bool _hasEndBeenReached(PhotoPageState state) =>
@@ -61,10 +62,10 @@ abstract class AbstractPhotoPageBloc
           print("got first photoPage: $photoPage");
           yield PhotoPageStateSuccess(photos: photoPage);
         } else if (currentState is PhotoPageStateSuccess) {
-          if(currentState.photos.page >= event.page){
+          if (currentState.photos.page >= event.page) {
             print("page already loaded - yielding same state");
             yield currentState;
-          }else{
+          } else {
             final photos = await this.mediaRepo.getPhotosByPage(event.page);
             print("got photos: $photos");
 
@@ -72,8 +73,6 @@ abstract class AbstractPhotoPageBloc
                 ? currentState.copyWith()
                 : currentState.copyWith(newPhotos: photos);
           }
-
-
         }
       } catch (err) {
         print("error getting Photo Page err: $err");
@@ -97,7 +96,7 @@ abstract class AbstractPhotoPageBloc
           }
           return false;
         })
-        .debounceTime(const Duration(milliseconds: 50))
+        .debounceTime(const Duration(milliseconds: 2000))
         .switchMap(transitionFn);
   }
 

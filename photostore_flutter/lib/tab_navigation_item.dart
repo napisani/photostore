@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:photostore_flutter/screens/home_screen.dart';
+import 'package:photostore_flutter/screens/photo_backup_screen.dart';
 import 'package:photostore_flutter/screens/photo_list_widget.dart';
 
 class TabNavigationItem {
@@ -15,20 +16,22 @@ class TabNavigationItem {
   });
 
   static List<TabNavigationItem> get items => [
-        TabNavigationItem(
-          page: HomeScreen(),
-          icon: Icon(Icons.home),
-          title: "Home",
-        ),
+
         TabNavigationItem(
           page: PhotoListTabWidget(mediaSource: "MOBILE"),
-          icon: Icon(Icons.phone),
+          icon: Icon(Icons.devices),
           title: "mobile",
         ),
         TabNavigationItem(
           page: PhotoListTabWidget(mediaSource: "SERVER"),
-          icon: Icon(Icons.language),
+          icon: Icon(Icons.cloud),
           title: "server",
+        ),
+
+        TabNavigationItem(
+          page: PhotoBackupScreen(),
+          icon: Icon(Icons.cloud_upload),
+          title: "Backup",
         ),
       ];
 }

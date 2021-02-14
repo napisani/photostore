@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photostore_flutter/models/app_settings.dart';
 import 'package:photostore_flutter/models/state/app_settings_state.dart';
 import 'package:photostore_flutter/services/settings_repository.dart';
+
+import 'behavior_subject_bloc_mixin.dart';
 
 class AppSettingsBloc extends Cubit<AppSettingsState> {
   final SettingsRepository _settingsRepository;
@@ -35,12 +39,20 @@ class AppSettingsBloc extends Cubit<AppSettingsState> {
     }
   }
 
-  Future<AppSettings> getCurrentSettings() async{
-    if(state is AppSettingsSuccess){
+  Future<AppSettings> getCurrentSettings() async {
+    if (state is AppSettingsSuccess) {
       return (state as AppSettingsSuccess).appSettings;
     }
     return this.loadSettings();
   }
 
-
+  StreamSubscription<AppSettingsState> listenWithCurrent(
+      void Function(AppSettingsState state) onData,
+      {Function onError,
+      void Function() onDone,
+      bool cancelOnError}) {
+    onData(this.state);
+    return super.listen(onData,
+        onError: onError, onDone: onDone, cancelOnError: cancelOnError);
+  }
 }
