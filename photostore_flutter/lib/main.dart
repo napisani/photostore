@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:photostore_flutter/screens/settings_screen.dart';
-import 'package:photostore_flutter/serviceprovs/app_level_provider.dart';
-import 'package:photostore_flutter/tab_navigation_item.dart';
+import 'package:photostore_flutter/ui/tab_navigation_item.dart';
+import 'package:photostore_flutter/ui/screen/settings_screen.dart';
+
+import 'locator.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  print('inside main func');
+  setupLocator();
   runApp(App());
 }
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AppLevelProviders(
-        child: MaterialApp(
+    return MaterialApp(
       title: 'Photo Store',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: _PhotoStoreApp(),
       // routes: {'/gallery': (context) => PhotoGalleryScreen()},
-    ));
+    );
   }
 }
 
@@ -33,6 +36,8 @@ class _PhotoStoreAppState extends State<_PhotoStoreApp> {
 
   _PhotoStoreAppState() {
     this.tabItems = TabNavigationItem.items;
+    print('calling setup');
+    setupLocator();
   }
 
   // // This is the trick!

@@ -32,7 +32,10 @@ dependencies:
 
   #  photo_gallery: ^0.3.0
   photo_manager: ^0.5.8
-  flutter_bloc: ^6.1.1
+#  flutter_bloc: ^6.1.1
+  provider: ^4.3.3
+  get_it: ^5.0.6
+#  bloc: ^6.1.1
   rxdart: ^0.25.0
   http: ^0.12.2
   equatable: ^1.2.5
