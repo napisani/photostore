@@ -20,6 +20,9 @@ class Pagination<T> extends Equatable {
       {this.items = const [], this.perPage = 0, this.total = 0, this.page = 0});
 
   factory Pagination.combineWith(Pagination<T> p,Pagination<T> p2) {
+    if(p == null || p.items == null || p.items.isEmpty){
+      return p2;
+    }
     return new Pagination(
         items: p.items..addAll(p2.items),
         perPage: p2.perPage,

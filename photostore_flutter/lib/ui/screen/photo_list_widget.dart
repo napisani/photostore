@@ -51,10 +51,22 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
   void initState() {
     super.initState();
     print('init state mediaSource: ${widget.mediaSource}');
+    // _scrollController.addListener(_onScroll);
+    // _photoPageModel = getPhotoPageViewModel(context);
+    // WidgetsBinding.instance.addPostFrameCallback((_) => _loadedEnoughYet());
+  }
+
+  @override
+  void didChangeDependencies() {
+    print('inside didChangeDependencies');
+    super.didChangeDependencies();
     _scrollController.addListener(_onScroll);
     _photoPageModel = getPhotoPageViewModel(context);
     WidgetsBinding.instance.addPostFrameCallback((_) => _loadedEnoughYet());
   }
+
+
+
 
   bool _hasPhotosLoaded() =>
       _photoPageModel.photoPage != null &&

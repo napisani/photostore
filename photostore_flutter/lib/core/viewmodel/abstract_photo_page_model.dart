@@ -60,6 +60,7 @@ abstract class AbstractPhotoPageModel with ChangeNotifier {
               await photoPageService.loadPage(event.page);
             } catch (err) {
               error = err.toString();
+              print(err);
               notifyListeners();
             }
           } else if (event is PhotoPageResetEvent) {
