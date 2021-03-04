@@ -15,6 +15,7 @@ class Pagination<T> extends Equatable {
   final int page;
 
   int get remainingPages => ((total - (page * perPage)) / perPage).ceil();
+  bool get hasMorePages => this.page == 0 || remainingPages > 0;
 
   const Pagination(
       {this.items = const [], this.perPage = 0, this.total = 0, this.page = 0});

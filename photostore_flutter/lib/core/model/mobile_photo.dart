@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'agnostic_media.dart';
 
 class MobilePhoto extends AgnosticMedia {
@@ -5,6 +7,7 @@ class MobilePhoto extends AgnosticMedia {
   final String gphotoId;
   final String mimeType;
   final String filename;
+  final  Future<File> originFile;
 
   const MobilePhoto(
       {id,
@@ -15,7 +18,8 @@ class MobilePhoto extends AgnosticMedia {
       this.filename,
       thumbnail,
       thumbnailProvider,
-      getThumbnailProviderOfSize})
+      getThumbnailProviderOfSize,
+      this.originFile})
       : super(
             id: id,
             creationDate: creationDate,

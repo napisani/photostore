@@ -36,7 +36,6 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
 
     return Consumer<BackupModel>(builder: (context, state, child) {
       // final model = Provider.of<BackupModel>(context);
-      final bool preparingPhotoBackupQueue = false;
       if (state == null ||
           state.screenStatus.type == ScreenStatusType.UNINITIALIZED) {
         return Center(
@@ -45,7 +44,7 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
               "Load",
             ),
             onPressed: () {
-              state.load();
+              state.loadBackupStats();
             },
           ),
         );
@@ -53,19 +52,22 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
         return Center(
           child: Text("Error occurred: ${state.screenStatus.error}"),
         );
+      } else if (state.screenStatus.type == ScreenStatusType.LOADING) {
+        return Center(
+          child: Text("Loading..."),
+        );
       } else if (state.screenStatus.type == ScreenStatusType.SUCCESS) {
         if (state.queuedPhotos == null || state.queuedPhotos.length == 0) {
           return Center(
             child: RaisedButton(
-                child: Text(preparingPhotoBackupQueue
-                    ? 'Preparing Backup'
-                    : 'Prepare Backup'),
-                onPressed: () =>
-                    preparingPhotoBackupQueue ? null : _prepareBackup()),
+                child: Text('Prepare Backup'),
+                onPressed: () => state.loadQueue()),
           );
         } else {
           return Center(
-            child: Text('loaded'),
+            child: RaisedButton(
+                child: Text('photos to backup: ${state.queuedPhotos.length}'),
+                onPressed: () => state.doBackup()),
           );
         }
       } else {
@@ -75,6 +77,4 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
       }
     });
   }
-
-  void _prepareBackup() {}
 }

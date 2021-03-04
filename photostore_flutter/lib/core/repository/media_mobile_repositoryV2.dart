@@ -3,6 +3,7 @@ import 'package:photostore_flutter/core/model/future_memory_image.dart';
 import 'package:photostore_flutter/core/model/media_contents.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
+
 import 'media_repository.dart';
 
 const int _ITEMS_PER_AGE = 10;
@@ -10,8 +11,7 @@ const int _ITEMS_PER_AGE = 10;
 class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
   AssetPathEntity _allPath;
 
-  MediaMobileRepositoryV2({requestPermissions = true})
-      : super() {
+  MediaMobileRepositoryV2({requestPermissions = true}) : super() {
     this.requestPermission();
   }
 
@@ -31,7 +31,6 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
     }
     return this._allPath;
   }
-
 
   Future<Pagination<MobilePhoto>> getPhotosByPage(int page) async {
     AssetPathEntity allAlbum = await this.getAllAlbum();
@@ -55,6 +54,7 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
                 gphotoId: '',
                 filename: item.title,
                 creationDate: item.createDateTime,
+                originFile: item.originFile,
                 getThumbnailProviderOfSize: (double width, double height) =>
                     FutureMemoryImage(item
                         .thumbDataWithSize(width.round(), height.round())

@@ -1,0 +1,33 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+uvicorn = "*"
+pydantic = "*"
+requests = "*"
+python-multipart = "*"
+psycopg2-binary = "*"
+alembic = "*"
+sqlalchemy = "*"
+pytest = "*"
+tenacity = "*"
+python-dotenv = "*"
+gphotospy = "*"
+python-magic = "*"
+pyheif = "*"
+numpy = "*"
+loguru = "*"
+pillow = "*"
+pyheif-pillow-opener = "*"
+flask-sqlalchemy = "*"
+
+[dev-packages]
+pytest-mock = "*"
+faker = "*"
+factory-boy = "*"
+
+[requires]
+python_version = "3.8"

@@ -30,8 +30,9 @@ abstract class AbstractPhotoPageService {
   }
 
   Future<Pagination<AgnosticMedia>> loadPage(int pageNumber) async {
-    if (_photoPage.value.page >= pageNumber) {
+    if (_photoPage.value.page >= pageNumber || !_photoPage.value.hasMorePages) {
       print("page already loaded - yielding same state");
+      _photoPage.add(_photoPage.value);
       return _photoPage.value;
     } else {
       final photos = await this.mediaRepo.getPhotosByPage(pageNumber);
@@ -42,67 +43,3 @@ abstract class AbstractPhotoPageService {
     }
   }
 }
-  // AbstractPhotoPageBloc({@required this.mediaRepo})
-  //     : super(PhotoPageStateInitial()) {
-  //   this.mediaRepo.appSettingsBloc.listen((state) {
-  //     if (!(state is PhotoPageStateInitial)) {
-  //       print("PhotoPageBloc adding reset event");
-  //       this.add(PhotoPageResetEvent());
-  //     }
-  //   });
-  // }
-  //
-  // bool _hasEndBeenReached(PhotoPageState state) =>
-  //     state is PhotoPageStateSuccess && state.reachedEnd();
-  //
-  // @override
-  // Stream<PhotoPageState> mapEventToState(PhotoPageEvent event) async* {
-  //   final currentState = state.clone();
-  //   print("in mapEventToState $event ${_hasEndBeenReached(currentState)}");
-  //   if (event is PhotoPageFetchEvent && !_hasEndBeenReached(currentState)) {
-  //     // yield PhotoPageStateLoading(photos: currentState.photos);
-  //     print('working on PhotoPageFetchEvent page: ${event.page}');
-  //     try {
-  //       if (currentState is PhotoPageStateInitial) {
-  //         final Pagination<AgnosticMedia> photoPage =
-  //         (await this.mediaRepo.getPhotosByPage(event.page));
-  //         print("got first photoPage: $photoPage");
-  //         yield PhotoPageStateSuccess(photos: photoPage);
-  //       } else if (currentState is PhotoPageStateSuccess) {
-  //         if (currentState.photos.page >= event.page) {
-  //           print("page already loaded - yielding same state");
-  //           yield currentState;
-  //         } else {
-  //           final photos = await this.mediaRepo.getPhotosByPage(event.page);
-  //           print("got photos: $photos");
-  //
-  //           yield photos.items.isEmpty
-  //               ? currentState.copyWith()
-  //               : currentState.copyWith(newPhotos: photos);
-  //         }
-  //       }
-  //     } catch (err) {
-  //       print("error getting Photo Page err: $err");
-  //       yield PhotoPageStateFailure(errorMessage: err.toString());
-  //     }
-  //   } else if (event is PhotoPageResetEvent) {
-  //     yield PhotoPageStateInitial();
-  //   }
-  // }
-  //
-  // @override
-  // Stream<Transition<PhotoPageEvent, PhotoPageState>> transformEvents(events,
-  //     transitionFn) {
-  //   return events
-  //       .distinct((PhotoPageEvent previous, PhotoPageEvent next) {
-  //     if (previous == next) {
-  //       if (next.timeEmitted - previous.timeEmitted > 100) {
-  //         return false;
-  //       }
-  //       return true;
-  //     }
-  //     return false;
-  //   })
-  //       .debounceTime(const Duration(milliseconds: 50))
-  //       .switchMap(transitionFn);
-  // }
