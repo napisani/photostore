@@ -1,5 +1,7 @@
+import copy
 import os
 import re
+from typing import Optional
 
 import magic
 from PIL import Image
@@ -19,11 +21,9 @@ register_heif_opener()
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'heic'}
 
 
-def secure_filename():
-    pass
+def secure_filename(uploaded_file_name):
+    return uploaded_file_name  # todo
 
-
-#     todo
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -99,7 +99,7 @@ def _create_thumbnail(photo_path, photo_filename):
         raise PhotoExceptions.failed_to_save_photo_file()
 
 
-def add_photo(photo: Photo, file):
+def add_photo(db: Session, photo: Photo, file):
     logger.debug('in add_photo photo: {}', photo)
     photo.id = None
     save_file_return = _save_photo_file(file)
@@ -112,7 +112,7 @@ def add_photo(photo: Photo, file):
     mime = magic.Magic(mime=True)
     photo.mime_type = mime.from_file(photo.path)
     try:
-        added_photo = photo.save()
+        added_photo = PhotoRepo.create(db, obj_in=photo)
     except:
         raise
         raise PhotoExceptions.failed_to_save_photo_to_db()
@@ -121,8 +121,8 @@ def add_photo(photo: Photo, file):
     return photo
 
 
-def delete_photo(id: int):
-    photo = get_photo(id)
+def delete_photo(db: Session, photo_id: int):
+    photo = get_photo(db, photo_id)
     if not photo:
         raise PhotoExceptions.photo_not_found()
     if os.path.exists(photo.path):
@@ -132,30 +132,34 @@ def delete_photo(id: int):
             raise
             raise PhotoExceptions.failed_to_delete_photo_file()
     try:
-        photo.delete()
+        PhotoRepo.remove(db, id=photo.id)
     except:
         raise
         raise PhotoExceptions.failed_to_delete_photo_from_db()
 
 
 def get_photo(db: Session, photo_id: int) -> Photo:
-    return PhotoRepo.get_by_id(db, photo_id)
+    return PhotoRepo.get_by_id(db, id=photo_id)
 
 
-def get_latest_photo() -> Photo:
-    return PhotoRepo.query \
-        .order_by(PhotoRepo.creation_date.desc()) \
-        .first()
+def get_latest_photo(db: Session) -> Optional[Photo]:
+    return PhotoRepo.get_latest_photo(db)
 
 
-def update_photo(photo: Photo) -> Photo:
-    saved_photo = get_photo(photo.id)
+def update_photo(db: Session, photo: Photo) -> Photo:
+    saved_photo = get_photo(db, photo.id)
+    # current = copy.deepcopy(saved_photo)
     if not saved_photo:
         raise PhotoExceptions.photo_not_found()
-    saved_photo.media_metadata = photo.media_metadata
-    saved_photo.gphoto_id = photo.gphoto_id
-    saved_photo.creation_date = photo.creation_date
-    return saved_photo.update()
+    # saved_photo.media_metadata = photo.media_metadata
+    # saved_photo.gphoto_id = photo.gphoto_id
+    # saved_photo.creation_date = photo.creation_date
+    updates = {
+        'media_metadata': photo.media_metadata,
+        'gphoto_id': photo.gphoto_id,
+        'creation_date': photo.creation_date
+    }
+    return PhotoRepo.update(db, db_obj=saved_photo, obj_in=updates)
 
 
 def get_photos(db: Session, page: int, per_page: int = 10):

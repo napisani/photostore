@@ -23,6 +23,8 @@ loguru = "*"
 pillow = "*"
 pyheif-pillow-opener = "*"
 flask-sqlalchemy = "*"
+factory-boy = "*"
+pytest-mock = "*"
 
 [dev-packages]
 pytest-mock = "*"

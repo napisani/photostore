@@ -67,4 +67,4 @@ def make_photo_factory(db: Session):
             """Factory configuration."""
             model = Photo
 
-    return PhotoFactory()
+    return PhotoFactory

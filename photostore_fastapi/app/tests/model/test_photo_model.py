@@ -7,9 +7,8 @@ from app.crud.crud_photo import PhotoRepo
 
 @pytest.mark.unit
 class TestPhotoModel:
-
     def test_add_and_get_photo(self, db: Session, photo_factory):
-        photo = photo_factory
+        photo = photo_factory()
         logger.debug('photo {}', photo)
         photo_saved = PhotoRepo.create(db, obj_in=photo)
         logger.debug('photo_saved {}', photo_saved)

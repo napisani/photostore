@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../photostore-api/.idea/photostore-api.iml" filepath="$PROJECT_DIR$/../photostore-api/.idea/photostore-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/photostore_fastapi.iml" filepath="$PROJECT_DIR$/.idea/photostore_fastapi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../taxi-gps/.idea/taxi-gps.iml" filepath="$PROJECT_DIR$/../taxi-gps/.idea/taxi-gps.iml" />
     </modules>
   </component>
 </project>

@@ -1,4 +1,4 @@
-from typing import Dict, Generator
+from typing import Generator
 
 import pytest
 from fastapi.testclient import TestClient
@@ -12,15 +12,24 @@ from app.main import app
 from .factories import make_photo_factory
 
 
+# import sys
+# sys.path.insert(0, "/Users/nick/PycharmProjects/photostore-mono/photostore_fastapi")
+
 @pytest.fixture(scope="session")
 def db() -> Generator:
     yield SessionLocal()
 
 
 @pytest.fixture(scope="module")
-def client() -> Generator:
+def test_client() -> Generator:
     with TestClient(app) as c:
         yield c
+
+
+@pytest.fixture(scope="module")
+def app_settings() -> Generator:
+    yield settings
+
 
 @pytest.fixture(scope="module")
 def photo_factory(db: Session) -> Generator:
