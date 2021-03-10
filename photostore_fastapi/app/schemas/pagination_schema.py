@@ -6,7 +6,10 @@ T = TypeVar('T')
 
 
 class PaginationSchema(GenericModel, Generic[T]):
-    items: Optional[List[T]]
+    items: List[T] = []
     total: Optional[int]
     page: Optional[int]
     per_page: Optional[int]
+
+    class Config:
+        orm_mode = True

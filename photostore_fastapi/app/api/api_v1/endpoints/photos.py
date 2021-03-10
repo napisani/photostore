@@ -31,7 +31,7 @@ def api_get_health(
     return health
 
 
-@router.get("/", response_model=PaginationSchema[PhotoSchema])
+@router.get("/{page}", response_model=PaginationSchema[PhotoSchema])
 def api_get_photos(
         db: Session = Depends(deps.get_db),
         page: int = 1
@@ -41,9 +41,9 @@ def api_get_photos(
     """
     photos = get_photos(db, page, 20)
     logger.debug('view_get_photos {}', photos)
-    logger.debug('view_get_photos {}', photos.__dict__)
-
-    return photos
+    pagination = PaginationSchema.from_orm(photos)
+    pagination.items = [PhotoSchema.from_orm(p) for p in photos.items]
+    return pagination
 
 
 @router.post('/upload', response_model=PhotoSchema)

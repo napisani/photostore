@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 
 class PhotoSchema(BaseModel):
+    id: Optional[int]
     path: Optional[str]
     filename: Optional[str]
     checksum: Optional[str]
@@ -15,6 +16,9 @@ class PhotoSchema(BaseModel):
     media_metadata: Optional[Dict]
     thumbnail_path: Optional[str]
     creation_date: Optional[datetime.datetime]
+
+    class Config:
+        orm_mode = True
 
 
 # # Properties to receive on item creation

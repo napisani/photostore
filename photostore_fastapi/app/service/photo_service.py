@@ -101,7 +101,7 @@ def _create_thumbnail(photo_path, photo_filename):
 
 def add_photo(db: Session, photo: Photo, file):
     logger.debug('in add_photo photo: {}', photo)
-    photo.id = None
+    # photo.id = None
     save_file_return = _save_photo_file(file)
     logger.debug('in add_photo save_file_return :{}', save_file_return)
     photo.filename = save_file_return['filename']
