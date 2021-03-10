@@ -28,7 +28,7 @@ class TestPhotosAPI:
         # assign an id as if it was saved to the db
         photo.id = 1
         # mock the actual add_photo service function so that it returns the exact photo object we are working with
-        # mocker.patch('photostore.photos.photo_views.add_photo', return_value=photo)
+        mocker.patch('app.api.api_v1.endpoints.photos.add_photo', return_value=schema)
         resp = test_client.post('/api/v1/photos/upload', files=data)
         logger.debug('test_simple resp {}', resp)
         logger.debug('test_simple resp.json {}', resp.json)
@@ -39,36 +39,29 @@ class TestPhotosAPI:
         assert resp.json
         assert added_photo
         # make sure the response matches the test data
-        assert added_photo['filename'] == photo.filename
-        assert added_photo['checksum'] == photo.checksum
-    #
-    # def test_get_thumbnail(self, mocker, test_client):
-    #     photo = PhotoFactory()
-    #     photo.id = 1
-    #     data = {
-    #         'photo_id': f'{photo.id}'
-    #     }
-    #     mocker.patch('photostore.photos.photo_views.get_photo', return_value=photo)
-    #     url = url_for('photos.view_get_thumbnail', photo_id=f'{photo.id}')
-    #     logger.debug('test_get_thumbnail url {}', url)
-    #     logger.debug('photo.path  {}', photo.path)
-    #     logger.debug('photo.thumbnail_path  {}', photo.thumbnail_path)
-    #     resp = test_client.get(url, headers={
-    #         'Authorization': 'Token {}'.format('test')
-    #     })
-    #     assert resp
-    #
-    # def test_get_fullsize(self, mocker, test_client):
-    #     photo = PhotoFactory()
-    #     photo.id = 1
-    #     data = {
-    #         'photo_id': f'{photo.id}'
-    #     }
-    #     mocker.patch('photostore.photos.photo_views.get_photo', return_value=photo)
-    #     url = url_for('photos.view_get_thumbnail', photo_id=f'{photo.id}')
-    #     logger.debug('test_get_fullsize url {}', url)
-    #     logger.debug('photo.path  {}', photo.path)
-    #     resp = test_client.get(url, headers={
-    #         'Authorization': 'Token {}'.format('test')
-    #     })
-    #     assert resp
+        assert added_photo['filename'] == schema.filename
+        assert added_photo['checksum'] == schema.checksum
+
+    def test_get_thumbnail(self, mocker, test_client, photo_factory):
+        photo = photo_factory()
+        schema = PhotoSchema(filename=photo.filename, path=photo.path, thumbnail_path=photo.thumbnail_path)
+        photo.id = 1
+        mocker.patch('app.api.api_v1.endpoints.photos.get_photo', return_value=schema)
+        url = f'/api/v1/photos/thumbnail/{photo.id}'
+        logger.debug('test_get_thumbnail url {}', url)
+        logger.debug('photo.path  {}', photo.path)
+        logger.debug('photo.thumbnail_path  {}', photo.thumbnail_path)
+        resp = test_client.get(url)
+        assert resp
+
+    def test_get_fullsize(self, mocker, test_client,photo_factory):
+        photo = photo_factory()
+        schema = PhotoSchema(filename=photo.filename, path=photo.path, thumbnail_path=photo.thumbnail_path)
+        photo.id = 1
+        mocker.patch('app.api.api_v1.endpoints.photos.get_photo', return_value=schema)
+        url = f'/api/v1/photos/fullsize/{photo.id}'
+        logger.debug('test_get_fullsize url {}', url)
+        logger.debug('photo.path  {}', photo.path)
+        logger.debug('photo.thumbnail_path  {}', photo.thumbnail_path)
+        resp = test_client.get(url)
+        assert resp

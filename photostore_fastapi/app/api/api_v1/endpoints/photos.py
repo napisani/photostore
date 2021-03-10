@@ -1,16 +1,18 @@
+import io
 import json
 
 from fastapi import APIRouter, Depends
 from fastapi import File, UploadFile
 from loguru import logger
 from sqlalchemy.orm import Session
+from starlette.responses import StreamingResponse
 
 from app.api import deps
 from app.exception.photo_exceptions import PhotoExceptions
 from app.schemas.health_schema import HealthSchema
 from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchema
-from app.service.photo_service import get_photos, allowed_file, add_photo
+from app.service.photo_service import get_photos, allowed_file, add_photo, get_photo
 
 router = APIRouter()
 
@@ -63,10 +65,24 @@ def api_upload_photo(db: Session = Depends(deps.get_db),
         raise PhotoExceptions.filename_not_passed()
     if not file or not allowed_file(file.filename):
         raise PhotoExceptions.invalid_photo_passed()
-    # json_metadata = json.load(metadata.file)
     # logger.debug(f'json_metadata: {json_metadata}')
-    photo_info = PhotoSchema.parse_file(metadata.file)
-    added_photo = add_photo(db, photo_info=photo_info, file=file)
+    photo_info = PhotoSchema.parse_obj(meta)
+    added_photo = add_photo(db, photo=photo_info, file=file)
     logger.debug('view_upload_photo added_photo {}', added_photo)
     return added_photo
-    return {'filename': 'ff'}
+
+
+@router.get('/fullsize/{photo_id}')
+def api_get_fullsize_image(photo_id: int, db: Session = Depends(deps.get_db)):
+    photo = get_photo(db, photo_id=photo_id)
+    logger.debug('view_get_fullsize photo: {}', photo)
+    with open(photo.path, 'rb') as f:
+        return StreamingResponse(io.BytesIO(f.read()), media_type="image/png")
+
+
+@router.get('/thumbnail/{photo_id}')
+def api_get_thumbnail_image(photo_id: int, db: Session = Depends(deps.get_db)):
+    photo = get_photo(db, photo_id=photo_id)
+    logger.debug('view_get_fullsize photo: {}', photo)
+    with open(photo.thumbnail_path, 'rb') as f:
+        return StreamingResponse(io.BytesIO(f.read()), media_type="image/png")
