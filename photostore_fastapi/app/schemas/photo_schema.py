@@ -1,25 +1,64 @@
 import datetime
-from typing import Optional, Dict
+from typing import Optional, Any, Type
 
 from pydantic import BaseModel
 
 
-
 class PhotoSchema(BaseModel):
-    id: Optional[int]
-    path: Optional[str]
-    filename: Optional[str]
-    checksum: Optional[str]
-    gphoto_id: Optional[str]
-    mime_type: Optional[str]
+    @classmethod
+    def from_orm(cls: Type['Model'], obj: Any) -> 'Model':
+        if obj is None:
+            return None
+        return super().from_orm(obj)
+
     # media_metadata = Column(JSON(none_as_null=True), nullable=True, default=None)
-    media_metadata: Optional[Dict]
-    thumbnail_path: Optional[str]
-    creation_date: Optional[datetime.datetime]
 
     class Config:
         orm_mode = True
 
+
+class PhotoSchemaFull(PhotoSchema):
+    id: Optional[int]
+    path: Optional[str]
+    checksum: Optional[str]
+    gphoto_id: Optional[str]
+    mime_type: Optional[str]
+    thumbnail_path: Optional[str]
+
+    native_id: Optional[str]
+    device_id: Optional[str]
+
+    filename: Optional[str]
+    # media_metadata: Optional[Dict]
+    creation_date: Optional[datetime.datetime]
+    modified_date: Optional[datetime.datetime]
+    width: Optional[int]
+    height: Optional[int]
+    longitude: Optional[float]
+    latitude: Optional[float]
+
+
+class PhotoSchemaAdd(PhotoSchema):
+    native_id: Optional[str]
+    device_id: Optional[str]
+
+    gphoto_id: Optional[str]
+    filename: Optional[str]
+    # media_metadata: Optional[Dict]
+    creation_date: Optional[datetime.datetime]
+    modified_date: Optional[datetime.datetime]
+    width: Optional[int]
+    height: Optional[int]
+    longitude: Optional[float]
+    latitude: Optional[float]
+
+
+class PhotoSchemaUpdate(PhotoSchemaAdd):
+    id: Optional[int]
+
+
+class PhotoSchemaDelete(PhotoSchema):
+    id: Optional[int]
 
 # # Properties to receive on item creation
 # class PhotoSchemaAdd(PhotoSchemaBase):

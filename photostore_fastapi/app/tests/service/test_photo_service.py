@@ -5,6 +5,7 @@ import pytest
 from loguru import logger
 from werkzeug.datastructures import FileStorage
 
+from app.schemas.photo_schema import PhotoSchemaUpdate
 from app.service.photo_service import _get_unique_filename, add_photo, delete_photo, get_photo, update_photo, \
     get_latest_photo, get_photos
 from app.utils import get_file_checksum
@@ -57,12 +58,13 @@ class TestPhotoService:
         photo = photo_factory()
         file = FileStorage(stream=open(photo.path, 'rb'), filename=photo.filename)
         saved_photo = add_photo(db, photo, file)
-        saved_photo.media_metadata = '_new_'
-        saved_photo.creation_date = today
-        updated_photo = update_photo(db, saved_photo)
+        # saved_photo.media_metadata = '_new_'
+
+        photo_updates = PhotoSchemaUpdate(id=saved_photo.id, creation_date=today)
+        updated_photo = update_photo(db, photo_updates)
 
         assert updated_photo
-        assert updated_photo.media_metadata == '_new_'
+        # assert updated_photo.media_metadata == '_new_'
         assert updated_photo.creation_date.replace(hour=0, minute=0, second=0, microsecond=0) == today.replace(hour=0,
                                                                                                                minute=0,
                                                                                                                second=0,

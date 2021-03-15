@@ -52,16 +52,25 @@ def make_photo_factory(db: Session):
             return m
 
         filename = Sequence(lambda n: 'photo_{0}.PNG'.format(n))
+        device_id = Sequence(lambda n: 'phone_1')
+        native_id = Sequence(lambda n: 'native_id_{0}'.format(n))
+
         path = Sequence(lambda n: PhotoFactory.get_path_photo(n))
         thumbnail_path = Sequence(lambda n: PhotoFactory.get_path_photo(n))
         checksum = Sequence(lambda n: PhotoFactory._get_checksum(n))
         gphoto_id = Sequence(lambda n: f'gphoto_id_{n}')
         mime_type = Sequence(lambda n: 'image/png')
         creation_date = Sequence(lambda n: datetime.datetime.utcnow())
+        modified_date = Sequence(lambda n: datetime.datetime.utcnow())
+        height = Sequence(lambda n: 768)
+        width = Sequence(lambda n: 1024)
+        longitude = Sequence(lambda n: 0.0)
+        latitude = Sequence(lambda n: 0.0)
+
 
         # email = Sequence(lambda n: 'user{0}@example.com'.format(n))
         # password = PostGenerationMethodCall('set_password', 'example')
-        media_metadata = Sequence(lambda n: PhotoFactory._get_metadata(n))
+        # media_metadata = Sequence(lambda n: PhotoFactory._get_metadata(n))
 
         class Meta:
             """Factory configuration."""

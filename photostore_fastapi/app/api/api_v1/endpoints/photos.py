@@ -11,7 +11,7 @@ from app.api import deps
 from app.exception.photo_exceptions import PhotoExceptions
 from app.schemas.health_schema import HealthSchema
 from app.schemas.pagination_schema import PaginationSchema
-from app.schemas.photo_schema import PhotoSchema
+from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull
 from app.service.photo_service import get_photos, allowed_file, add_photo, get_photo
 
 router = APIRouter()
@@ -20,7 +20,7 @@ router = APIRouter()
 @router.get("/health", response_model=HealthSchema)
 def api_get_health(
         db: Session = Depends(deps.get_db)
-) -> PaginationSchema[PhotoSchema]:
+) -> HealthSchema:
     """
     health check
     """
@@ -31,25 +31,22 @@ def api_get_health(
     return health
 
 
-@router.get("/{page}", response_model=PaginationSchema[PhotoSchema])
+@router.get("/{page}", response_model=PaginationSchema[PhotoSchemaFull])
 def api_get_photos(
         db: Session = Depends(deps.get_db),
         page: int = 1
-) -> PaginationSchema[PhotoSchema]:
+) -> PaginationSchema[PhotoSchemaFull]:
     """
     Retrieve photos by page.
     """
-    photos = get_photos(db, page, 20)
-    logger.debug('view_get_photos {}', photos)
-    pagination = PaginationSchema.from_orm(photos)
-    pagination.items = [PhotoSchema.from_orm(p) for p in photos.items]
+    pagination = get_photos(db, page, 20)
     return pagination
 
 
-@router.post('/upload', response_model=PhotoSchema)
+@router.post('/upload', response_model=PhotoSchemaFull)
 def api_upload_photo(db: Session = Depends(deps.get_db),
                      file: UploadFile = File(...),
-                     metadata: UploadFile = File(...)):
+                     metadata: UploadFile = File(...)) -> PhotoSchemaFull:
     meta = json.load(metadata.file)
     logger.debug(f'metadata: {meta}, file: {file}')
 
@@ -66,7 +63,7 @@ def api_upload_photo(db: Session = Depends(deps.get_db),
     if not file or not allowed_file(file.filename):
         raise PhotoExceptions.invalid_photo_passed()
     # logger.debug(f'json_metadata: {json_metadata}')
-    photo_info = PhotoSchema.parse_obj(meta)
+    photo_info = PhotoSchemaAdd.parse_obj(meta)
     added_photo = add_photo(db, photo=photo_info, file=file)
     logger.debug('view_upload_photo added_photo {}', added_photo)
     return added_photo

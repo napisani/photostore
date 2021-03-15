@@ -15,6 +15,6 @@ class TestPhotoModel:
         photo_retrieved = PhotoRepo.get_by_id(db, photo.id)
         assert photo_retrieved.filename is not None
         assert photo_retrieved.filename != ''
-        for attr in ['path', 'filename', 'checksum', 'gphoto_id', 'mime_type', 'media_metadata']:
+        for attr in ['path', 'filename', 'checksum', 'gphoto_id', 'mime_type']:
             logger.debug('photo_retrieved {} = {}', attr, getattr(photo_retrieved, attr))
             assert getattr(photo_retrieved, attr) == getattr(photo, attr)

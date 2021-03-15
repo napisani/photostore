@@ -1,4 +1,3 @@
-import copy
 import os
 import re
 from typing import Optional
@@ -14,7 +13,9 @@ from app.core.config import settings
 # register to support .HEIC files
 from app.crud.crud_photo import PhotoRepo
 from app.exception.photo_exceptions import PhotoExceptions
-from app.models.photo_model import Photo
+from app.models.pagination import Pagination
+from app.schemas.pagination_schema import PaginationSchema
+from app.schemas.photo_schema import PhotoSchemaFull, PhotoSchemaAdd, PhotoSchemaUpdate
 from app.utils import get_file_checksum
 
 register_heif_opener()
@@ -99,7 +100,7 @@ def _create_thumbnail(photo_path, photo_filename):
         raise PhotoExceptions.failed_to_save_photo_file()
 
 
-def add_photo(db: Session, photo: Photo, file):
+def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull:
     logger.debug('in add_photo photo: {}', photo)
     # photo.id = None
     save_file_return = _save_photo_file(file)
@@ -118,7 +119,7 @@ def add_photo(db: Session, photo: Photo, file):
         raise PhotoExceptions.failed_to_save_photo_to_db()
 
     logger.debug('in add_photo added_photo :{}', added_photo)
-    return photo
+    return PhotoSchemaFull.from_orm(photo)
 
 
 def delete_photo(db: Session, photo_id: int):
@@ -138,29 +139,28 @@ def delete_photo(db: Session, photo_id: int):
         raise PhotoExceptions.failed_to_delete_photo_from_db()
 
 
-def get_photo(db: Session, photo_id: int) -> Photo:
-    return PhotoRepo.get_by_id(db, id=photo_id)
+def get_photo(db: Session, photo_id: int) -> PhotoSchemaFull:
+    return PhotoSchemaFull.from_orm(PhotoRepo.get_by_id(db, id=photo_id))
 
 
-def get_latest_photo(db: Session) -> Optional[Photo]:
-    return PhotoRepo.get_latest_photo(db)
+def get_latest_photo(db: Session) -> Optional[PhotoSchemaFull]:
+    return PhotoSchemaFull.from_orm(PhotoRepo.get_latest_photo(db))
 
 
-def update_photo(db: Session, photo: Photo) -> Photo:
-    saved_photo = get_photo(db, photo.id)
+def update_photo(db: Session, photo: PhotoSchemaUpdate) -> PhotoSchemaFull:
+    saved_photo = PhotoRepo.get_by_id(db, id=photo.id)
     # current = copy.deepcopy(saved_photo)
     if not saved_photo:
         raise PhotoExceptions.photo_not_found()
     # saved_photo.media_metadata = photo.media_metadata
     # saved_photo.gphoto_id = photo.gphoto_id
     # saved_photo.creation_date = photo.creation_date
-    updates = {
-        'media_metadata': photo.media_metadata,
-        'gphoto_id': photo.gphoto_id,
-        'creation_date': photo.creation_date
-    }
-    return PhotoRepo.update(db, db_obj=saved_photo, obj_in=updates)
+
+    return PhotoSchemaFull.from_orm(PhotoRepo.update(db, db_obj=saved_photo, obj_in=photo))
 
 
-def get_photos(db: Session, page: int, per_page: int = 10):
-    return PhotoRepo.get_photos(db, page=page, per_page=per_page)
+def get_photos(db: Session, page: int, per_page: int = 10) -> Pagination:
+    photos = PhotoRepo.get_photos(db, page=page, per_page=per_page)
+    pagination = PaginationSchema.from_orm(photos)
+    pagination.items = [PhotoSchemaFull.from_orm(p) for p in photos.items]
+    return pagination

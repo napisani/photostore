@@ -65,6 +65,9 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db.delete(obj)
         db.commit()
         return obj
+    def delete_all(self, db:Session):
+        db.query(self.model).delete()
+        db.commit()
 
     def _paginate(self, query: Query, page=None, per_page=None, error_out=True, max_per_page=None):
         """Returns ``per_page`` items from page ``page``.

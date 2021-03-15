@@ -3,7 +3,7 @@ from io import BytesIO
 import pytest
 from loguru import logger
 
-from app.schemas.photo_schema import PhotoSchema
+from app.schemas.photo_schema import PhotoSchema, PhotoSchemaAdd, PhotoSchemaFull
 
 
 @pytest.mark.unit
@@ -18,7 +18,7 @@ class TestPhotosAPI:
     # test uploading files
     def test_view_upload_photo(self, mocker, photo_factory, test_client):
         photo = photo_factory()
-        schema = PhotoSchema(filename=photo.filename, path=photo.path)
+        schema = PhotoSchemaFull(filename=photo.filename, device_id=photo.device_id, native_id=photo.native_id, path=photo.path)
         logger.debug("photo created by factory {}", photo)
         data = {
             'file': (photo.filename, open(photo.path, 'rb')),
@@ -44,7 +44,8 @@ class TestPhotosAPI:
 
     def test_get_thumbnail(self, mocker, test_client, photo_factory):
         photo = photo_factory()
-        schema = PhotoSchema(filename=photo.filename, path=photo.path, thumbnail_path=photo.thumbnail_path)
+        schema = PhotoSchemaFull(filename=photo.filename, device_id=photo.device_id, native_id=photo.native_id,
+                                 path=photo.path,  thumbnail_path=photo.thumbnail_path)
         photo.id = 1
         mocker.patch('app.api.api_v1.endpoints.photos.get_photo', return_value=schema)
         url = f'/api/v1/photos/thumbnail/{photo.id}'
@@ -56,7 +57,8 @@ class TestPhotosAPI:
 
     def test_get_fullsize(self, mocker, test_client,photo_factory):
         photo = photo_factory()
-        schema = PhotoSchema(filename=photo.filename, path=photo.path, thumbnail_path=photo.thumbnail_path)
+        schema = PhotoSchemaFull(filename=photo.filename, device_id=photo.device_id, native_id=photo.native_id,
+                                 path=photo.path,  thumbnail_path=photo.thumbnail_path)
         photo.id = 1
         mocker.patch('app.api.api_v1.endpoints.photos.get_photo', return_value=schema)
         url = f'/api/v1/photos/fullsize/{photo.id}'

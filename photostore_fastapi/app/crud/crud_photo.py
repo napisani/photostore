@@ -5,10 +5,10 @@ from sqlalchemy.orm import Session
 from .base import CRUDBase
 from ..models.pagination import Pagination
 from ..models.photo_model import Photo
-from ..schemas.photo_schema import PhotoSchema
+from ..schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaUpdate
 
 
-class CRUDPhoto(CRUDBase[Photo, PhotoSchema, PhotoSchema]):
+class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
 
     def get_photos(self, db: Session, page, per_page=10) -> Pagination:
         return self._paginate((db.query(self.model)
