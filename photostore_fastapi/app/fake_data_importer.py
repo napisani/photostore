@@ -7,7 +7,7 @@ from loguru import logger
 from werkzeug.datastructures import FileStorage
 
 from app.db.session import SessionLocal
-from app.schemas.photo_schema import PhotoSchema
+from app.schemas.photo_schema import PhotoSchemaAdd
 from app.service.photo_service import add_photo
 
 
@@ -32,7 +32,7 @@ def init() -> None:
         image.save('/tmp/f.jpg', format='JPEG')
         file = FileStorage(stream=open('/tmp/f.jpg', 'rb'), filename=str(uuid.uuid1()) + ".JPG")
 
-        photo = PhotoSchema()
+        photo = PhotoSchemaAdd()
         photo.creation_date = datetime.datetime.now()
         saved_photo = add_photo(db, file=file, photo=photo)
         logger.debug('saved photo {}', saved_photo)

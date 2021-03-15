@@ -105,15 +105,17 @@ def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull:
     # photo.id = None
     save_file_return = _save_photo_file(file)
     logger.debug('in add_photo save_file_return :{}', save_file_return)
-    photo.filename = save_file_return['filename']
-    photo.path = save_file_return['path']
-    photo.checksum = get_file_checksum(photo.path)
-    photo.thumbnail_path = _create_thumbnail(photo_filename=photo.filename,
-                                             photo_path=photo.path)
+    photo_full = PhotoSchemaFull(data=photo.dict())
+
+    photo_full.filename = save_file_return['filename']
+    photo_full.path = save_file_return['path']
+    photo_full.checksum = get_file_checksum(photo_full.path)
+    photo_full.thumbnail_path = _create_thumbnail(photo_filename=photo_full.filename,
+                                                  photo_path=photo_full.path)
     mime = magic.Magic(mime=True)
-    photo.mime_type = mime.from_file(photo.path)
+    photo_full.mime_type = mime.from_file(photo_full.path)
     try:
-        added_photo = PhotoRepo.create(db, obj_in=photo)
+        added_photo = PhotoRepo.create(db, obj_in=photo_full)
     except:
         raise
         raise PhotoExceptions.failed_to_save_photo_to_db()
