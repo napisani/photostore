@@ -54,6 +54,13 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
                 gphotoId: '',
                 filename: item.title,
                 creationDate: item.createDateTime,
+                modifiedDate: item.modifiedDateTime,
+                width: item.width,
+                height: item.height,
+                longitude: item.longitude,
+                latitude: item.latitude,
+                nativeId: item.id,
+                deviceId: 'test_iphone',
                 originFile: item.originFile,
                 getThumbnailProviderOfSize: (double width, double height) =>
                     FutureMemoryImage(item

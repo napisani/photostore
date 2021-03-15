@@ -6,28 +6,41 @@ class MobilePhoto extends AgnosticMedia {
   final String checksum;
   final String gphotoId;
   final String mimeType;
-  final String filename;
-  final  Future<File> originFile;
+  final Future<File> originFile;
 
-  const MobilePhoto(
-      {id,
-      this.checksum,
-      this.gphotoId,
-      this.mimeType,
-      creationDate,
-      this.filename,
-      thumbnail,
-      thumbnailProvider,
-      getThumbnailProviderOfSize,
-      this.originFile})
-      : super(
+  const MobilePhoto({
+    id,
+    this.checksum,
+    this.gphotoId,
+    this.mimeType,
+    creationDate,
+    modifiedDate,
+    filename,
+    thumbnail,
+    thumbnailProvider,
+    getThumbnailProviderOfSize,
+    this.originFile,
+    nativeId,
+    deviceId,
+    width,
+    height,
+    longitude,
+    latitude,
+  }) : super(
             id: id,
             creationDate: creationDate,
             thumbnail: thumbnail,
             thumbnailProvider: thumbnailProvider,
-            getThumbnailProviderOfSize: getThumbnailProviderOfSize);
+            getThumbnailProviderOfSize: getThumbnailProviderOfSize,
+            nativeId: nativeId,
+            deviceId: deviceId,
+            modifiedDate: modifiedDate,
+            width: width,
+            height: height,
+            longitude: longitude,
+            latitude: latitude,
+            filename: filename);
 
   @override
-  List<Object> get props =>
-      [...super.props, checksum, gphotoId, mimeType, filename];
+  List<Object> get props => [...super.props, checksum, gphotoId, mimeType];
 }
