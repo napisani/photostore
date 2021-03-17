@@ -60,27 +60,18 @@ class PhotoSchemaUpdate(PhotoSchemaAdd):
 class PhotoSchemaDelete(PhotoSchema):
     id: Optional[int]
 
-# # Properties to receive on item creation
-# class PhotoSchemaAdd(PhotoSchemaBase):
-#     pass
-#
-#
-# # Properties to receive on item update
-# class PhotoSchemaUpdate(PhotoSchemaBase):
-#     pass
-#
-#
-# class PhotoSchemaInDBBase(PhotoSchemaBase):
-#     class Config:
-#         orm_mode = True
-#
-#
-# # Properties to return to client
-# class PhotoSchema(PhotoSchemaInDBBase):
-#     pass
-#
-#
-# # Properties properties stored in DB
-# class PhotoInDB(PhotoSchemaInDBBase):
-#     pass
-#
+
+class PhotoDiffRequestSchema(BaseModel):
+    native_id: Optional[str]
+    device_id: Optional[str]
+    modified_date: Optional[datetime.datetime]
+    checksum: Optional[str]
+
+
+class PhotoDiffResultSchema(BaseModel):
+    photo_id: Optional[int]
+    native_id: Optional[str]
+    device_id: Optional[str]
+    exists: Optional[bool]
+    same_date: Optional[bool]
+    same_checksum: Optional[bool]

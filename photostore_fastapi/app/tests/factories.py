@@ -4,7 +4,7 @@ import datetime
 import os
 
 import pytest
-from factory import Sequence
+from factory import Sequence, Factory
 from factory.alchemy import SQLAlchemyModelFactory
 from sqlalchemy.orm import Session
 
@@ -13,13 +13,12 @@ from app.models.photo_model import Photo
 from app.utils import get_file_checksum
 
 def make_photo_factory(db: Session):
-    class BaseFactory(SQLAlchemyModelFactory):
+    class BaseFactory(Factory):
         """Base factory."""
 
         class Meta:
             """Factory configuration."""
             abstract = True
-            sqlalchemy_session = db
 
     class PhotoFactory(BaseFactory):
         """User factory."""

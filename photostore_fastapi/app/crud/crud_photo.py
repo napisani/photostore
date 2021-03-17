@@ -1,5 +1,6 @@
-from typing import Optional
+from typing import Optional, List
 
+from sqlalchemy import or_, and_
 from sqlalchemy.orm import Session
 
 from .base import CRUDBase
@@ -17,8 +18,19 @@ class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
                               per_page=per_page,
                               error_out=False)
 
-    def get_latest_photo(self, db: Session) -> Optional[Photo]:
-        return db.query(self.model).order_by(self.model.creation_date.desc()).first()
+    def get_photos_by_native_ids(self, db: Session, device_native_id_pairs: List, ) -> List[Photo]:
+        if len(device_native_id_pairs) == 0:
+            return []
+
+        cond = or_(*[and_(Photo.native_id == native, Photo.device_id == device)
+                     for (device, native) in device_native_id_pairs])
+        return db.query(self.model).filter(cond).all()
+
+    def get_latest_photo(self, db: Session, device_id: str) -> Optional[Photo]:
+        return (db.query(self.model)
+                .filter_by(device_id=device_id)
+                .order_by(self.model.creation_date.desc())
+                .first())
 
         # def create_with_owner(
         #     self, db: Session, *, obj_in: ItemCreate, owner_id: int

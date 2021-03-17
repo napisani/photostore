@@ -1,6 +1,7 @@
 import os
 import re
-from typing import Optional
+import shutil
+from typing import Optional, List
 
 import magic
 from PIL import Image
@@ -14,8 +15,10 @@ from app.core.config import settings
 from app.crud.crud_photo import PhotoRepo
 from app.exception.photo_exceptions import PhotoExceptions
 from app.models.pagination import Pagination
+from app.models.photo_model import Photo
 from app.schemas.pagination_schema import PaginationSchema
-from app.schemas.photo_schema import PhotoSchemaFull, PhotoSchemaAdd, PhotoSchemaUpdate
+from app.schemas.photo_schema import PhotoSchemaFull, PhotoSchemaAdd, PhotoSchemaUpdate, PhotoDiffRequestSchema, \
+    PhotoDiffResultSchema
 from app.utils import get_file_checksum
 
 register_heif_opener()
@@ -56,12 +59,14 @@ def _get_unique_filename(filename):
         return _get_unique_filename(f'{filename_pre}{filename_split[1]}')
 
 
-def _save_photo_file(uploaded_file):
+def _save_photo_file(filename: str, uploaded_file):
     try:
-        filename = secure_filename(uploaded_file.filename)
+        filename = secure_filename(filename)
         filename = _get_unique_filename(filename)
         destination_file = _get_destination_path(filename)
-        uploaded_file.save(destination_file)
+        # uploaded_file.save(destination_file)
+        with open(destination_file, 'wb') as dest_file:
+            shutil.copyfileobj(uploaded_file, dest_file)
         return {"filename": filename, 'path': destination_file}
     except:
         raise
@@ -103,9 +108,9 @@ def _create_thumbnail(photo_path, photo_filename):
 def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull:
     logger.debug('in add_photo photo: {}', photo)
     # photo.id = None
-    save_file_return = _save_photo_file(file)
+    save_file_return = _save_photo_file(photo.filename, file)
     logger.debug('in add_photo save_file_return :{}', save_file_return)
-    photo_full = PhotoSchemaFull(data=photo.dict())
+    photo_full = PhotoSchemaFull.parse_obj(photo.dict())
 
     photo_full.filename = save_file_return['filename']
     photo_full.path = save_file_return['path']
@@ -121,7 +126,7 @@ def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull:
         raise PhotoExceptions.failed_to_save_photo_to_db()
 
     logger.debug('in add_photo added_photo :{}', added_photo)
-    return PhotoSchemaFull.from_orm(photo)
+    return PhotoSchemaFull.from_orm(added_photo)
 
 
 def delete_photo(db: Session, photo_id: int):
@@ -145,8 +150,9 @@ def get_photo(db: Session, photo_id: int) -> PhotoSchemaFull:
     return PhotoSchemaFull.from_orm(PhotoRepo.get_by_id(db, id=photo_id))
 
 
-def get_latest_photo(db: Session) -> Optional[PhotoSchemaFull]:
-    return PhotoSchemaFull.from_orm(PhotoRepo.get_latest_photo(db))
+def get_latest_photo(db: Session, device_id: str) -> Optional[PhotoSchemaFull]:
+    photo = PhotoRepo.get_latest_photo(db, device_id)
+    return PhotoSchemaFull.from_orm(photo)
 
 
 def update_photo(db: Session, photo: PhotoSchemaUpdate) -> PhotoSchemaFull:
@@ -166,3 +172,26 @@ def get_photos(db: Session, page: int, per_page: int = 10) -> Pagination:
     pagination = PaginationSchema.from_orm(photos)
     pagination.items = [PhotoSchemaFull.from_orm(p) for p in photos.items]
     return pagination
+
+
+def diff_photos(db: Session, diff_reqs: List[PhotoDiffRequestSchema]) -> List[PhotoDiffResultSchema]:
+    pairs = [(req.device_id, req.native_id) for req in diff_reqs]
+    photos = PhotoRepo.get_photos_by_native_ids(db=db, device_native_id_pairs=pairs)
+
+    existing_dict = {photo.native_id: photo for photo in photos}
+    return [_make_diff_result(req, existing_dict.get(req.native_id)) for req in diff_reqs]
+
+
+def _make_diff_result(req: PhotoDiffRequestSchema, photo: Photo) -> PhotoDiffResultSchema:
+    res = PhotoDiffResultSchema(exists=False,
+                                same_date=False,
+                                same_checksum=False,
+                                native_id=req.native_id,
+                                device_id=req.device_id)
+    if not photo:
+        return res
+    res.exists = True
+    res.same_date = photo.modified_date == req.modified_date
+    res.same_checksum = photo.checksum == req.checksum
+    res.photo_id = photo.id
+    return res

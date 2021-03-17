@@ -12,7 +12,7 @@ class TestPhotoModel:
         logger.debug('photo {}', photo)
         photo_saved = PhotoRepo.create(db, obj_in=photo)
         logger.debug('photo_saved {}', photo_saved)
-        photo_retrieved = PhotoRepo.get_by_id(db, photo.id)
+        photo_retrieved = PhotoRepo.get_by_id(db, photo_saved.id)
         assert photo_retrieved.filename is not None
         assert photo_retrieved.filename != ''
         for attr in ['path', 'filename', 'checksum', 'gphoto_id', 'mime_type']:

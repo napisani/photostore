@@ -1,5 +1,6 @@
 import io
 import json
+from typing import List
 
 from fastapi import APIRouter, Depends
 from fastapi import File, UploadFile
@@ -11,8 +12,8 @@ from app.api import deps
 from app.exception.photo_exceptions import PhotoExceptions
 from app.schemas.health_schema import HealthSchema
 from app.schemas.pagination_schema import PaginationSchema
-from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull
-from app.service.photo_service import get_photos, allowed_file, add_photo, get_photo
+from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull, PhotoDiffRequestSchema, PhotoDiffResultSchema
+from app.service.photo_service import get_photos, allowed_file, add_photo, get_photo, diff_photos, get_latest_photo
 
 router = APIRouter()
 
@@ -58,13 +59,15 @@ def api_upload_photo(db: Session = Depends(deps.get_db),
 
     # if user does not select file, browser also
     # submit an empty part without filename
-    if file.filename == '':
-        raise PhotoExceptions.filename_not_passed()
-    if not file or not allowed_file(file.filename):
-        raise PhotoExceptions.invalid_photo_passed()
-    # logger.debug(f'json_metadata: {json_metadata}')
     photo_info = PhotoSchemaAdd.parse_obj(meta)
-    added_photo = add_photo(db, photo=photo_info, file=file)
+    logger.debug(f'photo_info: {photo_info}')
+
+    if photo_info.filename == '':
+        raise PhotoExceptions.filename_not_passed()
+    if not file or not allowed_file(photo_info.filename):
+        raise PhotoExceptions.invalid_photo_passed()
+
+    added_photo = add_photo(db, photo=photo_info, file=file.file)
     logger.debug('view_upload_photo added_photo {}', added_photo)
     return added_photo
 
@@ -83,3 +86,18 @@ def api_get_thumbnail_image(photo_id: int, db: Session = Depends(deps.get_db)):
     logger.debug('view_get_fullsize photo: {}', photo)
     with open(photo.thumbnail_path, 'rb') as f:
         return StreamingResponse(io.BytesIO(f.read()), media_type="image/png")
+
+
+@router.post('/diff', response_model=List[PhotoDiffResultSchema])
+def api_do_diff(diff_items: List[PhotoDiffRequestSchema], db: Session = Depends(deps.get_db)) \
+        -> List[PhotoDiffResultSchema]:
+    result_list = diff_photos(db=db, diff_reqs=diff_items)
+    logger.debug('api_do_diff result_list: {}', result_list)
+    return result_list
+
+
+@router.get('/latest/{device_id}', response_model=PhotoSchemaFull)
+def api_get_latest_photo_for_device(device_id: str, db=Depends(deps.get_db)) -> PhotoSchemaFull:
+    photo = get_latest_photo(db=db, device_id=device_id)
+    logger.debug('api_get_latest_photo_for_device photo: {}', photo)
+    return photo
