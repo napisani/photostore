@@ -13,6 +13,7 @@ import 'media_repository.dart';
 
 class MediaAPIRepository extends MediaRepository<Photo> {
   final http.Client httpClient = locator<http.Client>();
+  final String deviceId = "iphone";
 
   MediaAPIRepository();
 
@@ -29,13 +30,14 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     var request =
         new http.MultipartRequest("POST", Uri.parse('${_getBaseURL()}/upload'));
     // request.fields['metadata'] = jsonEncode({'id': photo.id});
+    final Map<String, dynamic> json = photo.toJson();
+    final String path = (await photo.originFile).path;
+    json['filename'] = path;
     final MultipartFile metadata = MultipartFile.fromString(
-        'metadata', jsonEncode({'id': 0, 'thumbnail_path': ''}),
+        'metadata', jsonEncode(json),
         filename: "metadata");
-
-    final MultipartFile file = await MultipartFile.fromPath(
-        'file', (await photo.originFile).path,
-        filename: 'file');
+    final MultipartFile file =
+        await MultipartFile.fromPath('file', path, filename: photo.filename);
     request.files.add(metadata);
     request.files.add(file);
 
@@ -68,12 +70,12 @@ class MediaAPIRepository extends MediaRepository<Photo> {
 
   Future<Photo> getLastBackedUpPhoto() async {
     print("MediaAPIRepository getLastBackedUpPhoto baseUrl: ${_getBaseURL()}");
-    final String url = "${_getBaseURL()}/latest";
+    final String url = "${_getBaseURL()}/latest/$deviceId";
     final response = await http.get("$url");
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
 
-      return data.containsKey('id')
+      return data != null && data.containsKey('id')
           ? mapResponseToPhoto(data)
           :
           //no photos currently backed up

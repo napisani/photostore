@@ -43,4 +43,20 @@ class MobilePhoto extends AgnosticMedia {
 
   @override
   List<Object> get props => [...super.props, checksum, gphotoId, mimeType];
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'checksum': checksum,
+        'gphoto_id': gphotoId,
+        'mime_type': mimeType,
+        'creation_date': creationDate.toString(),
+        'modified_date': modifiedDate.toString(),
+        'filename': filename,
+        'native_id': nativeId,
+        'device_id': deviceId,
+        'width': width,
+        'height': height,
+        'longitude': longitude,
+        'latitude': latitude
+      };
 }

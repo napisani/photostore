@@ -37,6 +37,8 @@ class Photo extends AgnosticMedia {
             latitude: latitude,
             filename: filename);
 
+
+
   @override
   List<Object> get props => [...super.props, checksum, gphotoId, mimeType];
 }
