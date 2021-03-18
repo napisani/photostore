@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:photostore_flutter/core/model/photo_diff_request.dart';
 
 import 'media_contents.dart';
 
@@ -34,9 +35,14 @@ abstract class AgnosticMedia extends Equatable {
     this.nativeId,
   }) : super();
 
+  toDiffRequest() => PhotoDiffRequest(
+      nativeId: nativeId,
+      modifiedDate: modifiedDate,
+      checksum: '',
+      deviceId: deviceId);
+
   @override
-  List<Object> get props =>
-      [
+  List<Object> get props => [
         id,
         creationDate,
         modifiedDate,

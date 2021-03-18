@@ -1,8 +1,8 @@
 class BackupStats {
   final int backedUpPhotoCount;
   final String lastBackedUpPhotoId;
-  final DateTime lastBackedUpPhotoCreateDate;
+  final DateTime lastBackedUpPhotoModifyDate;
 
   const BackupStats({this.backedUpPhotoCount,  this.lastBackedUpPhotoId,
-      this.lastBackedUpPhotoCreateDate});
+      this.lastBackedUpPhotoModifyDate});
 }

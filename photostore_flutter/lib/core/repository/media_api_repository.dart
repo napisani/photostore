@@ -1,19 +1,19 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:photostore_flutter/core/model/media_contents.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo.dart';
+import 'package:photostore_flutter/core/model/photo_diff_request.dart';
+import 'package:photostore_flutter/core/model/photo_diff_result.dart';
 import 'package:photostore_flutter/locator.dart';
 
 import 'media_repository.dart';
 
 class MediaAPIRepository extends MediaRepository<Photo> {
   final http.Client httpClient = locator<http.Client>();
-  final String deviceId = "iphone";
+  final String deviceId = "test_iphone";
 
   MediaAPIRepository();
 
@@ -31,6 +31,7 @@ class MediaAPIRepository extends MediaRepository<Photo> {
         new http.MultipartRequest("POST", Uri.parse('${_getBaseURL()}/upload'));
     // request.fields['metadata'] = jsonEncode({'id': photo.id});
     final Map<String, dynamic> json = photo.toJson();
+    json['device_id'] = deviceId;
     final String path = (await photo.originFile).path;
     json['filename'] = path;
     final MultipartFile metadata = MultipartFile.fromString(
@@ -87,25 +88,42 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     }
   }
 
+  Future<int> getPhotoCount() async {
+    print("MediaAPIRepository getPhotoCount baseUrl: ${_getBaseURL()}");
+    final String url = "${_getBaseURL()}/count/$deviceId";
+    final response = await http.get("$url");
+    if (response.statusCode == 200) {
+      return int.parse(response.body);
+    } else {
+      final Exception ex = Exception('error getting photo count from server');
+      print("MediaAPIRepository.getPhotoCount $ex");
+      throw ex;
+    }
+  }
+
+  Future<List<PhotoDiffResult>> diffPhotos(
+      List<PhotoDiffRequest> photoDiffReqs) async {
+    print("MediaAPIRepository diffPhotos baseUrl: ${_getBaseURL()}");
+    final String url = "${_getBaseURL()}/diff";
+    final List<Map<String, dynamic>> reqs =
+        photoDiffReqs.map<Map<String, dynamic>>((req) => req.toJson()).toList();
+
+    final response = await http.post("$url", body: json.encoder.convert(reqs));
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data
+          .map<PhotoDiffResult>((jsonData) => PhotoDiffResult.fromJson(jsonData))
+          .toList();
+    } else {
+      final Exception ex = Exception(
+          'error getting photo differences between the mobile device and the server');
+      print("MediaAPIRepository.diffPhotos $ex");
+      throw ex;
+    }
+  }
+
   Photo mapResponseToPhoto(Map<String, dynamic> item) {
     final String url = "${_getBaseURL()}/thumbnail/${item['id']}";
-    return Photo(
-        id: item['id'].toString(),
-        checksum: item['checksum'],
-        gphotoId: item['gphoto_id'],
-        filename: item['filename'],
-        width: item['width'],
-        height: item['height'],
-        longitude: item['longitude'],
-        latitude: item['latitude'],
-        nativeId: item['native_id'],
-        deviceId: item['device_id'],
-        creationDate: DateTime.parse(item['creation_date']),
-        modifiedDate: DateTime.parse(item['modified_date']),
-        getThumbnailProviderOfSize: (double width, double height) =>
-            NetworkImage(url),
-        thumbnailProvider: NetworkImage(url),
-        thumbnail: Future.value(MediaContents.url(url)),
-        mimeType: item['mime_type']);
+    return Photo.fromJson(item, url);
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:photostore_flutter/core/model/agnostic_media.dart';
 import 'package:photostore_flutter/core/model/backup_stats.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
@@ -9,15 +8,16 @@ import 'package:photostore_flutter/locator.dart';
 
 class BackupModel with ChangeNotifier {
   List<MobilePhoto> queuedPhotos;
-
   ScreenStatus screenStatus = ScreenStatus.uninitialized();
   BackupStats stats;
+  bool backupFinished = false;
 
   final BackupService _backupService = locator<BackupService>();
 
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
 
   BackupModel() {
+    this.reinit();
     _registerAppSettingsListener();
   }
 
@@ -25,6 +25,14 @@ class BackupModel with ChangeNotifier {
     this._appSettingsService.appSettingsAsStream.listen((event) {
       if (screenStatus.type != ScreenStatusType.UNINITIALIZED) {}
     });
+  }
+
+  void reinit() {
+    this.screenStatus = ScreenStatus.uninitialized();
+    this.queuedPhotos = null;
+    this.stats = null;
+    backupFinished = false;
+    notifyListeners();
   }
 
   Future<void> loadBackupStats() async {
@@ -41,15 +49,32 @@ class BackupModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadQueue() async {
+  Future<void> loadIncrementalBackupQueue() async {
+    this.backupFinished = false;
     this.screenStatus = ScreenStatus.loading();
     notifyListeners();
     try {
       queuedPhotos = await _backupService
-          .getBackupQueue(stats.lastBackedUpPhotoCreateDate);
+          .getBackupQueueUsingDate(stats.lastBackedUpPhotoModifyDate);
       this.screenStatus = ScreenStatus.success();
     } catch (err) {
-      print('[BackupModel] got error in loadQueue ${err.toString()}');
+      print('[BackupModel] got error in loadIncrementalBackupQueue ${err.toString()}');
+      queuedPhotos = null;
+      this.screenStatus = ScreenStatus.error(err.toString());
+    }
+    notifyListeners();
+  }
+
+  Future<void> loadFullBackupQueue() async {
+    this.backupFinished = false;
+    this.screenStatus = ScreenStatus.loading();
+    notifyListeners();
+    try {
+      queuedPhotos = await _backupService
+          .getFullBackupQueue();
+      this.screenStatus = ScreenStatus.success();
+    } catch (err) {
+      print('[BackupModel] got error in loadFullBackupQueue ${err.toString()}');
       queuedPhotos = null;
       this.screenStatus = ScreenStatus.error(err.toString());
     }
@@ -60,14 +85,15 @@ class BackupModel with ChangeNotifier {
     this.screenStatus = ScreenStatus.loading();
     notifyListeners();
     try {
-       await _backupService
-          .doBackup(queuedPhotos);
+      await _backupService.doBackup(queuedPhotos);
       this.screenStatus = ScreenStatus.success();
+      this.backupFinished = true;
+      this.queuedPhotos = null;
+      this.loadBackupStats();
     } catch (err) {
       print('[BackupModel] got error in doBackup ${err.toString()}');
       this.screenStatus = ScreenStatus.error(err.toString());
     }
     notifyListeners();
   }
-
 }
