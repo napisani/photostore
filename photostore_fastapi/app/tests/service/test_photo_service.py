@@ -7,7 +7,7 @@ from werkzeug.datastructures import FileStorage
 
 from app.schemas.photo_schema import PhotoSchemaUpdate, PhotoDiffRequestSchema, PhotoSchemaAdd, PhotoSchemaFull
 from app.service.photo_service import _get_unique_filename, add_photo, delete_photo, get_photo, update_photo, \
-    get_latest_photo, get_photos, diff_photos
+    get_latest_photo, get_photos, diff_photos, count_photos
 from app.utils import get_file_checksum
 
 
@@ -126,3 +126,11 @@ class TestPhotoService:
         assert not res_dict[photo_missing.native_id].exists
         assert not res_dict[photo_missing.native_id].same_date
         assert not res_dict[photo_missing.native_id].same_checksum
+
+    def test_add_photo_and_count(self, app_settings, db, photo_factory):
+        logger.debug('test_add_photo_and_count')
+        photo = photo_factory()
+        file = FileStorage(stream=open(photo.path, 'rb'), filename=photo.filename)
+        saved_photo = add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo)), file)
+        count = count_photos(db, saved_photo.device_id)
+        assert count == 1

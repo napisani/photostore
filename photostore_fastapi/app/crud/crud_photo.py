@@ -32,6 +32,11 @@ class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
                 .order_by(self.model.creation_date.desc())
                 .first())
 
+    def get_photo_count_by_device_id(self, db: Session, device_id):
+        return (db.query(self.model)
+                .filter_by(device_id=device_id)
+                .count())
+
         # def create_with_owner(
         #     self, db: Session, *, obj_in: ItemCreate, owner_id: int
         # ) -> Item:

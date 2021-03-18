@@ -13,7 +13,8 @@ from app.exception.photo_exceptions import PhotoExceptions
 from app.schemas.health_schema import HealthSchema
 from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull, PhotoDiffRequestSchema, PhotoDiffResultSchema
-from app.service.photo_service import get_photos, allowed_file, add_photo, get_photo, diff_photos, get_latest_photo
+from app.service.photo_service import get_photos, allowed_file, add_photo, get_photo, diff_photos, get_latest_photo, \
+    count_photos
 
 router = APIRouter()
 
@@ -101,3 +102,10 @@ def api_get_latest_photo_for_device(device_id: str, db=Depends(deps.get_db)) -> 
     photo = get_latest_photo(db=db, device_id=device_id)
     logger.debug('api_get_latest_photo_for_device photo: {}', photo)
     return photo
+
+
+@router.get('/count/{device_id}', response_model=int)
+def api_get_photo_count(device_id: str, db=Depends(deps.get_db)) -> int:
+    photo_count = count_photos(db=db, device_id=device_id)
+    logger.debug('api_get_photo_count photo_count: {}', photo_count)
+    return photo_count

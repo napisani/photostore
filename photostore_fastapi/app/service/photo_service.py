@@ -108,6 +108,8 @@ def _create_thumbnail(photo_path, photo_filename):
 def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull:
     logger.debug('in add_photo photo: {}', photo)
     # photo.id = None
+    base_path, filename = os.path.split(photo.filename)
+    photo.filename = filename
     save_file_return = _save_photo_file(photo.filename, file)
     logger.debug('in add_photo save_file_return :{}', save_file_return)
     photo_full = PhotoSchemaFull.parse_obj(photo.dict())
@@ -195,3 +197,7 @@ def _make_diff_result(req: PhotoDiffRequestSchema, photo: Photo) -> PhotoDiffRes
     res.same_checksum = photo.checksum == req.checksum
     res.photo_id = photo.id
     return res
+
+
+def count_photos(db: Session, device_id: str) -> int:
+    return PhotoRepo.get_photo_count_by_device_id(db, device_id)

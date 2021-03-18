@@ -84,3 +84,11 @@ class TestPhotosAPI:
         url = f'/api/v1/photos/latest/{photo.device_id}'
         resp = test_client.get(url)
         assert resp
+
+
+    def test_count_photos(self, mocker, test_client, photo_factory):
+        photo = photo_factory()
+        mocker.patch('app.api.api_v1.endpoints.photos.count_photos', return_value=1)
+        url = f'/api/v1/photos/count/{photo.device_id}'
+        resp = test_client.get(url)
+        assert resp

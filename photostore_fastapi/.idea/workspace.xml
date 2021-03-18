@@ -19,7 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="adding all mobile attirubtes - fixed schemas for Add and Update specific">
+    <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="photo upload working">
+      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo_diff_request.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo_diff_result.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/backup_stats_widget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/screen_error_widget.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore-api/migrations/script.py.mako" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore-api/migrations/script.py.mako" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore-api/migrations/versions/1406b069ce17_.py" beforeDir="false" />
@@ -31,15 +35,18 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/crud/crud_photo.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/crud/crud_photo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/photo_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/photo_schema.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/service/photo_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/photo_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/tests/api/api_v1/endpoints/test_photos.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/api/api_v1/endpoints/test_photos.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/tests/factories.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/factories.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/tests/model/test_photo_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/model/test_photo_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/tests/service/test_photo_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/service/test_photo_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/mobile_photo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/mobile_photo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/agnostic_media.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/agnostic_media.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/backup_stats.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/backup_stats.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_api_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_api_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/backup_services.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/backup_services.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/server_media_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/server_media_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/backup_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/backup_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_backup_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_backup_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +207,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1615146085437</updated>
-      <workItem from="1615146086776" duration="37076000" />
+      <workItem from="1615146086776" duration="40257000" />
     </task>
     <task id="LOCAL-00001" summary="adding all mobile attirubtes - fixed schemas for Add and Update specific">
       <created>1615777399372</created>
@@ -216,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615779353789</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="photo upload working">
+      <created>1615950060199</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1615950060199</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,7 +249,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="adding all mobile attirubtes - fixed schemas for Add and Update specific" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding all mobile attirubtes - fixed schemas for Add and Update specific" />
+    <MESSAGE value="photo upload working" />
+    <option name="LAST_COMMIT_MESSAGE" value="photo upload working" />
   </component>
   <component name="WindowStateProjectService">
     <state x="619" y="449" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1615946388474">
@@ -358,9 +373,10 @@
       <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="461" y="209" key="SettingsEditor/0.23.1920.1100@0.23.1920.1100" timestamp="1615934384093" />
-    <state x="1380" y="758" key="Vcs.Push.Dialog.v2" timestamp="1615779355262">
-      <screen x="0" y="23" width="3840" height="2054" />
+    <state x="690" y="420" key="Vcs.Push.Dialog.v2" timestamp="1615950062360">
+      <screen x="0" y="23" width="1920" height="1109" />
     </state>
+    <state x="690" y="420" key="Vcs.Push.Dialog.v2/0.23.1920.1109@0.23.1920.1109" timestamp="1615950062360" />
     <state x="1380" y="758" key="Vcs.Push.Dialog.v2/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1615779355262" />
     <state width="480" height="547" key="XDebugger.FullValuePopup" timestamp="1615253998011">
       <screen x="0" y="23" width="1920" height="1095" />
@@ -468,7 +484,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/service/photo_service.py</url>
-          <line>180</line>
+          <line>182</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -478,12 +494,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/service/photo_service.py</url>
-          <line>178</line>
+          <line>180</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/service/photo_service.py</url>
-          <line>117</line>
+          <line>119</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -498,7 +514,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py</url>
-          <line>66</line>
+          <line>67</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
