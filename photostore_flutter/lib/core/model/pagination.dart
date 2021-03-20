@@ -15,19 +15,22 @@ class Pagination<T> extends Equatable {
   final int page;
 
   int get remainingPages => ((total - (page * perPage)) / perPage).ceil();
+
   bool get hasMorePages => this.page == 0 || remainingPages > 0;
 
   const Pagination(
       {this.items = const [], this.perPage = 0, this.total = 0, this.page = 0});
 
-  factory Pagination.combineWith(Pagination<T> p,Pagination<T> p2) {
-    if(p == null || p.items == null || p.items.isEmpty){
+  factory Pagination.combineWith(Pagination<T> p, Pagination<T> p2) {
+    if (p == null || p.items == null || p.items.isEmpty) {
       return p2;
     }
+    final List<T> newItems = [...p?.items, ...p2?.items];
     return new Pagination(
-        items: p.items..addAll(p2.items),
+        items: newItems,
         perPage: p2.perPage,
-        page: p2.page);
+        page: p2.page,
+        total: p2.total);
   }
 
   @override

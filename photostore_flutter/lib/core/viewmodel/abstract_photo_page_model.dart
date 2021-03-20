@@ -8,7 +8,6 @@ import 'package:photostore_flutter/locator.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class AbstractPhotoPageModel with ChangeNotifier {
-
   bool initialized = false;
   bool loading = false;
   String error;
@@ -36,6 +35,9 @@ abstract class AbstractPhotoPageModel with ChangeNotifier {
 
   void _registerCurrentPhotoPageListener() {
     photoPageService.currentPhotoPageAsStream.listen((event) {
+      print('currentPhotoPageAsStream.subscription page:${event?.page} '
+          'total: ${event?.total} '
+          'hasMorePages:${event?.hasMorePages} ');
       photoPage = event;
       notifyListeners();
     });
@@ -57,10 +59,12 @@ abstract class AbstractPhotoPageModel with ChangeNotifier {
           if (event is PhotoPageFetchEvent) {
             initialized = true;
             try {
+              print('in loadPage process started: ${event.page}');
+
               await photoPageService.loadPage(event.page);
-            } catch (err) {
+            } catch (err, s) {
               error = err.toString();
-              print(err);
+              print("AbstractPhotoPageModel:_registerEventListener failed to load loadPage: $err, $s");
               notifyListeners();
             }
           } else if (event is PhotoPageResetEvent) {
@@ -75,6 +79,7 @@ abstract class AbstractPhotoPageModel with ChangeNotifier {
   }
 
   void loadPage(int pageNumber) {
+    print('in loadPage: $pageNumber');
     _eventStream.add(PhotoPageFetchEvent(pageNumber));
   }
 

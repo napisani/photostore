@@ -34,7 +34,8 @@ class BackupService {
       morePhotos.items.removeWhere(
           (element) => element.creationDate.compareTo(lastBackedUpDate) <= 0);
       final bool done = previousCount != morePhotos.items.length;
-      queuedPhotos = Pagination.combineWith(queuedPhotos, morePhotos);
+      queuedPhotos = morePhotos;
+      // queuedPhotos = Pagination.combineWith(queuedPhotos, morePhotos);
       if (done) {
         break;
       }
@@ -66,7 +67,11 @@ class BackupService {
     return List<MobilePhoto>.from(queuedPhotos);
   }
 
-  Future<void> doBackup(List<MobilePhoto> queue) async {
+  Future<void> doBackup(List<MobilePhoto> queueIn) async {
+    List<MobilePhoto> queue = [...queueIn];
+    queue.sort((a,b) {
+      return a.modifiedDate.compareTo(b.modifiedDate);
+    });
     print('doBackup');
     for (MobilePhoto photo in queue) {
       await _serverMediaService.uploadPhoto(photo);

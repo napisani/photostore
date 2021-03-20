@@ -57,8 +57,8 @@ class BackupModel with ChangeNotifier {
       queuedPhotos = await _backupService
           .getBackupQueueUsingDate(stats.lastBackedUpPhotoModifyDate);
       this.screenStatus = ScreenStatus.success();
-    } catch (err) {
-      print('[BackupModel] got error in loadIncrementalBackupQueue ${err.toString()}');
+    } catch (err, s) {
+      print('[BackupModel] got error in loadIncrementalBackupQueue ${err.toString()} $s');
       queuedPhotos = null;
       this.screenStatus = ScreenStatus.error(err.toString());
     }
@@ -90,8 +90,8 @@ class BackupModel with ChangeNotifier {
       this.backupFinished = true;
       this.queuedPhotos = null;
       this.loadBackupStats();
-    } catch (err) {
-      print('[BackupModel] got error in doBackup ${err.toString()}');
+    } catch (err, s) {
+      print('[BackupModel] got error in doBackup ${err.toString()}, stack: $s');
       this.screenStatus = ScreenStatus.error(err.toString());
     }
     notifyListeners();

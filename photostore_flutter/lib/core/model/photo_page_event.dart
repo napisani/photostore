@@ -15,7 +15,7 @@ class PhotoPageFetchEvent extends PhotoPageEvent {
   PhotoPageFetchEvent(this.page) : super();
 
   @override
-  List<Object> get props => [page];
+  List<Object> get props => [];
 }
 
 class PhotoPageResetEvent extends PhotoPageEvent {

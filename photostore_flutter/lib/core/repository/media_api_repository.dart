@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -30,28 +31,31 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     var request =
         new http.MultipartRequest("POST", Uri.parse('${_getBaseURL()}/upload'));
     // request.fields['metadata'] = jsonEncode({'id': photo.id});
-    final Map<String, dynamic> json = photo.toJson();
-    json['device_id'] = deviceId;
+    final Map<String, dynamic> jsonData = photo.toJson();
+    jsonData['device_id'] = deviceId;
     final String path = (await photo.originFile).path;
-    json['filename'] = path;
+    jsonData['filename'] = path;
     final MultipartFile metadata = MultipartFile.fromString(
-        'metadata', jsonEncode(json),
+        'metadata', jsonEncode(jsonData),
         filename: "metadata");
     final MultipartFile file =
         await MultipartFile.fromPath('file', path, filename: photo.filename);
     request.files.add(metadata);
     request.files.add(file);
 
-    request.send().then((response) {
-      if (response.statusCode == 200) print("Uploaded!");
-    });
+    // request.send().then((response) {
+    //   if (response.statusCode == 200) print("Uploaded!");
+    // });
+    final StreamedResponse resp = await request.send();
+    // final Map<String, dynamic> data = json.decode(response.body);
+    // print(data);
     return null;
   }
 
   Future<Pagination<Photo>> getPhotosByPage(int page) async {
     print(
         "MediaAPIRepository getPhotosByPage baseUrl: ${_getBaseURL()} page: $page");
-    final response = await http.get("${_getBaseURL()}/$page");
+    final response = await http.get(Uri.parse("${_getBaseURL()}/$page"));
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       print(data);
@@ -72,7 +76,7 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   Future<Photo> getLastBackedUpPhoto() async {
     print("MediaAPIRepository getLastBackedUpPhoto baseUrl: ${_getBaseURL()}");
     final String url = "${_getBaseURL()}/latest/$deviceId";
-    final response = await http.get("$url");
+    final response = await http.get(Uri.parse("$url"));
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
 
@@ -91,7 +95,7 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   Future<int> getPhotoCount() async {
     print("MediaAPIRepository getPhotoCount baseUrl: ${_getBaseURL()}");
     final String url = "${_getBaseURL()}/count/$deviceId";
-    final response = await http.get("$url");
+    final response = await http.get(Uri.parse("$url"));
     if (response.statusCode == 200) {
       return int.parse(response.body);
     } else {
@@ -108,7 +112,7 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     final List<Map<String, dynamic>> reqs =
         photoDiffReqs.map<Map<String, dynamic>>((req) => req.toJson()).toList();
 
-    final response = await http.post("$url", body: json.encoder.convert(reqs));
+    final response = await http.post(Uri.parse("$url"), body: json.encoder.convert(reqs));
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data

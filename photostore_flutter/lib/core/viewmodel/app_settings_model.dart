@@ -24,8 +24,9 @@ class AppSettingsModel with ChangeNotifier {
     notifyListeners();
     try {
       appSettings = await _appSettingsService.saveSettings(newAppSettings);
-    } catch (err) {
+    } catch (err, s) {
       error = err.toString();
+      print('AppSettingsModel:save failed to save: $err, stack: $s');
     }
     loading = false;
     notifyListeners();
