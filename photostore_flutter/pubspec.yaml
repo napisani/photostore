@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   settings_ui: ^0.6.0
 
+  dio: ^3.0.10
   #  photo_gallery: ^0.3.0
   photo_manager: ^1.0.2
 #  flutter_bloc: ^6.1.1
@@ -37,10 +38,15 @@ dependencies:
   get_it: ^6.0.0
 #  bloc: ^6.1.1
   rxdart: ^0.26.0
-  http: ^0.13.1
+#  http: ^0.13.1
   equatable: ^2.0.0
   bloc_test: ^8.0.0
   photo_view: ^0.11.1
+
+
+
+  photo_gallery: ^0.4.0
+
 
   shared_preferences: ^2.0.5
 dev_dependencies:

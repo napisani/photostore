@@ -33,7 +33,7 @@ class PhotoGridWidget extends StatelessWidget {
             child: GestureDetector(
               onTap: () => _onPress(index),
               child: FutureBuilder<MediaContents>(
-                future: photos.items[index].thumbnail,
+                future: photos.items[index].getThumbnail(),
                 builder: (context, AsyncSnapshot<MediaContents> snapshot) {
                   if (snapshot.hasData) {
                     // print('grid tile build - hasData');

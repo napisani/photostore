@@ -69,12 +69,35 @@ class BackupService {
 
   Future<void> doBackup(List<MobilePhoto> queueIn) async {
     List<MobilePhoto> queue = [...queueIn];
-    queue.sort((a,b) {
+    queue.sort((a, b) {
       return a.modifiedDate.compareTo(b.modifiedDate);
     });
     print('doBackup');
+    List<MobilePhoto> batch = [];
     for (MobilePhoto photo in queue) {
-      await _serverMediaService.uploadPhoto(photo);
+      if (photo.assetType != 1) {
+        print('not a photo - skipping');
+      } else {
+        batch.add(photo);
+      }
+      if (batch.length == 5) {
+        await _backupBatch(batch);
+        batch.clear();
+      }
+    }
+    await _backupBatch(batch);
+    print('doBackup - done!');
+  }
+
+  Future<void> _backupBatch(List<MobilePhoto> batch) async {
+    if (batch.isNotEmpty) {
+      try {
+        await Future.wait(batch
+            .map((p) async => await _serverMediaService.uploadPhoto(p))
+            .toList());
+      } catch (e, s) {
+        print('an error occurred uploading photo e: $e stack: $s ');
+      }
     }
   }
 

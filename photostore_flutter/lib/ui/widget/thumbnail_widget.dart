@@ -11,7 +11,7 @@ class ThumbnailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<MediaContents>(
-        future: this.photo.thumbnail,
+        future: this.photo.getThumbnail(),
         builder: (context, AsyncSnapshot<MediaContents> snapshot) {
           if (snapshot.hasData) {
             // print('grid tile build - hasData');

@@ -2,19 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:photostore_flutter/core/model/agnostic_media.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/repository/media_repository.dart';
-import 'package:photostore_flutter/core/service/app_settings_service.dart';
-import 'package:photostore_flutter/locator.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class AbstractPhotoPageService {
-
-
-
   @protected
   final MediaRepository mediaRepo;
-  final BehaviorSubject<
-      Pagination<AgnosticMedia>> _photoPage = BehaviorSubject.seeded(
-      Pagination<AgnosticMedia>());
+  final BehaviorSubject<Pagination<AgnosticMedia>> _photoPage =
+      BehaviorSubject.seeded(Pagination<AgnosticMedia>());
+  //
+  // final BehaviorSubject<Pagination<AgnosticMedia>> _photoPageFake =
+  //     BehaviorSubject.seeded(Pagination<AgnosticMedia>());
 
   AbstractPhotoPageService({@required this.mediaRepo});
 

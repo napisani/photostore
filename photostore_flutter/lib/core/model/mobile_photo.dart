@@ -2,24 +2,27 @@ import 'dart:io';
 
 import 'agnostic_media.dart';
 
+typedef FileGetterFunction = Future<File> Function();
+
 class MobilePhoto extends AgnosticMedia {
   final String checksum;
   final String gphotoId;
   final String mimeType;
-  final Future<File> originFile;
+  final FileGetterFunction getOriginFile;
 
   const MobilePhoto({
     id,
     this.checksum,
     this.gphotoId,
     this.mimeType,
+    assetType,
     creationDate,
     modifiedDate,
     filename,
-    thumbnail,
+    getThumbnail,
     thumbnailProvider,
     getThumbnailProviderOfSize,
-    this.originFile,
+    this.getOriginFile,
     nativeId,
     deviceId,
     width,
@@ -29,7 +32,7 @@ class MobilePhoto extends AgnosticMedia {
   }) : super(
             id: id,
             creationDate: creationDate,
-            thumbnail: thumbnail,
+            getThumbnail: getThumbnail,
             thumbnailProvider: thumbnailProvider,
             getThumbnailProviderOfSize: getThumbnailProviderOfSize,
             nativeId: nativeId,
@@ -39,7 +42,8 @@ class MobilePhoto extends AgnosticMedia {
             height: height,
             longitude: longitude,
             latitude: latitude,
-            filename: filename);
+            filename: filename,
+            assetType: assetType);
 
   @override
   List<Object> get props => [...super.props, checksum, gphotoId, mimeType];

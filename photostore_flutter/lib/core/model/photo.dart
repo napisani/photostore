@@ -16,7 +16,7 @@ class Photo extends AgnosticMedia {
     creationDate,
     modifiedDate,
     filename,
-    thumbnail,
+    getThumbnail,
     thumbnailProvider,
     getThumbnailProviderOfSize,
     nativeId,
@@ -28,7 +28,7 @@ class Photo extends AgnosticMedia {
       : super(
       id: id,
       creationDate: creationDate,
-      thumbnail: thumbnail,
+      getThumbnail: getThumbnail,
       thumbnailProvider: thumbnailProvider,
       getThumbnailProviderOfSize: getThumbnailProviderOfSize,
       modifiedDate: modifiedDate,
@@ -56,8 +56,8 @@ class Photo extends AgnosticMedia {
         modifiedDate: DateTime.parse(item['modified_date']),
         getThumbnailProviderOfSize: (double width, double height) =>
             NetworkImage(url),
-        thumbnailProvider: NetworkImage(url),
-        thumbnail: Future.value(MediaContents.url(url)),
+        thumbnailProvider:  NetworkImage(url),
+        getThumbnail: ()=>Future.value(MediaContents.url(url)),
         mimeType: item['mime_type']);
   }
 

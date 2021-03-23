@@ -52,6 +52,7 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
                 id: item.id,
                 checksum: '',
                 gphotoId: '',
+                assetType: item.typeInt,
                 filename: item.title,
                 creationDate: item.createDateTime,
                 modifiedDate: item.modifiedDateTime,
@@ -61,15 +62,16 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
                 latitude: item.latitude,
                 nativeId: item.id,
                 deviceId: 'test_iphone',
-                originFile: item.originFile,
+                // originFile: ()=> item.loadFile(isOrigin: false),
+                getOriginFile: () => item.originFile,
                 getThumbnailProviderOfSize: (double width, double height) =>
-                    FutureMemoryImage(item
+                    FutureMemoryImage(() => item
                         .thumbDataWithSize(width.round(), height.round())
                         .asStream()
                         .first),
                 thumbnailProvider:
-                    FutureMemoryImage(item.thumbData.asStream().first),
-                thumbnail: item.thumbData
+                    FutureMemoryImage(() => item.thumbData.asStream().first),
+                getThumbnail: () => item.thumbData
                     .asStream()
                     .map((bin) => MediaContents.memory(bin))
                     .first,

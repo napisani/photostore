@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
+import 'package:dio/dio.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo.dart';
@@ -13,7 +12,7 @@ import 'package:photostore_flutter/locator.dart';
 import 'media_repository.dart';
 
 class MediaAPIRepository extends MediaRepository<Photo> {
-  final http.Client httpClient = locator<http.Client>();
+  final Dio httpClient = locator<Dio>();
   final String deviceId = "test_iphone";
 
   MediaAPIRepository();
@@ -28,25 +27,18 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   Future<Photo> uploadPhoto(MobilePhoto photo) async {
     print(
         "MediaAPIRepository uploadPhoto baseUrl: ${_getBaseURL()} photo: $photo");
-    var request =
-        new http.MultipartRequest("POST", Uri.parse('${_getBaseURL()}/upload'));
-    // request.fields['metadata'] = jsonEncode({'id': photo.id});
+
     final Map<String, dynamic> jsonData = photo.toJson();
     jsonData['device_id'] = deviceId;
-    final String path = (await photo.originFile).path;
-    jsonData['filename'] = path;
-    final MultipartFile metadata = MultipartFile.fromString(
-        'metadata', jsonEncode(jsonData),
-        filename: "metadata");
-    final MultipartFile file =
-        await MultipartFile.fromPath('file', path, filename: photo.filename);
-    request.files.add(metadata);
-    request.files.add(file);
-
-    // request.send().then((response) {
-    //   if (response.statusCode == 200) print("Uploaded!");
-    // });
-    final StreamedResponse resp = await request.send();
+    final File originFile = (await photo.getOriginFile());
+    jsonData['filename'] = originFile.path;
+    FormData formData = FormData.fromMap({
+      "metadata": MultipartFile.fromString(jsonEncode(jsonData),
+          filename: "metadata"),
+      "file": MultipartFile.fromFileSync(originFile.path,
+            filename: originFile.path),
+    });
+    Response res = await httpClient.post('${_getBaseURL()}/upload', data: formData);
     // final Map<String, dynamic> data = json.decode(response.body);
     // print(data);
     return null;
@@ -55,9 +47,9 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   Future<Pagination<Photo>> getPhotosByPage(int page) async {
     print(
         "MediaAPIRepository getPhotosByPage baseUrl: ${_getBaseURL()} page: $page");
-    final response = await http.get(Uri.parse("${_getBaseURL()}/$page"));
+    final response = await httpClient.get("${_getBaseURL()}/$page");
     if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
+      final Map<String, dynamic> data = response.data;
       print(data);
       return Pagination<Photo>(
           page: data['page'],
@@ -76,9 +68,9 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   Future<Photo> getLastBackedUpPhoto() async {
     print("MediaAPIRepository getLastBackedUpPhoto baseUrl: ${_getBaseURL()}");
     final String url = "${_getBaseURL()}/latest/$deviceId";
-    final response = await http.get(Uri.parse("$url"));
+    final response = await httpClient.get(url);
     if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
+      final Map<String, dynamic> data = response.data;
 
       return data != null && data.containsKey('id')
           ? mapResponseToPhoto(data)
@@ -95,9 +87,9 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   Future<int> getPhotoCount() async {
     print("MediaAPIRepository getPhotoCount baseUrl: ${_getBaseURL()}");
     final String url = "${_getBaseURL()}/count/$deviceId";
-    final response = await http.get(Uri.parse("$url"));
+    final response = await httpClient.get(url);
     if (response.statusCode == 200) {
-      return int.parse(response.body);
+      return response.data;
     } else {
       final Exception ex = Exception('error getting photo count from server');
       print("MediaAPIRepository.getPhotoCount $ex");
@@ -112,11 +104,13 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     final List<Map<String, dynamic>> reqs =
         photoDiffReqs.map<Map<String, dynamic>>((req) => req.toJson()).toList();
 
-    final response = await http.post(Uri.parse("$url"), body: json.encoder.convert(reqs));
+    final response =
+        await httpClient.post(url, data: json.encoder.convert(reqs));
     if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
+      final List<dynamic> data = response.data;
       return data
-          .map<PhotoDiffResult>((jsonData) => PhotoDiffResult.fromJson(jsonData))
+          .map<PhotoDiffResult>(
+              (jsonData) => PhotoDiffResult.fromJson(jsonData))
           .toList();
     } else {
       final Exception ex = Exception(

@@ -22,7 +22,7 @@ class MockMediaRepository extends MediaRepository<Photo> {
           filename: _randString(5) + ".png",
           gphotoId: _randString(7),
           checksum: _randString(16),
-          thumbnail: Future.value(MediaContents.url(
+          getThumbnail: () => Future.value(MediaContents.url(
               "https://upload.wikimedia.org/wikipedia/en/9/95/Test_image.jpg")),
           id: i.toString());
       i++;
