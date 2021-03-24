@@ -61,7 +61,7 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
                 longitude: item.longitude,
                 latitude: item.latitude,
                 nativeId: item.id,
-                deviceId: 'test_iphone',
+                deviceId: settings.deviceID,
                 // originFile: ()=> item.loadFile(isOrigin: false),
                 getOriginFile: () => item.originFile,
                 getThumbnailProviderOfSize: (double width, double height) =>

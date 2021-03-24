@@ -41,8 +41,8 @@ class BackupModel with ChangeNotifier {
     try {
       this.stats = await this._backupService.getPhotoBackupStats();
       this.screenStatus = ScreenStatus.success();
-    } catch (err) {
-      print('[BackupModel] got error in loadBackupStats ${err.toString()}');
+    } catch (err, s) {
+      print('[BackupModel] got error in loadBackupStats ${err.toString()} stack: $s');
       this.stats = null;
       this.screenStatus = ScreenStatus.error(err.toString());
     }
@@ -73,8 +73,8 @@ class BackupModel with ChangeNotifier {
       queuedPhotos = await _backupService
           .getFullBackupQueue();
       this.screenStatus = ScreenStatus.success();
-    } catch (err) {
-      print('[BackupModel] got error in loadFullBackupQueue ${err.toString()}');
+    } catch (err, s) {
+      print('[BackupModel] got error in loadFullBackupQueue ${err.toString()} stack: $s');
       queuedPhotos = null;
       this.screenStatus = ScreenStatus.error(err.toString());
     }

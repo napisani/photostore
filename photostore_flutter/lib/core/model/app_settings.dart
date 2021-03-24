@@ -4,16 +4,50 @@ class AppSettings extends Equatable {
   final String serverIP;
   final int serverPort;
   final bool https;
+  final String deviceID;
+  final String apiKey;
 
-  const AppSettings(this.serverIP, this.serverPort, this.https);
+  /* advanced */
+  final int batchSize;
+  final int uploadRetryAttempts;
+  final int connectTimeout; // in seconds
+  final int receiveTimeout; // in seconds
 
-  AppSettings cloneWith({String serverIP, int serverPort, bool https}) {
+  const AppSettings(
+      {this.serverIP,
+      this.serverPort,
+      this.https,
+      this.deviceID,
+      this.apiKey,
+      this.batchSize,
+      this.uploadRetryAttempts,
+      this.connectTimeout,
+      this.receiveTimeout});
+
+  AppSettings cloneWith(
+      {String serverIP,
+      int serverPort,
+      bool https,
+      String deviceID,
+      String apiKey,
+      int batchSize,
+      int uploadRetryAttempts,
+      int connectTimeout,
+      int receiveTimeout}) {
     bool newHttpsVal = this.https;
     if (https != null) {
       newHttpsVal = https;
     }
     return AppSettings(
-        serverIP ?? this.serverIP, serverPort ?? serverPort, newHttpsVal);
+        serverIP: serverIP ?? this.serverIP,
+        serverPort: serverPort ?? this.serverPort,
+        https: newHttpsVal,
+        deviceID: deviceID ?? this.deviceID,
+        apiKey: apiKey ?? this.apiKey,
+        batchSize: batchSize ?? this.batchSize,
+        uploadRetryAttempts: uploadRetryAttempts ?? this.uploadRetryAttempts,
+        connectTimeout: connectTimeout ?? this.connectTimeout,
+        receiveTimeout: receiveTimeout ?? this.receiveTimeout);
   }
 
   @override

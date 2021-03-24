@@ -7,15 +7,15 @@ import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo.dart';
 import 'package:photostore_flutter/core/model/photo_diff_request.dart';
 import 'package:photostore_flutter/core/model/photo_diff_result.dart';
+import 'package:photostore_flutter/core/service/app_settings_service.dart';
+import 'package:photostore_flutter/core/service/http_service.dart';
 import 'package:photostore_flutter/locator.dart';
 
 import 'media_repository.dart';
 
 class MediaAPIRepository extends MediaRepository<Photo> {
-  final Dio httpClient = locator<Dio>();
-  final String deviceId = "test_iphone";
+  final HTTPService _httpService = locator<HTTPService>();
 
-  MediaAPIRepository();
 
   String _getBaseURL() {
     if (this.settings != null) {
@@ -29,16 +29,18 @@ class MediaAPIRepository extends MediaRepository<Photo> {
         "MediaAPIRepository uploadPhoto baseUrl: ${_getBaseURL()} photo: $photo");
 
     final Map<String, dynamic> jsonData = photo.toJson();
-    jsonData['device_id'] = deviceId;
+    jsonData['device_id'] = settings.deviceID;
     final File originFile = (await photo.getOriginFile());
     jsonData['filename'] = originFile.path;
     FormData formData = FormData.fromMap({
-      "metadata": MultipartFile.fromString(jsonEncode(jsonData),
-          filename: "metadata"),
+      "metadata":
+          MultipartFile.fromString(jsonEncode(jsonData), filename: "metadata"),
       "file": MultipartFile.fromFileSync(originFile.path,
-            filename: originFile.path),
+          filename: originFile.path),
     });
-    Response res = await httpClient.post('${_getBaseURL()}/upload', data: formData);
+    Response res = await _httpService
+        .getHttpClient()
+        .post('${_getBaseURL()}/upload', data: formData);
     // final Map<String, dynamic> data = json.decode(response.body);
     // print(data);
     return null;
@@ -47,7 +49,8 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   Future<Pagination<Photo>> getPhotosByPage(int page) async {
     print(
         "MediaAPIRepository getPhotosByPage baseUrl: ${_getBaseURL()} page: $page");
-    final response = await httpClient.get("${_getBaseURL()}/$page");
+    final response =
+        await _httpService.getHttpClient().get("${_getBaseURL()}/$page");
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = response.data;
       print(data);
@@ -67,8 +70,8 @@ class MediaAPIRepository extends MediaRepository<Photo> {
 
   Future<Photo> getLastBackedUpPhoto() async {
     print("MediaAPIRepository getLastBackedUpPhoto baseUrl: ${_getBaseURL()}");
-    final String url = "${_getBaseURL()}/latest/$deviceId";
-    final response = await httpClient.get(url);
+    final String url = "${_getBaseURL()}/latest/${settings.deviceID}";
+    final response = await _httpService.getHttpClient().get(url);
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = response.data;
 
@@ -86,8 +89,8 @@ class MediaAPIRepository extends MediaRepository<Photo> {
 
   Future<int> getPhotoCount() async {
     print("MediaAPIRepository getPhotoCount baseUrl: ${_getBaseURL()}");
-    final String url = "${_getBaseURL()}/count/$deviceId";
-    final response = await httpClient.get(url);
+    final String url = "${_getBaseURL()}/count/${settings.deviceID}";
+    final response = await _httpService.getHttpClient().get(url);
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -104,8 +107,9 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     final List<Map<String, dynamic>> reqs =
         photoDiffReqs.map<Map<String, dynamic>>((req) => req.toJson()).toList();
 
-    final response =
-        await httpClient.post(url, data: json.encoder.convert(reqs));
+    final response = await _httpService
+        .getHttpClient()
+        .post(url, data: json.encoder.convert(reqs));
     if (response.statusCode == 200) {
       final List<dynamic> data = response.data;
       return data

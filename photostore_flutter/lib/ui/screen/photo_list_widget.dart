@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/abstract_photo_page_model.dart';
 import 'package:photostore_flutter/core/viewmodel/mobile_media_page_model.dart';
 import 'package:photostore_flutter/core/viewmodel/server_media_page_model.dart';
 import 'package:photostore_flutter/ui/screen/photo_page_notifier_mixin.dart';
 import 'package:photostore_flutter/ui/widget/photo_grid_widget.dart';
+import 'package:photostore_flutter/ui/widget/screen_error_widget.dart';
 import 'package:provider/provider.dart';
 
 class PhotoListTabWidget extends StatelessWidget {
@@ -18,12 +20,12 @@ class PhotoListTabWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return mediaSource == 'MOBILE'
         ? ChangeNotifierProvider<MobileMediaPageModel>(
-        create: (context) => MobileMediaPageModel(),
-        child: PhotoListWidget(mediaSource: mediaSource)) :
-    ChangeNotifierProvider<ServerMediaPageModel>(
-      create: (context) => ServerMediaPageModel(),
-      child: PhotoListWidget(mediaSource: mediaSource),
-    );
+            create: (context) => MobileMediaPageModel(),
+            child: PhotoListWidget(mediaSource: mediaSource))
+        : ChangeNotifierProvider<ServerMediaPageModel>(
+            create: (context) => ServerMediaPageModel(),
+            child: PhotoListWidget(mediaSource: mediaSource),
+          );
 
     print('working on mediaSource: $mediaSource');
     return PhotoListWidget(mediaSource: mediaSource);
@@ -65,15 +67,13 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
     WidgetsBinding.instance.addPostFrameCallback((_) => _loadedEnoughYet());
   }
 
-
-
-
   bool _hasPhotosLoaded() =>
       _photoPageModel.photoPage != null &&
-          _photoPageModel.photoPage.items.isNotEmpty;
+      _photoPageModel.photoPage.items.isNotEmpty;
 
   void _loadedEnoughYet() {
-    if (_hasPhotosLoaded() || _photoPageModel.initialized) {
+    if (_hasPhotosLoaded() ||
+        _photoPageModel.status.type != ScreenStatusType.UNINITIALIZED) {
       print('after first paint');
       try {
         _scrollController.position;
@@ -96,14 +96,14 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
       builder: (context, s, child) {
         final AbstractPhotoPageModel state = s;
         print(
-            'this: $this mediaSource: ${widget
-                .mediaSource} building state type of: ${state.runtimeType}');
+            'this: $this mediaSource: ${widget.mediaSource} building state type of: ${state.runtimeType}');
         print('scroll stats: $_scrollController');
 
-        if (state == null || !state.initialized) {
+        if (state == null ||
+            state.status.type == ScreenStatusType.UNINITIALIZED) {
           // _photoPageModel.loadPage(_nextPageNumber());
           return Center(
-            child: RaisedButton(
+            child: TextButton(
               child: Text(
                 "Load",
               ),
@@ -112,14 +112,20 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
               },
             ),
           );
-        } else if (state.error != null) {
+        } else if (state.status.type == ScreenStatusType.ERROR) {
           return Center(
-            child: Text("Error occurred: ${state.error}"),
+              child: ScreenErrorWidget(
+            err: state.status.error,
+            onDismiss: () => state.reset(),
+          ));
+        } else if (state.status.type == ScreenStatusType.LOADING) {
+          return Center(
+            child: Text("Loading..."),
           );
-        } else {
+        } else if (state.status.type == ScreenStatusType.SUCCESS) {
           if (state.photoPage?.items == null || state.photoPage.items.isEmpty) {
             return Center(
-              child: Text('no photos'),
+              child: Text('no photos found'),
             );
           }
           // Future.delayed(Duration.zero, () => _adjustScrollOffset());
@@ -127,6 +133,10 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
             photos: state.photoPage,
             scrollController: _scrollController,
             onPress: (photo) => _handlePhotoSelected(photo),
+          );
+        } else {
+          return Center(
+            child: Text('invalid  state type: ${state.status.type}'),
           );
         }
       },

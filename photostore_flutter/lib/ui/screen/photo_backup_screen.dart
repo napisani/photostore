@@ -41,7 +41,7 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
       if (state == null ||
           state.screenStatus.type == ScreenStatusType.UNINITIALIZED) {
         return Center(
-            child: RaisedButton(
+            child: TextButton(
           child: Text(
             "Load",
           ),
@@ -53,7 +53,7 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
         return Center(
             child: ScreenErrorWidget(
           err: state.screenStatus.error,
-          onTap: () => state.reinit(),
+          onDismiss: () => state.reinit(),
         ));
       } else if (state.screenStatus.type == ScreenStatusType.LOADING) {
         return Center(
@@ -70,16 +70,16 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
                   state.queuedPhotos == null
                       ? Column(
                           children: [
-                            RaisedButton(
+                            TextButton(
                                 child: Text('Prepare Incremental Backup'),
                                 onPressed: () => state.loadIncrementalBackupQueue()),
-                            RaisedButton(
+                            TextButton(
                                 child: Text('Prepare Full Backup'),
                                 onPressed: () => state.loadFullBackupQueue())
                           ],
                         )
                       : Center(
-                          child: RaisedButton(
+                          child: TextButton(
                               child: Text(
                                   'photos to backup: ${state.queuedPhotos.length}'),
                               onPressed: () => state.doBackup()),
@@ -87,7 +87,7 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
                 ].where((child) => child != null).toList()));
       } else {
         return Center(
-          child: Text('state type: ${state.screenStatus.type}'),
+          child: Text('invalid state type: ${state.screenStatus.type}'),
         );
       }
     });

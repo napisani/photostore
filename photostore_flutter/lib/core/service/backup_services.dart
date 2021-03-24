@@ -8,9 +8,14 @@ import 'package:photostore_flutter/core/service/mobile_media_service.dart';
 import 'package:photostore_flutter/core/service/server_media_service.dart';
 import 'package:photostore_flutter/locator.dart';
 
+import 'app_settings_service.dart';
+
 class BackupService {
+  final AppSettingsService _appSettingsService = locator<AppSettingsService>();
   final ServerMediaService _serverMediaService = locator<ServerMediaService>();
   final MobileMediaService _mobileMediaService = locator<MobileMediaService>();
+
+  BackupService() {}
 
   Future<BackupStats> getPhotoBackupStats() async {
     Photo photo = await this._serverMediaService.getLastBackedUpPhoto();
@@ -68,6 +73,7 @@ class BackupService {
   }
 
   Future<void> doBackup(List<MobilePhoto> queueIn) async {
+    final int batchSize = _appSettingsService.currentAppSettings.batchSize;
     List<MobilePhoto> queue = [...queueIn];
     queue.sort((a, b) {
       return a.modifiedDate.compareTo(b.modifiedDate);
@@ -80,7 +86,7 @@ class BackupService {
       } else {
         batch.add(photo);
       }
-      if (batch.length == 5) {
+      if (batch.length == batchSize) {
         await _backupBatch(batch);
         batch.clear();
       }

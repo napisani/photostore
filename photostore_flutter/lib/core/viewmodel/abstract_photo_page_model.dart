@@ -2,15 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:photostore_flutter/core/model/agnostic_media.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo_page_event.dart';
+import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/service/abstract_photo_page_service.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
 import 'package:photostore_flutter/locator.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class AbstractPhotoPageModel with ChangeNotifier {
-  bool initialized = false;
-  bool loading = false;
-  String error;
+  ScreenStatus status = ScreenStatus.uninitialized();
   Pagination<AgnosticMedia> photoPage;
   Subject<PhotoPageEvent> _eventStream = PublishSubject();
 
@@ -26,8 +25,8 @@ abstract class AbstractPhotoPageModel with ChangeNotifier {
 
   void _registerAppSettingsListener() {
     this._appSettingsService.appSettingsAsStream.listen((event) {
-      if (initialized) {
-        initialized = false;
+      if (status.type != ScreenStatusType.UNINITIALIZED) {
+        status = ScreenStatus.uninitialized();
         photoPageService.reset();
       }
     });
@@ -57,18 +56,19 @@ abstract class AbstractPhotoPageModel with ChangeNotifier {
         .debounceTime(const Duration(milliseconds: 50))
         .listen((PhotoPageEvent event) async {
           if (event is PhotoPageFetchEvent) {
-            initialized = true;
+            status = ScreenStatus.loading();
             try {
               print('in loadPage process started: ${event.page}');
 
               await photoPageService.loadPage(event.page);
+              status = ScreenStatus.success();
             } catch (err, s) {
-              error = err.toString();
+              status = ScreenStatus.error(err.toString());
               print("AbstractPhotoPageModel:_registerEventListener failed to load loadPage: $err, $s");
               notifyListeners();
             }
           } else if (event is PhotoPageResetEvent) {
-            initialized = false;
+            status = ScreenStatus.uninitialized();
             photoPageService.reset();
           }
         });

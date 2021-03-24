@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:photostore_flutter/core/model/app_settings.dart';
+import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/app_settings_model.dart';
-import 'package:photostore_flutter/ui/widget/settings/settings_hostname_input_widget.dart';
-import 'package:photostore_flutter/ui/widget/settings/settings_port_input_widget.dart';
+import 'package:photostore_flutter/ui/widget/screen_error_widget.dart';
+import 'package:photostore_flutter/ui/widget/settings/settings_form_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:settings_ui/settings_ui.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -14,62 +14,24 @@ class SettingsScreen extends StatelessWidget {
         create: (context) => AppSettingsModel(),
         child: Consumer<AppSettingsModel>(builder: (context, state, child) {
           Widget inner;
-          if (state == null || state.loading || !state.initialized) {
+          if (state == null ||
+              state.status.type == ScreenStatusType.UNINITIALIZED ||
+              state.status.type == ScreenStatusType.LOADING) {
             inner = Text("Loading");
-          } else if (state.error != null) {
-            inner = Text(state.error);
-          } else {
+          } else if (state.status.type == ScreenStatusType.ERROR) {
+            inner = Center(
+                child: ScreenErrorWidget(
+                    err: state.status.error, onDismiss: () => state.reinit()));
+          } else if (state.status.type == ScreenStatusType.SUCCESS) {
             final AppSettings appSettings = state.appSettings;
-            inner = SettingsList(
-              sections: [
-                SettingsSection(
-                  title: 'Server Settings',
-                  tiles: [
-                    SettingsTile(
-                      title: 'Hostname/IP',
-                      subtitle: appSettings.serverIP ?? '',
-                      onPressed: (BuildContext context) {
-                        showDialog(
-                            context: context,
-                            builder: (context) => SettingsHostnameInputWidget(
-                                serverIP: appSettings.serverIP,
-                                savePressed: (newIPHostname) {
-                                  final AppSettings newAppSettings = appSettings
-                                      .cloneWith(serverIP: newIPHostname);
-                                  state.save(newAppSettings);
-                                }));
-                      },
-                    ),
-                    SettingsTile(
-                      title: 'Port Number',
-                      subtitle: "${appSettings.serverPort ?? 5000}",
-                      onPressed: (BuildContext context) {
-                        showDialog(
-                            context: context,
-                            builder: (context) => SettingsPortInputWidget(
-                                port: appSettings.serverPort,
-                                savePressed: (newPort) {
-                                  final AppSettings newAppSettings = appSettings
-                                      .cloneWith(serverPort: newPort);
-                                  state.save(newAppSettings);
-                                }));
-                      },
-                    ),
-                    SettingsTile.switchTile(
-                      title: 'Use https',
-                      switchValue: appSettings.https,
-                      onToggle: (bool newHttps) {
-                        final AppSettings newAppSettings =
-                            appSettings.cloneWith(https: newHttps);
-                        state.save(newAppSettings);
-                      },
-                    ),
-                  ],
-                ),
-              ],
+            inner = SettingsFormWidget(
+                appSettings: appSettings,
+                onSave: (settings) => state.save(settings));
+          } else {
+            inner = Center(
+              child: Text('invalid state type: ${state.status.type}'),
             );
           }
-
           return Scaffold(appBar: AppBar(title: Text('Settings')), body: inner);
         }));
   }

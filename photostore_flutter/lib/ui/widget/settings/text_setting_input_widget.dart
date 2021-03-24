@@ -1,19 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SettingsHostnameInputWidget extends StatelessWidget {
-  final String serverIP;
+class TextSettingInputWidget extends StatelessWidget {
+
+  final String textValue;
+  final String prompt;
   final Function savePressed;
 
-  SettingsHostnameInputWidget({ this.serverIP = "", this.savePressed}) {}
+  TextSettingInputWidget({
+    this.textValue = "",
+    this.prompt = "Enter Value",
+    this.savePressed});
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController txtController =
     TextEditingController();
-    txtController.text = this.serverIP;
+    txtController.text = this.textValue;
     return AlertDialog(
-      title: Text("Enter Server Hostname/IP"),
+      title: Text(prompt),
       content: TextField(controller: txtController),
       actions: [
         TextButton(
@@ -35,5 +40,4 @@ class SettingsHostnameInputWidget extends StatelessWidget {
       ],
     );
   }
-
 }
