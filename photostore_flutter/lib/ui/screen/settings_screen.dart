@@ -21,7 +21,8 @@ class SettingsScreen extends StatelessWidget {
           } else if (state.status.type == ScreenStatusType.ERROR) {
             inner = Center(
                 child: ScreenErrorWidget(
-                    err: state.status.error, onDismiss: () => state.reinit()));
+                    err: (state.status as ErrorScreenStatus).error,
+                    onDismiss: () => state.reinit()));
           } else if (state.status.type == ScreenStatusType.SUCCESS) {
             final AppSettings appSettings = state.appSettings;
             inner = SettingsFormWidget(

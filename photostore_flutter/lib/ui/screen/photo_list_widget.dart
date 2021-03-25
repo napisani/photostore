@@ -112,10 +112,10 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
               },
             ),
           );
-        } else if (state.status.type == ScreenStatusType.ERROR) {
+        } else if (state.status is ErrorScreenStatus) {
           return Center(
               child: ScreenErrorWidget(
-            err: state.status.error,
+            err: (state.status as ErrorScreenStatus).error,
             onDismiss: () => state.reset(),
           ));
         } else if (state.status.type == ScreenStatusType.LOADING) {

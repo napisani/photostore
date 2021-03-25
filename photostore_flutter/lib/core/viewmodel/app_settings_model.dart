@@ -2,20 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:photostore_flutter/core/model/app_settings.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
+import 'package:photostore_flutter/core/viewmodel/viewmodel_ticker_provider.dart';
 import 'package:photostore_flutter/locator.dart';
 
-class AppSettingsModel with ChangeNotifier {
+import 'abstract_view_model.dart';
+
+class AppSettingsModel extends AbstractViewModel {
   ScreenStatus status = ScreenStatus.uninitialized();
   AppSettings appSettings;
 
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
 
-  AppSettingsModel() {
+  AppSettingsModel(): super() {
     reinit();
   }
 
   save(AppSettings newAppSettings) async {
-    status = ScreenStatus.loading();
+    status = ScreenStatus.loading(this);
     notifyListeners();
     try {
       appSettings = await _appSettingsService.saveSettings(newAppSettings);

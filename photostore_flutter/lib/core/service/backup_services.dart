@@ -10,12 +10,14 @@ import 'package:photostore_flutter/locator.dart';
 
 import 'app_settings_service.dart';
 
+typedef BackupProgressHandler = Function(int originalCount, int queueCount);
+
 class BackupService {
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
   final ServerMediaService _serverMediaService = locator<ServerMediaService>();
   final MobileMediaService _mobileMediaService = locator<MobileMediaService>();
 
-  BackupService() {}
+  BackupService();
 
   Future<BackupStats> getPhotoBackupStats() async {
     Photo photo = await this._serverMediaService.getLastBackedUpPhoto();
@@ -72,14 +74,24 @@ class BackupService {
     return List<MobilePhoto>.from(queuedPhotos);
   }
 
-  Future<void> doBackup(List<MobilePhoto> queueIn) async {
+  Future<void> doBackup(List<MobilePhoto> queueIn,
+      {BackupProgressHandler progressNotify}) async {
+    final BackupProgressHandler progressNotifySafe = (orig, newCnt) {
+      if (progressNotify != null) {
+        progressNotify(orig, newCnt);
+      }
+    };
+
     final int batchSize = _appSettingsService.currentAppSettings.batchSize;
     List<MobilePhoto> queue = [...queueIn];
     queue.sort((a, b) {
       return a.modifiedDate.compareTo(b.modifiedDate);
     });
     print('doBackup');
+    final origSize = queue.length;
+    progressNotifySafe(origSize, origSize);
     List<MobilePhoto> batch = [];
+    int uploadCount = 0;
     for (MobilePhoto photo in queue) {
       if (photo.assetType != 1) {
         print('not a photo - skipping');
@@ -88,10 +100,14 @@ class BackupService {
       }
       if (batch.length == batchSize) {
         await _backupBatch(batch);
+        uploadCount += batch.length;
+        progressNotifySafe(origSize, origSize - uploadCount);
         batch.clear();
       }
     }
     await _backupBatch(batch);
+    uploadCount += batch.length;
+    progressNotifySafe(origSize, origSize - uploadCount);
     print('doBackup - done!');
   }
 

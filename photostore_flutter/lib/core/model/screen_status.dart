@@ -1,26 +1,72 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 enum ScreenStatusType { UNINITIALIZED, LOADING, SUCCESS, ERROR }
 
-class ScreenStatus {
-  final ScreenStatusType type;
-  final String error;
+abstract class ScreenStatus {
+  // final ScreenStatusType type;
+  // controller = AnimationController(
+  // vsync: this,
+  // duration: const Duration(seconds: 5),
+  // )
 
-  ScreenStatus({@required this.type, this.error});
+  @protected
+  const ScreenStatus();
 
   factory ScreenStatus.uninitialized() {
-    return ScreenStatus(type: ScreenStatusType.UNINITIALIZED);
+    return UninitializedScreenStatus();
   }
 
-  factory ScreenStatus.loading() {
-    return ScreenStatus(type: ScreenStatusType.LOADING);
+  factory ScreenStatus.loading(TickerProvider vsync,
+      {percent = -1.0, progressText = ''}) {
+    return LoadingScreenStatus(vsync,
+        percent: percent, progressText: progressText);
   }
 
   factory ScreenStatus.success() {
-    return ScreenStatus(type: ScreenStatusType.SUCCESS);
+    return SuccessScreenStatus();
   }
 
   factory ScreenStatus.error(String error) {
-    return ScreenStatus(type: ScreenStatusType.ERROR, error: error);
+    return ErrorScreenStatus(error: error);
   }
+
+  ScreenStatusType get type;
+}
+
+class UninitializedScreenStatus extends ScreenStatus {
+  @override
+  ScreenStatusType get type => ScreenStatusType.UNINITIALIZED;
+}
+
+class LoadingScreenStatus extends ScreenStatus {
+  AnimationController loadingAnimationController;
+  final double percent;
+  final String progressText;
+
+  LoadingScreenStatus(TickerProvider vsync,
+      {this.percent = -1.0, this.progressText = ''})
+      : super() {
+    loadingAnimationController = AnimationController(
+      vsync: vsync,
+      duration: const Duration(seconds: 5),
+    );
+    loadingAnimationController.repeat(reverse: false);
+  }
+
+  @override
+  ScreenStatusType get type => ScreenStatusType.LOADING;
+}
+
+class SuccessScreenStatus extends ScreenStatus {
+  @override
+  ScreenStatusType get type => ScreenStatusType.SUCCESS;
+}
+
+class ErrorScreenStatus extends ScreenStatus {
+  final String error;
+
+  ErrorScreenStatus({this.error});
+
+  @override
+  ScreenStatusType get type => ScreenStatusType.ERROR;
 }

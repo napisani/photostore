@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/backup_model.dart';
 import 'package:photostore_flutter/ui/widget/backup_stats_widget.dart';
+import 'package:photostore_flutter/ui/widget/loading_widget.dart';
 import 'package:photostore_flutter/ui/widget/screen_error_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -52,12 +53,17 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
       } else if (state.screenStatus.type == ScreenStatusType.ERROR) {
         return Center(
             child: ScreenErrorWidget(
-          err: state.screenStatus.error,
+          err: (state.screenStatus as ErrorScreenStatus).error,
           onDismiss: () => state.reinit(),
         ));
       } else if (state.screenStatus.type == ScreenStatusType.LOADING) {
         return Center(
-          child: Text("Loading..."),
+          child: LoadingWidget(
+              animationController: (state.screenStatus as LoadingScreenStatus)
+                  .loadingAnimationController,
+              percent: (state.screenStatus as LoadingScreenStatus).percent,
+              progressText:
+                  (state.screenStatus as LoadingScreenStatus).progressText),
         );
       } else if (state.screenStatus.type == ScreenStatusType.SUCCESS) {
         return Center(
@@ -72,7 +78,8 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
                           children: [
                             TextButton(
                                 child: Text('Prepare Incremental Backup'),
-                                onPressed: () => state.loadIncrementalBackupQueue()),
+                                onPressed: () =>
+                                    state.loadIncrementalBackupQueue()),
                             TextButton(
                                 child: Text('Prepare Full Backup'),
                                 onPressed: () => state.loadFullBackupQueue())

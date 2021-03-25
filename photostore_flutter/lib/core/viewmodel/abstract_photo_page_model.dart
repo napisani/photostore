@@ -5,11 +5,12 @@ import 'package:photostore_flutter/core/model/photo_page_event.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/service/abstract_photo_page_service.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
+import 'package:photostore_flutter/core/viewmodel/abstract_view_model.dart';
+import 'package:photostore_flutter/core/viewmodel/viewmodel_ticker_provider.dart';
 import 'package:photostore_flutter/locator.dart';
 import 'package:rxdart/rxdart.dart';
 
-abstract class AbstractPhotoPageModel with ChangeNotifier {
-  ScreenStatus status = ScreenStatus.uninitialized();
+abstract class AbstractPhotoPageModel extends AbstractViewModel {
   Pagination<AgnosticMedia> photoPage;
   Subject<PhotoPageEvent> _eventStream = PublishSubject();
 
@@ -17,7 +18,7 @@ abstract class AbstractPhotoPageModel with ChangeNotifier {
   final AbstractPhotoPageService photoPageService;
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
 
-  AbstractPhotoPageModel({@required this.photoPageService}) {
+  AbstractPhotoPageModel({@required this.photoPageService}): super() {
     _registerAppSettingsListener();
     _registerCurrentPhotoPageListener();
     _registerEventListener();
@@ -56,7 +57,7 @@ abstract class AbstractPhotoPageModel with ChangeNotifier {
         .debounceTime(const Duration(milliseconds: 50))
         .listen((PhotoPageEvent event) async {
           if (event is PhotoPageFetchEvent) {
-            status = ScreenStatus.loading();
+            status = ScreenStatus.loading(this);
             try {
               print('in loadPage process started: ${event.page}');
 
