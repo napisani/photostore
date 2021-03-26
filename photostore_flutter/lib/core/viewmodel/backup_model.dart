@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:photostore_flutter/core/model/backup_stats.dart';
+import 'package:photostore_flutter/core/model/cancel_notifier.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
@@ -12,7 +15,7 @@ class BackupModel extends AbstractViewModel {
   ScreenStatus screenStatus = ScreenStatus.uninitialized();
   BackupStats stats;
   bool backupFinished = false;
-
+  CancelNotifier cancelNotifier;
   final BackupService _backupService = locator<BackupService>();
 
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
@@ -31,6 +34,7 @@ class BackupModel extends AbstractViewModel {
   void reinit() {
     this.screenStatus = ScreenStatus.uninitialized();
     this.queuedPhotos = null;
+    this.cancelNotifier = null;
     this.stats = null;
     backupFinished = false;
     notifyListeners();
@@ -56,14 +60,22 @@ class BackupModel extends AbstractViewModel {
     this.screenStatus = ScreenStatus.loading(this);
     notifyListeners();
     try {
-      queuedPhotos = await _backupService
-          .getBackupQueueUsingDate(stats.lastBackedUpPhotoModifyDate);
-      this.screenStatus = ScreenStatus.success();
+      this.cancelNotifier = CancelNotifier();
+      queuedPhotos = await _backupService.getBackupQueueUsingDate(
+          stats.lastBackedUpPhotoModifyDate,
+          canceller: cancelNotifier);
+      if (cancelNotifier.hasBeenCancelled) {
+        reinit();
+      } else {
+        this.screenStatus = ScreenStatus.success();
+        cancelNotifier = null;
+      }
     } catch (err, s) {
       print(
           '[BackupModel] got error in loadIncrementalBackupQueue ${err.toString()} $s');
       queuedPhotos = null;
       this.screenStatus = ScreenStatus.error(err.toString());
+      cancelNotifier = null;
     }
     notifyListeners();
   }
@@ -73,13 +85,21 @@ class BackupModel extends AbstractViewModel {
     this.screenStatus = ScreenStatus.loading(this);
     notifyListeners();
     try {
-      queuedPhotos = await _backupService.getFullBackupQueue();
-      this.screenStatus = ScreenStatus.success();
+      this.cancelNotifier = CancelNotifier();
+      queuedPhotos =
+          await _backupService.getFullBackupQueue(canceller: cancelNotifier);
+      if (cancelNotifier.hasBeenCancelled) {
+        reinit();
+      } else {
+        this.screenStatus = ScreenStatus.success();
+        cancelNotifier = null;
+      }
     } catch (err, s) {
       print(
           '[BackupModel] got error in loadFullBackupQueue ${err.toString()} stack: $s');
       queuedPhotos = null;
       this.screenStatus = ScreenStatus.error(err.toString());
+      cancelNotifier = null;
     }
     notifyListeners();
   }
@@ -88,21 +108,27 @@ class BackupModel extends AbstractViewModel {
     this.screenStatus = ScreenStatus.loading(this);
     notifyListeners();
     try {
-      await _backupService.doBackup(queuedPhotos,
+      this.cancelNotifier = CancelNotifier();
+      await _backupService.doBackup(queuedPhotos, canceller: cancelNotifier,
           progressNotify: (int orig, int newCnt) {
         print('inside progressNotify');
-        final String progressText = 'Backed up ${orig-newCnt} of $orig total';
+        final String progressText = 'Backed up ${orig - newCnt} of $orig total';
         this.screenStatus = ScreenStatus.loading(this,
-            percent: ((orig - newCnt) ) / orig, progressText: progressText);
-          notifyListeners();
+            percent: ((orig - newCnt)) / orig, progressText: progressText);
+        notifyListeners();
       });
-      this.screenStatus = ScreenStatus.success();
-      this.backupFinished = true;
-      this.queuedPhotos = null;
-      this.loadBackupStats();
+      if (cancelNotifier.hasBeenCancelled) {
+        reinit();
+      } else {
+        this.screenStatus = ScreenStatus.success();
+        this.backupFinished = true;
+        this.queuedPhotos = null;
+        this.loadBackupStats();
+      }
     } catch (err, s) {
       print('[BackupModel] got error in doBackup ${err.toString()}, stack: $s');
       this.screenStatus = ScreenStatus.error(err.toString());
+      this.cancelNotifier = null;
     }
     notifyListeners();
   }

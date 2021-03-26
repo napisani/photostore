@@ -28,6 +28,6 @@ class ScreenErrorWidget extends StatelessWidget {
       onDismiss == null
           ? null
           : TextButton(onPressed: onDismiss, child: Text("Dismiss"))
-    ].where((widget) => widget != null)));
+    ].where((widget) => widget != null).toList()));
   }
 }

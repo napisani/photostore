@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/scheduler/ticker.dart';
-
+import 'package:flutter/scheduler.dart';
 import 'abstract_view_model.dart';
 
 mixin ViewModelTickerProviderMixin<T extends AbstractViewModel>

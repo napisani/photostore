@@ -5,9 +5,13 @@ class LoadingWidget extends StatelessWidget {
   final AnimationController animationController;
   final double percent;
   final String progressText;
+  final Function onCancel;
 
   const LoadingWidget(
-      {this.animationController, this.percent, this.progressText});
+      {this.animationController,
+      this.percent,
+      this.progressText,
+      this.onCancel});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,14 @@ class LoadingWidget extends StatelessWidget {
             value: percent < 0 ? animationController.value : percent,
             semanticsLabel: 'Loading',
           ),
-        ],
+          this.onCancel == null
+              ? null
+              : TextButton(
+                  child: Text("Cancel"),
+                  onPressed: onCancel,
+                )
+        ].where((element) => element != null)
+            .toList(),
       ),
     );
   }

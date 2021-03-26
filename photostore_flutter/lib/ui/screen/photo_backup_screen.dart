@@ -63,7 +63,10 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
                   .loadingAnimationController,
               percent: (state.screenStatus as LoadingScreenStatus).percent,
               progressText:
-                  (state.screenStatus as LoadingScreenStatus).progressText),
+                  (state.screenStatus as LoadingScreenStatus).progressText,
+              onCancel: state.cancelNotifier == null
+                  ? null
+                  : () => state.cancelNotifier?.cancel()),
         );
       } else if (state.screenStatus.type == ScreenStatusType.SUCCESS) {
         return Center(

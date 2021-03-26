@@ -1,5 +1,6 @@
 import 'package:photostore_flutter/core/model/agnostic_media.dart';
 import 'package:photostore_flutter/core/model/backup_stats.dart';
+import 'package:photostore_flutter/core/model/cancel_notifier.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo.dart';
@@ -30,9 +31,15 @@ class BackupService {
   }
 
   Future<List<MobilePhoto>> getBackupQueueUsingDate(
-      DateTime lastBackedUpDate) async {
+      DateTime lastBackedUpDate, {canceller: CancelNotifier}) async {
     Pagination<AgnosticMedia> queuedPhotos = Pagination<AgnosticMedia>();
     while (queuedPhotos.hasMorePages) {
+      if (canceller != null && canceller.hasBeenCancelled) {
+        print('cancelled getFullBackupQueue');
+        return [];
+      }
+
+
       Pagination<AgnosticMedia> morePhotos =
           await _mobileMediaService.loadPage(queuedPhotos.page + 1);
       final int previousCount = morePhotos.items.length;
@@ -51,10 +58,16 @@ class BackupService {
     return List<MobilePhoto>.from(queuedPhotos.items);
   }
 
-  Future<List<MobilePhoto>> getFullBackupQueue() async {
+  Future<List<MobilePhoto>> getFullBackupQueue({canceller: CancelNotifier}) async {
     List<AgnosticMedia> queuedPhotos = [];
     // Pagination<MobilePhoto> queuedPhotos = Pagination<MobilePhoto>();
     for (int page = 1; page > 0; page++) {
+
+      if (canceller != null && canceller.hasBeenCancelled) {
+        print('cancelled getFullBackupQueue');
+        return [];
+      }
+
       Pagination<AgnosticMedia> morePhotos =
           await _mobileMediaService.loadPage(page);
 
@@ -75,7 +88,7 @@ class BackupService {
   }
 
   Future<void> doBackup(List<MobilePhoto> queueIn,
-      {BackupProgressHandler progressNotify}) async {
+      {BackupProgressHandler progressNotify, CancelNotifier canceller}) async {
     final BackupProgressHandler progressNotifySafe = (orig, newCnt) {
       if (progressNotify != null) {
         progressNotify(orig, newCnt);
@@ -99,11 +112,20 @@ class BackupService {
         batch.add(photo);
       }
       if (batch.length == batchSize) {
+        if (canceller != null && canceller.hasBeenCancelled) {
+          print('cancelled doBackup');
+          return;
+        }
         await _backupBatch(batch);
         uploadCount += batch.length;
         progressNotifySafe(origSize, origSize - uploadCount);
+
         batch.clear();
       }
+    }
+    if (canceller != null && canceller.hasBeenCancelled) {
+      print('cancelled doBackup');
+      return;
     }
     await _backupBatch(batch);
     uploadCount += batch.length;
