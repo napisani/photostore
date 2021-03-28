@@ -9,6 +9,7 @@ class AppSettings extends Equatable {
 
   /* advanced */
   final int batchSize;
+  final int itemsPerPage;
   final int uploadRetryAttempts;
   final int connectTimeout; // in seconds
   final int receiveTimeout; // in seconds
@@ -20,6 +21,7 @@ class AppSettings extends Equatable {
       this.deviceID,
       this.apiKey,
       this.batchSize,
+      this.itemsPerPage,
       this.uploadRetryAttempts,
       this.connectTimeout,
       this.receiveTimeout});
@@ -31,6 +33,7 @@ class AppSettings extends Equatable {
       String deviceID,
       String apiKey,
       int batchSize,
+      int itemsPerPage,
       int uploadRetryAttempts,
       int connectTimeout,
       int receiveTimeout}) {
@@ -45,6 +48,7 @@ class AppSettings extends Equatable {
         deviceID: deviceID ?? this.deviceID,
         apiKey: apiKey ?? this.apiKey,
         batchSize: batchSize ?? this.batchSize,
+        itemsPerPage: itemsPerPage ?? this.itemsPerPage,
         uploadRetryAttempts: uploadRetryAttempts ?? this.uploadRetryAttempts,
         connectTimeout: connectTimeout ?? this.connectTimeout,
         receiveTimeout: receiveTimeout ?? this.receiveTimeout);

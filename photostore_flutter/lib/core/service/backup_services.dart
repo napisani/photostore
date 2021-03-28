@@ -78,8 +78,8 @@ class BackupService {
       morePhotos.items.removeWhere((AgnosticMedia photo) =>
           resultsMap[photo.nativeId].exists &&
           resultsMap[photo.nativeId].sameDate);
-      queuedPhotos.addAll(morePhotos.items);
       if (!morePhotos.hasMorePages) {
+        queuedPhotos.addAll(morePhotos.items);
         break;
       }
     }

@@ -9,7 +9,7 @@ class LoadingWidget extends StatelessWidget {
 
   const LoadingWidget(
       {this.animationController,
-      this.percent,
+      this.percent = -1,
       this.progressText,
       this.onCancel});
 
@@ -31,7 +31,7 @@ class LoadingWidget extends StatelessWidget {
           ),
           this.onCancel == null
               ? null
-              : TextButton(
+              : ElevatedButton(
                   child: Text("Cancel"),
                   onPressed: onCancel,
                 )

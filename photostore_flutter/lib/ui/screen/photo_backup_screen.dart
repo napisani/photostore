@@ -40,9 +40,9 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
     return Consumer<BackupModel>(builder: (context, state, child) {
       // final model = Provider.of<BackupModel>(context);
       if (state == null ||
-          state.screenStatus.type == ScreenStatusType.UNINITIALIZED) {
+          state.status.type == ScreenStatusType.UNINITIALIZED) {
         return Center(
-            child: TextButton(
+            child: ElevatedButton(
           child: Text(
             "Load",
           ),
@@ -50,25 +50,24 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
             state.loadBackupStats();
           },
         ));
-      } else if (state.screenStatus.type == ScreenStatusType.ERROR) {
+      } else if (state.status.type == ScreenStatusType.ERROR) {
         return Center(
             child: ScreenErrorWidget(
-          err: (state.screenStatus as ErrorScreenStatus).error,
+          err: (state.status as ErrorScreenStatus).error,
           onDismiss: () => state.reinit(),
         ));
-      } else if (state.screenStatus.type == ScreenStatusType.LOADING) {
+      } else if (state.status.type == ScreenStatusType.LOADING) {
         return Center(
           child: LoadingWidget(
-              animationController: (state.screenStatus as LoadingScreenStatus)
+              animationController: (state.status as LoadingScreenStatus)
                   .loadingAnimationController,
-              percent: (state.screenStatus as LoadingScreenStatus).percent,
-              progressText:
-                  (state.screenStatus as LoadingScreenStatus).progressText,
+              percent: (state.status as LoadingScreenStatus).percent,
+              progressText: (state.status as LoadingScreenStatus).progressText,
               onCancel: state.cancelNotifier == null
                   ? null
                   : () => state.cancelNotifier?.cancel()),
         );
-      } else if (state.screenStatus.type == ScreenStatusType.SUCCESS) {
+      } else if (state.status.type == ScreenStatusType.SUCCESS) {
         return Center(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,25 +78,32 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
                   state.queuedPhotos == null
                       ? Column(
                           children: [
-                            TextButton(
+                            ElevatedButton(
                                 child: Text('Prepare Incremental Backup'),
                                 onPressed: () =>
                                     state.loadIncrementalBackupQueue()),
-                            TextButton(
+                            ElevatedButton(
                                 child: Text('Prepare Full Backup'),
                                 onPressed: () => state.loadFullBackupQueue())
                           ],
                         )
                       : Center(
-                          child: TextButton(
-                              child: Text(
-                                  'photos to backup: ${state.queuedPhotos.length}'),
-                              onPressed: () => state.doBackup()),
+                          child: Column(
+                            children: [
+                              ElevatedButton(
+                                  child: Text(
+                                      'Start backup of : ${state.queuedPhotos.length} Photos'),
+                                  onPressed: () => state.doBackup()),
+                              ElevatedButton(
+                                  child: Text('Cancel'),
+                                  onPressed: () => state.reinit())
+                            ],
+                          ),
                         ),
                 ].where((child) => child != null).toList()));
       } else {
         return Center(
-          child: Text('invalid state type: ${state.screenStatus.type}'),
+          child: Text('invalid state type: ${state.status.type}'),
         );
       }
     });

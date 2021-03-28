@@ -10,6 +10,11 @@ import 'package:photostore_flutter/locator.dart';
 abstract class MediaRepository<T extends AgnosticMedia> {
   @protected
   AppSettings settings;
+
+  @protected
+  int itemsPerPage = 10;
+
+
   final AppSettingsService appSettingsService = locator<AppSettingsService>();
   final StreamController<AppSettings> _onSettingsChanged =
       new StreamController();
@@ -17,17 +22,8 @@ abstract class MediaRepository<T extends AgnosticMedia> {
   MediaRepository() {
     this.appSettingsService.appSettingsAsStream.listen((event) {
       this.settings = event;
+      this.itemsPerPage = event.itemsPerPage;
     });
-    // this.appSettingsBloc.listenWithCurrent((AppSettingsState appSettingsState) {
-    //   if (appSettingsState is AppSettingsSuccess) {
-    //     print("${this.runtimeType} received new app settings!");
-    //     this.settings = appSettingsState.appSettings;
-    //     // this.mediaRepo.setAppSettings(_appSettings);
-    //     this._onSettingsChanged.sink.add(this.settings);
-    //   } else if (appSettingsState is AppSettingsInitial) {
-    //     this.appSettingsBloc.loadSettings();
-    //   }
-    // });
   }
 
   Stream<AppSettings> onAppSettingsChanged() => this._onSettingsChanged.stream;

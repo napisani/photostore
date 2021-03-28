@@ -25,13 +25,13 @@ class IntegerSettingInputWidget extends StatelessWidget {
         ], // Only numbers can be entered
       ),
       actions: [
-        TextButton(
+        ElevatedButton(
             onPressed: () {
               print('cancel pressed');
               Navigator.pop(context);
             },
             child: Text("Cancel")),
-        TextButton(
+        ElevatedButton(
             onPressed: () {
               print('save pressed ${txtController.value.text}');
               Navigator.pop(context);

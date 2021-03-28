@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:photostore_flutter/core/model/app_settings.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/app_settings_model.dart';
+import 'package:photostore_flutter/ui/widget/loading_widget.dart';
 import 'package:photostore_flutter/ui/widget/screen_error_widget.dart';
 import 'package:photostore_flutter/ui/widget/settings/settings_form_widget.dart';
 import 'package:provider/provider.dart';
@@ -15,9 +16,13 @@ class SettingsScreen extends StatelessWidget {
         child: Consumer<AppSettingsModel>(builder: (context, state, child) {
           Widget inner;
           if (state == null ||
-              state.status.type == ScreenStatusType.UNINITIALIZED ||
-              state.status.type == ScreenStatusType.LOADING) {
-            inner = Text("Loading");
+              state.status.type == ScreenStatusType.UNINITIALIZED) {
+          } else if (state.status is LoadingScreenStatus) {
+            inner = Center(
+                child: LoadingWidget(
+              animationController: (state.status as LoadingScreenStatus)
+                  .loadingAnimationController,
+            ));
           } else if (state.status.type == ScreenStatusType.ERROR) {
             inner = Center(
                 child: ScreenErrorWidget(

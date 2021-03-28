@@ -21,13 +21,13 @@ class TextSettingInputWidget extends StatelessWidget {
       title: Text(prompt),
       content: TextField(controller: txtController),
       actions: [
-        TextButton(
+        ElevatedButton(
             onPressed: () {
               print('cancel pressed');
               Navigator.pop(context);
             },
             child: Text("Cancel")),
-        TextButton(
+        ElevatedButton(
             onPressed: () {
               print(
                   'save pressed ${txtController.value.text}');

@@ -16,13 +16,13 @@ class SettingsHostnameInputWidget extends StatelessWidget {
       title: Text("Enter Server Hostname/IP"),
       content: TextField(controller: txtController),
       actions: [
-        TextButton(
+        ElevatedButton(
             onPressed: () {
               print('cancel pressed');
               Navigator.pop(context);
             },
             child: Text("Cancel")),
-        TextButton(
+        ElevatedButton(
             onPressed: () {
               print(
                   'save pressed ${txtController.value.text}');

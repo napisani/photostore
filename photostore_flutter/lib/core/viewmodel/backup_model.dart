@@ -21,23 +21,27 @@ class BackupModel extends AbstractViewModel {
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
 
   BackupModel() : super() {
-    this.reinit();
     _registerAppSettingsListener();
+    this.reinit();
   }
 
   void _registerAppSettingsListener() {
     this._appSettingsService.appSettingsAsStream.listen((event) {
-      if (screenStatus.type != ScreenStatusType.UNINITIALIZED) {}
+      reinit();
     });
   }
 
-  void reinit() {
+  void reinit() async {
     this.screenStatus = ScreenStatus.uninitialized();
     this.queuedPhotos = null;
     this.cancelNotifier = null;
     this.stats = null;
     backupFinished = false;
-    notifyListeners();
+    if (this._appSettingsService.currentAppSettings != null) {
+      await loadBackupStats();
+    } else {
+      notifyListeners();
+    }
   }
 
   Future<void> loadBackupStats() async {

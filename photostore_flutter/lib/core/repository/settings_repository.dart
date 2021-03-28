@@ -11,6 +11,8 @@ class _AppSettingKeys {
   static const deviceID = 'deviceID';
   static const apiKey = 'apiKey';
   static const batchSize = 'batchSize';
+  static const itemsPerPage = 'itemsPerPage';
+
   static const uploadRetryAttempts = 'uploadRetryAttempts';
   static const connectTimeout = 'connectTimeout';
   static const receiveTimeout = 'receiveTimeout';
@@ -37,8 +39,8 @@ class SettingsRepository {
     success = await prefs.setInt(_AppSettingKeys.batchSize, settings.batchSize);
     _checkAndThrow(success, _AppSettingKeys.batchSize);
 
-    success = await prefs.setInt(_AppSettingKeys.batchSize, settings.batchSize);
-    _checkAndThrow(success, _AppSettingKeys.batchSize);
+    success = await prefs.setInt(_AppSettingKeys.itemsPerPage, settings.itemsPerPage);
+    _checkAndThrow(success, _AppSettingKeys.itemsPerPage);
 
     success = await prefs.setInt(
         _AppSettingKeys.uploadRetryAttempts, settings.uploadRetryAttempts);
@@ -70,6 +72,7 @@ class SettingsRepository {
           prefs.getString(_AppSettingKeys.deviceID) ?? (await _getDeviceId()),
       apiKey: prefs.getString(_AppSettingKeys.apiKey) ?? '',
       batchSize: prefs.getInt(_AppSettingKeys.batchSize) ?? 5,
+      itemsPerPage: prefs.getInt(_AppSettingKeys.itemsPerPage) ?? 25,
       uploadRetryAttempts:
           prefs.getInt(_AppSettingKeys.uploadRetryAttempts) ?? 2,
       connectTimeout: prefs.getInt(_AppSettingKeys.connectTimeout) ?? 60,

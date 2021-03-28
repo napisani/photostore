@@ -5,6 +5,7 @@ import 'package:photostore_flutter/core/viewmodel/abstract_photo_page_model.dart
 import 'package:photostore_flutter/core/viewmodel/mobile_media_page_model.dart';
 import 'package:photostore_flutter/core/viewmodel/server_media_page_model.dart';
 import 'package:photostore_flutter/ui/screen/photo_page_notifier_mixin.dart';
+import 'package:photostore_flutter/ui/widget/loading_widget.dart';
 import 'package:photostore_flutter/ui/widget/photo_grid_widget.dart';
 import 'package:photostore_flutter/ui/widget/screen_error_widget.dart';
 import 'package:provider/provider.dart';
@@ -103,7 +104,7 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
             state.status.type == ScreenStatusType.UNINITIALIZED) {
           // _photoPageModel.loadPage(_nextPageNumber());
           return Center(
-            child: TextButton(
+            child: ElevatedButton(
               child: Text(
                 "Load",
               ),
@@ -118,21 +119,36 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
             err: (state.status as ErrorScreenStatus).error,
             onDismiss: () => state.reset(),
           ));
-        } else if (state.status.type == ScreenStatusType.LOADING) {
-          return Center(
-            child: Text("Loading..."),
-          );
-        } else if (state.status.type == ScreenStatusType.SUCCESS) {
-          if (state.photoPage?.items == null || state.photoPage.items.isEmpty) {
-            return Center(
-              child: Text('no photos found'),
-            );
+        }
+        // else if (state.status.type == ScreenStatusType.LOADING) {
+        //   return Center(
+        //     child: Text("Loading..."),
+        //   );
+        // }
+        else if (state.status.type == ScreenStatusType.SUCCESS ||
+            state.status.type == ScreenStatusType.LOADING) {
+          if ((state.photoPage?.items == null ||
+              state.photoPage.items.isEmpty)) {
+            if (state.status is SuccessScreenStatus) {
+              return Center(
+                child: Text('no photos found'),
+              );
+            } else if (state.status is LoadingScreenStatus) {
+              return Center(
+                child: LoadingWidget(
+                  animationController: (state.status as LoadingScreenStatus)
+                      .loadingAnimationController,
+                ),
+              );
+            }
           }
           // Future.delayed(Duration.zero, () => _adjustScrollOffset());
           return PhotoGridWidget(
             photos: state.photoPage,
             scrollController: _scrollController,
+            currentScrollPosition: _curOffset,
             onPress: (photo) => _handlePhotoSelected(photo),
+            onRefresh: () => state.reset(),
           );
         } else {
           return Center(
@@ -158,6 +174,7 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
 
   @override
   void dispose() {
+    print('in dispose');
     _scrollController.dispose();
     super.dispose();
   }

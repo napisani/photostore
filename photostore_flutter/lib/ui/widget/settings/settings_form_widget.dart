@@ -121,6 +121,22 @@ class SettingsFormWidget extends StatelessWidget {
               },
             ),
             SettingsTile(
+              title: 'Items per Page',
+              subtitle: "${appSettings.itemsPerPage ?? 10}",
+              onPressed: (BuildContext context) {
+                showDialog(
+                    context: context,
+                    builder: (context) => IntegerSettingInputWidget(
+                        prompt: "Items per Page",
+                        intValue: appSettings.itemsPerPage,
+                        savePressed: (batch) {
+                          final AppSettings newAppSettings =
+                          appSettings.cloneWith(itemsPerPage: batch);
+                          _save(newAppSettings);
+                        }));
+              },
+            ),
+            SettingsTile(
               title: 'Upload Retry Attempt Count',
               subtitle: "${appSettings.uploadRetryAttempts ?? 2}",
               onPressed: (BuildContext context) {

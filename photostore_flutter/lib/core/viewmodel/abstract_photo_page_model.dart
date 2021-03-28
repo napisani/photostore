@@ -22,14 +22,16 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
     _registerAppSettingsListener();
     _registerCurrentPhotoPageListener();
     _registerEventListener();
+    this.reset();
   }
 
   void _registerAppSettingsListener() {
     this._appSettingsService.appSettingsAsStream.listen((event) {
-      if (status.type != ScreenStatusType.UNINITIALIZED) {
-        status = ScreenStatus.uninitialized();
-        photoPageService.reset();
-      }
+      // if (status.type != ScreenStatusType.UNINITIALIZED) {
+      //   status = ScreenStatus.uninitialized();
+      //   photoPageService.reset();
+      // }
+      this.reset();
     });
   }
 
@@ -76,7 +78,10 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
   }
 
   void reset() {
-    this._eventStream.add(PhotoPageResetEvent());
+    if(this._appSettingsService.currentAppSettings != null){
+      this._eventStream.add(PhotoPageResetEvent());
+      loadPage(1);
+    }
   }
 
   void loadPage(int pageNumber) {
