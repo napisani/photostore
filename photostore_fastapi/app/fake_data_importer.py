@@ -30,12 +30,15 @@ def init() -> None:
         # temp_img = os.path.join('/tmp/gphoto', media_item.filename())
         image = generate_fake_image()
         image.save('/tmp/f.jpg', format='JPEG')
-        file = FileStorage(stream=open('/tmp/f.jpg', 'rb'), filename=str(uuid.uuid1()) + ".JPG")
+        filename = str(uuid.uuid1()) + ".JPG"
+        file = FileStorage(stream=open('/tmp/f.jpg', 'rb'), filename=filename)
 
         photo = PhotoSchemaAdd()
+        photo.filename = filename
         photo.creation_date = datetime.datetime.now()
         saved_photo = add_photo(db, file=file, photo=photo)
         logger.debug('saved photo {}', saved_photo)
+
 
 def main() -> None:
     init()
