@@ -1,0 +1,52 @@
+#!/usr/bin/env groovy
+
+def label = "docker-jenkins-${UUID.randomUUID().toString()}"
+def home = "/home/jenkins/agent"
+def workspace = "${home}/workspace/photostore_fastapi"
+def workdir = "${workspace}/"
+def registry = "http://docker-registry.napisani.xyz"
+def ecrRepoName = "docker-registry.napisani.xyz/photostore_fastapi"
+def tag = "$ecrRepoName:latest"
+
+podTemplate(label: label,
+        containers: [
+                containerTemplate(name: 'jnlp', image: 'jenkins/jnlp-slave:alpine'),
+                containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
+            ],
+            volumes: [
+                hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
+            ]
+        ) {
+    node(label) {
+        dir(workdir) {
+           stage('Checkout external proj') {
+                timeout(time: 3, unit: 'MINUTES') {
+                      git(
+                       url: 'http://git.napisani.xyz/nick/photostore-mono.git',
+                       credentialsId: 'gogs_user',
+                       branch: "master"
+                    )
+                }
+            }
+            stage('Docker Build') {
+                container('docker') {
+                    echo "Building docker image..."
+                    // sh "docker build -t $tag -f photostore_fastapi/Dockerfile ."
+                    // sh "docker push $tag"
+
+                        docker.withRegistry(registry, 'docker_registry_creds') {
+
+                        // def customImage = docker.build("${ecrRepoName}:${env.BUILD_ID}", "photostore_fastapi/")
+                        def customImage = docker.build("${ecrRepoName}:latest", "photostore_fastapi/")
+
+                        /* Push the container to the custom Registry */
+                        customImage.push()
+
+
+                    }
+                }
+            }
+        }
+    }
+}
+
