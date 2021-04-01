@@ -9,15 +9,30 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=photostore
+    networks:
+      dockernetwork:
+        aliases:
+          - "db.docker.local"
+          - "db"
+
   web:
     build: .
-    command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
-    volumes:
-      - .:/code
+    #    command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    #    volumes:
+    #      - .:/code
     ports:
       - "8000:8000"
     depends_on:
       - db
+
+    networks:
+      dockernetwork:
+        aliases:
+          - "web.docker.local"
+          - "web"
+networks:
+  dockernetwork:
+    driver: bridge
 
 #  pgadmin:
 #    container_name: pgadmin
