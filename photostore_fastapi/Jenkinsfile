@@ -12,9 +12,12 @@ podTemplate(label: label,
         containers: [
                 containerTemplate(name: 'jnlp', image: 'jenkins/jnlp-slave:alpine'),
                 containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
+                containerTemplate(name: 'kubectl', image:  'roffe/kubectl', command: 'cat', ttyEnabled: true),
             ],
             volumes: [
+                hostPathVolume(hostPath: '/home/nick/.kube/config', mountPath: '/.kube/config'),
                 hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
+
             ]
         ) {
     node(label) {
@@ -46,10 +49,10 @@ podTemplate(label: label,
                     }
                 }
             }
-             stage('Run kubectl') {
-              container('kubectl') {
-                sh "kubectl rollout restart deployment photostore -n home"
-              }
+            stage("deploy") {
+                container("kubectl") {
+                    sh 'kubectl --kubeconfig /.kube/config  -n home set env deployment photostore DEPLOY_DATE="$(date)"'
+                }
             }
         }
     }

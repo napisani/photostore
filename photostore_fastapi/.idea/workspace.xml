@@ -185,7 +185,7 @@
       <workItem from="1615146086776" duration="40425000" />
       <workItem from="1616199320859" duration="4502000" />
       <workItem from="1616540087610" duration="1548000" />
-      <workItem from="1616628171079" duration="5118000" />
+      <workItem from="1616628171079" duration="7296000" />
     </task>
     <task id="LOCAL-00001" summary="adding all mobile attirubtes - fixed schemas for Add and Update specific">
       <created>1615777399372</created>
@@ -229,7 +229,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617238625192</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="photo upload working">
+      <created>1617239974562</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1617239974562</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
