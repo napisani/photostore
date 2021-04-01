@@ -46,6 +46,11 @@ podTemplate(label: label,
                     }
                 }
             }
+             stage('Run kubectl') {
+              container('kubectl') {
+                sh "kubectl rollout restart deployment photostore -n home"
+              }
+            }
         }
     }
 }
