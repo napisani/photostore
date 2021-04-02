@@ -4,6 +4,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/photo_gallery_view_model.dart';
+import 'package:photostore_flutter/ui/widget/loading_widget.dart';
 import 'package:photostore_flutter/ui/widget/screen_error_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -45,12 +46,20 @@ class _PhotoGalleryScreen extends StatelessWidget {
           err: (state.status as ErrorScreenStatus).error,
           onDismiss: () => state.reset(),
         ));
-      } else if (state.status is SuccessScreenStatus ||
-          state.status is LoadingScreenStatus) {
+      } else if (state.status is LoadingScreenStatus) {
+        return LoadingWidget(
+            animationController: (state.status as LoadingScreenStatus)
+                .loadingAnimationController);
+      } else if (state.status is SuccessScreenStatus) {
         if (state.photoPage?.items == null || state.photoPage.items.isEmpty) {
           return Center(
-            child: Text('no photos'),
-          );
+              child: Column(
+            children: [
+              Text('no photos found'),
+              ElevatedButton(
+                  child: Text('Reload'), onPressed: () => state.reset())
+            ],
+          ));
         }
         // Future.delayed(Duration.zero, () => _adjustScrollOffset());
         return Scaffold(
