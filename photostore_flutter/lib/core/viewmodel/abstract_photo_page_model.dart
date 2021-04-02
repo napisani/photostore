@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:photostore_flutter/core/model/agnostic_media.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
@@ -6,43 +8,39 @@ import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/service/abstract_photo_page_service.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
 import 'package:photostore_flutter/core/viewmodel/abstract_view_model.dart';
-import 'package:photostore_flutter/core/viewmodel/viewmodel_ticker_provider.dart';
 import 'package:photostore_flutter/locator.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class AbstractPhotoPageModel extends AbstractViewModel {
   Pagination<AgnosticMedia> photoPage;
   Subject<PhotoPageEvent> _eventStream = PublishSubject();
-
   @protected
   final AbstractPhotoPageService photoPageService;
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
 
-  AbstractPhotoPageModel({@required this.photoPageService}): super() {
+  AbstractPhotoPageModel({@required this.photoPageService}) : super() {
     _registerAppSettingsListener();
     _registerCurrentPhotoPageListener();
     _registerEventListener();
-    this.reset();
+    this.initialize();
   }
 
   void _registerAppSettingsListener() {
-    this._appSettingsService.appSettingsAsStream.listen((event) {
-      // if (status.type != ScreenStatusType.UNINITIALIZED) {
-      //   status = ScreenStatus.uninitialized();
-      //   photoPageService.reset();
-      // }
-      this.reset();
-    });
+    addSubscription(
+        this._appSettingsService.appSettingsAsStream.listen((event) {
+      // this.reset();
+      this.initialize();
+    }));
   }
 
   void _registerCurrentPhotoPageListener() {
-    photoPageService.currentPhotoPageAsStream.listen((event) {
+    addSubscription(photoPageService.currentPhotoPageAsStream.listen((event) {
       print('currentPhotoPageAsStream.subscription page:${event?.page} '
           'total: ${event?.total} '
           'hasMorePages:${event?.hasMorePages} ');
       photoPage = event;
       notifyListeners();
-    });
+    }));
   }
 
   void _registerEventListener() {
@@ -58,7 +56,10 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
         })
         .debounceTime(const Duration(milliseconds: 50))
         .listen((PhotoPageEvent event) async {
-          if (event is PhotoPageFetchEvent) {
+          if (event is PhotoPageResetEvent) {
+            status = ScreenStatus.uninitialized();
+            photoPageService.reset();
+          } else if (event is PhotoPageFetchEvent) {
             status = ScreenStatus.loading(this);
             try {
               print('in loadPage process started: ${event.page}');
@@ -67,20 +68,24 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
               status = ScreenStatus.success();
             } catch (err, s) {
               status = ScreenStatus.error(err.toString());
-              print("AbstractPhotoPageModel:_registerEventListener failed to load loadPage: $err, $s");
+              print(
+                  "AbstractPhotoPageModel:_registerEventListener failed to load loadPage: $err, $s");
               notifyListeners();
             }
-          } else if (event is PhotoPageResetEvent) {
-            status = ScreenStatus.uninitialized();
-            photoPageService.reset();
           }
         });
   }
 
   void reset() {
-    if(this._appSettingsService.currentAppSettings != null){
+    if (this._appSettingsService.currentAppSettings != null) {
       this._eventStream.add(PhotoPageResetEvent());
-      loadPage(1);
+      Future.delayed(Duration(milliseconds: 120), () => loadPage(1));
+    }
+  }
+
+  void initialize() {
+    if (!this.photoPageService.hasPhotosLoaded) {
+      this.reset();
     }
   }
 
@@ -90,8 +95,8 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
   }
 
   void dispose() {
-    _eventStream.close();
-    photoPageService.reset();
     super.dispose();
+    _eventStream.close();
+    // photoPageService.reset();
   }
 }

@@ -4,6 +4,7 @@ import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/abstract_photo_page_model.dart';
 import 'package:photostore_flutter/core/viewmodel/mobile_media_page_model.dart';
 import 'package:photostore_flutter/core/viewmodel/server_media_page_model.dart';
+import 'package:photostore_flutter/ui/screen/photo_gallery_screen.dart';
 import 'package:photostore_flutter/ui/screen/photo_page_notifier_mixin.dart';
 import 'package:photostore_flutter/ui/widget/loading_widget.dart';
 import 'package:photostore_flutter/ui/widget/photo_grid_widget.dart';
@@ -130,8 +131,14 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
           if ((state.photoPage?.items == null ||
               state.photoPage.items.isEmpty)) {
             if (state.status is SuccessScreenStatus) {
-              return Center(
-                child: Text('no photos found'),
+              return Center(child:
+                Column(children: [
+                  Text('no photos found'),
+                  ElevatedButton(
+                      child: Text('Reload'),
+                      onPressed: () => state.reset())
+                ],)
+
               );
             } else if (state.status is LoadingScreenStatus) {
               return Center(
@@ -161,13 +168,13 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
 
   void _handlePhotoSelected(int index) {
     print('loading index: $index');
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => PhotoGalleryScreen(
-    //         mediaSource: this.getMediaSource(), photoIndex: index),
-    //   ),
-    // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PhotoGalleryScreen(
+            mediaSource: this.getMediaSource(), photoIndex: index),
+      ),
+    );
 
     // showDialog(context: context, builder: (_) => PhotoGalleryWidget());
   }

@@ -9,6 +9,7 @@ abstract class AbstractPhotoPageService {
   final MediaRepository mediaRepo;
   final BehaviorSubject<Pagination<AgnosticMedia>> _photoPage =
       BehaviorSubject.seeded(Pagination<AgnosticMedia>());
+
   //
   // final BehaviorSubject<Pagination<AgnosticMedia>> _photoPageFake =
   //     BehaviorSubject.seeded(Pagination<AgnosticMedia>());
@@ -23,8 +24,13 @@ abstract class AbstractPhotoPageService {
   }
 
   void reset() async {
+    print('inside AbstractPhotoPageService.reset()');
     _photoPage.add(Pagination<AgnosticMedia>());
   }
+
+  bool get hasPhotosLoaded =>
+      this._photoPage?.value?.items != null &&
+      this._photoPage.value.items.length > 0;
 
   Future<Pagination<AgnosticMedia>> loadPage(int pageNumber) async {
     if (_photoPage.value.page >= pageNumber || !_photoPage.value.hasMorePages) {

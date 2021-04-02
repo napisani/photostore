@@ -26,9 +26,9 @@ class BackupModel extends AbstractViewModel {
   }
 
   void _registerAppSettingsListener() {
-    this._appSettingsService.appSettingsAsStream.listen((event) {
+    addSubscription(this._appSettingsService.appSettingsAsStream.listen((event) {
       reinit();
-    });
+    }));
   }
 
   void reinit() async {

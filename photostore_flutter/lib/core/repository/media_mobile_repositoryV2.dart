@@ -6,7 +6,6 @@ import 'package:photostore_flutter/core/model/pagination.dart';
 
 import 'media_repository.dart';
 
-
 class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
   AssetPathEntity _allPath;
 
@@ -33,15 +32,15 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
 
   Future<Pagination<MobilePhoto>> getPhotosByPage(int page) async {
     AssetPathEntity allAlbum = await this.getAllAlbum();
-    int perPageOrRemaining =
-        allAlbum.assetCount - ((page - 1) * itemsPerPage);
+    int perPageOrRemaining = allAlbum.assetCount - ((page - 1) * itemsPerPage);
     if (perPageOrRemaining > itemsPerPage) {
       perPageOrRemaining = itemsPerPage;
     }
     final int skip = itemsPerPage * (page - 1);
     List<AssetEntity> assets = await allAlbum.getAssetListRange(
         start: skip, end: skip + perPageOrRemaining);
-    print('getPhotosByPage allAlbum : $allAlbum assets: ${assets.length}');
+    print(
+        'getPhotosByPage allAlbum : $allAlbum assets: ${assets.length} , itemsPerPage: $itemsPerPage');
     return Pagination<MobilePhoto>(
         page: page,
         perPage: itemsPerPage,
