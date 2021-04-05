@@ -20,8 +20,8 @@ router = APIRouter()
 
 
 @router.get("/health", response_model=HealthSchema)
-def api_get_health(
-        db: Session = Depends(deps.get_db)
+async def api_get_health(
+        db: Session = Depends(deps.get_async_db)
 ) -> HealthSchema:
     """
     health check
@@ -34,21 +34,21 @@ def api_get_health(
 
 
 @router.get("/{page}", response_model=PaginationSchema[PhotoSchemaFull])
-def api_get_photos(
-        db: Session = Depends(deps.get_db),
+async def api_get_photos(
+        db: Session = Depends(deps.get_async_db),
         page: int = 1
 ) -> PaginationSchema[PhotoSchemaFull]:
     """
     Retrieve photos by page.
     """
-    pagination = get_photos(db, page, 20)
+    pagination = await get_photos(db, page, 20)
     return pagination
 
 
 @router.post('/upload', response_model=PhotoSchemaFull)
-def api_upload_photo(db: Session = Depends(deps.get_db),
-                     file: UploadFile = File(...),
-                     metadata: UploadFile = File(...)) -> PhotoSchemaFull:
+async def api_upload_photo(db: Session = Depends(deps.get_async_db),
+                           file: UploadFile = File(...),
+                           metadata: UploadFile = File(...)) -> PhotoSchemaFull:
     meta = json.load(metadata.file)
     logger.debug(f'metadata: {meta}, file: {file}')
 
@@ -68,44 +68,44 @@ def api_upload_photo(db: Session = Depends(deps.get_db),
     if not file or not allowed_file(photo_info.filename):
         raise PhotoExceptions.invalid_photo_passed()
 
-    added_photo = add_photo(db, photo=photo_info, file=file.file)
+    added_photo = await add_photo(db, photo=photo_info, file=file.file)
     logger.debug('view_upload_photo added_photo {}', added_photo)
     return added_photo
 
 
 @router.get('/fullsize/{photo_id}')
-def api_get_fullsize_image(photo_id: int, db: Session = Depends(deps.get_db)):
-    photo = get_photo(db, photo_id=photo_id)
+async def api_get_fullsize_image(photo_id: int, db: Session = Depends(deps.get_async_db)):
+    photo = await get_photo(db, photo_id=photo_id)
     logger.debug('view_get_fullsize photo: {}', photo)
     with open(photo.path, 'rb') as f:
         return StreamingResponse(io.BytesIO(f.read()), media_type="image/png")
 
 
 @router.get('/thumbnail/{photo_id}')
-def api_get_thumbnail_image(photo_id: int, db: Session = Depends(deps.get_db)):
-    photo = get_photo(db, photo_id=photo_id)
+async def api_get_thumbnail_image(photo_id: int, db: Session = Depends(deps.get_async_db)):
+    photo = await get_photo(db, photo_id=photo_id)
     logger.debug('view_get_fullsize photo: {}', photo)
     with open(photo.thumbnail_path, 'rb') as f:
         return StreamingResponse(io.BytesIO(f.read()), media_type="image/png")
 
 
 @router.post('/diff', response_model=List[PhotoDiffResultSchema])
-def api_do_diff(diff_items: List[PhotoDiffRequestSchema], db: Session = Depends(deps.get_db)) \
+async def api_do_diff(diff_items: List[PhotoDiffRequestSchema], db: Session = Depends(deps.get_async_db)) \
         -> List[PhotoDiffResultSchema]:
-    result_list = diff_photos(db=db, diff_reqs=diff_items)
+    result_list = await diff_photos(db=db, diff_reqs=diff_items)
     logger.debug('api_do_diff result_list: {}', result_list)
     return result_list
 
 
 @router.get('/latest/{device_id}', response_model=PhotoSchemaFull)
-def api_get_latest_photo_for_device(device_id: str, db=Depends(deps.get_db)) -> PhotoSchemaFull:
-    photo = get_latest_photo(db=db, device_id=device_id)
+async def api_get_latest_photo_for_device(device_id: str, db=Depends(deps.get_async_db)) -> PhotoSchemaFull:
+    photo = await get_latest_photo(db=db, device_id=device_id)
     logger.debug('api_get_latest_photo_for_device photo: {}', photo)
     return photo
 
 
 @router.get('/count/{device_id}', response_model=int)
-def api_get_photo_count(device_id: str, db=Depends(deps.get_db)) -> int:
-    photo_count = count_photos(db=db, device_id=device_id)
+async def api_get_photo_count(device_id: str, db=Depends(deps.get_async_db)) -> int:
+    photo_count = await count_photos(db=db, device_id=device_id)
     logger.debug('api_get_photo_count photo_count: {}', photo_count)
     return photo_count

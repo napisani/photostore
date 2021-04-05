@@ -25,6 +25,7 @@ pyheif-pillow-opener = "*"
 flask-sqlalchemy = "*"
 factory-boy = "*"
 pytest-mock = "*"
+pytest-asyncio = "*"
 
 [dev-packages]
 pytest-mock = "*"

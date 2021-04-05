@@ -1,7 +1,7 @@
 import os
 import re
 import shutil
-from typing import Optional, List
+from typing import Optional, List, Awaitable
 
 import magic
 from PIL import Image
@@ -105,7 +105,7 @@ def _create_thumbnail(photo_path, photo_filename):
         raise PhotoExceptions.failed_to_save_photo_file()
 
 
-def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull:
+async def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull:
     logger.debug('in add_photo photo: {}', photo)
     # photo.id = None
     base_path, filename = os.path.split(photo.filename)
@@ -122,7 +122,7 @@ def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull:
     mime = magic.Magic(mime=True)
     photo_full.mime_type = mime.from_file(photo_full.path)
     try:
-        added_photo = PhotoRepo.create(db, obj_in=photo_full)
+        added_photo = await PhotoRepo.create(db, obj_in=photo_full)
     except:
         raise
         raise PhotoExceptions.failed_to_save_photo_to_db()
@@ -131,8 +131,8 @@ def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull:
     return PhotoSchemaFull.from_orm(added_photo)
 
 
-def delete_photo(db: Session, photo_id: int):
-    photo = get_photo(db, photo_id)
+async def delete_photo(db: Session, photo_id: int):
+    photo = await get_photo(db, photo_id)
     if not photo:
         raise PhotoExceptions.photo_not_found()
     if os.path.exists(photo.path):
@@ -142,23 +142,23 @@ def delete_photo(db: Session, photo_id: int):
             raise
             raise PhotoExceptions.failed_to_delete_photo_file()
     try:
-        PhotoRepo.remove(db, id=photo.id)
+        await PhotoRepo.remove(db, id=photo.id)
     except:
         raise
         raise PhotoExceptions.failed_to_delete_photo_from_db()
 
 
-def get_photo(db: Session, photo_id: int) -> PhotoSchemaFull:
-    return PhotoSchemaFull.from_orm(PhotoRepo.get_by_id(db, id=photo_id))
+async def get_photo(db: Session, photo_id: int) -> PhotoSchemaFull:
+    return PhotoSchemaFull.from_orm(await PhotoRepo.get_by_id(db, id=photo_id))
 
 
-def get_latest_photo(db: Session, device_id: str) -> Optional[PhotoSchemaFull]:
-    photo = PhotoRepo.get_latest_photo(db, device_id)
+async def get_latest_photo(db: Session, device_id: str) -> Optional[PhotoSchemaFull]:
+    photo = await PhotoRepo.get_latest_photo(db, device_id)
     return PhotoSchemaFull.from_orm(photo)
 
 
-def update_photo(db: Session, photo: PhotoSchemaUpdate) -> PhotoSchemaFull:
-    saved_photo = PhotoRepo.get_by_id(db, id=photo.id)
+async def update_photo(db: Session, photo: PhotoSchemaUpdate) -> PhotoSchemaFull:
+    saved_photo = await PhotoRepo.get_by_id(db, id=photo.id)
     # current = copy.deepcopy(saved_photo)
     if not saved_photo:
         raise PhotoExceptions.photo_not_found()
@@ -166,19 +166,19 @@ def update_photo(db: Session, photo: PhotoSchemaUpdate) -> PhotoSchemaFull:
     # saved_photo.gphoto_id = photo.gphoto_id
     # saved_photo.creation_date = photo.creation_date
 
-    return PhotoSchemaFull.from_orm(PhotoRepo.update(db, db_obj=saved_photo, obj_in=photo))
+    return PhotoSchemaFull.from_orm(await PhotoRepo.update(db, db_obj=saved_photo, obj_in=photo))
 
 
-def get_photos(db: Session, page: int, per_page: int = 10) -> Pagination:
-    photos = PhotoRepo.get_photos(db, page=page, per_page=per_page)
+async def get_photos(db: Session, page: int, per_page: int = 10) -> Awaitable[Pagination]:
+    photos = await PhotoRepo.get_photos(db, page=page, per_page=per_page)
     pagination = PaginationSchema.from_orm(photos)
     pagination.items = [PhotoSchemaFull.from_orm(p) for p in photos.items]
     return pagination
 
 
-def diff_photos(db: Session, diff_reqs: List[PhotoDiffRequestSchema]) -> List[PhotoDiffResultSchema]:
+async def diff_photos(db: Session, diff_reqs: List[PhotoDiffRequestSchema]) -> List[PhotoDiffResultSchema]:
     pairs = [(req.device_id, req.native_id) for req in diff_reqs]
-    photos = PhotoRepo.get_photos_by_native_ids(db=db, device_native_id_pairs=pairs)
+    photos = await  PhotoRepo.get_photos_by_native_ids(db=db, device_native_id_pairs=pairs)
 
     existing_dict = {photo.native_id: photo for photo in photos}
     return [_make_diff_result(req, existing_dict.get(req.native_id)) for req in diff_reqs]
@@ -199,5 +199,5 @@ def _make_diff_result(req: PhotoDiffRequestSchema, photo: Photo) -> PhotoDiffRes
     return res
 
 
-def count_photos(db: Session, device_id: str) -> int:
-    return PhotoRepo.get_photo_count_by_device_id(db, device_id)
+async def count_photos(db: Session, device_id: str) -> int:
+    return await PhotoRepo.get_photo_count_by_device_id(db, device_id)

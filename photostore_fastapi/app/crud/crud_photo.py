@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from sqlalchemy import or_, and_
+from sqlalchemy import or_, and_, select
 from sqlalchemy.orm import Session
 
 from .base import CRUDBase
@@ -11,31 +11,32 @@ from ..schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaUpdate
 
 class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
 
-    def get_photos(self, db: Session, page, per_page=10) -> Pagination:
-        return self._paginate((db.query(self.model)
-                               .order_by(self.model.creation_date.desc())),
-                              page=page,
-                              per_page=per_page,
-                              error_out=False)
+    async def get_photos(self, db: Session, page, per_page=10) -> Pagination:
+        return await self._paginate(db, (select(self.model)
+                                         .order_by(self.model.creation_date.desc())),
+                                    self.model,
+                                    page=page,
+                                    per_page=per_page,
+                                    error_out=False)
 
-    def get_photos_by_native_ids(self, db: Session, device_native_id_pairs: List, ) -> List[Photo]:
+    async def get_photos_by_native_ids(self, db: Session, device_native_id_pairs: List, ) -> List[Photo]:
         if len(device_native_id_pairs) == 0:
             return []
 
         cond = or_(*[and_(Photo.native_id == native, Photo.device_id == device)
                      for (device, native) in device_native_id_pairs])
-        return db.query(self.model).filter(cond).all()
+        return await db.execute(select(self.model).filter(cond))
 
-    def get_latest_photo(self, db: Session, device_id: str) -> Optional[Photo]:
-        return (db.query(self.model)
-                .filter_by(device_id=device_id)
-                .order_by(self.model.creation_date.desc())
-                .first())
+    async def get_latest_photo(self, db: Session, device_id: str) -> Optional[Photo]:
+        return await (db.execute(select(self.model)
+                                 .filter_by(device_id=device_id)
+                                 .order_by(self.model.creation_date.desc())
+                                 .first()))
 
-    def get_photo_count_by_device_id(self, db: Session, device_id):
-        return (db.query(self.model)
-                .filter_by(device_id=device_id)
-                .count())
+    async def get_photo_count_by_device_id(self, db: Session, device_id):
+        return await (db.execute(select(self.model)
+                                 .filter_by(device_id=device_id)
+                                 .count()))
 
         # def create_with_owner(
         #     self, db: Session, *, obj_in: ItemCreate, owner_id: int

@@ -6,7 +6,7 @@ from loguru import logger
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
-from app.db.session import SessionLocal
+from app.db.session import SessionLocalAsync
 from app.main import app
 # from app.tests.utils.user import authentication_token_from_email
 # from app.tests.utils.utils import get_superuser_token_headers
@@ -18,7 +18,7 @@ from ..crud.crud_photo import PhotoRepo
 
 @pytest.fixture(scope="session")
 def db() -> Generator:
-    yield SessionLocal()
+    yield SessionLocalAsync()
 
 
 @pytest.fixture(scope="module")
@@ -38,12 +38,12 @@ def photo_factory(db: Session) -> Generator:
 
 
 @pytest.fixture(autouse=True)
-def run_before_each_test(db: Session):
+async def run_before_each_test(db: Session):
     # Code that will run before your test, for example:
     # ... do something to check the existing files
 
     logger.info('run_before_each_test')
-    PhotoRepo.delete_all(db=db)
+    await PhotoRepo.delete_all(db=db)
     # A test function will be run at this point
     yield
     # Code that will run after your test, for example:

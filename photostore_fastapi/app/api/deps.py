@@ -8,20 +8,28 @@ from typing import Generator
 # from app import crud, models, schemas
 # from app.core import security
 # from app.core.config import settings
-from app.db.session import SessionLocal
+from app.db.session import SessionLocal, SessionLocalAsync
+
 
 # reusable_oauth2 = OAuth2PasswordBearer(
 #     tokenUrl=f"{settings.API_V1_STR}/login/access-token"
 # )
 
 
-def get_db() -> Generator:
+# def get_db() -> Generator:
+#     try:
+#         db = SessionLocal()
+#         yield db
+#     finally:
+#         db.close()
+
+
+async def get_async_db() -> Generator:
     try:
-        db = SessionLocal()
+        db = SessionLocalAsync()
         yield db
     finally:
-        db.close()
-
+        await db.close()
 
 # def get_current_user(
 #     db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
