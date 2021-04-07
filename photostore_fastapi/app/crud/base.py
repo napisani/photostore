@@ -1,6 +1,5 @@
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
-from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy import select, func, delete
 from sqlalchemy.orm import Session, Query
@@ -26,7 +25,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self.model = model
 
     async def get_by_id(self, db: Session, id: Any) -> Optional[ModelType]:
-        return await db.execute(select(self.model).where(self.model.id == id).first())
+        items_itr = await db.execute(select(self.model).where(self.model.id == id))
+        return items_itr.scalars().one_or_none()
 
     async def get_multi(
             self, db: Session, *, skip: int = 0, limit: int = 100
@@ -34,7 +34,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return await db.execute(select(self.model)).offset(skip).limit(limit)
 
     async def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
-        obj_in_data = jsonable_encoder(obj_in)
+        obj_in_data = obj_in.dict()
         db_obj = self.model(**obj_in_data)  # type: ignore
         db.add(db_obj)
         await db.commit()
@@ -48,7 +48,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             db_obj: ModelType,
             obj_in: Union[UpdateSchemaType, Dict[str, Any]]
     ) -> ModelType:
-        obj_data = jsonable_encoder(db_obj)
+        obj_data = vars(db_obj)
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
@@ -56,14 +56,14 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         for field in obj_data:
             if field in update_data:
                 setattr(db_obj, field, update_data[field])
-        await db.add(db_obj)
+        db.add(db_obj)
         await db.commit()
         await db.refresh(db_obj)
         return db_obj
 
     async def remove(self, db: Session, *, id: int) -> ModelType:
-        obj = db.execute(select(self.model).where(self.model.id == id))
-        db.execute(delete(self.model).where(self.model.id == id))
+        obj = await db.execute(select(self.model).where(self.model.id == id))
+        await db.execute(delete(self.model).where(self.model.id == id))
         await db.commit()
         return obj
 

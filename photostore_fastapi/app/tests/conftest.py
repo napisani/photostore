@@ -1,3 +1,4 @@
+from asyncio import get_event_loop
 from typing import Generator
 
 import pytest
@@ -16,29 +17,39 @@ from .factories import make_photo_factory
 from ..crud.crud_photo import PhotoRepo
 
 
+@pytest.fixture(scope="function")
+async def db() -> Generator:
+    s = SessionLocalAsync()
+    yield s
+    await s.close()
+
+
 @pytest.fixture(scope="session")
-def db() -> Generator:
-    yield SessionLocalAsync()
-
-
-@pytest.fixture(scope="module")
-def test_client() -> Generator:
+def test_client(event_loop) -> Generator:
     with TestClient(app) as c:
         yield c
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def app_settings() -> Generator:
     yield settings
 
 
-@pytest.fixture(scope="module")
-def photo_factory(db: Session) -> Generator:
-    yield make_photo_factory(db)
+@pytest.fixture(scope="function")
+def photo_factory() -> Generator:
+    yield make_photo_factory()
 
 
+@pytest.fixture(scope="session")
+def event_loop():
+    loop = get_event_loop()
+    yield loop
+    loop.close()
+
+
+@pytest.mark.asyncio
 @pytest.fixture(autouse=True)
-async def run_before_each_test(db: Session):
+async def run_before_each_test(db: Session, event_loop):
     # Code that will run before your test, for example:
     # ... do something to check the existing files
 
@@ -46,6 +57,8 @@ async def run_before_each_test(db: Session):
     await PhotoRepo.delete_all(db=db)
     # A test function will be run at this point
     yield
+
+    # event_loop.run_until_complete()
     # Code that will run after your test, for example:
     # ... do something to check the existing files
     # assert files_before == files_after

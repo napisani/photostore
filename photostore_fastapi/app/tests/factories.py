@@ -3,16 +3,14 @@
 import datetime
 import os
 
-import pytest
 from factory import Sequence, Factory
-from factory.alchemy import SQLAlchemyModelFactory
-from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.models.photo_model import Photo
 from app.utils import get_file_checksum
 
-def make_photo_factory(db: Session):
+
+def make_photo_factory():
     class BaseFactory(Factory):
         """Base factory."""
 
@@ -65,7 +63,6 @@ def make_photo_factory(db: Session):
         width = Sequence(lambda n: 1024)
         longitude = Sequence(lambda n: 0.0)
         latitude = Sequence(lambda n: 0.0)
-
 
         # email = Sequence(lambda n: 'user{0}@example.com'.format(n))
         # password = PostGenerationMethodCall('set_password', 'example')

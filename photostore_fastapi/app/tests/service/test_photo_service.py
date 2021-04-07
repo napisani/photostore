@@ -52,7 +52,7 @@ class TestPhotoService:
         file = FileStorage(stream=open(photo.path, 'rb'), filename=photo.filename)
         saved_photo = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo)), file)
 
-        delete_photo(db, saved_photo.id)
+        await delete_photo(db, saved_photo.id)
 
         assert not os.path.exists(saved_photo.path)
         assert not await get_photo(db, saved_photo.id)
@@ -91,7 +91,7 @@ class TestPhotoService:
         for _ in range(0, 4):
             photo = photo_factory()
             file = FileStorage(stream=open(photo.path, 'rb'), filename=photo.filename)
-            saved_photo = add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo)), file)
+            saved_photo = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo)), file)
             assert saved_photo
         photos = await get_photos(db, 1)
         logger.debug('test_add_photos_and_get_photos photos: {}', photos)

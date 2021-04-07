@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from sqlalchemy import or_, and_, select
+from sqlalchemy import or_, and_, select, func
 from sqlalchemy.orm import Session
 
 from .base import CRUDBase
@@ -25,18 +25,20 @@ class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
 
         cond = or_(*[and_(Photo.native_id == native, Photo.device_id == device)
                      for (device, native) in device_native_id_pairs])
-        return await db.execute(select(self.model).filter(cond))
+        result_itr = await db.execute(select(self.model).where(cond))
+        return result_itr.scalars().all()
 
     async def get_latest_photo(self, db: Session, device_id: str) -> Optional[Photo]:
-        return await (db.execute(select(self.model)
-                                 .filter_by(device_id=device_id)
-                                 .order_by(self.model.creation_date.desc())
-                                 .first()))
+        result_itr = await (db.execute(select(self.model)
+                                       .filter_by(device_id=device_id)
+                                       .order_by(self.model.creation_date.desc())))
+        return result_itr.scalars().one_or_none()
 
     async def get_photo_count_by_device_id(self, db: Session, device_id):
-        return await (db.execute(select(self.model)
-                                 .filter_by(device_id=device_id)
-                                 .count()))
+        result_itr = await (db.execute(select(func.count())
+                                       .select_from(self.model)
+                                       .where(device_id == device_id)))
+        return result_itr.scalars().one_or_none()
 
         # def create_with_owner(
         #     self, db: Session, *, obj_in: ItemCreate, owner_id: int
