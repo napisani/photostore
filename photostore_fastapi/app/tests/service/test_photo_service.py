@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 import os
 
@@ -84,6 +85,32 @@ class TestPhotoService:
                                                                                                               minute=0,
                                                                                                               second=0,
                                                                                                               microsecond=0)
+
+    @pytest.mark.asyncio
+    async def test_add_two_and_get_latest(self, photo_factory, db):
+        today = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        today = datetime.datetime.strptime(today, "%Y-%m-%d %H:%M:%S")
+        logger.debug('test_add_and_delete')
+        photo = photo_factory()
+        file = FileStorage(stream=open(photo.path, 'rb'), filename=photo.filename)
+        saved_photo = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo)), file)
+
+        await asyncio.sleep(1)
+
+        photo2 = photo_factory()
+        file2 = FileStorage(stream=open(photo.path, 'rb'), filename=photo2.filename)
+        saved_photo2 = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo2)), file2)
+
+        assert saved_photo2
+        # assert updated_photo.media_metadata == '_new_'
+        assert saved_photo2.creation_date.replace(hour=0, minute=0, second=0, microsecond=0) == today.replace(hour=0,
+                                                                                                              minute=0,
+                                                                                                              second=0,
+                                                                                                              microsecond=0)
+        latest_photo = await get_latest_photo(db, device_id=photo.device_id)
+
+        assert latest_photo
+        assert latest_photo.id == saved_photo2.id
 
     @pytest.mark.asyncio
     async def test_add_photos_and_get_photos(self, photo_factory, db):

@@ -26,7 +26,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     async def get_by_id(self, db: Session, id: Any) -> Optional[ModelType]:
         items_itr = await db.execute(select(self.model).where(self.model.id == id))
-        return items_itr.scalars().one_or_none()
+        return items_itr.scalars().first()
 
     async def get_multi(
             self, db: Session, *, skip: int = 0, limit: int = 100

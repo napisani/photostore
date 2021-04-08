@@ -32,13 +32,13 @@ class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
         result_itr = await (db.execute(select(self.model)
                                        .filter_by(device_id=device_id)
                                        .order_by(self.model.creation_date.desc())))
-        return result_itr.scalars().one_or_none()
+        return result_itr.scalars().first()
 
     async def get_photo_count_by_device_id(self, db: Session, device_id):
         result_itr = await (db.execute(select(func.count())
                                        .select_from(self.model)
                                        .where(device_id == device_id)))
-        return result_itr.scalars().one_or_none()
+        return result_itr.scalars().first()
 
         # def create_with_owner(
         #     self, db: Session, *, obj_in: ItemCreate, owner_id: int
