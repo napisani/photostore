@@ -22,12 +22,12 @@ class PhotoListTabWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return mediaSource == 'MOBILE'
         ? ChangeNotifierProvider<MobileMediaPageModel>(
-            create: (context) => MobileMediaPageModel(),
-            child: PhotoListWidget(mediaSource: mediaSource))
+        create: (context) => MobileMediaPageModel(),
+        child: PhotoListWidget(mediaSource: mediaSource))
         : ChangeNotifierProvider<ServerMediaPageModel>(
-            create: (context) => ServerMediaPageModel(),
-            child: PhotoListWidget(mediaSource: mediaSource),
-          );
+      create: (context) => ServerMediaPageModel(),
+      child: PhotoListWidget(mediaSource: mediaSource),
+    );
 
     print('working on mediaSource: $mediaSource');
     return PhotoListWidget(mediaSource: mediaSource);
@@ -71,7 +71,7 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
 
   bool _hasPhotosLoaded() =>
       _photoPageModel.photoPage != null &&
-      _photoPageModel.photoPage.items.isNotEmpty;
+          _photoPageModel.photoPage.items.isNotEmpty;
 
   void _loadedEnoughYet() {
     if (_hasPhotosLoaded() ||
@@ -98,7 +98,8 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
       builder: (context, s, child) {
         final AbstractPhotoPageModel state = s;
         print(
-            'this: $this mediaSource: ${widget.mediaSource} building state type of: ${state.runtimeType}');
+            'this: $this mediaSource: ${widget
+                .mediaSource} building state type of: ${state.runtimeType}');
         print('scroll stats: $_scrollController');
 
         if (state == null ||
@@ -117,9 +118,9 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
         } else if (state.status is ErrorScreenStatus) {
           return Center(
               child: ScreenErrorWidget(
-            err: (state.status as ErrorScreenStatus).error,
-            onDismiss: () => state.reset(),
-          ));
+                err: (state.status as ErrorScreenStatus).error,
+                onDismiss: () => state.reset(),
+              ));
         }
         // else if (state.status.type == ScreenStatusType.LOADING) {
         //   return Center(
@@ -132,12 +133,12 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
               state.photoPage.items.isEmpty)) {
             if (state.status is SuccessScreenStatus) {
               return Center(child:
-                Column(children: [
-                  Text('no photos found'),
-                  ElevatedButton(
-                      child: Text('Reload'),
-                      onPressed: () => state.reset())
-                ],)
+              Column(children: [
+                Text('no photos found'),
+                ElevatedButton(
+                    child: Text('Reload'),
+                    onPressed: () => state.reset())
+              ],)
 
               );
             } else if (state.status is LoadingScreenStatus) {
@@ -155,7 +156,10 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
             scrollController: _scrollController,
             currentScrollPosition: _curOffset,
             onPress: (photo) => _handlePhotoSelected(photo),
-            onRefresh: () => state.reset(),
+            onRefresh: () {
+              print('refresh called!');
+              state.reset();
+            },
           );
         } else {
           return Center(
@@ -171,8 +175,9 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PhotoGalleryScreen(
-            mediaSource: this.getMediaSource(), photoIndex: index),
+        builder: (context) =>
+            PhotoGalleryScreen(
+                mediaSource: this.getMediaSource(), photoIndex: index),
       ),
     );
 

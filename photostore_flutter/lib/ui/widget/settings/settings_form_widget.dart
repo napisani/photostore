@@ -15,6 +15,13 @@ class SettingsFormWidget extends StatelessWidget {
 
   SettingsFormWidget({this.appSettings, this.onSave});
 
+  String _elipsify(String str, {int size = 10}) {
+    if (str == null || str.length <= size) {
+      return str;
+    }
+    return str.substring(0,size) + '...';
+  }
+
   @override
   Widget build(BuildContext context) {
     return SettingsList(
@@ -24,7 +31,7 @@ class SettingsFormWidget extends StatelessWidget {
           tiles: [
             SettingsTile(
               title: 'Hostname/IP',
-              subtitle: appSettings.serverIP ?? '',
+              subtitle: _elipsify(appSettings.serverIP ?? ''),
               onPressed: (BuildContext context) {
                 showDialog(
                     context: context,
@@ -40,7 +47,7 @@ class SettingsFormWidget extends StatelessWidget {
             ),
             SettingsTile(
               title: 'Port Number',
-              subtitle: "${appSettings.serverPort ?? 5000}",
+              subtitle: _elipsify("${appSettings.serverPort ?? 5000}"),
               onPressed: (BuildContext context) {
                 showDialog(
                     context: context,
@@ -65,7 +72,7 @@ class SettingsFormWidget extends StatelessWidget {
             ),
             SettingsTile(
               title: 'API Key',
-              subtitle: "${appSettings.apiKey ?? ''}",
+              subtitle: _elipsify("${appSettings.apiKey ?? ''}"),
               onPressed: (BuildContext context) {
                 showDialog(
                     context: context,
@@ -79,10 +86,9 @@ class SettingsFormWidget extends StatelessWidget {
                         }));
               },
             ),
-
             SettingsTile(
               title: 'Device ID',
-              subtitle: "${appSettings.deviceID ?? ''}",
+              subtitle: _elipsify("${appSettings.deviceID ?? ''}"),
               onPressed: (BuildContext context) {
                 showDialog(
                     context: context,
@@ -91,101 +97,95 @@ class SettingsFormWidget extends StatelessWidget {
                         textValue: appSettings.deviceID ?? '',
                         savePressed: (devId) {
                           final AppSettings newAppSettings =
-                          appSettings.cloneWith(deviceID: devId);
+                              appSettings.cloneWith(deviceID: devId);
                           _save(newAppSettings);
                         }));
               },
             ),
           ],
-
-
-
         ),
-        SettingsSection(
-          title: 'Advanced Settings',
-          tiles: [
-            SettingsTile(
-              title: 'Batch Size',
-              subtitle: "${appSettings.batchSize ?? 5}",
-              onPressed: (BuildContext context) {
-                showDialog(
-                    context: context,
-                    builder: (context) => IntegerSettingInputWidget(
-                        prompt: "Enter Batch Size",
-                        intValue: appSettings.batchSize,
-                        savePressed: (batch) {
-                          final AppSettings newAppSettings =
-                          appSettings.cloneWith(batchSize: batch);
-                          _save(newAppSettings);
-                        }));
-              },
-            ),
-            SettingsTile(
-              title: 'Items per Page',
-              subtitle: "${appSettings.itemsPerPage ?? 10}",
-              onPressed: (BuildContext context) {
-                showDialog(
-                    context: context,
-                    builder: (context) => IntegerSettingInputWidget(
-                        prompt: "Items per Page",
-                        intValue: appSettings.itemsPerPage,
-                        savePressed: (batch) {
-                          final AppSettings newAppSettings =
-                          appSettings.cloneWith(itemsPerPage: batch);
-                          _save(newAppSettings);
-                        }));
-              },
-            ),
-            SettingsTile(
-              title: 'Upload Retry Attempt Count',
-              subtitle: "${appSettings.uploadRetryAttempts ?? 2}",
-              onPressed: (BuildContext context) {
-                showDialog(
-                    context: context,
-                    builder: (context) => IntegerSettingInputWidget(
-                        prompt: "Enter Upload Retry Attempt Count",
-                        intValue: appSettings.uploadRetryAttempts,
-                        savePressed: (cnt) {
-                          final AppSettings newAppSettings =
-                          appSettings.cloneWith(uploadRetryAttempts: cnt);
-                          _save(newAppSettings);
-                        }));
-              },
-            ),
-            SettingsTile(
-              title: 'Connect timeout (seconds)',
-              subtitle: "${appSettings.connectTimeout ?? 60}",
-              onPressed: (BuildContext context) {
-                showDialog(
-                    context: context,
-                    builder: (context) => IntegerSettingInputWidget(
-                        prompt: "Connect timeout (seconds)",
-                        intValue: appSettings.connectTimeout,
-                        savePressed: (cnt) {
-                          final AppSettings newAppSettings =
-                          appSettings.cloneWith(connectTimeout: cnt);
-                          _save(newAppSettings);
-                        }));
-              },
-            ),
-            SettingsTile(
-              title: 'Retrieve timeout (seconds)',
-              subtitle: "${appSettings.receiveTimeout ?? 60}",
-              onPressed: (BuildContext context) {
-                showDialog(
-                    context: context,
-                    builder: (context) => IntegerSettingInputWidget(
-                        prompt: "Retrieve timeout (seconds)",
-                        intValue: appSettings.receiveTimeout,
-                        savePressed: (cnt) {
-                          final AppSettings newAppSettings =
-                          appSettings.cloneWith(receiveTimeout: cnt);
-                          _save(newAppSettings);
-                        }));
-              },
-            ),
-          ]
-        )
+        SettingsSection(title: 'Advanced Settings', tiles: [
+          SettingsTile(
+            title: 'Batch Size',
+            subtitle: _elipsify("${appSettings.batchSize ?? 5}"),
+            onPressed: (BuildContext context) {
+              showDialog(
+                  context: context,
+                  builder: (context) => IntegerSettingInputWidget(
+                      prompt: "Enter Batch Size",
+                      intValue: appSettings.batchSize,
+                      savePressed: (batch) {
+                        final AppSettings newAppSettings =
+                            appSettings.cloneWith(batchSize: batch);
+                        _save(newAppSettings);
+                      }));
+            },
+          ),
+          SettingsTile(
+            title: 'Items per Page',
+            subtitle: _elipsify("${appSettings.itemsPerPage ?? 10}"),
+            onPressed: (BuildContext context) {
+              showDialog(
+                  context: context,
+                  builder: (context) => IntegerSettingInputWidget(
+                      prompt: "Items per Page",
+                      intValue: appSettings.itemsPerPage,
+                      savePressed: (batch) {
+                        final AppSettings newAppSettings =
+                            appSettings.cloneWith(itemsPerPage: batch);
+                        _save(newAppSettings);
+                      }));
+            },
+          ),
+          SettingsTile(
+            title: 'Upload Retry Attempt Count',
+            subtitle: _elipsify("${appSettings.uploadRetryAttempts ?? 2}"),
+            onPressed: (BuildContext context) {
+              showDialog(
+                  context: context,
+                  builder: (context) => IntegerSettingInputWidget(
+                      prompt: "Enter Upload Retry Attempt Count",
+                      intValue: appSettings.uploadRetryAttempts,
+                      savePressed: (cnt) {
+                        final AppSettings newAppSettings =
+                            appSettings.cloneWith(uploadRetryAttempts: cnt);
+                        _save(newAppSettings);
+                      }));
+            },
+          ),
+          SettingsTile(
+            title: 'Connect timeout (seconds)',
+            subtitle: _elipsify("${appSettings.connectTimeout ?? 60}"),
+            onPressed: (BuildContext context) {
+              showDialog(
+                  context: context,
+                  builder: (context) => IntegerSettingInputWidget(
+                      prompt: "Connect timeout (seconds)",
+                      intValue: appSettings.connectTimeout,
+                      savePressed: (cnt) {
+                        final AppSettings newAppSettings =
+                            appSettings.cloneWith(connectTimeout: cnt);
+                        _save(newAppSettings);
+                      }));
+            },
+          ),
+          SettingsTile(
+            title: 'Retrieve timeout (seconds)',
+            subtitle: _elipsify("${appSettings.receiveTimeout ?? 60}"),
+            onPressed: (BuildContext context) {
+              showDialog(
+                  context: context,
+                  builder: (context) => IntegerSettingInputWidget(
+                      prompt: "Retrieve timeout (seconds)",
+                      intValue: appSettings.receiveTimeout,
+                      savePressed: (cnt) {
+                        final AppSettings newAppSettings =
+                            appSettings.cloneWith(receiveTimeout: cnt);
+                        _save(newAppSettings);
+                      }));
+            },
+          ),
+        ])
       ],
     );
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:photostore_flutter/core/model/agnostic_media.dart';
-import 'package:photostore_flutter/core/model/media_contents.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
+import 'package:photostore_flutter/ui/widget/thumbnail_widget.dart';
 
 class PhotoGridWidget extends StatelessWidget {
   final Pagination<AgnosticMedia> photos;
@@ -43,40 +43,8 @@ class PhotoGridWidget extends StatelessWidget {
             child: new GridTile(
               // footer: new Text(this.photos.items[index].id.toString()),
               child: GestureDetector(
-                onTap: () => _onPress(index),
-                child: FutureBuilder<MediaContents>(
-                  future: photos.items[index].getThumbnail(),
-                  builder: (context, AsyncSnapshot<MediaContents> snapshot) {
-                    if (snapshot.hasData) {
-                      // print('grid tile build - hasData');
-                      if (snapshot.data is MediaURLContents) {
-                        // print('grid tile build - returning image.network');
-
-                        return Image.network(
-                          (snapshot.data as MediaURLContents).url,
-                          loadingBuilder:(BuildContext context, Widget child,ImageChunkEvent loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes != null ?
-                                loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                    : null,
-                              ),
-                            );
-                          },
-                        );
-                      } else {
-                        // print('grid tile build - returning image.memory');
-
-                        return Image.memory(
-                            (snapshot.data as MediaMemoryContents).binary);
-                      }
-                    } else {
-                      return CircularProgressIndicator();
-                    }
-                  },
-                ),
-              ),
+                  onTap: () => _onPress(index),
+                  child: ThumbnailWidget(photo: photos.items[index])),
             ),
           ),
           controller: _scrollController,
@@ -86,7 +54,7 @@ class PhotoGridWidget extends StatelessWidget {
 
   Future<void> _doRefresh() async {
     print('inside _doRefresh');
-    if(_onRefresh != null){
+    if (_onRefresh != null) {
       _onRefresh();
     }
   }

@@ -11,25 +11,37 @@ class ThumbnailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<MediaContents>(
-        future: this.photo.getThumbnail(),
-        builder: (context, AsyncSnapshot<MediaContents> snapshot) {
-          if (snapshot.hasData) {
-            // print('grid tile build - hasData');
-            if (snapshot.data is MediaURLContents) {
-              // print('grid tile build - returning image.network');
+      future: photo.getThumbnail(),
+      builder: (context, AsyncSnapshot<MediaContents> snapshot) {
+        if (snapshot.hasData) {
+          // print('grid tile build - hasData');
+          if (snapshot.data is MediaURLContents) {
+            // print('grid tile build - returning image.network');
 
-              return Image.network(
-                (snapshot.data as MediaURLContents).url,
-              );
-            } else {
-              // print('grid tile build - returning image.memory');
-
-              return Image.memory(
-                  (snapshot.data as MediaMemoryContents).binary);
-            }
+            return Image.network(
+              (snapshot.data as MediaURLContents).url,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                        : null,
+                  ),
+                );
+              },
+            );
           } else {
-            return CircularProgressIndicator();
+            // print('grid tile build - returning image.memory');
+
+            return Image.memory((snapshot.data as MediaMemoryContents).binary);
           }
-        });
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
   }
 }
