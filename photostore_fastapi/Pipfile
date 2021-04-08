@@ -26,6 +26,7 @@ flask-sqlalchemy = "*"
 factory-boy = "*"
 pytest-mock = "*"
 pytest-asyncio = "*"
+asyncpg = "*"
 
 [dev-packages]
 pytest-mock = "*"
