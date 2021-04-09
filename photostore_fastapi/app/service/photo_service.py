@@ -16,6 +16,8 @@ from app.crud.crud_photo import PhotoRepo
 from app.exception.photo_exceptions import PhotoExceptions
 from app.models.pagination import Pagination
 from app.models.photo_model import Photo
+from app.obj.photo_sort_attribute import PhotoSortAttribute
+from app.obj.sort_direction import SortDirection
 from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchemaFull, PhotoSchemaAdd, PhotoSchemaUpdate, PhotoDiffRequestSchema, \
     PhotoDiffResultSchema
@@ -169,7 +171,11 @@ async def update_photo(db: Session, photo: PhotoSchemaUpdate) -> Awaitable[Photo
     return PhotoSchemaFull.from_orm(await PhotoRepo.update(db, db_obj=saved_photo, obj_in=photo))
 
 
-async def get_photos(db: Session, page: int, per_page: int = 10) -> Awaitable[Pagination]:
+async def get_photos(db: Session,
+                     page: int,
+                     per_page: int = 10,
+                     order_by = PhotoSortAttribute.modified_date,
+                     direction =  SortDirection.desc) -> Awaitable[Pagination]:
     photos = await PhotoRepo.get_photos(db, page=page, per_page=per_page)
     pagination = PaginationSchema.from_orm(photos)
     pagination.items = [PhotoSchemaFull.from_orm(p) for p in photos.items]

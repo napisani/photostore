@@ -6,14 +6,20 @@ from sqlalchemy.orm import Session
 from .base import CRUDBase
 from ..models.pagination import Pagination
 from ..models.photo_model import Photo
+from ..obj.photo_sort_attribute import PhotoSortAttribute
+from ..obj.sort_direction import SortDirection
 from ..schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaUpdate
 
 
 class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
 
-    async def get_photos(self, db: Session, page, per_page=10) -> Pagination:
+    async def get_photos(self, db: Session, page, per_page=10,
+                         order_by=PhotoSortAttribute.modified_date,
+                         direction=SortDirection.desc) -> Pagination:
+        order_by_clause = getattr(self.model, order_by)
+        order_by_with_direction_clause = getattr(order_by_clause, direction)
         return await self._paginate(db, (select(self.model)
-                                         .order_by(self.model.creation_date.desc())),
+                                         .order_by(order_by_with_direction_clause())),
                                     self.model,
                                     page=page,
                                     per_page=per_page,

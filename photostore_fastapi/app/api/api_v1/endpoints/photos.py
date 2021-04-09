@@ -10,6 +10,8 @@ from starlette.responses import StreamingResponse
 
 from app.api import deps
 from app.exception.photo_exceptions import PhotoExceptions
+from app.obj.photo_sort_attribute import PhotoSortAttribute
+from app.obj.sort_direction import SortDirection
 from app.schemas.health_schema import HealthSchema
 from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull, PhotoDiffRequestSchema, PhotoDiffResultSchema
@@ -36,12 +38,15 @@ async def api_get_health(
 @router.get("/{page}", response_model=PaginationSchema[PhotoSchemaFull])
 async def api_get_photos(
         db: Session = Depends(deps.get_async_db),
-        page: int = 1
+        page: int = 1,
+        per_page: int = 10,
+        sort: PhotoSortAttribute = PhotoSortAttribute.modified_date,
+        direction: SortDirection = SortDirection.desc
 ) -> PaginationSchema[PhotoSchemaFull]:
     """
     Retrieve photos by page.
     """
-    pagination = await get_photos(db, page, 20)
+    pagination = await get_photos(db, page, per_page, sort, direction)
     return pagination
 
 
