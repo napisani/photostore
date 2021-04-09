@@ -20,17 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="working async db">
-      <change afterPath="$PROJECT_DIR$/app/obj/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/obj/photo_sort_attribute.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/obj/sort_direction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/crud/crud_photo.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/crud/crud_photo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/service/photo_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/photo_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_api_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_api_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/settings_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/settings_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/locator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/locator.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_backup_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_backup_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/backup_stats_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/backup_stats_widget.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/screen_error_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/screen_error_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +190,7 @@
       <workItem from="1616199320859" duration="4502000" />
       <workItem from="1616540087610" duration="1548000" />
       <workItem from="1616628171079" duration="7296000" />
-      <workItem from="1617580956708" duration="18474000" />
+      <workItem from="1617580956708" duration="19247000" />
     </task>
     <task id="LOCAL-00001" summary="adding all mobile attirubtes - fixed schemas for Add and Update specific">
       <created>1615777399372</created>
@@ -271,7 +269,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617922980293</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="working async db">
+      <created>1617927787447</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1617927787447</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -425,12 +430,12 @@
       <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="461" y="209" key="SettingsEditor/0.23.1920.1100@0.23.1920.1100" timestamp="1615934384093" />
-    <state x="690" y="418" key="Vcs.Push.Dialog.v2" timestamp="1617922981865">
-      <screen x="0" y="23" width="1920" height="1102" />
+    <state x="690" y="418" key="Vcs.Push.Dialog.v2" timestamp="1617927789128">
+      <screen x="0" y="23" width="1920" height="1104" />
     </state>
     <state x="690" y="417" key="Vcs.Push.Dialog.v2/0.23.1920.1100@0.23.1920.1100" timestamp="1617760844440" />
     <state x="690" y="418" key="Vcs.Push.Dialog.v2/0.23.1920.1102@0.23.1920.1102" timestamp="1617922981865" />
-    <state x="690" y="418" key="Vcs.Push.Dialog.v2/0.23.1920.1104@0.23.1920.1104" timestamp="1616036188310" />
+    <state x="690" y="418" key="Vcs.Push.Dialog.v2/0.23.1920.1104@0.23.1920.1104" timestamp="1617927789128" />
     <state x="690" y="419" key="Vcs.Push.Dialog.v2/0.23.1920.1106@0.23.1920.1106" timestamp="1617238626892" />
     <state x="690" y="420" key="Vcs.Push.Dialog.v2/0.23.1920.1109@0.23.1920.1109" timestamp="1615950062360" />
     <state x="1380" y="758" key="Vcs.Push.Dialog.v2/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1615779355262" />

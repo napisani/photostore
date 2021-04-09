@@ -74,7 +74,9 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   state.backupFinished ? Text("Backup Complete!") : null,
-                  BackupStatsWidget(stats: state.stats),
+                  Padding(
+                      child: BackupStatsWidget(stats: state.stats),
+                      padding: const EdgeInsets.all(15.0)),
                   state.queuedPhotos == null
                       ? Column(
                           children: [

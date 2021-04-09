@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:photostore_flutter/ui/screen/home_screen.dart';
@@ -21,20 +22,28 @@ class TabNavigationItem {
         //   icon: Icon(Icons.home),
         //   title: "mobile",
         // ),
-        TabNavigationItem(
-          page: PhotoListTabWidget(mediaSource: "MOBILE"),
-          icon: Icon(Icons.devices),
-          title: "mobile",
-        ),
+        if (kIsWeb)
+          TabNavigationItem(
+            page: HomeScreen(),
+            icon: Icon(Icons.home),
+            title: "Home",
+          ),
+        if (!kIsWeb)
+          TabNavigationItem(
+            page: PhotoListTabWidget(mediaSource: "MOBILE"),
+            icon: Icon(Icons.devices),
+            title: "mobile",
+          ),
         TabNavigationItem(
           page: PhotoListTabWidget(mediaSource: "SERVER"),
           icon: Icon(Icons.cloud),
           title: "server",
         ),
-        TabNavigationItem(
-          page: PhotoBackupScreen(),
-          icon: Icon(Icons.cloud_upload),
-          title: "Backup",
-        ),
+        if (!kIsWeb)
+          TabNavigationItem(
+            page: PhotoBackupScreen(),
+            icon: Icon(Icons.cloud_upload),
+            title: "Backup",
+          ),
       ];
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:photostore_flutter/core/repository/media_api_repository.dart';
 import 'package:photostore_flutter/core/repository/media_mobile_repositoryV2.dart';
@@ -27,27 +28,28 @@ void setupLocator() {
     locator.registerLazySingleton<AppSettingsService>(
         () => AppSettingsService(),
         dispose: (service) => service.dispose());
-    locator.registerLazySingleton<MobileMediaService>(
-        () => MobileMediaService(),
-        dispose: (service) => service.dispose());
+
     locator.registerLazySingleton<ServerMediaService>(
         () => ServerMediaService(),
-        dispose: (service) => service.dispose());
-
-    locator.registerLazySingleton<BackupService>(() => BackupService(),
         dispose: (service) => service.dispose());
 
     // locator.registerLazySingleton<http.Client>(() => http.Client());
     locator.registerLazySingleton<HTTPService>(() => HTTPService(),
         dispose: (service) => service.dispose());
-
-    locator.registerLazySingleton<MediaMobileRepositoryV2>(
-        () => MediaMobileRepositoryV2(),
-        dispose: (service) => service.dispose());
-
     locator.registerLazySingleton<MediaAPIRepository>(
         () => MediaAPIRepository(),
         dispose: (service) => service.dispose());
+
+    if (!kIsWeb) {
+      locator.registerLazySingleton<MobileMediaService>(
+          () => MobileMediaService(),
+          dispose: (service) => service.dispose());
+      locator.registerLazySingleton<BackupService>(() => BackupService(),
+          dispose: (service) => service.dispose());
+      locator.registerLazySingleton<MediaMobileRepositoryV2>(
+          () => MediaMobileRepositoryV2(),
+          dispose: (service) => service.dispose());
+    }
   }
 
   // locator.registerSingleton<SettingsRepository>(SettingsRepository());

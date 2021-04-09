@@ -15,7 +15,6 @@ import 'media_repository.dart';
 class MediaAPIRepository extends MediaRepository<Photo> {
   final HTTPService _httpService = locator<HTTPService>();
 
-
   String _getBaseURL() {
     if (this.settings != null) {
       return "${settings.https ? "https" : "http"}://${settings.serverIP}:${settings.serverPort}/api/v1/photos";
@@ -48,8 +47,13 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   Future<Pagination<Photo>> getPhotosByPage(int page) async {
     print(
         "MediaAPIRepository getPhotosByPage baseUrl: ${_getBaseURL()} page: $page");
-    final response =
-        await _httpService.getHttpClient().get("${_getBaseURL()}/$page");
+    final response = await _httpService
+        .getHttpClient()
+        .get("${_getBaseURL()}/$page", queryParameters: {
+      "per_page": itemsPerPage,
+      "sort": "modified_date",
+      "direction": "desc"
+    });
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = response.data;
       print(data);

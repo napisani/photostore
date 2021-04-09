@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:device_info/device_info.dart';
 import 'package:photostore_flutter/core/model/app_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class _AppSettingKeys {
   static const serverIP = 'serverIP';
@@ -81,14 +82,16 @@ class SettingsRepository {
   }
 
   Future<String> _getDeviceId() async {
-    var deviceInfo = DeviceInfoPlugin();
-    if (Platform.isIOS) {
-      // import 'dart:io'
-      var iosDeviceInfo = await deviceInfo.iosInfo;
-      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
-    } else if (Platform.isAndroid) {
-      var androidDeviceInfo = await deviceInfo.androidInfo;
-      return androidDeviceInfo.androidId; // unique ID on Android
+    if(!kIsWeb) {
+      var deviceInfo = DeviceInfoPlugin();
+      if (Platform.isIOS) {
+        // import 'dart:io'
+        var iosDeviceInfo = await deviceInfo.iosInfo;
+        return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+      } else if (Platform.isAndroid) {
+        var androidDeviceInfo = await deviceInfo.androidInfo;
+        return androidDeviceInfo.androidId; // unique ID on Android
+      }
     }
     return 'web_device_${DateTime.now().millisecondsSinceEpoch}';
   }

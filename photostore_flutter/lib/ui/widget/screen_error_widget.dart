@@ -9,8 +9,8 @@ class ScreenErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final black = Color(0xFF000000);
-    final red = Color(0xFFFF0000);
+    final black = Colors.black;
+    final red = Colors.red;
     return Container(
         child: Column(
             children: [
