@@ -6,7 +6,7 @@ from app.crud.crud_photo import PhotoRepo
 from app.schemas.photo_schema import PhotoSchemaAdd
 
 
-@pytest.mark.unit
+# @pytest.mark.unit
 @pytest.mark.asyncio
 class TestPhotoModel:
     async def test_add_and_get_photo(self, db: Session, photo_factory):

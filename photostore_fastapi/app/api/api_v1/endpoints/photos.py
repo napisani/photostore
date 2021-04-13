@@ -15,8 +15,8 @@ from app.obj.sort_direction import SortDirection
 from app.schemas.health_schema import HealthSchema
 from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull, PhotoDiffRequestSchema, PhotoDiffResultSchema
-from app.service.photo_service import get_photos, allowed_file, add_photo, get_photo, diff_photos, get_latest_photo, \
-    count_photos
+from app.service.photo_service import get_photos, add_photo, get_photo, diff_photos, get_latest_photo, \
+    count_photos, allowed_file
 
 router = APIRouter()
 

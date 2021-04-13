@@ -6,24 +6,15 @@ import pytest
 from loguru import logger
 from werkzeug.datastructures import FileStorage
 
+from app.obj.media_type import MediaType
 from app.schemas.photo_schema import PhotoSchemaUpdate, PhotoDiffRequestSchema, PhotoSchemaAdd, PhotoSchemaFull
-from app.service.photo_service import _get_unique_filename, add_photo, delete_photo, get_photo, update_photo, \
+from app.service.photo_service import add_photo, delete_photo, get_photo, update_photo, \
     get_latest_photo, get_photos, diff_photos, count_photos
 from app.utils import get_file_checksum
 
 
-@pytest.mark.unit
+# @pytest.mark.unit
 class TestPhotoService:
-    def test_unique_filename(self, mocker, db):
-        def mock_exists(filename):
-            logger.debug(filename)
-            if '(4)' in filename:
-                return False
-            return True
-
-        mocker.patch('app.service.photo_service.os.path.exists', side_effect=mock_exists)
-        unique_filename = _get_unique_filename('photo_0.PNG')
-        assert unique_filename == 'photo_0_(4).PNG'
 
     @pytest.mark.asyncio
     async def test_add_photo(self, app_settings, db, photo_factory):
@@ -31,7 +22,6 @@ class TestPhotoService:
         photo = photo_factory()
         file = FileStorage(stream=open(photo.path, 'rb'), filename=photo.filename)
         saved_photo = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo)), file)
-
         assert saved_photo
         assert app_settings.SAVE_PHOTO_DIR in saved_photo.path
         assert saved_photo.checksum
@@ -45,6 +35,7 @@ class TestPhotoService:
         assert photo.device_id
         assert photo.width > 0
         assert photo.height > 0
+        assert photo.media_type == MediaType.IMAGE
 
     @pytest.mark.asyncio
     async def test_add_and_delete(self, app_settings, db, photo_factory):
@@ -52,10 +43,9 @@ class TestPhotoService:
         photo = photo_factory()
         file = FileStorage(stream=open(photo.path, 'rb'), filename=photo.filename)
         saved_photo = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo)), file)
-
         await delete_photo(db, saved_photo.id)
-
         assert not os.path.exists(saved_photo.path)
+        assert not os.path.exists(saved_photo.thumbnail_path)
         assert not await get_photo(db, saved_photo.id)
 
     @pytest.mark.asyncio
@@ -79,7 +69,6 @@ class TestPhotoService:
                                                                                                                microsecond=0)
 
         latest_photo = await get_latest_photo(db, device_id=photo.device_id)
-
         assert latest_photo
         assert latest_photo.creation_date.replace(hour=0, minute=0, second=0, microsecond=0) == today.replace(hour=0,
                                                                                                               minute=0,
@@ -167,3 +156,24 @@ class TestPhotoService:
         saved_photo = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo)), file)
         count = await  count_photos(db, saved_photo.device_id)
         assert count == 1
+
+    @pytest.mark.asyncio
+    async def test_add_and_get_video(self, video_factory, app_settings, db):
+        logger.debug('test_add_photo')
+        video = video_factory()
+        file = FileStorage(stream=open(video.path, 'rb'), filename=video.filename)
+        saved_photo = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(video)), file)
+        assert saved_photo
+        assert app_settings.SAVE_PHOTO_DIR in saved_photo.path
+        assert saved_photo.checksum
+        assert saved_photo.id
+        assert saved_photo.id > 0
+        assert os.path.exists(video.path)
+        assert os.path.exists(video.thumbnail_path)
+        assert video.checksum == get_file_checksum(video.path)
+        assert video.mime_type
+        assert video.media_type == MediaType.VIDEO
+        assert video.native_id
+        assert video.device_id
+        assert video.width > 0
+        assert video.height > 0

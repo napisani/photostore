@@ -11,7 +11,7 @@ from app.db.session import SessionLocalAsync
 from app.main import app
 # from app.tests.utils.user import authentication_token_from_email
 # from app.tests.utils.utils import get_superuser_token_headers
-from .factories import make_photo_factory
+from .factories import make_photo_factory, make_video_factory
 # import sys
 # sys.path.insert(0, "/Users/nick/PycharmProjects/photostore-mono/photostore_fastapi")
 from ..crud.crud_photo import PhotoRepo
@@ -38,6 +38,11 @@ def app_settings() -> Generator:
 @pytest.fixture(scope="function")
 def photo_factory() -> Generator:
     yield make_photo_factory()
+
+
+@pytest.fixture(scope="function")
+def video_factory() -> Generator:
+    yield make_video_factory()
 
 
 @pytest.fixture(scope="session")

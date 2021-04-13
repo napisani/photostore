@@ -3,6 +3,8 @@ from typing import Optional, Any, Type
 
 from pydantic import BaseModel
 
+from app.obj.media_type import MediaType
+
 
 class PhotoSchema(BaseModel):
     @classmethod
@@ -24,6 +26,7 @@ class PhotoSchemaFull(PhotoSchema):
     gphoto_id: Optional[str]
     mime_type: Optional[str]
     thumbnail_path: Optional[str]
+    media_type: Optional[MediaType]
 
     native_id: Optional[str]
     device_id: Optional[str]
@@ -44,6 +47,7 @@ class PhotoSchemaAdd(PhotoSchema):
 
     gphoto_id: Optional[str]
     filename: Optional[str]
+
     # media_metadata: Optional[Dict]
     creation_date: Optional[datetime.datetime]
     modified_date: Optional[datetime.datetime]

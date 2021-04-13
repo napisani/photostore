@@ -7,7 +7,7 @@ from app.schemas.photo_schema import PhotoSchemaFull, PhotoDiffResultSchema, \
     PhotoDiffRequestSchema
 
 
-@pytest.mark.unit
+# @pytest.mark.unit
 class TestPhotosAPI:
     def test_health(self, test_client):
         resp = test_client.get('/api/v1/photos/health')

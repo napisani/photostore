@@ -23,6 +23,11 @@ class PhotoExceptions(APIError):
     def failed_to_save_photo_file(cls):
         return cls(**cls._template("failed to save photo file to disk", code=500))
 
+
+    @classmethod
+    def failed_to_create_thumbnail(cls):
+        return cls(**cls._template("failed to create thumbnail", code=500))
+
     @classmethod
     def failed_to_save_photo_to_db(cls):
         return cls(**cls._template("failed to save photo to db", code=500))
@@ -33,7 +38,11 @@ class PhotoExceptions(APIError):
 
     @classmethod
     def failed_to_delete_photo_file(cls):
-        return cls(**cls._template("failed to delete photo  file from disk", code=500))
+        return cls(**cls._template("failed to delete photo file from disk", code=500))
+
+    @classmethod
+    def failed_to_delete_thumbnail_file(cls):
+        return cls(**cls._template("failed to delete thumbnail file from disk", code=500))
 
     @classmethod
     def photo_not_found(cls):
