@@ -9,12 +9,33 @@ from werkzeug.datastructures import FileStorage
 from app.obj.media_type import MediaType
 from app.schemas.photo_schema import PhotoSchemaUpdate, PhotoDiffRequestSchema, PhotoSchemaAdd, PhotoSchemaFull
 from app.service.photo_service import add_photo, delete_photo, get_photo, update_photo, \
-    get_latest_photo, get_photos, diff_photos, count_photos
+    get_latest_photo, get_photos, diff_photos, count_photos, allowed_file, delete_photos_by_device
 from app.utils import get_file_checksum
 
 
 # @pytest.mark.unit
 class TestPhotoService:
+
+    @pytest.mark.asyncio
+    async def test_delete_photos_by_device(self, photo_factory, db):
+        logger.debug('test_delete_photos_by_device')
+        photo = photo_factory()
+        file = FileStorage(stream=open(photo.path, 'rb'), filename=photo.filename)
+        saved_photo = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo)), file)
+        await delete_photos_by_device(db, saved_photo.device_id)
+        assert not os.path.exists(saved_photo.path)
+        assert not os.path.exists(saved_photo.thumbnail_path)
+        assert not await get_photo(db, saved_photo.id)
+
+    def test_allowed_filename(self):
+        assert allowed_file("something.png")
+        assert allowed_file("something.PNG")
+        assert allowed_file("something.jpeg")
+        assert allowed_file("something.jpg")
+        assert allowed_file("something.mov")
+        assert allowed_file("something.mp4")
+        assert allowed_file("something.MOV")
+        assert allowed_file("/tmp/.video/FB4F2B49-5E10-486E-A18F-CAE1FA8FE399_L0_001_origin.IMG_6572.MOV")
 
     @pytest.mark.asyncio
     async def test_add_photo(self, app_settings, db, photo_factory):

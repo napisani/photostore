@@ -56,6 +56,14 @@ async def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull
     return PhotoSchemaFull.from_orm(added_photo)
 
 
+async def delete_photos_by_device(db: Session, device_id: str):
+    for photo in await PhotoRepo.get_photos_by_device_id(db, device_id):
+        try:
+            await delete_photo(db, photo.id)
+        except Exception as e:
+            logger.warning(f"failed to delete photo with id: {photo.id} - {e}")
+
+
 async def delete_photo(db: Session, photo_id: int):
     photo = await get_photo(db, photo_id)
     if not photo:

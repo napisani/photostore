@@ -16,7 +16,7 @@ from app.schemas.health_schema import HealthSchema
 from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull, PhotoDiffRequestSchema, PhotoDiffResultSchema
 from app.service.photo_service import get_photos, add_photo, get_photo, diff_photos, get_latest_photo, \
-    count_photos, allowed_file
+    count_photos, allowed_file, delete_photos_by_device
 
 router = APIRouter()
 
@@ -83,7 +83,7 @@ async def api_get_fullsize_image(photo_id: int, db: Session = Depends(deps.get_a
     photo = await get_photo(db, photo_id=photo_id)
     logger.debug('view_get_fullsize photo: {}', photo)
     with open(photo.path, 'rb') as f:
-        return StreamingResponse(io.BytesIO(f.read()), media_type="image/png")
+        return StreamingResponse(io.BytesIO(f.read()), media_type=photo.mime_type)
 
 
 @router.get('/thumbnail/{photo_id}')
@@ -114,3 +114,9 @@ async def api_get_photo_count(device_id: str, db=Depends(deps.get_async_db)) -> 
     photo_count = await count_photos(db=db, device_id=device_id)
     logger.debug('api_get_photo_count photo_count: {}', photo_count)
     return photo_count
+
+
+@router.delete('/delete_by_device/{device_id}')
+async def api_delete_photos_by_id(device_id: str, db=Depends(deps.get_async_db)):
+    await delete_photos_by_device(db=db, device_id=device_id)
+    logger.debug('api_delete_photos_by_id  {}')

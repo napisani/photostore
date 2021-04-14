@@ -46,26 +46,10 @@ class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
                                        .where(device_id == device_id)))
         return result_itr.scalars().first()
 
-        # def create_with_owner(
-        #     self, db: Session, *, obj_in: ItemCreate, owner_id: int
-        # ) -> Item:
-        #     obj_in_data = jsonable_encoder(obj_in)
-        #     db_obj = self.model(**obj_in_data, owner_id=owner_id)
-        #     db.add(db_obj)
-        #     db.commit()
-        #     db.refresh(db_obj)
-        #     return db_obj
-        #
-        # def get_multi_by_owner(
-        #     self, db: Session, *, owner_id: int, skip: int = 0, limit: int = 100
-        # ) -> List[Item]:
-        #     return (
-        #         db.query(self.model)
-        #         .filter(Item.owner_id == owner_id)
-        #         .offset(skip)
-        #         .limit(limit)
-        #         .all()
-        #     )
+    async def get_photos_by_device_id(self, db: Session, device_id):
+        result_itr = await (db.execute(select(self.model)
+                                       .where(device_id == device_id)))
+        return result_itr.scalars().all()
 
 
 PhotoRepo = CRUDPhoto(Photo)
