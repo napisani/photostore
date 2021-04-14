@@ -91,6 +91,72 @@ class BackupStatsWidget extends StatelessWidget {
             ),
           ],
         ),
+        TableRow(
+          children: <Widget>[
+            TableCell(
+              verticalAlignment: TableCellVerticalAlignment.middle,
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Backed up Photo Count (for this device)",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            TableCell(
+              verticalAlignment: TableCellVerticalAlignment.middle,
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "${this.stats.backedUpPhotoCount == null ? 'N/A' : this.stats.backedUpPhotoCount}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        TableRow(
+          children: <Widget>[
+            TableCell(
+              verticalAlignment: TableCellVerticalAlignment.middle,
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Mobile Device Photo Count)",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            TableCell(
+              verticalAlignment: TableCellVerticalAlignment.middle,
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "${this.stats.mobilePhotoCount == null ? 'N/A' : this.stats.mobilePhotoCount}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
       ],
     );
   }

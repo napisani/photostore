@@ -6,6 +6,7 @@ import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
 import 'package:photostore_flutter/core/service/backup_services.dart';
+import 'package:photostore_flutter/core/service/server_media_service.dart';
 import 'package:photostore_flutter/locator.dart';
 
 import 'abstract_view_model.dart';
@@ -17,7 +18,7 @@ class BackupModel extends AbstractViewModel {
   bool backupFinished = false;
   CancelNotifier cancelNotifier;
   final BackupService _backupService = locator<BackupService>();
-
+  final ServerMediaService _serverMediaService = locator<ServerMediaService>();
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
 
   BackupModel() : super() {
@@ -26,7 +27,8 @@ class BackupModel extends AbstractViewModel {
   }
 
   void _registerAppSettingsListener() {
-    addSubscription(this._appSettingsService.appSettingsAsStream.listen((event) {
+    addSubscription(
+        this._appSettingsService.appSettingsAsStream.listen((event) {
       reinit();
     }));
   }
@@ -80,6 +82,20 @@ class BackupModel extends AbstractViewModel {
       queuedPhotos = null;
       this.screenStatus = ScreenStatus.error(err.toString());
       cancelNotifier = null;
+    }
+    notifyListeners();
+  }
+
+  Future<void> deletePhotos() async {
+    this.screenStatus = ScreenStatus.loading(this);
+    notifyListeners();
+    try {
+      await _serverMediaService.deletePhotosByDeviceID();
+
+      this.screenStatus = ScreenStatus.success();
+    } catch (err, s) {
+      print('[BackupModel] got error in deletePhotos ${err.toString()} $s');
+      this.screenStatus = ScreenStatus.error(err.toString());
     }
     notifyListeners();
   }

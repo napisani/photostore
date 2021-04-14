@@ -22,6 +22,19 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     throw new Exception("Server settings are not configured");
   }
 
+  Future<void> deletePhotosByDeviceID() async {
+    print(
+        "MediaAPIRepository deletePhotosByDeviceID baseUrl: ${_getBaseURL()} ");
+    final response = await _httpService
+        .getHttpClient()
+        .delete("${_getBaseURL()}/delete_by_device/${settings.deviceID}");
+    if (response.statusCode != 200) {
+      final Exception ex = Exception('error deleting photos by device id');
+      print("MediaAPIRepository.deletePhotosByDeviceID $ex");
+      throw ex;
+    }
+  }
+
   Future<Photo> uploadPhoto(MobilePhoto photo) async {
     print(
         "MediaAPIRepository uploadPhoto baseUrl: ${_getBaseURL()} photo: $photo");

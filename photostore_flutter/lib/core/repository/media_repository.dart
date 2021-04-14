@@ -14,7 +14,6 @@ abstract class MediaRepository<T extends AgnosticMedia> {
   @protected
   int itemsPerPage = 10;
 
-
   final AppSettingsService appSettingsService = locator<AppSettingsService>();
   final StreamController<AppSettings> _onSettingsChanged =
       new StreamController();
@@ -29,6 +28,8 @@ abstract class MediaRepository<T extends AgnosticMedia> {
   Stream<AppSettings> onAppSettingsChanged() => this._onSettingsChanged.stream;
 
   Future<Pagination<T>> getPhotosByPage(int page);
+
+  Future<int> getPhotoCount();
 
   void dispose() {
     _onSettingsChanged.close();

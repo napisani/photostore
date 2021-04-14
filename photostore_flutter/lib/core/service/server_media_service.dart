@@ -19,8 +19,8 @@ class ServerMediaService extends AbstractPhotoPageService {
     return (mediaRepo as MediaAPIRepository).uploadPhoto(photo);
   }
 
-  Future<int> getPhotoCount() async {
-    return (mediaRepo as MediaAPIRepository).getPhotoCount();
+  Future<void> deletePhotosByDeviceID() async {
+    return (mediaRepo as MediaAPIRepository).deletePhotosByDeviceID();
   }
 
   Future<List<PhotoDiffResult>> diffPhotos(List<AgnosticMedia> photos) async {

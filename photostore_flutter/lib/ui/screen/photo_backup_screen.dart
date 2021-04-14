@@ -28,6 +28,45 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
     super.initState();
   }
 
+  showAlertDialog(
+    BuildContext context,
+    Function onContinue,
+  ) {
+    // set up the buttons
+    Widget cancelButton = ElevatedButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop(); // dismiss dialog
+      },
+    );
+    Widget continueButton = ElevatedButton(
+      child: Text("Continue"),
+      onPressed: () {
+        onContinue();
+        Navigator.of(context).pop(); // dismiss dialog
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Are you sure?"),
+      content: Text(
+          "Would you like to continue to delete all photos on the server associated with this device?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // return Scaffold(
@@ -86,7 +125,11 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
                                     state.loadIncrementalBackupQueue()),
                             ElevatedButton(
                                 child: Text('Prepare Full Backup'),
-                                onPressed: () => state.loadFullBackupQueue())
+                                onPressed: () => state.loadFullBackupQueue()),
+                            ElevatedButton(
+                                child: Text('Delete Photos on Server'),
+                                onPressed: () => showAlertDialog(
+                                    context, () => state.deletePhotos()))
                           ],
                         )
                       : Center(

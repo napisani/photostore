@@ -21,13 +21,19 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
     return result;
   }
 
-  Future<AssetPathEntity> getAllAlbum() async {
+  Future<AssetPathEntity> getAllAlbum({includeVideos = true}) async {
     if (this._allPath == null) {
       this._allPath = (await PhotoManager.getAssetPathList(
-              onlyAll: true, type: RequestType.image))
+              onlyAll: true,
+              type: includeVideos ? RequestType.all : RequestType.image))
           .first;
     }
     return this._allPath;
+  }
+
+  Future<int> getPhotoCount() async {
+    AssetPathEntity allAlbum = await this.getAllAlbum();
+    return allAlbum.assetCount;
   }
 
   Future<Pagination<MobilePhoto>> getPhotosByPage(int page) async {

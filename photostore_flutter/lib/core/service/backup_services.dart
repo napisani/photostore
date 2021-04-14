@@ -22,23 +22,24 @@ class BackupService {
 
   Future<BackupStats> getPhotoBackupStats() async {
     Photo photo = await this._serverMediaService.getLastBackedUpPhoto();
-    int count = await this._serverMediaService.getPhotoCount();
+    int backupCount = await this._serverMediaService.getPhotoCount();
+    int mobileCount = await this._mobileMediaService.getPhotoCount();
     BackupStats stats = BackupStats(
-        backedUpPhotoCount: count,
+        backedUpPhotoCount: backupCount,
+        mobilePhotoCount: mobileCount,
         lastBackedUpPhotoId: photo.id,
         lastBackedUpPhotoModifyDate: photo.creationDate);
     return stats;
   }
 
-  Future<List<MobilePhoto>> getBackupQueueUsingDate(
-      DateTime lastBackedUpDate, {canceller: CancelNotifier}) async {
+  Future<List<MobilePhoto>> getBackupQueueUsingDate(DateTime lastBackedUpDate,
+      {canceller: CancelNotifier}) async {
     Pagination<AgnosticMedia> queuedPhotos = Pagination<AgnosticMedia>();
     while (queuedPhotos.hasMorePages) {
       if (canceller != null && canceller.hasBeenCancelled) {
         print('cancelled getFullBackupQueue');
         return [];
       }
-
 
       Pagination<AgnosticMedia> morePhotos =
           await _mobileMediaService.loadPage(queuedPhotos.page + 1);
@@ -58,11 +59,11 @@ class BackupService {
     return List<MobilePhoto>.from(queuedPhotos.items);
   }
 
-  Future<List<MobilePhoto>> getFullBackupQueue({canceller: CancelNotifier}) async {
+  Future<List<MobilePhoto>> getFullBackupQueue(
+      {canceller: CancelNotifier}) async {
     List<AgnosticMedia> queuedPhotos = [];
     // Pagination<MobilePhoto> queuedPhotos = Pagination<MobilePhoto>();
     for (int page = 1; page > 0; page++) {
-
       if (canceller != null && canceller.hasBeenCancelled) {
         print('cancelled getFullBackupQueue');
         return [];
@@ -106,11 +107,11 @@ class BackupService {
     List<MobilePhoto> batch = [];
     int uploadCount = 0;
     for (MobilePhoto photo in queue) {
-      if (photo.assetType != 1) {
-        print('not a photo - skipping');
-      } else {
-        batch.add(photo);
-      }
+      // if (photo.assetType != 1) {
+      // print('not a photo - skipping');
+      // } else {
+      batch.add(photo);
+      // }
       if (batch.length == batchSize) {
         if (canceller != null && canceller.hasBeenCancelled) {
           print('cancelled doBackup');

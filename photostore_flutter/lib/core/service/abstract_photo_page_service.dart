@@ -45,4 +45,8 @@ abstract class AbstractPhotoPageService {
       return newPhotos;
     }
   }
+
+  Future<int> getPhotoCount() async {
+    return mediaRepo.getPhotoCount();
+  }
 }

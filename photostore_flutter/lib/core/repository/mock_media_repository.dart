@@ -69,4 +69,9 @@ class MockMediaRepository extends MediaRepository<Photo> {
     return MediaContents.url(
         "https://upload.wikimedia.org/wikipedia/en/9/95/Test_image.jpg");
   }
+
+  @override
+  Future<int> getPhotoCount() {
+    return Future.value(200);
+  }
 }
