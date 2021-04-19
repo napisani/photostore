@@ -1,9 +1,14 @@
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:photostore_flutter/core/model/progress_log.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/backup_model.dart';
+import 'package:photostore_flutter/ui/widget/alert_message.dart';
 import 'package:photostore_flutter/ui/widget/backup_stats_widget.dart';
 import 'package:photostore_flutter/ui/widget/loading_widget.dart';
+import 'package:photostore_flutter/ui/widget/progress_log_widget.dart';
 import 'package:photostore_flutter/ui/widget/screen_error_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -33,31 +38,15 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
     Function onContinue,
   ) {
     // set up the buttons
-    Widget cancelButton = ElevatedButton(
-      child: Text("Cancel"),
-      onPressed: () {
-        Navigator.of(context).pop(); // dismiss dialog
-      },
-    );
-    Widget continueButton = ElevatedButton(
-      child: Text("Continue"),
-      onPressed: () {
-        onContinue();
-        Navigator.of(context).pop(); // dismiss dialog
-      },
-    );
+    LinkedHashMap<String, Function> actions = LinkedHashMap();
+    actions["Cancel"] = () => null;
+    actions["Continue"] = onContinue;
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Are you sure?"),
-      content: Text(
-          "Would you like to continue to delete all photos on the server associated with this device?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
+    AlertMessage alert = AlertMessage(
+        actions: actions,
+        header: "Are you sure?",
+        message:
+            "Would you like to continue to delete all photos on the server associated with this device?");
     // show the dialog
     showDialog(
       context: context,
@@ -65,6 +54,12 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
         return alert;
       },
     );
+  }
+
+  String _horizontify(String str) => str.replaceAll(" ", "\n");
+
+  Widget _buildBackupLog(BuildContext context, ProgressLog progressLog) {
+    return Expanded(child: ProgressLogWidget(progressLog: progressLog));
   }
 
   @override
@@ -97,50 +92,76 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
         ));
       } else if (state.status.type == ScreenStatusType.LOADING) {
         return Center(
-          child: LoadingWidget(
-              animationController: (state.status as LoadingScreenStatus)
-                  .loadingAnimationController,
-              percent: (state.status as LoadingScreenStatus).percent,
-              progressText: (state.status as LoadingScreenStatus).progressText,
-              onCancel: state.cancelNotifier == null
-                  ? null
-                  : () => state.cancelNotifier?.cancel()),
-        );
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+              LoadingWidget(
+                  animationController: (state.status as LoadingScreenStatus)
+                      .loadingAnimationController,
+                  percent: (state.status as LoadingScreenStatus).percent,
+                  progressText:
+                      (state.status as LoadingScreenStatus).progressText,
+                  onCancel: state.cancelNotifier == null
+                      ? null
+                      : () => state.cancelNotifier?.cancel()),
+              _buildBackupLog(context, state.progressLog)
+            ]));
       } else if (state.status.type == ScreenStatusType.SUCCESS) {
         return Center(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  state.backupFinished ? Text("Backup Complete!") : null,
+                  state.backupFinished
+                      ? Text("Backup Complete!",
+                          style: Theme.of(context).textTheme.headline6)
+                      : null,
                   Padding(
                       child: BackupStatsWidget(stats: state.stats),
                       padding: const EdgeInsets.all(15.0)),
+                  _buildBackupLog(context, state.progressLog),
                   state.queuedPhotos == null
-                      ? Column(
+                      ? ButtonBar(
+                          alignment: MainAxisAlignment.center,
                           children: [
                             ElevatedButton(
-                                child: Text('Prepare Incremental Backup'),
+                                child: Text(
+                                  _horizontify('Prepare Incremental Backup'),
+                                  textAlign: TextAlign.center,
+                                ),
                                 onPressed: () =>
                                     state.loadIncrementalBackupQueue()),
                             ElevatedButton(
-                                child: Text('Prepare Full Backup'),
+                                child: Text(
+                                  _horizontify('Prepare Full Backup'),
+                                  textAlign: TextAlign.center,
+                                ),
                                 onPressed: () => state.loadFullBackupQueue()),
                             ElevatedButton(
-                                child: Text('Delete Photos on Server'),
+                                child: Text(
+                                  _horizontify('Delete Photos on Server'),
+                                  textAlign: TextAlign.center,
+                                ),
                                 onPressed: () => showAlertDialog(
                                     context, () => state.deletePhotos()))
                           ],
                         )
                       : Center(
-                          child: Column(
+                          child: ButtonBar(
+                            alignment: MainAxisAlignment.center,
                             children: [
                               ElevatedButton(
                                   child: Text(
-                                      'Start backup of : ${state.queuedPhotos.length} Photos'),
+                                    'Start backup of:\n${state.queuedPhotos.length} Photos',
+                                    textAlign: TextAlign.center,
+                                  ),
                                   onPressed: () => state.doBackup()),
                               ElevatedButton(
-                                  child: Text('Cancel'),
+                                  child: Text(
+                                    'Cancel',
+                                    textAlign: TextAlign.center,
+                                  ),
                                   onPressed: () => state.reinit())
                             ],
                           ),

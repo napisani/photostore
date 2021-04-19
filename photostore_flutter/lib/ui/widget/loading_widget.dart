@@ -35,8 +35,7 @@ class LoadingWidget extends StatelessWidget {
                   child: Text("Cancel"),
                   onPressed: onCancel,
                 )
-        ].where((element) => element != null)
-            .toList(),
+        ].where((element) => element != null).toList(),
       ),
     );
   }

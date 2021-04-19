@@ -5,6 +5,7 @@ import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo.dart';
 import 'package:photostore_flutter/core/model/photo_diff_result.dart';
+import 'package:photostore_flutter/core/model/progress_log.dart';
 import 'package:photostore_flutter/core/service/mobile_media_service.dart';
 import 'package:photostore_flutter/core/service/server_media_service.dart';
 import 'package:photostore_flutter/locator.dart';
@@ -88,8 +89,16 @@ class BackupService {
     return List<MobilePhoto>.from(queuedPhotos);
   }
 
+  ProgressStats _buildBackupStatFromPhoto(AgnosticMedia media) {
+    ProgressStats stats =
+        ProgressStats(id: media.id, status: "Backup in Progress...");
+    return stats;
+  }
+
   Future<void> doBackup(List<MobilePhoto> queueIn,
-      {BackupProgressHandler progressNotify, CancelNotifier canceller}) async {
+      {BackupProgressHandler progressNotify,
+      CancelNotifier canceller,
+      ProgressLog progressLog}) async {
     final BackupProgressHandler progressNotifySafe = (orig, newCnt) {
       if (progressNotify != null) {
         progressNotify(orig, newCnt);
@@ -117,7 +126,7 @@ class BackupService {
           print('cancelled doBackup');
           return;
         }
-        await _backupBatch(batch);
+        await _backupBatch(batch, progressLog: progressLog);
         uploadCount += batch.length;
         progressNotifySafe(origSize, origSize - uploadCount);
 
@@ -134,14 +143,25 @@ class BackupService {
     print('doBackup - done!');
   }
 
-  Future<void> _backupBatch(List<MobilePhoto> batch) async {
+  Future<void> _backupBatch(List<MobilePhoto> batch,
+      {ProgressLog progressLog}) async {
     if (batch.isNotEmpty) {
+      List<ProgressStats> stats =
+          batch.map((media) => _buildBackupStatFromPhoto(media)).toList();
+      progressLog?.addAll(stats);
       try {
         await Future.wait(batch
             .map((p) async => await _serverMediaService.uploadPhoto(p))
             .toList());
+
+        stats.forEach((stat) {
+          stat.updateStatus("DONE");
+        });
       } catch (e, s) {
         print('an error occurred uploading photo e: $e stack: $s ');
+        stats.forEach((stat) {
+          stat.updateStatus("Error: $e");
+        });
       }
     }
   }

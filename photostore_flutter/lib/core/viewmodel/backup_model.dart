@@ -3,11 +3,14 @@ import 'dart:async';
 import 'package:photostore_flutter/core/model/backup_stats.dart';
 import 'package:photostore_flutter/core/model/cancel_notifier.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
+import 'package:photostore_flutter/core/model/progress_log.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
 import 'package:photostore_flutter/core/service/backup_services.dart';
+import 'package:photostore_flutter/core/service/mobile_media_service.dart';
 import 'package:photostore_flutter/core/service/server_media_service.dart';
 import 'package:photostore_flutter/locator.dart';
+import 'package:wakelock/wakelock.dart';
 
 import 'abstract_view_model.dart';
 
@@ -15,9 +18,11 @@ class BackupModel extends AbstractViewModel {
   List<MobilePhoto> queuedPhotos;
   ScreenStatus screenStatus = ScreenStatus.uninitialized();
   BackupStats stats;
+  final ProgressLog progressLog = new ProgressLog();
   bool backupFinished = false;
   CancelNotifier cancelNotifier;
   final BackupService _backupService = locator<BackupService>();
+  final MobileMediaService _mobileMediaService = locator<MobileMediaService>();
   final ServerMediaService _serverMediaService = locator<ServerMediaService>();
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
 
@@ -35,10 +40,12 @@ class BackupModel extends AbstractViewModel {
 
   void reinit() async {
     this.screenStatus = ScreenStatus.uninitialized();
+    this.progressLog.clear();
     this.queuedPhotos = null;
     this.cancelNotifier = null;
     this.stats = null;
     backupFinished = false;
+    _mobileMediaService.reset();
     if (this._appSettingsService.currentAppSettings != null) {
       await loadBackupStats();
     } else {
@@ -63,8 +70,10 @@ class BackupModel extends AbstractViewModel {
 
   Future<void> loadIncrementalBackupQueue() async {
     this.backupFinished = false;
+    this.progressLog.clear();
     this.screenStatus = ScreenStatus.loading(this);
     notifyListeners();
+    Wakelock.toggle(enable: true);
     try {
       this.cancelNotifier = CancelNotifier();
       queuedPhotos = await _backupService.getBackupQueueUsingDate(
@@ -83,6 +92,7 @@ class BackupModel extends AbstractViewModel {
       this.screenStatus = ScreenStatus.error(err.toString());
       cancelNotifier = null;
     }
+    Wakelock.toggle(enable: false);
     notifyListeners();
   }
 
@@ -91,19 +101,21 @@ class BackupModel extends AbstractViewModel {
     notifyListeners();
     try {
       await _serverMediaService.deletePhotosByDeviceID();
-
       this.screenStatus = ScreenStatus.success();
     } catch (err, s) {
       print('[BackupModel] got error in deletePhotos ${err.toString()} $s');
       this.screenStatus = ScreenStatus.error(err.toString());
     }
+    reinit();
     notifyListeners();
   }
 
   Future<void> loadFullBackupQueue() async {
     this.backupFinished = false;
+    this.progressLog.clear();
     this.screenStatus = ScreenStatus.loading(this);
     notifyListeners();
+    Wakelock.toggle(enable: true);
     try {
       this.cancelNotifier = CancelNotifier();
       queuedPhotos =
@@ -121,15 +133,19 @@ class BackupModel extends AbstractViewModel {
       this.screenStatus = ScreenStatus.error(err.toString());
       cancelNotifier = null;
     }
+    Wakelock.toggle(enable: false);
     notifyListeners();
   }
 
   Future<void> doBackup() async {
+    this.progressLog.clear();
     this.screenStatus = ScreenStatus.loading(this);
+    Wakelock.toggle(enable: true);
     notifyListeners();
     try {
       this.cancelNotifier = CancelNotifier();
-      await _backupService.doBackup(queuedPhotos, canceller: cancelNotifier,
+      await _backupService.doBackup(queuedPhotos,
+          canceller: cancelNotifier, progressLog: this.progressLog,
           progressNotify: (int orig, int newCnt) {
         print('inside progressNotify');
         final String progressText = 'Backed up ${orig - newCnt} of $orig total';
@@ -150,6 +166,13 @@ class BackupModel extends AbstractViewModel {
       this.screenStatus = ScreenStatus.error(err.toString());
       this.cancelNotifier = null;
     }
+    Wakelock.toggle(enable: false);
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    progressLog.dispose();
   }
 }

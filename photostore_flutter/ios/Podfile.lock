@@ -8,6 +8,8 @@ PODS:
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
+  - wakelock (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - device_info (from `.symlinks/plugins/device_info/ios`)
@@ -15,6 +17,7 @@ DEPENDENCIES:
   - photo_gallery (from `.symlinks/plugins/photo_gallery/ios`)
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 EXTERNAL SOURCES:
   device_info:
@@ -27,6 +30,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/photo_manager/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
+  wakelock:
+    :path: ".symlinks/plugins/wakelock/ios"
 
 SPEC CHECKSUMS:
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
@@ -34,6 +39,7 @@ SPEC CHECKSUMS:
   photo_gallery: 9f95e57747cd22c10676ece3660d1ffe6c603ee5
   photo_manager: f7c619c2cc8c2adb8d85c63363babac477de9c67
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
