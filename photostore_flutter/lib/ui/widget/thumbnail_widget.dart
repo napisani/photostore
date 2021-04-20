@@ -23,14 +23,14 @@ class _ThumbnailWidgetState extends State<ThumbnailWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('build again');
+    // print('build again');
     return FutureBuilder<MediaContents>(
       future: thumbFuture,
       builder: (context, AsyncSnapshot<MediaContents> snapshot) {
         if (snapshot.hasData) {
           // print('grid tile build - hasData');
           if (snapshot.data is MediaURLContents) {
-            print('grid tile build - returning image.network');
+            // print('grid tile build - returning image.network');
             return Image.network(
               (snapshot.data as MediaURLContents).url,
               loadingBuilder: (BuildContext context, Widget child,
@@ -47,7 +47,7 @@ class _ThumbnailWidgetState extends State<ThumbnailWidget> {
               },
             );
           } else {
-            print('grid tile build - returning image.memory');
+            // print('grid tile build - returning image.memory');
             return Image.memory((snapshot.data as MediaMemoryContents).binary);
           }
         } else {
