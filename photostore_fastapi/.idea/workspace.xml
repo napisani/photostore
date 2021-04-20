@@ -20,16 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="adding video support">
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/progress_log.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/progress_log_widget.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/backup_services.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/backup_services.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/backup_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/backup_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_backup_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_backup_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/loading_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/loading_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/thumbnail_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/thumbnail_widget.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,15 +59,16 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.documentation.PythonDocumentationConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/runtime_resources" />
+      <recent name="$PROJECT_DIR$/app/tests/api/api_v1" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/test_resources" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/app/tests/service" />
       <recent name="$PROJECT_DIR$/app/service" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/runtime_resources" />
-      <recent name="$PROJECT_DIR$/app/tests/api/api_v1" />
     </key>
   </component>
   <component name="RunManager" selected="Python tests.pytest for test_photo_service.TestPhotoService.test_delete_photos_by_device">
@@ -198,7 +194,7 @@
       <workItem from="1616540087610" duration="1548000" />
       <workItem from="1616628171079" duration="7296000" />
       <workItem from="1617580956708" duration="35968000" />
-      <workItem from="1618358588472" duration="6075000" />
+      <workItem from="1618358588472" duration="7741000" />
     </task>
     <task id="LOCAL-00001" summary="adding all mobile attirubtes - fixed schemas for Add and Update specific">
       <created>1615777399372</created>

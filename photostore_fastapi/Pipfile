@@ -27,6 +27,7 @@ pytest-mock = "*"
 pytest-asyncio = "*"
 asyncpg = "*"
 gst = "*"
+aiofiles = "*"
 
 [dev-packages]
 pytest-mock = "*"
