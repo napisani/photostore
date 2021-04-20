@@ -90,8 +90,10 @@ class BackupService {
   }
 
   ProgressStats _buildBackupStatFromPhoto(AgnosticMedia media) {
-    ProgressStats stats =
-        ProgressStats(id: media.id, status: "Backup in Progress...");
+    ProgressStats stats = ProgressStats(
+        id: media.id,
+        status: "Backup in Progress...",
+        details: "Currently backing up photo ID: ${media.id} at ${DateTime.now()}");
     return stats;
   }
 
@@ -155,12 +157,15 @@ class BackupService {
             .toList());
 
         stats.forEach((stat) {
-          stat.updateStatus("DONE");
+          stat.updateStatus("DONE",
+              details: "Finished backing up photo ID: ${stat.id} at ${DateTime.now()}");
         });
       } catch (e, s) {
         print('an error occurred uploading photo e: $e stack: $s ');
         stats.forEach((stat) {
-          stat.updateStatus("Error: $e");
+          stat.updateStatus("ERROR",
+              details:
+                  "An error occurred backing up photo ID ${stat.id} - error: $e");
         });
       }
     }

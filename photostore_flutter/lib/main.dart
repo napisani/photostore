@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:photostore_flutter/ui/tab_navigation_item.dart';
+import 'package:photostore_flutter/core/model/lockout_type.dart';
+import 'package:photostore_flutter/core/service/lockout_service.dart';
 import 'package:photostore_flutter/ui/screen/settings_screen.dart';
+import 'package:photostore_flutter/ui/tab_navigation_item.dart';
 
 import 'locator.dart';
 
@@ -51,6 +53,12 @@ class _PhotoStoreAppState extends State<_PhotoStoreApp> {
   //   );
   // }
 
+  bool _isSettingsLockedOut() =>
+      locator<LockoutService>().isDisabled(LockoutType.SETTINGS);
+
+  bool _isNavigationLockedOut() =>
+      locator<LockoutService>().isDisabled(LockoutType.NAVIGATION);
+
   @override
   Widget build(BuildContext context) {
     print('inside main build');
@@ -62,15 +70,17 @@ class _PhotoStoreAppState extends State<_PhotoStoreApp> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SettingsScreen()),
-                  ).then((_) {
-                    print('resetting tab items');
-                    this.setState(() {
-                      tabItems = TabNavigationItem.items;
+                  if (!this._isSettingsLockedOut()) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SettingsScreen()),
+                    ).then((_) {
+                      print('resetting tab items');
+                      this.setState(() {
+                        tabItems = TabNavigationItem.items;
+                      });
                     });
-                  });
+                  }
                 },
                 child: Icon(Icons.settings),
               )),
@@ -84,7 +94,11 @@ class _PhotoStoreAppState extends State<_PhotoStoreApp> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: (int index) => setState(() => _currentIndex = index),
+        onTap: (int index) {
+          if (!_isNavigationLockedOut()) {
+            setState(() => _currentIndex = index);
+          }
+        },
         items: [
           for (final tabItem in this.tabItems)
             BottomNavigationBarItem(
@@ -95,21 +109,4 @@ class _PhotoStoreAppState extends State<_PhotoStoreApp> {
       ),
     );
   }
-
-// Widget _buildAdHocNavigator(TabItem tabItem) {
-//   return TabNavigator(
-//     navigatorKey: _navigatorKeys[tabItem],
-//     tabItem: tabItem,
-//   );
-// }
-//
-// Widget _buildOffstageNavigator(TabItem tabItem) {
-//   return Offstage(
-//     offstage: _currentTab != tabItem,
-//     child: TabNavigator(
-//       navigatorKey: _navigatorKeys[tabItem],
-//       tabItem: tabItem,
-//     ),
-//   );
-// }
 }

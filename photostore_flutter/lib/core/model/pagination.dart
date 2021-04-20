@@ -1,13 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-/*
-  items: Array<T>;
-  itemSlices: Array<Array<T>>;
-  perPage: number;
-  total: number;
-  page: number;
-  remainingPages: number;
- */
 class Pagination<T> extends Equatable {
   final List<T> items;
   final int perPage;

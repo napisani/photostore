@@ -7,6 +7,7 @@ import 'package:photostore_flutter/core/model/progress_log.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
 import 'package:photostore_flutter/core/service/backup_services.dart';
+import 'package:photostore_flutter/core/service/lockout_service.dart';
 import 'package:photostore_flutter/core/service/mobile_media_service.dart';
 import 'package:photostore_flutter/core/service/server_media_service.dart';
 import 'package:photostore_flutter/locator.dart';
@@ -25,6 +26,7 @@ class BackupModel extends AbstractViewModel {
   final MobileMediaService _mobileMediaService = locator<MobileMediaService>();
   final ServerMediaService _serverMediaService = locator<ServerMediaService>();
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
+  final LockoutService _lockoutService = locator<LockoutService>();
 
   BackupModel() : super() {
     _registerAppSettingsListener();
@@ -74,6 +76,7 @@ class BackupModel extends AbstractViewModel {
     this.screenStatus = ScreenStatus.loading(this);
     notifyListeners();
     Wakelock.toggle(enable: true);
+    _lockoutService.establishAllLockout();
     try {
       this.cancelNotifier = CancelNotifier();
       queuedPhotos = await _backupService.getBackupQueueUsingDate(
@@ -93,6 +96,7 @@ class BackupModel extends AbstractViewModel {
       cancelNotifier = null;
     }
     Wakelock.toggle(enable: false);
+    _lockoutService.clearLockout();
     notifyListeners();
   }
 
@@ -116,6 +120,8 @@ class BackupModel extends AbstractViewModel {
     this.screenStatus = ScreenStatus.loading(this);
     notifyListeners();
     Wakelock.toggle(enable: true);
+    _lockoutService.establishAllLockout();
+
     try {
       this.cancelNotifier = CancelNotifier();
       queuedPhotos =
@@ -133,6 +139,7 @@ class BackupModel extends AbstractViewModel {
       this.screenStatus = ScreenStatus.error(err.toString());
       cancelNotifier = null;
     }
+    _lockoutService.clearLockout();
     Wakelock.toggle(enable: false);
     notifyListeners();
   }
@@ -140,6 +147,7 @@ class BackupModel extends AbstractViewModel {
   Future<void> doBackup() async {
     this.progressLog.clear();
     this.screenStatus = ScreenStatus.loading(this);
+    _lockoutService.establishAllLockout();
     Wakelock.toggle(enable: true);
     notifyListeners();
     try {
@@ -166,6 +174,7 @@ class BackupModel extends AbstractViewModel {
       this.screenStatus = ScreenStatus.error(err.toString());
       this.cancelNotifier = null;
     }
+    _lockoutService.clearLockout();
     Wakelock.toggle(enable: false);
     notifyListeners();
   }

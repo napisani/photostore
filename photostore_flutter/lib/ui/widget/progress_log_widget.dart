@@ -1,6 +1,10 @@
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photostore_flutter/core/model/progress_log.dart';
+
+import 'alert_message.dart';
 
 class ProgressLogWidget extends StatefulWidget {
   final ProgressLog progressLog;
@@ -30,6 +34,27 @@ class _ProgressLogWidgetState extends State<ProgressLogWidget> {
     });
   }
 
+  showAlertDialog(
+    BuildContext context,
+    ProgressStats stats,
+  ) {
+    // set up the buttons
+    LinkedHashMap<String, Function> actions = LinkedHashMap();
+    actions["OK"] = () => null;
+
+    AlertMessage alert = AlertMessage(
+        actions: actions,
+        header: "Progress Details: ${stats.status}",
+        message: stats.details);
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return _stats != null
@@ -40,34 +65,55 @@ class _ProgressLogWidgetState extends State<ProgressLogWidget> {
                   ? SingleChildScrollView(
                       controller: _scrollController,
                       // reverse: true,
-                      child: DataTable(columns: const <DataColumn>[
-                        DataColumn(
-                          label: Text(
-                            'ID',
+                      child: Column(children: [
+                        DataTable(
+                            showCheckboxColumn: false,
+                            columns: const <DataColumn>[
+                              DataColumn(
+                                label: Text(
+                                  'ID',
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Status',
+                                ),
+                              ),
+                            ],
+                            rows: [
+                              ...snapshot.data
+                                  .map((ProgressStats e) => DataRow(
+                                          onSelectChanged: (bool selected) {
+                                            if (selected) {
+                                              showAlertDialog(context, e);
+                                            }
+                                          },
+                                          cells: [
+                                            DataCell(Container(
+                                              child: Text(e.id),
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.5,
+                                            )),
+                                            DataCell(Container(
+                                              child: Text(e.status,
+                                                  style: TextStyle(
+                                                      color: e.color)),
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.5,
+                                            )),
+                                          ]))
+                                  .toList()
+                            ]),
+                        if (this.widget.progressLog.hasBeenTrimmed())
+                          Container(
+                            child: Text(
+                                "(Only showing the last ${this.widget.progressLog.maxSize} entries)"),
                           ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Status',
-                          ),
-                        ),
-                      ], rows: [
-                        ...snapshot.data
-                            .map((e) => DataRow(cells: [
-                                  DataCell(Container(
-                                    child: Text(e.id),
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                  )),
-                                  DataCell(Container(
-                                    child: Text(e.status),
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                  )),
-                                ]))
-                            .toList()
-                      ]),
-                    )
+                      ]))
                   : Container();
             })
         : Container();

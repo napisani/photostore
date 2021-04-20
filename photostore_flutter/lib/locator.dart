@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:photostore_flutter/core/repository/media_api_repository.dart';
 import 'package:photostore_flutter/core/repository/media_mobile_repositoryV2.dart';
 import 'package:photostore_flutter/core/service/backup_services.dart';
+import 'package:photostore_flutter/core/service/lockout_service.dart';
 
 import 'core/repository/settings_repository.dart';
 import 'core/service/app_settings_service.dart';
@@ -32,6 +33,11 @@ void setupLocator() {
     locator.registerLazySingleton<ServerMediaService>(
         () => ServerMediaService(),
         dispose: (service) => service.dispose());
+
+    locator.registerLazySingleton<LockoutService>(
+            () => LockoutService(),
+        dispose: (service) => service.dispose());
+
 
     // locator.registerLazySingleton<http.Client>(() => http.Client());
     locator.registerLazySingleton<HTTPService>(() => HTTPService(),

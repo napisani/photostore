@@ -7,12 +7,28 @@ class BackupStatsWidget extends StatelessWidget {
 
   const BackupStatsWidget({this.stats});
 
+  Widget _buildCell(String data, {bool bold = false}) => TableCell(
+        verticalAlignment: TableCellVerticalAlignment.middle,
+        child: Container(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            data,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'RobotoMono',
+              fontSize: 12,
+              fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     if (this.stats == null) {
       return null;
     }
-
     return Table(
       border: TableBorder.all(),
       columnWidths: const <int, TableColumnWidth>{
@@ -23,157 +39,39 @@ class BackupStatsWidget extends StatelessWidget {
       children: <TableRow>[
         TableRow(
           children: <Widget>[
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Modified Date of last backed up photo",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'RobotoMono',
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  stats.lastBackedUpPhotoModifyDate.isBefore(new DateTime(1200))
-                      ? 'N/A'
-                      : '${stats?.lastBackedUpPhotoModifyDate}',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'RobotoMono',
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-            ),
+            _buildCell("Modified Date of last backed up photo", bold: true),
+            _buildCell(
+                stats.lastBackedUpPhotoModifyDate.isBefore(new DateTime(1200))
+                    ? 'N/A'
+                    : '${stats?.lastBackedUpPhotoModifyDate}',
+                bold: false)
           ],
         ),
         TableRow(
           children: <Widget>[
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "ID of last backed up photo",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "${this.stats.lastBackedUpPhotoId == null ? 'N/A' : this.stats.lastBackedUpPhotoId}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-            ),
+            _buildCell("ID of last backed up photo", bold: true),
+            _buildCell(
+                "${this.stats.lastBackedUpPhotoId == null ? 'N/A' : this.stats.lastBackedUpPhotoId}",
+                bold: false)
           ],
         ),
         TableRow(
           children: <Widget>[
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Backed up Photo Count (for this device)",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "${this.stats.backedUpPhotoCount == null ? 'N/A' : this.stats.backedUpPhotoCount}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-            ),
+            _buildCell("Backed up Photo Count (for this device)", bold: true),
+            _buildCell(
+                "${this.stats.backedUpPhotoCount == null ? 'N/A' : this.stats.backedUpPhotoCount}",
+                bold: false)
           ],
         ),
         TableRow(
           children: <Widget>[
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Mobile Device Photo Count)",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "${this.stats.mobilePhotoCount == null ? 'N/A' : this.stats.mobilePhotoCount}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-            ),
+            _buildCell("Mobile Device Photo Count", bold: true),
+            _buildCell(
+                "${this.stats.mobilePhotoCount == null ? 'N/A' : this.stats.mobilePhotoCount}",
+                bold: false)
           ],
         )
       ],
     );
   }
-
-// @override
-// Widget build(BuildContext context) {
-//   if (this.stats == null) {
-//     return null;
-//   }
-//   return Column(children: [
-//     this.stats.lastBackedUpPhotoModifyDate.isBefore(new DateTime(1200))
-//         ? Text("Last backed up Photo modified date: N/A")
-//         : Text(
-//             'Last backed up Photo modified date: ${this.stats?.lastBackedUpPhotoModifyDate}'),
-//     Text(
-//         'Last backed up Photo ID: ${this.stats.lastBackedUpPhotoId == null ? 'N/A' : this.stats.lastBackedUpPhotoId}'),
-//     Text('Backed up Photo count: ${this.stats.backedUpPhotoCount}')
-//   ]);
-// }
 }
