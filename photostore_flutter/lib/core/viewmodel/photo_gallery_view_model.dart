@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
-import 'package:photostore_flutter/core/service/mobile_media_service.dart';
-import 'package:photostore_flutter/core/service/server_media_service.dart';
+import 'package:photostore_flutter/core/model/tab_navigation_item.dart';
+import 'package:photostore_flutter/core/service/media/mobile_media_service.dart';
+import 'package:photostore_flutter/core/service/media/server_media_service.dart';
 import 'package:photostore_flutter/locator.dart';
 
 import 'abstract_photo_page_model.dart';
@@ -40,6 +41,9 @@ class PhotoGalleryViewModel extends AbstractPhotoPageModel {
       this.notifyListeners();
     }
   }
+
+  @override
+  TabName getTabName() => TabName.SERVER;
 
   void dispose() {
     super.dispose();

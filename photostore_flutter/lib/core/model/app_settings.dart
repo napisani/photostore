@@ -55,5 +55,16 @@ class AppSettings extends Equatable {
   }
 
   @override
-  List<Object> get props => [serverIP, serverPort, https];
+  List<Object> get props => [
+        serverIP,
+        serverPort,
+        https,
+        deviceID,
+        apiKey,
+        batchSize,
+        itemsPerPage,
+        uploadRetryAttempts,
+        connectTimeout,
+        receiveTimeout
+      ];
 }

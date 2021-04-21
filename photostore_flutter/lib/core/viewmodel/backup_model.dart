@@ -5,17 +5,19 @@ import 'package:photostore_flutter/core/model/cancel_notifier.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/progress_log.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
+import 'package:photostore_flutter/core/model/tab_navigation_item.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
 import 'package:photostore_flutter/core/service/backup_services.dart';
 import 'package:photostore_flutter/core/service/lockout_service.dart';
-import 'package:photostore_flutter/core/service/mobile_media_service.dart';
-import 'package:photostore_flutter/core/service/server_media_service.dart';
+import 'package:photostore_flutter/core/service/media/mobile_media_service.dart';
+import 'package:photostore_flutter/core/service/media/server_media_service.dart';
+import 'package:photostore_flutter/core/viewmodel/tab_view_model_mixin.dart';
 import 'package:photostore_flutter/locator.dart';
 import 'package:wakelock/wakelock.dart';
 
 import 'abstract_view_model.dart';
 
-class BackupModel extends AbstractViewModel {
+class BackupModel extends AbstractViewModel with TabViewModelMixin {
   List<MobilePhoto> queuedPhotos;
   ScreenStatus screenStatus = ScreenStatus.uninitialized();
   BackupStats stats;
@@ -184,4 +186,7 @@ class BackupModel extends AbstractViewModel {
     super.dispose();
     progressLog.dispose();
   }
+
+  @override
+  TabName getTabName() => TabName.BACKUP;
 }

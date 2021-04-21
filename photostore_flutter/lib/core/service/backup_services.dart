@@ -6,11 +6,11 @@ import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo.dart';
 import 'package:photostore_flutter/core/model/photo_diff_result.dart';
 import 'package:photostore_flutter/core/model/progress_log.dart';
-import 'package:photostore_flutter/core/service/mobile_media_service.dart';
-import 'package:photostore_flutter/core/service/server_media_service.dart';
+import 'package:photostore_flutter/core/service/media/server_media_service.dart';
 import 'package:photostore_flutter/locator.dart';
 
 import 'app_settings_service.dart';
+import 'media/mobile_media_service.dart';
 
 typedef BackupProgressHandler = Function(int originalCount, int queueCount);
 

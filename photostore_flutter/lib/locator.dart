@@ -4,12 +4,15 @@ import 'package:photostore_flutter/core/repository/media_api_repository.dart';
 import 'package:photostore_flutter/core/repository/media_mobile_repositoryV2.dart';
 import 'package:photostore_flutter/core/service/backup_services.dart';
 import 'package:photostore_flutter/core/service/lockout_service.dart';
+import 'package:photostore_flutter/core/service/tab_service.dart';
+import 'package:photostore_flutter/core/service/window/abstract_window_service.dart';
 
 import 'core/repository/settings_repository.dart';
 import 'core/service/app_settings_service.dart';
 import 'core/service/http_service.dart';
-import 'core/service/mobile_media_service.dart';
-import 'core/service/server_media_service.dart';
+import 'core/service/media/mobile_media_service.dart';
+import 'core/service/media/server_media_service.dart';
+import 'core/service/refinement_button_sevice.dart';
 
 // import 'package:http/http.dart' as http;
 
@@ -29,17 +32,19 @@ void setupLocator() {
     locator.registerLazySingleton<AppSettingsService>(
         () => AppSettingsService(),
         dispose: (service) => service.dispose());
-
+    locator.registerLazySingleton<TabService>(
+            () => TabService(),
+        dispose: (service) => service.dispose());
+    locator.registerLazySingleton<RefinementButtonService>(
+        () => RefinementButtonService(),
+        dispose: (service) => service.dispose());
     locator.registerLazySingleton<ServerMediaService>(
         () => ServerMediaService(),
         dispose: (service) => service.dispose());
-
-    locator.registerLazySingleton<LockoutService>(
-            () => LockoutService(),
+    locator.registerLazySingleton<LockoutService>(() => LockoutService(),
         dispose: (service) => service.dispose());
-
-
-    // locator.registerLazySingleton<http.Client>(() => http.Client());
+    locator.registerLazySingleton<WindowService>(() => WindowService.instance,
+        dispose: (service) => service.dispose());
     locator.registerLazySingleton<HTTPService>(() => HTTPService(),
         dispose: (service) => service.dispose());
     locator.registerLazySingleton<MediaAPIRepository>(
@@ -57,27 +62,4 @@ void setupLocator() {
           dispose: (service) => service.dispose());
     }
   }
-
-  // locator.registerSingleton<SettingsRepository>(SettingsRepository());
-  // locator.registerSingleton<AppSettingsService>(AppSettingsService(),
-  //     dispose: (service) => service.dispose());
-  // locator.registerSingleton<MobileMediaService>(MobileMediaService(),
-  //     dispose: (service) => service.dispose());
-  // locator.registerSingleton<ServerMediaService>(ServerMediaService(),
-  //     dispose: (service) => service.dispose());
-  // locator.registerLazySingleton<http.Client>(() => http.Client());
-  // locator.registerLazySingleton<SettingsRepository>(() => SettingsRepository());
-  // locator.registerLazySingleton<AppSettingsService>(() => AppSettingsService(),
-  //     dispose: (service) => service.dispose());
-  // locator.registerLazySingleton<MobileMediaService>(() => MobileMediaService(),
-  //     dispose: (service) => service.dispose());
-  // locator.registerLazySingleton<ServerMediaService>(() => ServerMediaService(),
-  //     dispose: (service) => service.dispose());
-  // locator.registerSingleton<http.Client>(http.Client());
-
-  // locator.registerLazySingleton(() => Api());
-  //
-  // locator.registerLazySingleton(() => LoginModel());
-  // locator.registerFactory(() => HomeModel());
-  // locator.registerFactory(() => CommentsModel());
 }

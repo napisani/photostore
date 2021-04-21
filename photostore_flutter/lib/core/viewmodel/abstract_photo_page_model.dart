@@ -5,11 +5,12 @@ import 'package:photostore_flutter/core/model/agnostic_media.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo_page_event.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
-import 'package:photostore_flutter/core/service/abstract_photo_page_service.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
-import 'package:photostore_flutter/core/viewmodel/abstract_view_model.dart';
+import 'package:photostore_flutter/core/service/media/abstract_photo_page_service.dart';
 import 'package:photostore_flutter/locator.dart';
 import 'package:rxdart/rxdart.dart';
+
+import 'abstract_view_model.dart';
 
 abstract class AbstractPhotoPageModel extends AbstractViewModel {
   Pagination<AgnosticMedia> photoPage;

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:photostore_flutter/core/model/lockout_type.dart';
-import 'package:photostore_flutter/core/service/lockout_service.dart';
 import 'package:photostore_flutter/ui/screen/settings_screen.dart';
-import 'package:photostore_flutter/ui/tab_navigation_item.dart';
+import 'package:provider/provider.dart';
 
+import 'core/viewmodel/app_model.dart';
 import 'locator.dart';
 
 void main() {
@@ -21,92 +20,69 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: _PhotoStoreApp(),
+      home: ChangeNotifierProvider(
+          create: (context) => AppModel(), child: _PhotoStoreApp()),
       // routes: {'/gallery': (context) => PhotoGalleryScreen()},
     );
   }
 }
 
-class _PhotoStoreApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _PhotoStoreAppState();
-}
-
-class _PhotoStoreAppState extends State<_PhotoStoreApp> {
-  int _currentIndex = 0;
-  List<TabNavigationItem> tabItems;
-
-  _PhotoStoreAppState() {
-    this.tabItems = TabNavigationItem.items;
-    print('calling setup');
-    setupLocator();
-  }
-
-  // // This is the trick!
-  // void _reset() {
-  //   Navigator.pushReplacement(
-  //     context,
-  //     PageRouteBuilder(
-  //       transitionDuration: Duration.zero,
-  //       pageBuilder: (_, __, ___) => DummyWidget(),
-  //     ),
-  //   );
-  // }
-
-  bool _isSettingsLockedOut() =>
-      locator<LockoutService>().isDisabled(LockoutType.SETTINGS);
-
-  bool _isNavigationLockedOut() =>
-      locator<LockoutService>().isDisabled(LockoutType.NAVIGATION);
-
-  @override
-  Widget build(BuildContext context) {
-    print('inside main build');
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Photos'),
-        actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  if (!this._isSettingsLockedOut()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SettingsScreen()),
-                    ).then((_) {
-                      print('resetting tab items');
-                      this.setState(() {
-                        tabItems = TabNavigationItem.items;
-                      });
-                    });
-                  }
-                },
-                child: Icon(Icons.settings),
-              )),
-        ],
-      ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: [
-          for (final tabItem in this.tabItems) tabItem.page,
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+class _PhotoStoreApp extends StatelessWidget {
+  Widget _buildBottomNavBar(AppModel state) {
+    if (state.tabItems.length >= 2) {
+      return BottomNavigationBar(
+        currentIndex: state.currentTabIndex,
         onTap: (int index) {
-          if (!_isNavigationLockedOut()) {
-            setState(() => _currentIndex = index);
+          if (!state.isNavigationLockedOut()) {
+            state.updateTabIndex(index);
           }
         },
         items: [
-          for (final tabItem in this.tabItems)
+          for (final tabItem in state.tabItems)
             BottomNavigationBarItem(
               icon: tabItem.icon,
               label: tabItem.title,
             )
         ],
-      ),
-    );
+      );
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('inside main build');
+    return Consumer<AppModel>(
+        builder: (context, state, child) => Scaffold(
+            appBar: AppBar(
+              title: Text('Photo Store'),
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (!state.isSettingsLockedOut()) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SettingsScreen()),
+                          ).then((_) {
+                            print('resetting tab items');
+                            state.resetTabItems();
+                          });
+                        }
+                      },
+                      child: Icon(Icons.settings),
+                    )),
+              ],
+            ),
+            body: IndexedStack(
+              index: state.currentTabIndex,
+              children: [
+                for (final tabItem in state.tabItems) tabItem.page,
+              ],
+            ),
+            bottomNavigationBar: _buildBottomNavBar(state)));
   }
 }
+

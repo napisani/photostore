@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:device_info/device_info.dart';
-import 'package:photostore_flutter/core/model/app_settings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:photostore_flutter/core/model/app_settings.dart';
+import 'package:photostore_flutter/core/service/window/abstract_window_service.dart';
+import 'package:photostore_flutter/locator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: uri_does_not_exist
 class _AppSettingKeys {
   static const serverIP = 'serverIP';
   static const serverPort = 'serverPort';
@@ -20,6 +23,8 @@ class _AppSettingKeys {
 }
 
 class SettingsRepository {
+  final WindowService _windowService = locator<WindowService>();
+
   Future<AppSettings> saveSettings(AppSettings settings) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool success =
@@ -40,7 +45,8 @@ class SettingsRepository {
     success = await prefs.setInt(_AppSettingKeys.batchSize, settings.batchSize);
     _checkAndThrow(success, _AppSettingKeys.batchSize);
 
-    success = await prefs.setInt(_AppSettingKeys.itemsPerPage, settings.itemsPerPage);
+    success =
+        await prefs.setInt(_AppSettingKeys.itemsPerPage, settings.itemsPerPage);
     _checkAndThrow(success, _AppSettingKeys.itemsPerPage);
 
     success = await prefs.setInt(
@@ -66,9 +72,12 @@ class SettingsRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return AppSettings(
-      serverIP: prefs.getString(_AppSettingKeys.serverIP) ?? '192.168.1.100',
-      serverPort: prefs.getInt(_AppSettingKeys.serverPort) ?? 5000,
-      https: prefs.getBool(_AppSettingKeys.https) ?? false,
+      serverIP: prefs.getString(_AppSettingKeys.serverIP) ??
+          this._getDefaultAPIServerIP(),
+      serverPort:
+          prefs.getInt(_AppSettingKeys.serverPort) ?? _getDefaultAPIPort(),
+      https: prefs.getBool(_AppSettingKeys.https) ??
+          this._isDefaultProtocolHTTPS(),
       deviceID:
           prefs.getString(_AppSettingKeys.deviceID) ?? (await _getDeviceId()),
       apiKey: prefs.getString(_AppSettingKeys.apiKey) ?? '',
@@ -82,7 +91,7 @@ class SettingsRepository {
   }
 
   Future<String> _getDeviceId() async {
-    if(!kIsWeb) {
+    if (!kIsWeb) {
       var deviceInfo = DeviceInfoPlugin();
       if (Platform.isIOS) {
         // import 'dart:io'
@@ -95,4 +104,10 @@ class SettingsRepository {
     }
     return 'web_device_${DateTime.now().millisecondsSinceEpoch}';
   }
+
+  String _getDefaultAPIServerIP() => _windowService.getDefaultAPIServerIP();
+
+  int _getDefaultAPIPort() => _windowService.getDefaultAPIPort();
+
+  bool _isDefaultProtocolHTTPS() => _windowService.isDefaultProtocolHTTPS();
 }
