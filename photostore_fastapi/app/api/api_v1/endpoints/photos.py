@@ -14,9 +14,10 @@ from app.obj.photo_sort_attribute import PhotoSortAttribute
 from app.obj.sort_direction import SortDirection
 from app.schemas.health_schema import HealthSchema
 from app.schemas.pagination_schema import PaginationSchema
-from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull, PhotoDiffRequestSchema, PhotoDiffResultSchema
+from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull, PhotoDiffRequestSchema, PhotoDiffResultSchema, \
+    DeviceResultSchema
 from app.service.photo_service import get_photos, add_photo, get_photo, diff_photos, get_latest_photo, \
-    count_photos, allowed_file, delete_photos_by_device
+    count_photos, allowed_file, delete_photos_by_device, get_devices
 
 router = APIRouter()
 
@@ -35,7 +36,7 @@ async def api_get_health(
     return health
 
 
-@router.get("/{page}", response_model=PaginationSchema[PhotoSchemaFull])
+@router.get("/page/{page}", response_model=PaginationSchema[PhotoSchemaFull])
 async def api_get_photos(
         db: Session = Depends(deps.get_async_db),
         page: int = 1,
@@ -120,3 +121,14 @@ async def api_get_photo_count(device_id: str, db=Depends(deps.get_async_db)) -> 
 async def api_delete_photos_by_id(device_id: str, db=Depends(deps.get_async_db)):
     await delete_photos_by_device(db=db, device_id=device_id)
     logger.debug('api_delete_photos_by_id  {}')
+
+
+@router.get('/devices', response_model=List[DeviceResultSchema])
+async def api_get_devices(db=Depends(deps.get_async_db)) -> List[DeviceResultSchema]:
+    logger.debug('inside api_get_devices')
+    device_list = await get_devices(db=db)
+    logger.debug('api_get_devices photo: {}', device_list)
+    results = [DeviceResultSchema(device_id=device_id, count=cnt) for device_id, cnt in device_list]
+    logger.debug('api_get_devices results: {}', results)
+
+    return results

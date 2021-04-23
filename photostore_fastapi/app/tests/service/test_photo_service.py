@@ -9,12 +9,34 @@ from werkzeug.datastructures import FileStorage
 from app.obj.media_type import MediaType
 from app.schemas.photo_schema import PhotoSchemaUpdate, PhotoDiffRequestSchema, PhotoSchemaAdd, PhotoSchemaFull
 from app.service.photo_service import add_photo, delete_photo, get_photo, update_photo, \
-    get_latest_photo, get_photos, diff_photos, count_photos, allowed_file, delete_photos_by_device
+    get_latest_photo, get_photos, diff_photos, count_photos, allowed_file, delete_photos_by_device, get_devices
 from app.utils import get_file_checksum
 
 
 # @pytest.mark.unit
 class TestPhotoService:
+
+    @pytest.mark.asyncio
+    async def test_delete_photos_by_device(self, photo_factory, db):
+        logger.debug('test_delete_photos_by_device')
+        photo1 = photo_factory()
+        file1 = FileStorage(stream=open(photo1.path, 'rb'), filename=photo1.filename)
+
+        second_dev = 'new_device_1111'
+        photo2 = photo_factory()
+        photo2.device_id = second_dev
+        file2 = FileStorage(stream=open(photo2.path, 'rb'), filename=photo2.filename)
+        saved_photo1 = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo1)), file1)
+        saved_photo2 = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo2)), file2)
+        device_list = get_devices(db)
+        assert device_list
+        assert len(device_list) == 2
+        found_count = 0
+        for device in device_list:
+            assert device.count == 1
+            if second_dev == device.device_id:
+                found_count += 1
+        assert found_count == 1
 
     @pytest.mark.asyncio
     async def test_delete_photos_by_device(self, photo_factory, db):

@@ -79,3 +79,8 @@ class PhotoDiffResultSchema(BaseModel):
     exists: Optional[bool]
     same_date: Optional[bool]
     same_checksum: Optional[bool]
+
+
+class DeviceResultSchema(BaseModel):
+    device_id: Optional[str]
+    count: Optional[str]

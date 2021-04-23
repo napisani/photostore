@@ -51,5 +51,12 @@ class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
                                        .where(device_id == device_id)))
         return result_itr.scalars().all()
 
+    async def get_devices(self, db: Session):
+        result_itr = await (
+            db.execute(select(self.model.device_id, func.count(self.model.device_id))
+                       .group_by(self.model.device_id))
+        )
+        return result_itr.all()
+
 
 PhotoRepo = CRUDPhoto(Photo)

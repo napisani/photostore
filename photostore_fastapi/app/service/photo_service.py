@@ -16,7 +16,7 @@ from app.obj.photo_sort_attribute import PhotoSortAttribute
 from app.obj.sort_direction import SortDirection
 from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchemaFull, PhotoSchemaAdd, PhotoSchemaUpdate, PhotoDiffRequestSchema, \
-    PhotoDiffResultSchema
+    PhotoDiffResultSchema, DeviceResultSchema
 from app.service.image_file_helper import save_photo_file, create_thumbnail, get_allowed_extensions, \
     get_media_type_by_extension
 from app.utils import get_file_checksum, get_file_extension
@@ -148,3 +148,9 @@ def _make_diff_result(req: PhotoDiffRequestSchema, photo: Photo) -> PhotoDiffRes
 
 async def count_photos(db: Session, device_id: str) -> int:
     return await PhotoRepo.get_photo_count_by_device_id(db, device_id)
+
+
+async def get_devices(db: Session) -> List[DeviceResultSchema]:
+    devices = await PhotoRepo.get_devices(db)
+    logger.info(devices)
+    return devices;
