@@ -24,6 +24,7 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
   final ProgressLog progressLog = new ProgressLog();
   bool backupFinished = false;
   CancelNotifier cancelNotifier;
+
   final BackupService _backupService = locator<BackupService>();
   final MobileMediaService _mobileMediaService = locator<MobileMediaService>();
   final ServerMediaService _serverMediaService = locator<ServerMediaService>();
@@ -50,9 +51,10 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
     this.stats = null;
     backupFinished = false;
     _mobileMediaService.reset();
-    if (this._appSettingsService.currentAppSettings != null) {
+    if (this._appSettingsService.areServerSettingsConfigured()) {
       await loadBackupStats();
     } else {
+      this.screenStatus = ScreenStatus.disabled(DISABLED_SERVER_FEATURE_TEXT);
       notifyListeners();
     }
   }

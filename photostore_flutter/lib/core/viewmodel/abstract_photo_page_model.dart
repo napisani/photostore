@@ -7,6 +7,7 @@ import 'package:photostore_flutter/core/model/photo_page_event.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
 import 'package:photostore_flutter/core/service/media/abstract_photo_page_service.dart';
+import 'package:photostore_flutter/core/service/tab_service.dart';
 import 'package:photostore_flutter/locator.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -15,9 +16,13 @@ import 'abstract_view_model.dart';
 abstract class AbstractPhotoPageModel extends AbstractViewModel {
   Pagination<AgnosticMedia> photoPage;
   Subject<PhotoPageEvent> _eventStream = PublishSubject();
+
   @protected
   final AbstractPhotoPageService photoPageService;
-  final AppSettingsService _appSettingsService = locator<AppSettingsService>();
+  @protected
+  final AppSettingsService appSettingsService = locator<AppSettingsService>();
+  @protected
+  final TabService tabService = locator<TabService>();
 
   AbstractPhotoPageModel({@required this.photoPageService}) : super() {
     _registerAppSettingsListener();
@@ -26,11 +31,11 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
     this.initialize();
   }
 
+
   void _registerAppSettingsListener() {
-    addSubscription(
-        this._appSettingsService.appSettingsAsStream.listen((event) {
-      // this.reset();
+    addSubscription(this.appSettingsService.appSettingsAsStream.listen((event) {
       this.initialize();
+      // this.reset();
     }));
   }
 
@@ -57,7 +62,10 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
         })
         .debounceTime(const Duration(milliseconds: 50))
         .listen((PhotoPageEvent event) async {
-          if (event is PhotoPageResetEvent) {
+          if (!this.isScreenEnabled()) {
+            status = ScreenStatus.disabled(DISABLED_SERVER_FEATURE_TEXT);
+            notifyListeners();
+          } else if (event is PhotoPageResetEvent) {
             status = ScreenStatus.uninitialized();
             photoPageService.reset();
           } else if (event is PhotoPageFetchEvent) {
@@ -78,11 +86,18 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
   }
 
   void reset() {
-    if (this._appSettingsService.currentAppSettings != null) {
+    if (this.isScreenEnabled()) {
       this._eventStream.add(PhotoPageResetEvent());
       Future.delayed(Duration(milliseconds: 120), () => loadPage(1));
+    } else {
+      status = ScreenStatus.disabled(DISABLED_SERVER_FEATURE_TEXT);
+      notifyListeners();
     }
   }
+
+
+  @protected
+  bool isScreenEnabled() => this.appSettingsService.currentAppSettings != null;
 
   void initialize() {
     if (!this.photoPageService.hasPhotosLoaded) {

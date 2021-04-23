@@ -167,6 +167,10 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
                           ),
                         ),
                 ].where((child) => child != null).toList()));
+      } else if (state.status is DisabledScreenStatus) {
+        return Center(
+          child: Text((state.status as DisabledScreenStatus).disabledText),
+        );
       } else {
         return Center(
           child: Text('invalid state type: ${state.status.type}'),

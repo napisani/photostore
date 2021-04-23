@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/viewmodel_ticker_provider.dart';
 
+const String DISABLED_SERVER_FEATURE_TEXT =
+    "Please go to 'Settings' to configure the Photostore server settings.";
+
 abstract class AbstractViewModel
     with ChangeNotifier, ViewModelTickerProviderMixin {
   @protected

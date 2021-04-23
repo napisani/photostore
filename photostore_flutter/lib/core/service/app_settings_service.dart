@@ -6,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 class AppSettingsService {
   final SettingsRepository _settingsRepository = locator<SettingsRepository>();
   final BehaviorSubject<AppSettings> _currentSettings =
-      BehaviorSubject<AppSettings>();
+  BehaviorSubject<AppSettings>();
 
   AppSettingsService() {
     this.loadSettings();
@@ -22,10 +22,14 @@ class AppSettingsService {
 
   Future<AppSettings> saveSettings(AppSettings settings) async {
     final AppSettings settingsSaved =
-        await this._settingsRepository.saveSettings(settings);
+    await this._settingsRepository.saveSettings(settings);
     this._currentSettings.sink.add(settingsSaved);
     return settingsSaved;
   }
+
+  bool areServerSettingsConfigured() =>
+      this.currentAppSettings?.serverIP != ''
+          && this.currentAppSettings?.serverIP != null;
 
   Stream<AppSettings> get appSettingsAsStream => _currentSettings.stream;
 

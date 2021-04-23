@@ -1,6 +1,7 @@
 import 'package:photostore_flutter/core/model/lockout_type.dart';
 import 'package:photostore_flutter/core/model/tab_navigation_item.dart';
 import 'package:photostore_flutter/core/service/lockout_service.dart';
+import 'package:photostore_flutter/core/service/refinement_button_sevice.dart';
 import 'package:photostore_flutter/core/service/tab_service.dart';
 import 'package:photostore_flutter/locator.dart';
 
@@ -8,6 +9,10 @@ import 'abstract_view_model.dart';
 
 class AppModel extends AbstractViewModel {
   TabService _tabService = locator<TabService>();
+  RefinementButtonService _refinementButtonService =
+      locator<RefinementButtonService>();
+
+  bool showRefinement = false;
 
   bool isSettingsLockedOut() =>
       locator<LockoutService>().isDisabled(LockoutType.SETTINGS);
@@ -19,18 +24,33 @@ class AppModel extends AbstractViewModel {
 
   AppModel() {
     resetTabItems();
-    registerTabIndexListener();
+    _registerTabIndexListener();
+    _registerRefinementButtonListener();
   }
 
-  void registerTabIndexListener() {
+  void _registerTabIndexListener() {
     _tabService.getTabIndexAsStream().listen((event) {
       notifyListeners();
     });
   }
 
-  void resetTabItems() {
+  void _registerRefinementButtonListener() {
+    _refinementButtonService
+        .shouldShowRefinementAsStream()
+        .listen((shouldShowBtn) {
+      this.showRefinement = shouldShowBtn;
+      notifyListeners();
+    });
+  }
+
+  Future<void> resetTabItems() async {
     this.tabItems = [..._tabService.items];
+    updateTabIndex(0);
     notifyListeners();
+  }
+
+  void pressedRefinement() {
+    this._refinementButtonService.pressedRefinement();
   }
 
   void updateTabIndex(int newIdx) {

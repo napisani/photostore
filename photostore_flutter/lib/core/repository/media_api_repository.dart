@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:photostore_flutter/core/model/media_device.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo.dart';
@@ -62,7 +63,7 @@ class MediaAPIRepository extends MediaRepository<Photo> {
         "MediaAPIRepository getPhotosByPage baseUrl: ${_getBaseURL()} page: $page");
     final response = await _httpService
         .getHttpClient()
-        .get("${_getBaseURL()}/$page", queryParameters: {
+        .get("${_getBaseURL()}/page/$page", queryParameters: {
       "per_page": itemsPerPage,
       "sort": "modified_date",
       "direction": "desc"
@@ -112,6 +113,24 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     } else {
       final Exception ex = Exception('error getting photo count from server');
       print("MediaAPIRepository.getPhotoCount $ex");
+      throw ex;
+    }
+  }
+
+  Future<List<MediaDevice>> getDevices() async {
+    print("MediaAPIRepository getDevices baseUrl: ${_getBaseURL()}");
+    final String url = "${_getBaseURL()}/devices";
+
+    final response = await _httpService.getHttpClient().get(url);
+    if (response.statusCode == 200) {
+      final List<dynamic> data = response.data;
+      return data
+          .map<MediaDevice>((jsonData) => MediaDevice.fromJson(jsonData))
+          .toList();
+    } else {
+      final Exception ex =
+          Exception('error getting the list of media devices from the server');
+      print("MediaAPIRepository.getDevices $ex");
       throw ex;
     }
   }

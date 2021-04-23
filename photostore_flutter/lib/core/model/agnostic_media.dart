@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_manager/photo_manager.dart';
 import 'package:photostore_flutter/core/model/photo_diff_request.dart';
 
 import 'media_contents.dart';
 
 typedef MediaContentsGetterFunction = Future<MediaContents> Function();
 
-typedef ThumbnailGetterFunction = ImageProvider Function(double width, double height);
+typedef ThumbnailGetterFunction = ImageProvider Function(
+    double width, double height);
 
 abstract class AgnosticMedia extends Equatable {
   final String id;
@@ -29,7 +29,7 @@ abstract class AgnosticMedia extends Equatable {
     this.id,
     this.creationDate,
     this.modifiedDate,
-    this.assetType =  1,
+    this.assetType = 1,
     this.filename,
     this.getThumbnail,
     this.thumbnailProvider,

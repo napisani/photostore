@@ -5,12 +5,19 @@ import 'package:photostore_flutter/locator.dart';
 
 import 'abstract_photo_page_model.dart';
 
-class MobileMediaPageModel extends AbstractPhotoPageModel with TabViewModelMixin {
-
-  MobileMediaPageModel(): super(photoPageService: locator<MobileMediaService>());
+class MobileMediaPageModel extends AbstractPhotoPageModel
+    with TabViewModelMixin {
+  MobileMediaPageModel()
+      : super(photoPageService: locator<MobileMediaService>()) {
+    registerTabLifeCycle();
+  }
 
   @override
   TabName getTabName() => TabName.MOBILE;
 
-
+  @override
+  void onTabActivated() {
+    super.onTabActivated();
+    print('activated mobile');
+  }
 }

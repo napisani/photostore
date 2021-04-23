@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-enum ScreenStatusType { UNINITIALIZED, LOADING, SUCCESS, ERROR }
+enum ScreenStatusType { UNINITIALIZED, LOADING, SUCCESS, ERROR, DISABLED }
 
 abstract class ScreenStatus {
   // final ScreenStatusType type;
@@ -28,6 +28,10 @@ abstract class ScreenStatus {
 
   factory ScreenStatus.error(String error) {
     return ErrorScreenStatus(error: error);
+  }
+
+  factory ScreenStatus.disabled(String disabledText) {
+    return DisabledScreenStatus(disabledText: disabledText);
   }
 
   ScreenStatusType get type;
@@ -69,4 +73,13 @@ class ErrorScreenStatus extends ScreenStatus {
 
   @override
   ScreenStatusType get type => ScreenStatusType.ERROR;
+}
+
+class DisabledScreenStatus extends ScreenStatus {
+  final String disabledText;
+
+  DisabledScreenStatus({this.disabledText});
+
+  @override
+  ScreenStatusType get type => ScreenStatusType.DISABLED;
 }

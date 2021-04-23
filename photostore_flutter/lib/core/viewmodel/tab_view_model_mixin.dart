@@ -1,20 +1,24 @@
 import 'package:photostore_flutter/core/model/tab_navigation_item.dart';
+import 'package:photostore_flutter/core/service/refinement_button_sevice.dart';
 import 'package:photostore_flutter/core/service/tab_service.dart';
 import 'package:photostore_flutter/locator.dart';
 
 mixin TabViewModelMixin {
   final TabService tabService = locator<TabService>();
-  int _currentTabIdx;
+  final RefinementButtonService refinementButtonService =
+      locator<RefinementButtonService>();
 
   void registerTabLifeCycle() {
-    tabService.getTabIndexAsStream().listen((int tabIdx) {
-      if (_currentTabIdx == getTabIndex() && getTabIndex() != tabIdx) {
+    this
+        .tabService
+        .getTabNameAsStream()
+        .listen((Iterable<TabName> currentAndLastTab) {
+      if (currentAndLastTab.toList()[0] == getTabName() &&
+          currentAndLastTab.toList()[1] != getTabName()) {
         onTabDeactivated();
-      } else if (_currentTabIdx != getTabIndex() && getTabIndex() == tabIdx) {
+      } else if (currentAndLastTab.toList()[1] == getTabName()) {
         onTabActivated();
       }
-
-      _currentTabIdx = tabIdx;
     });
   }
 
@@ -25,7 +29,9 @@ mixin TabViewModelMixin {
 
   TabName getTabName();
 
-  void onTabActivated() {}
+  void onTabActivated() {
+    this.refinementButtonService.disableRefinement();
+  }
 
   void onTabDeactivated() {}
 

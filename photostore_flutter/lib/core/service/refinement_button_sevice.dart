@@ -1,7 +1,8 @@
 import 'package:rxdart/rxdart.dart';
 
 class RefinementButtonService {
-  final BehaviorSubject<Function> _refinementOnPressed = BehaviorSubject<Function>();
+  final BehaviorSubject<Function> _refinementOnPressed =
+      BehaviorSubject<Function>();
 
   Stream<bool> shouldShowRefinementAsStream() =>
       _refinementOnPressed.stream.map((event) => event != null);
@@ -12,6 +13,12 @@ class RefinementButtonService {
 
   void disableRefinement() {
     this._refinementOnPressed.sink.add(null);
+  }
+
+  void pressedRefinement() {
+    if (_refinementOnPressed.value != null) {
+      _refinementOnPressed.value();
+    }
   }
 
   void dispose() {
