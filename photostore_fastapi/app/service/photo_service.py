@@ -112,12 +112,14 @@ async def get_photos(db: Session,
                      page: int,
                      per_page: int = 10,
                      order_by=PhotoSortAttribute.modified_date,
-                     direction=SortDirection.desc) -> Pagination:
+                     direction=SortDirection.desc,
+                     device_id: str = None) -> Pagination:
     photos = await PhotoRepo.get_photos(db,
                                         page=page,
                                         per_page=per_page,
                                         order_by=order_by,
-                                        direction=direction)
+                                        direction=direction,
+                                        device_id=device_id)
     pagination = PaginationSchema.from_orm(photos)
     pagination.items = [PhotoSchemaFull.from_orm(p) for p in photos.items]
     return pagination

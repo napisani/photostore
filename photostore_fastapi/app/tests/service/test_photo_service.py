@@ -15,7 +15,6 @@ from app.utils import get_file_checksum
 
 # @pytest.mark.unit
 class TestPhotoService:
-
     @pytest.mark.asyncio
     async def test_delete_photos_by_device(self, photo_factory, db):
         logger.debug('test_delete_photos_by_device')
@@ -26,8 +25,8 @@ class TestPhotoService:
         photo2 = photo_factory()
         photo2.device_id = second_dev
         file2 = FileStorage(stream=open(photo2.path, 'rb'), filename=photo2.filename)
-        saved_photo1 = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo1)), file1)
-        saved_photo2 = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo2)), file2)
+        await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo1)), file1)
+        await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo2)), file2)
         device_list = get_devices(db)
         assert device_list
         assert len(device_list) == 2
@@ -220,3 +219,25 @@ class TestPhotoService:
         assert video.device_id
         assert video.width > 0
         assert video.height > 0
+
+    @pytest.mark.asyncio
+    async def test_add_photos_and_get_photos_by_device_id(self, photo_factory, db):
+        logger.debug('test_add_photos_and_get_photos_by_device_id')
+        for _ in range(0, 4):
+            photo = photo_factory()
+            file = FileStorage(stream=open(photo.path, 'rb'), filename=photo.filename)
+            saved_photo = await add_photo(db, PhotoSchemaAdd.parse_obj(vars(photo)), file)
+            assert saved_photo
+        photos = await get_photos(db, 1, device_id=photo.device_id)
+        logger.debug('test_add_photos_and_get_photos photos: {}', photos)
+        assert photos
+        assert photos.items
+        assert photos.page == 1
+        assert len(photos.items) >= 4
+        assert photos.total >= len(photos.items)
+
+        photos = await get_photos(db, 1, device_id=(photo.device_id + "NOTFOUND"))
+        assert photos
+        assert photos.page == 1
+        assert len(photos.items) == 0
+        assert photos.total == len(photos.items)

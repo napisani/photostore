@@ -41,13 +41,15 @@ async def api_get_photos(
         db: Session = Depends(deps.get_async_db),
         page: int = 1,
         per_page: int = 10,
-        sort: PhotoSortAttribute = PhotoSortAttribute.modified_date,
-        direction: SortDirection = SortDirection.desc
+        sort: PhotoSortAttribute = PhotoSortAttribute.creation_date,
+        direction: SortDirection = SortDirection.desc,
+        device_id: str = None
 ) -> PaginationSchema[PhotoSchemaFull]:
     """
     Retrieve photos by page.
     """
-    pagination = await get_photos(db, page, per_page, sort, direction)
+    logger.debug(f'in api_get_photos page: {page}, per_page:{per_page}, device_id: {device_id}')
+    pagination = await get_photos(db, page, per_page, sort, direction, device_id)
     return pagination
 
 

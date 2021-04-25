@@ -1,5 +1,6 @@
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
+from loguru import logger
 from pydantic import BaseModel
 from sqlalchemy import select, func, delete
 from sqlalchemy.orm import Session, Query
@@ -71,7 +72,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         await db.execute(delete(self.model))
         await db.commit()
 
-    async def _paginate(self, db: Session, query: Query, model: BaseModel, page=None, per_page=None, error_out=True,
+    async def _paginate(self, db: Session, query: Query, total_query: Query, model: BaseModel, page=None, per_page=None, error_out=True,
                         max_per_page=None):
         """Returns ``per_page`` items from page ``page``.
 
@@ -119,11 +120,11 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         if not items and page != 1 and error_out:
             _abort(404)
         total = (
-            (await db.execute(select(func.count()).select_from(model)))
+            (await db.execute(total_query))
                 .scalars()
                 .one()
         )
-        print(f'total {total}')
+        logger.debug(f'total {total}')
 
         return Pagination(query, page, per_page, total, items)
 

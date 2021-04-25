@@ -88,7 +88,7 @@ def create_thumbnail(path: str, filename: str, media_type: MediaType) -> str:
             else:
                 logger.debug('create_thumbnail working on non-HEIC IMAGE file {}', path)
             image = Image.open(path)
-            image.thumbnail((500, 500))
+            image.thumbnail((settings.THUMBNAIL_WIDTH, settings.THUMBNAIL_HEIGHT))
             # creating thumbnail
             logger.debug('creating thumbnail {}', thumb_path)
             image.save(thumb_path)

@@ -47,6 +47,9 @@ class Settings(BaseSettings):
     GOOGLE_PHOTOS_OAUTH_FILE: str
     SAVE_PHOTO_DIR: str
 
+    THUMBNAIL_HEIGHT: int
+    THUMBNAIL_WIDTH: int
+
     class Config:
         case_sensitive = True
         env_file = '.env'

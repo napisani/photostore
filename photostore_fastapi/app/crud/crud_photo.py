@@ -15,11 +15,19 @@ class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
 
     async def get_photos(self, db: Session, page, per_page=10,
                          order_by=PhotoSortAttribute.modified_date,
-                         direction=SortDirection.desc) -> Pagination:
+                         direction=SortDirection.desc,
+                         device_id: str = None) -> Pagination:
         order_by_clause = getattr(self.model, order_by)
         order_by_with_direction_clause = getattr(order_by_clause, direction)
-        return await self._paginate(db, (select(self.model)
+        total_query = select(func.count()).select_from(self.model)
+        select_query = select(self.model)
+        if device_id is not None:
+            select_query = select_query.filter(self.model.device_id == device_id)
+            total_query = total_query.filter(self.model.device_id == device_id)
+
+        return await self._paginate(db, (select_query
                                          .order_by(order_by_with_direction_clause())),
+                                    total_query,
                                     self.model,
                                     page=page,
                                     per_page=per_page,
@@ -43,12 +51,12 @@ class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
     async def get_photo_count_by_device_id(self, db: Session, device_id):
         result_itr = await (db.execute(select(func.count())
                                        .select_from(self.model)
-                                       .where(device_id == device_id)))
+                                       .where(self.model.device_id == device_id)))
         return result_itr.scalars().first()
 
     async def get_photos_by_device_id(self, db: Session, device_id):
         result_itr = await (db.execute(select(self.model)
-                                       .where(device_id == device_id)))
+                                       .where(self.model.device_id == device_id)))
         return result_itr.scalars().all()
 
     async def get_devices(self, db: Session):
