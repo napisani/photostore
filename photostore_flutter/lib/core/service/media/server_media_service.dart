@@ -1,4 +1,5 @@
 import 'package:photostore_flutter/core/model/agnostic_media.dart';
+import 'package:photostore_flutter/core/model/media_device.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/photo.dart';
 import 'package:photostore_flutter/core/model/photo_diff_request.dart';
@@ -19,12 +20,17 @@ class ServerMediaService extends AbstractPhotoPageService {
     return (mediaRepo as MediaAPIRepository).uploadPhoto(photo);
   }
 
-  Future<void> deletePhotosByDeviceID() async {
-    return (mediaRepo as MediaAPIRepository).deletePhotosByDeviceID();
+  Future<void> deletePhotosByDeviceID({String deviceId}) async {
+    return (mediaRepo as MediaAPIRepository)
+        .deletePhotosByDeviceID(deviceId: deviceId);
   }
 
   Future<List<PhotoDiffResult>> diffPhotos(List<AgnosticMedia> photos) async {
     return (mediaRepo as MediaAPIRepository).diffPhotos(
         photos.map<PhotoDiffRequest>((p) => p.toDiffRequest()).toList());
+  }
+
+  Future<List<MediaDevice>> getDevices() async {
+    return (mediaRepo as MediaAPIRepository).getDevices();
   }
 }

@@ -1,11 +1,9 @@
-import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photostore_flutter/core/model/progress_log.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/backup_model.dart';
-import 'package:photostore_flutter/ui/widget/alert_message.dart';
 import 'package:photostore_flutter/ui/widget/backup_stats_widget.dart';
 import 'package:photostore_flutter/ui/widget/loading_widget.dart';
 import 'package:photostore_flutter/ui/widget/progress_log_widget.dart';
@@ -33,28 +31,6 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
     super.initState();
   }
 
-  showAlertDialog(
-    BuildContext context,
-    Function onContinue,
-  ) {
-    // set up the buttons
-    LinkedHashMap<String, Function> actions = LinkedHashMap();
-    actions["Cancel"] = () => null;
-    actions["Continue"] = onContinue;
-
-    AlertMessage alert = AlertMessage(
-        actions: actions,
-        header: "Are you sure?",
-        message:
-            "Would you like to continue to delete all photos on the server associated with this device?");
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
 
   String _horizontify(String str) => str.replaceAll(" ", "\n");
 
@@ -138,13 +114,6 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
                                   textAlign: TextAlign.center,
                                 ),
                                 onPressed: () => state.loadFullBackupQueue()),
-                            ElevatedButton(
-                                child: Text(
-                                  _horizontify('Delete Photos on Server'),
-                                  textAlign: TextAlign.center,
-                                ),
-                                onPressed: () => showAlertDialog(
-                                    context, () => state.deletePhotos()))
                           ],
                         )
                       : Center(

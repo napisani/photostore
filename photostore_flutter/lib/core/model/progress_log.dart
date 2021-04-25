@@ -8,7 +8,7 @@ class ProgressLog {
   final int maxSize;
   bool _hasTrimmed = false;
 
-  ProgressLog({this.maxSize = 10});
+  ProgressLog({this.maxSize = 300});
 
   void clear() {
     progressStats = [];

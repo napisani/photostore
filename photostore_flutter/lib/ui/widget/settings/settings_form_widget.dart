@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:photostore_flutter/core/model/app_settings.dart';
+import 'package:photostore_flutter/ui/screen/device_management_screen.dart';
 import 'package:photostore_flutter/ui/widget/settings/text_setting_input_widget.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -19,7 +20,7 @@ class SettingsFormWidget extends StatelessWidget {
     if (str == null || str.length <= size) {
       return str;
     }
-    return str.substring(0,size) + '...';
+    return str.substring(0, size) + '...';
   }
 
   @override
@@ -185,6 +186,21 @@ class SettingsFormWidget extends StatelessWidget {
                       }));
             },
           ),
+        ]),
+        SettingsSection(title: "Devices", tiles: [
+          SettingsTile(
+            title: 'Manage devices...',
+            onPressed: (BuildContext context) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DeviceManagementScreen()),
+              ).then((_) {
+                print('closed device management');
+                // state.resetTabItems();
+              });
+            },
+          )
         ])
       ],
     );

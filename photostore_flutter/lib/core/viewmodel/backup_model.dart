@@ -10,7 +10,6 @@ import 'package:photostore_flutter/core/service/app_settings_service.dart';
 import 'package:photostore_flutter/core/service/backup_services.dart';
 import 'package:photostore_flutter/core/service/lockout_service.dart';
 import 'package:photostore_flutter/core/service/media/mobile_media_service.dart';
-import 'package:photostore_flutter/core/service/media/server_media_service.dart';
 import 'package:photostore_flutter/core/viewmodel/tab_view_model_mixin.dart';
 import 'package:photostore_flutter/locator.dart';
 import 'package:wakelock/wakelock.dart';
@@ -27,7 +26,6 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
 
   final BackupService _backupService = locator<BackupService>();
   final MobileMediaService _mobileMediaService = locator<MobileMediaService>();
-  final ServerMediaService _serverMediaService = locator<ServerMediaService>();
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
   final LockoutService _lockoutService = locator<LockoutService>();
 
@@ -101,20 +99,6 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
     }
     Wakelock.toggle(enable: false);
     _lockoutService.clearLockout();
-    notifyListeners();
-  }
-
-  Future<void> deletePhotos() async {
-    this.screenStatus = ScreenStatus.loading(this);
-    notifyListeners();
-    try {
-      await _serverMediaService.deletePhotosByDeviceID();
-      this.screenStatus = ScreenStatus.success();
-    } catch (err, s) {
-      print('[BackupModel] got error in deletePhotos ${err.toString()} $s');
-      this.screenStatus = ScreenStatus.error(err.toString());
-    }
-    reinit();
     notifyListeners();
   }
 
