@@ -38,7 +38,7 @@ class TabService {
   Stream<int> getTabIndexAsStream() => _currentTabIndex.stream;
 
   Stream<Iterable<TabName>> getTabNameAsStream() => _currentTabIndex.stream
-      .map((idx) => idx < -1 ? null : items[idx].name)
+      .map((idx) => idx <= -1 ? null : items[idx].name)
       .pairwise();
 
   void dispose() {

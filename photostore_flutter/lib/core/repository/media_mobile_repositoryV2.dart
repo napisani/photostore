@@ -36,7 +36,7 @@ class MediaMobileRepositoryV2 extends MediaRepository<MobilePhoto> {
     return allAlbum.assetCount;
   }
 
-  Future<Pagination<MobilePhoto>> getPhotosByPage(int page) async {
+  Future<Pagination<MobilePhoto>> getPhotosByPage(int page, {Map<String, String> filters}) async {
     AssetPathEntity allAlbum = await this.getAllAlbum();
     int perPageOrRemaining = allAlbum.assetCount - ((page - 1) * itemsPerPage);
     if (perPageOrRemaining > itemsPerPage) {

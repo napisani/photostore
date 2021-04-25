@@ -10,6 +10,9 @@ import 'package:photostore_flutter/locator.dart';
 import 'abstract_photo_page_service.dart';
 
 class ServerMediaService extends AbstractPhotoPageService {
+
+
+
   ServerMediaService() : super(mediaRepo: locator<MediaAPIRepository>());
 
   Future<Photo> getLastBackedUpPhoto() async {

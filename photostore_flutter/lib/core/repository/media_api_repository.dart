@@ -61,7 +61,8 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     return null;
   }
 
-  Future<Pagination<Photo>> getPhotosByPage(int page) async {
+  Future<Pagination<Photo>> getPhotosByPage(int page,
+      {Map<String, String> filters}) async {
     print(
         "MediaAPIRepository getPhotosByPage baseUrl: ${_getBaseURL()} page: $page");
     final response = await _httpService
@@ -69,7 +70,8 @@ class MediaAPIRepository extends MediaRepository<Photo> {
         .get("${_getBaseURL()}/page/$page", queryParameters: {
       "per_page": itemsPerPage,
       "sort": "modified_date",
-      "direction": "desc"
+      "direction": "desc",
+      ...(filters != null ? filters : {})
     });
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = response.data;

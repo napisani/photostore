@@ -31,7 +31,6 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
     this.initialize();
   }
 
-
   void _registerAppSettingsListener() {
     addSubscription(this.appSettingsService.appSettingsAsStream.listen((event) {
       this.initialize();
@@ -73,7 +72,7 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
             try {
               print('in loadPage process started: ${event.page}');
 
-              await photoPageService.loadPage(event.page);
+              await loadPageOfPhotosInternal(event.page);
               status = ScreenStatus.success();
             } catch (err, s) {
               status = ScreenStatus.error(err.toString());
@@ -83,6 +82,12 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
             }
           }
         });
+  }
+
+  @protected
+  Future<Pagination<AgnosticMedia>> loadPageOfPhotosInternal(
+      int pageNumber) async {
+    return await photoPageService.loadPage(pageNumber);
   }
 
   void reset() {
@@ -95,14 +100,11 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
     }
   }
 
-
   @protected
   bool isScreenEnabled() => this.appSettingsService.currentAppSettings != null;
 
   void initialize() {
-    if (!this.photoPageService.hasPhotosLoaded) {
-      this.reset();
-    }
+    this.reset();
   }
 
   void loadPage(int pageNumber) {

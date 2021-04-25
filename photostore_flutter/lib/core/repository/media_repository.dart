@@ -27,7 +27,8 @@ abstract class MediaRepository<T extends AgnosticMedia> {
 
   Stream<AppSettings> onAppSettingsChanged() => this._onSettingsChanged.stream;
 
-  Future<Pagination<T>> getPhotosByPage(int page);
+  Future<Pagination<T>> getPhotosByPage(int page,
+      {Map<String, String> filters});
 
   Future<int> getPhotoCount();
 

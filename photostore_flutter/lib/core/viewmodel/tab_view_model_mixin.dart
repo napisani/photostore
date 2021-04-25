@@ -13,6 +13,8 @@ mixin TabViewModelMixin {
         .tabService
         .getTabNameAsStream()
         .listen((Iterable<TabName> currentAndLastTab) {
+      print(
+          'inside activate deactivate lifecycle prev:${currentAndLastTab.toList()[0]}, next: ${currentAndLastTab.toList()[1]} tablename: ${getTabName()}');
       if (currentAndLastTab.toList()[0] == getTabName() &&
           currentAndLastTab.toList()[1] != getTabName()) {
         onTabDeactivated();

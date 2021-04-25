@@ -49,8 +49,8 @@ class AppModel extends AbstractViewModel {
     notifyListeners();
   }
 
-  void pressedRefinement() {
-    this._refinementButtonService.pressedRefinement();
+  void pressedRefinement(context) {
+    this._refinementButtonService.pressedRefinement(context);
   }
 
   void updateTabIndex(int newIdx) {

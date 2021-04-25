@@ -117,11 +117,6 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
             onDismiss: () => state.reset(),
           ));
         }
-        // else if (state.status.type == ScreenStatusType.LOADING) {
-        //   return Center(
-        //     child: Text("Loading..."),
-        //   );
-        // }
         else if (state.status.type == ScreenStatusType.SUCCESS ||
             state.status.type == ScreenStatusType.LOADING) {
           if ((state.photoPage?.items == null ||

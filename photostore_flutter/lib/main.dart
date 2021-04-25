@@ -72,7 +72,7 @@ class __PhotoStoreAppState extends State<_PhotoStoreApp> {
                   ? IconButton(
                       icon: Icon(Icons.more_horiz),
                       onPressed: () {
-                        state.pressedRefinement();
+                        state.pressedRefinement(context);
                       })
                   : null,
               actions: <Widget>[

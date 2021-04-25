@@ -82,6 +82,10 @@ class _DeviceManagementScreen extends StatelessWidget {
         } else {
           inner = Center(child: Text('No devices found on the server.'));
         }
+      } else if (state.status is DisabledScreenStatus) {
+        inner =  Center(
+          child: Text((state.status as DisabledScreenStatus).disabledText),
+        );
       } else {
         inner = Center(
           child: Text('invalid state type: ${state.status.type}'),

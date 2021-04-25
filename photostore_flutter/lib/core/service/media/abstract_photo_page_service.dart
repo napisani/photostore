@@ -32,13 +32,14 @@ abstract class AbstractPhotoPageService {
       this._photoPage?.value?.items != null &&
       this._photoPage.value.items.length > 0;
 
-  Future<Pagination<AgnosticMedia>> loadPage(int pageNumber) async {
+  Future<Pagination<AgnosticMedia>> loadPage(int pageNumber,
+      {Map<String, String> filters}) async {
     if (_photoPage.value.page >= pageNumber || !_photoPage.value.hasMorePages) {
       print("page already loaded - yielding same state");
       _photoPage.add(_photoPage.value);
       return _photoPage.value;
     } else {
-      final photos = await this.mediaRepo.getPhotosByPage(pageNumber);
+      final photos = await this.mediaRepo.getPhotosByPage(pageNumber, filters: filters);
       print("got photos: $photos");
       final newPhotos = Pagination.combineWith(_photoPage.value, photos);
       _photoPage.add(newPhotos);

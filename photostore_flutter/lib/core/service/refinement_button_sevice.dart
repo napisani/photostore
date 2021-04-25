@@ -15,9 +15,9 @@ class RefinementButtonService {
     this._refinementOnPressed.sink.add(null);
   }
 
-  void pressedRefinement() {
+  void pressedRefinement(context) {
     if (_refinementOnPressed.value != null) {
-      _refinementOnPressed.value();
+      _refinementOnPressed.value(context);
     }
   }
 

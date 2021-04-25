@@ -58,7 +58,7 @@ class MockMediaRepository extends MediaRepository<Photo> {
   }
 
   @override
-  Future<Pagination<Photo>> getPhotosByPage(int page) async {
+  Future<Pagination<Photo>> getPhotosByPage(int page, {Map<String, String> filters}) async {
     this.pageGen.moveNext();
     Pagination<Photo> page = this.pageGen.current;
     // sleep(Duration(seconds: simulatedWait));

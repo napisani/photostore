@@ -4,6 +4,7 @@ import 'package:photostore_flutter/core/repository/media_api_repository.dart';
 import 'package:photostore_flutter/core/repository/media_mobile_repositoryV2.dart';
 import 'package:photostore_flutter/core/service/backup_services.dart';
 import 'package:photostore_flutter/core/service/lockout_service.dart';
+import 'package:photostore_flutter/core/service/server_refinement_service.dart';
 import 'package:photostore_flutter/core/service/tab_service.dart';
 import 'package:photostore_flutter/core/service/window/abstract_window_service.dart';
 
@@ -32,11 +33,14 @@ void setupLocator() {
     locator.registerLazySingleton<AppSettingsService>(
         () => AppSettingsService(),
         dispose: (service) => service.dispose());
-    locator.registerLazySingleton<TabService>(
-            () => TabService(),
+    locator.registerLazySingleton<TabService>(() => TabService(),
         dispose: (service) => service.dispose());
     locator.registerLazySingleton<RefinementButtonService>(
         () => RefinementButtonService(),
+        dispose: (service) => service.dispose());
+
+    locator.registerLazySingleton<ServerRefinementService>(
+        () => ServerRefinementService(),
         dispose: (service) => service.dispose());
     locator.registerLazySingleton<ServerMediaService>(
         () => ServerMediaService(),

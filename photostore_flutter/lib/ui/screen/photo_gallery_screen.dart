@@ -4,8 +4,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/photo_gallery_view_model.dart';
-import 'package:photostore_flutter/ui/widget/loading_widget.dart';
-import 'package:photostore_flutter/ui/widget/screen_error_widget.dart';
+import 'package:photostore_flutter/ui/widget/common_status_widget.dart';
 import 'package:provider/provider.dart';
 
 class PhotoGalleryScreen extends StatelessWidget {
@@ -29,28 +28,7 @@ class _PhotoGalleryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<PhotoGalleryViewModel>(builder: (context, state, child) {
-      if (state.status is UninitializedScreenStatus) {
-        return Center(
-          child: ElevatedButton(
-            child: Text(
-              "Load",
-            ),
-            onPressed: () {
-              state.loadNextPage();
-            },
-          ),
-        );
-      } else if (state.status is ErrorScreenStatus) {
-        return Center(
-            child: ScreenErrorWidget(
-          err: (state.status as ErrorScreenStatus).error,
-          onDismiss: () => state.reset(),
-        ));
-      } else if (state.status is LoadingScreenStatus) {
-        return LoadingWidget(
-            animationController: (state.status as LoadingScreenStatus)
-                .loadingAnimationController);
-      } else if (state.status is SuccessScreenStatus) {
+      if (state.status is SuccessScreenStatus) {
         if (state.photoPage?.items == null || state.photoPage.items.isEmpty) {
           return Center(
               child: Column(
@@ -93,9 +71,13 @@ class _PhotoGalleryScreen extends StatelessWidget {
             // ),
           ),
         );
-      } else {
-        throw Exception("invalid PhotoPageState type");
       }
+
+      return CommonStatusWidget(
+        status: state.status,
+        onInit: () => state.loadNextPage(),
+        onErrorDismiss: () => state.reset(),
+      );
     });
   }
 }

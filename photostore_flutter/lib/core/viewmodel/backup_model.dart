@@ -31,6 +31,7 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
 
   BackupModel() : super() {
     _registerAppSettingsListener();
+    registerTabLifeCycle();
     this.reinit();
   }
 
@@ -175,4 +176,10 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
 
   @override
   TabName getTabName() => TabName.BACKUP;
+
+  @override
+  void onTabActivated() {
+    super.onTabActivated();
+    print('activated backup screen');
+  }
 }

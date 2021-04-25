@@ -1,13 +1,12 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photostore_flutter/core/model/progress_log.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/backup_model.dart';
 import 'package:photostore_flutter/ui/widget/backup_stats_widget.dart';
+import 'package:photostore_flutter/ui/widget/common_status_widget.dart';
 import 'package:photostore_flutter/ui/widget/loading_widget.dart';
 import 'package:photostore_flutter/ui/widget/progress_log_widget.dart';
-import 'package:photostore_flutter/ui/widget/screen_error_widget.dart';
 import 'package:provider/provider.dart';
 
 class PhotoBackupScreen extends StatelessWidget {
@@ -31,7 +30,6 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
     super.initState();
   }
 
-
   String _horizontify(String str) => str.replaceAll(" ", "\n");
 
   Widget _buildBackupLog(BuildContext context, ProgressLog progressLog) {
@@ -48,42 +46,7 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
     //     body: Text('test'));
 
     return Consumer<BackupModel>(builder: (context, state, child) {
-      // final model = Provider.of<BackupModel>(context);
-      if (state == null ||
-          state.status.type == ScreenStatusType.UNINITIALIZED) {
-        return Center(
-            child: ElevatedButton(
-          child: Text(
-            "Load",
-          ),
-          onPressed: () {
-            state.loadBackupStats();
-          },
-        ));
-      } else if (state.status.type == ScreenStatusType.ERROR) {
-        return Center(
-            child: ScreenErrorWidget(
-          err: (state.status as ErrorScreenStatus).error,
-          onDismiss: () => state.reinit(),
-        ));
-      } else if (state.status.type == ScreenStatusType.LOADING) {
-        return Center(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-              LoadingWidget(
-                  animationController: (state.status as LoadingScreenStatus)
-                      .loadingAnimationController,
-                  percent: (state.status as LoadingScreenStatus).percent,
-                  progressText:
-                      (state.status as LoadingScreenStatus).progressText,
-                  onCancel: state.cancelNotifier == null
-                      ? null
-                      : () => state.cancelNotifier?.cancel()),
-              _buildBackupLog(context, state.progressLog)
-            ]));
-      } else if (state.status.type == ScreenStatusType.SUCCESS) {
+      if (state?.status?.type == ScreenStatusType.SUCCESS) {
         return Center(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,15 +99,29 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
                           ),
                         ),
                 ].where((child) => child != null).toList()));
-      } else if (state.status is DisabledScreenStatus) {
-        return Center(
-          child: Text((state.status as DisabledScreenStatus).disabledText),
-        );
-      } else {
-        return Center(
-          child: Text('invalid state type: ${state.status.type}'),
-        );
       }
+
+      return CommonStatusWidget(
+          status: state.status,
+          onInit: () => state.loadBackupStats(),
+          onErrorDismiss: () => state.reinit(),
+          childLoading: (ctx) => Center(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                    LoadingWidget(
+                        animationController:
+                            (state.status as LoadingScreenStatus)
+                                .loadingAnimationController,
+                        percent: (state.status as LoadingScreenStatus).percent,
+                        progressText:
+                            (state.status as LoadingScreenStatus).progressText,
+                        onCancel: state.cancelNotifier == null
+                            ? null
+                            : () => state.cancelNotifier?.cancel()),
+                    _buildBackupLog(context, state.progressLog)
+                  ])));
     });
   }
 }
