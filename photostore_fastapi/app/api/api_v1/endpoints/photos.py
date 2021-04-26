@@ -4,11 +4,13 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 from fastapi import File, UploadFile
+from fastapi.openapi.models import APIKey
 from loguru import logger
 from sqlalchemy.orm import Session
 from starlette.responses import StreamingResponse
 
 from app.api import deps
+from app.api.deps import get_api_key
 from app.exception.photo_exceptions import PhotoExceptions
 from app.obj.photo_sort_attribute import PhotoSortAttribute
 from app.obj.sort_direction import SortDirection
@@ -24,6 +26,7 @@ router = APIRouter()
 
 @router.get("/health", response_model=HealthSchema)
 async def api_get_health(
+        api_key: APIKey = Depends(get_api_key),
         db: Session = Depends(deps.get_async_db)
 ) -> HealthSchema:
     """
@@ -38,6 +41,7 @@ async def api_get_health(
 
 @router.get("/page/{page}", response_model=PaginationSchema[PhotoSchemaFull])
 async def api_get_photos(
+        api_key: APIKey = Depends(get_api_key),
         db: Session = Depends(deps.get_async_db),
         page: int = 1,
         per_page: int = 10,
@@ -54,9 +58,11 @@ async def api_get_photos(
 
 
 @router.post('/upload', response_model=PhotoSchemaFull)
-async def api_upload_photo(db: Session = Depends(deps.get_async_db),
-                           file: UploadFile = File(...),
-                           metadata: UploadFile = File(...)) -> PhotoSchemaFull:
+async def api_upload_photo(
+        api_key: APIKey = Depends(get_api_key),
+        db: Session = Depends(deps.get_async_db),
+        file: UploadFile = File(...),
+        metadata: UploadFile = File(...)) -> PhotoSchemaFull:
     meta = json.load(metadata.file)
     logger.debug(f'metadata: {meta}, file: {file}')
 
@@ -82,7 +88,9 @@ async def api_upload_photo(db: Session = Depends(deps.get_async_db),
 
 
 @router.get('/fullsize/{photo_id}')
-async def api_get_fullsize_image(photo_id: int, db: Session = Depends(deps.get_async_db)):
+async def api_get_fullsize_image(photo_id: int,
+                                 api_key: APIKey = Depends(get_api_key),
+                                 db: Session = Depends(deps.get_async_db)):
     photo = await get_photo(db, photo_id=photo_id)
     logger.debug('view_get_fullsize photo: {}', photo)
     with open(photo.path, 'rb') as f:
@@ -90,7 +98,8 @@ async def api_get_fullsize_image(photo_id: int, db: Session = Depends(deps.get_a
 
 
 @router.get('/thumbnail/{photo_id}')
-async def api_get_thumbnail_image(photo_id: int, db: Session = Depends(deps.get_async_db)):
+async def api_get_thumbnail_image(photo_id: int, db: Session = Depends(deps.get_async_db),
+                                  api_key: APIKey = Depends(get_api_key)):
     photo = await get_photo(db, photo_id=photo_id)
     logger.debug('view_get_fullsize photo: {}', photo)
     with open(photo.thumbnail_path, 'rb') as f:
@@ -98,7 +107,9 @@ async def api_get_thumbnail_image(photo_id: int, db: Session = Depends(deps.get_
 
 
 @router.post('/diff', response_model=List[PhotoDiffResultSchema])
-async def api_do_diff(diff_items: List[PhotoDiffRequestSchema], db: Session = Depends(deps.get_async_db)) \
+async def api_do_diff(diff_items: List[PhotoDiffRequestSchema],
+                      api_key: APIKey = Depends(get_api_key),
+                      db: Session = Depends(deps.get_async_db)) \
         -> List[PhotoDiffResultSchema]:
     result_list = await diff_photos(db=db, diff_reqs=diff_items)
     logger.debug('api_do_diff result_list: {}', result_list)
@@ -106,27 +117,31 @@ async def api_do_diff(diff_items: List[PhotoDiffRequestSchema], db: Session = De
 
 
 @router.get('/latest/{device_id}', response_model=PhotoSchemaFull)
-async def api_get_latest_photo_for_device(device_id: str, db=Depends(deps.get_async_db)) -> PhotoSchemaFull:
+async def api_get_latest_photo_for_device(device_id: str, api_key: APIKey = Depends(get_api_key),
+                                          db=Depends(deps.get_async_db)) -> PhotoSchemaFull:
     photo = await get_latest_photo(db=db, device_id=device_id)
     logger.debug('api_get_latest_photo_for_device photo: {}', photo)
     return photo
 
 
 @router.get('/count/{device_id}', response_model=int)
-async def api_get_photo_count(device_id: str, db=Depends(deps.get_async_db)) -> int:
+async def api_get_photo_count(device_id: str, api_key: APIKey = Depends(get_api_key),
+                              db=Depends(deps.get_async_db)) -> int:
     photo_count = await count_photos(db=db, device_id=device_id)
     logger.debug('api_get_photo_count photo_count: {}', photo_count)
     return photo_count
 
 
 @router.delete('/delete_by_device/{device_id}')
-async def api_delete_photos_by_id(device_id: str, db=Depends(deps.get_async_db)):
+async def api_delete_photos_by_id(device_id: str, api_key: APIKey = Depends(get_api_key),
+                                  db=Depends(deps.get_async_db)):
     await delete_photos_by_device(db=db, device_id=device_id)
     logger.debug('api_delete_photos_by_id  {}')
 
 
 @router.get('/devices', response_model=List[DeviceResultSchema])
-async def api_get_devices(db=Depends(deps.get_async_db)) -> List[DeviceResultSchema]:
+async def api_get_devices(api_key: APIKey = Depends(get_api_key),
+                          db=Depends(deps.get_async_db)) -> List[DeviceResultSchema]:
     logger.debug('inside api_get_devices')
     device_list = await get_devices(db=db)
     logger.debug('api_get_devices photo: {}', device_list)
