@@ -1,7 +1,21 @@
 import secrets
 from typing import Any, Dict, List, Optional, Union
 
-from pydantic import AnyHttpUrl, BaseSettings, PostgresDsn, validator
+from pydantic import AnyHttpUrl, BaseSettings, validator
+
+
+def assemble_db_connection(v: Optional[str], values: Dict[str, Any], is_async=False) -> Any:
+    if isinstance(v, str):
+        return v
+    if values.get('DB_TYPE').upper() == 'POSTGRES':
+        driver = 'postgresql'
+        if is_async:
+            driver += '+asyncpg'
+        return f"{driver}://{values.get('POSTGRES_USER')}:{values.get('POSTGRES_PASSWORD')}@{values.get('POSTGRES_SERVER')}/{values.get('POSTGRES_DB')}"
+    driver = 'sqlite'
+    if is_async:
+        driver += '+aiosqlite'
+    return f"{driver}://{values.get('SQLITE_FILE')}"
 
 
 class Settings(BaseSettings):
@@ -26,23 +40,22 @@ class Settings(BaseSettings):
             return v
         raise ValueError(v)
 
+    DB_TYPE: str
+    SQLITE_FILE: str
     POSTGRES_SERVER: str
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
-    SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
+    DATABASE_URI_ASYNC: Optional[str] = None
+    DATABASE_URI: Optional[str] = None
 
-    @validator("SQLALCHEMY_DATABASE_URI", pre=True)
-    def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
-        if isinstance(v, str):
-            return v
-        return PostgresDsn.build(
-            scheme="postgresql",
-            user=values.get("POSTGRES_USER"),
-            password=values.get("POSTGRES_PASSWORD"),
-            host=values.get("POSTGRES_SERVER"),
-            path=f"/{values.get('POSTGRES_DB') or ''}",
-        )
+    @validator("DATABASE_URI_ASYNC", pre=True)
+    def assemble_db_uri_async(cls, v: Optional[str], values: Dict[str, Any]):
+        return assemble_db_connection(v, values, True)
+
+    @validator("DATABASE_URI", pre=True)
+    def assemble_db_uri(cls, v: Optional[str], values: Dict[str, Any]):
+        return assemble_db_connection(v, values, False)
 
     GOOGLE_PHOTOS_OAUTH_FILE: str
     SAVE_PHOTO_DIR: str

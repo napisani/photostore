@@ -19,42 +19,24 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="adding video support">
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/server_refinement_service.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/common_status_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.docker" beforeDir="false" afterPath="$PROJECT_DIR$/.env.docker" afterDir="false" />
+    <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="adding device filters">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic.ini" beforeDir="false" afterPath="$PROJECT_DIR$/alembic.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/alembic/env.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/versions/.keep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/versions/1aa040bd7f3b_init.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/versions/22a8786b15f2_init.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/versions/26116c934e1e_init.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/versions/6f2cc0df9e40_init.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/versions/7cd0b6d9afe9_init.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/versions/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/versions/d4867f3a4c0a_first_revision.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/versions/e79cb49f47ef_init.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/core/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/crud/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/crud/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/crud/crud_photo.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/crud/crud_photo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/service/image_file_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/image_file_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/service/photo_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/photo_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/tests/service/test_photo_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/service/test_photo_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/media_device.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/media_device.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_api_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_api_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_mobile_repositoryV2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_mobile_repositoryV2.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/mock_media_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/mock_media_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/abstract_photo_page_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/abstract_photo_page_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/server_media_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/server_media_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/refinement_button_sevice.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/refinement_button_sevice.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/tab_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/tab_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/abstract_photo_page_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/abstract_photo_page_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/app_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/app_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/backup_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/backup_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/device_management_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/device_management_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/server_media_page_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/server_media_page_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/server_refinement_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/server_refinement_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/tab_view_model_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/tab_view_model_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/locator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/locator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/device_management_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/device_management_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_backup_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_backup_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_gallery_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_gallery_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_list_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_list_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/server_refinement_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/server_refinement_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/settings_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/settings_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,7 +207,7 @@
       <workItem from="1616540087610" duration="1548000" />
       <workItem from="1616628171079" duration="7296000" />
       <workItem from="1617580956708" duration="35968000" />
-      <workItem from="1618358588472" duration="17811000" />
+      <workItem from="1618358588472" duration="24624000" />
     </task>
     <task id="LOCAL-00001" summary="adding all mobile attirubtes - fixed schemas for Add and Update specific">
       <created>1615777399372</created>
@@ -353,7 +335,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619146082506</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="adding device filters">
+      <created>1619393578903</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1619393578903</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -387,7 +376,8 @@
     <MESSAGE value="working through asyncifying db functions" />
     <MESSAGE value="working async db" />
     <MESSAGE value="adding video support" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding video support" />
+    <MESSAGE value="adding device filters" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding device filters" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1238" y="836" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619388014260">
@@ -427,10 +417,10 @@
       <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="100" y="123" width="1720" height="894" key="DiffContextDialog/0.23.1920.1100@0.23.1920.1100" timestamp="1618190059441" />
-    <state width="1878" height="312" key="GridCell.Tab.0.bottom" timestamp="1619392976679">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.0.bottom" timestamp="1619398705909">
+      <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="312" key="GridCell.Tab.0.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1619390203263" />
+    <state width="1878" height="312" key="GridCell.Tab.0.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705909" />
     <state width="1878" height="312" key="GridCell.Tab.0.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1619392976679" />
     <state width="1878" height="533" key="GridCell.Tab.0.bottom/0.23.1920.1100@0.23.1920.1100" timestamp="1619391287175" />
     <state width="1878" height="533" key="GridCell.Tab.0.bottom/0.23.1920.1102@0.23.1920.1102" timestamp="1618362627856" />
@@ -440,10 +430,10 @@
     <state width="1878" height="370" key="GridCell.Tab.0.bottom/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
     <state width="3220" height="533" key="GridCell.Tab.0.bottom/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
     <state width="2454" height="312" key="GridCell.Tab.0.bottom/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="312" key="GridCell.Tab.0.center" timestamp="1619392976679">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.0.center" timestamp="1619398705908">
+      <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="312" key="GridCell.Tab.0.center/0.23.1920.1095@0.23.1920.1095" timestamp="1619390203262" />
+    <state width="1878" height="312" key="GridCell.Tab.0.center/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705908" />
     <state width="1878" height="312" key="GridCell.Tab.0.center/0.23.1920.1098@0.23.1920.1098" timestamp="1619392976679" />
     <state width="1878" height="533" key="GridCell.Tab.0.center/0.23.1920.1100@0.23.1920.1100" timestamp="1619391287175" />
     <state width="1878" height="533" key="GridCell.Tab.0.center/0.23.1920.1102@0.23.1920.1102" timestamp="1618362627855" />
@@ -453,10 +443,10 @@
     <state width="1878" height="370" key="GridCell.Tab.0.center/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="3220" height="533" key="GridCell.Tab.0.center/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
     <state width="2454" height="312" key="GridCell.Tab.0.center/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="312" key="GridCell.Tab.0.left" timestamp="1619392976678">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.0.left" timestamp="1619398705908">
+      <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="312" key="GridCell.Tab.0.left/0.23.1920.1095@0.23.1920.1095" timestamp="1619390203262" />
+    <state width="1878" height="312" key="GridCell.Tab.0.left/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705908" />
     <state width="1878" height="312" key="GridCell.Tab.0.left/0.23.1920.1098@0.23.1920.1098" timestamp="1619392976678" />
     <state width="1878" height="533" key="GridCell.Tab.0.left/0.23.1920.1100@0.23.1920.1100" timestamp="1619391287174" />
     <state width="1878" height="533" key="GridCell.Tab.0.left/0.23.1920.1102@0.23.1920.1102" timestamp="1618362627855" />
@@ -466,10 +456,10 @@
     <state width="1878" height="370" key="GridCell.Tab.0.left/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="3220" height="533" key="GridCell.Tab.0.left/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782627" />
     <state width="2454" height="312" key="GridCell.Tab.0.left/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015876" />
-    <state width="1878" height="312" key="GridCell.Tab.0.right" timestamp="1619392976679">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.0.right" timestamp="1619398705909">
+      <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="312" key="GridCell.Tab.0.right/0.23.1920.1095@0.23.1920.1095" timestamp="1619390203263" />
+    <state width="1878" height="312" key="GridCell.Tab.0.right/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705909" />
     <state width="1878" height="312" key="GridCell.Tab.0.right/0.23.1920.1098@0.23.1920.1098" timestamp="1619392976679" />
     <state width="1878" height="533" key="GridCell.Tab.0.right/0.23.1920.1100@0.23.1920.1100" timestamp="1619391287175" />
     <state width="1878" height="533" key="GridCell.Tab.0.right/0.23.1920.1102@0.23.1920.1102" timestamp="1618362627855" />
@@ -479,10 +469,10 @@
     <state width="1878" height="370" key="GridCell.Tab.0.right/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="3220" height="533" key="GridCell.Tab.0.right/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
     <state width="2454" height="312" key="GridCell.Tab.0.right/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="312" key="GridCell.Tab.1.bottom" timestamp="1619393065076">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.1.bottom" timestamp="1619398705910">
+      <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="312" key="GridCell.Tab.1.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1619390207347" />
+    <state width="1878" height="312" key="GridCell.Tab.1.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705910" />
     <state width="1878" height="312" key="GridCell.Tab.1.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1619393065076" />
     <state width="1878" height="312" key="GridCell.Tab.1.bottom/0.23.1920.1100@0.23.1920.1100" timestamp="1619391127877" />
     <state width="1876" height="370" key="GridCell.Tab.1.bottom/0.23.1920.1102@0.23.1920.1102" timestamp="1615943867861" />
@@ -491,10 +481,10 @@
     <state width="1878" height="370" key="GridCell.Tab.1.bottom/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664747" />
     <state width="2471" height="624" key="GridCell.Tab.1.bottom/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150038" />
     <state width="2454" height="312" key="GridCell.Tab.1.bottom/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019639" />
-    <state width="1878" height="312" key="GridCell.Tab.1.center" timestamp="1619393065075">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.1.center" timestamp="1619398705909">
+      <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="312" key="GridCell.Tab.1.center/0.23.1920.1095@0.23.1920.1095" timestamp="1619390207346" />
+    <state width="1878" height="312" key="GridCell.Tab.1.center/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705909" />
     <state width="1878" height="312" key="GridCell.Tab.1.center/0.23.1920.1098@0.23.1920.1098" timestamp="1619393065075" />
     <state width="1878" height="312" key="GridCell.Tab.1.center/0.23.1920.1100@0.23.1920.1100" timestamp="1619391127876" />
     <state width="1876" height="370" key="GridCell.Tab.1.center/0.23.1920.1102@0.23.1920.1102" timestamp="1615943867860" />
@@ -503,10 +493,10 @@
     <state width="1878" height="370" key="GridCell.Tab.1.center/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
     <state width="2471" height="624" key="GridCell.Tab.1.center/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150037" />
     <state width="2454" height="312" key="GridCell.Tab.1.center/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019638" />
-    <state width="1878" height="312" key="GridCell.Tab.1.left" timestamp="1619393065074">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.1.left" timestamp="1619398705909">
+      <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="312" key="GridCell.Tab.1.left/0.23.1920.1095@0.23.1920.1095" timestamp="1619390207345" />
+    <state width="1878" height="312" key="GridCell.Tab.1.left/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705909" />
     <state width="1878" height="312" key="GridCell.Tab.1.left/0.23.1920.1098@0.23.1920.1098" timestamp="1619393065074" />
     <state width="1878" height="312" key="GridCell.Tab.1.left/0.23.1920.1100@0.23.1920.1100" timestamp="1619391127876" />
     <state width="1876" height="370" key="GridCell.Tab.1.left/0.23.1920.1102@0.23.1920.1102" timestamp="1615943867860" />
@@ -515,10 +505,10 @@
     <state width="1878" height="370" key="GridCell.Tab.1.left/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
     <state width="2471" height="624" key="GridCell.Tab.1.left/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150036" />
     <state width="2454" height="312" key="GridCell.Tab.1.left/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019636" />
-    <state width="1878" height="312" key="GridCell.Tab.1.right" timestamp="1619393065075">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.1.right" timestamp="1619398705910">
+      <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="312" key="GridCell.Tab.1.right/0.23.1920.1095@0.23.1920.1095" timestamp="1619390207346" />
+    <state width="1878" height="312" key="GridCell.Tab.1.right/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705910" />
     <state width="1878" height="312" key="GridCell.Tab.1.right/0.23.1920.1098@0.23.1920.1098" timestamp="1619393065075" />
     <state width="1878" height="312" key="GridCell.Tab.1.right/0.23.1920.1100@0.23.1920.1100" timestamp="1619391127876" />
     <state width="1876" height="370" key="GridCell.Tab.1.right/0.23.1920.1102@0.23.1920.1102" timestamp="1615943867861" />
@@ -531,9 +521,10 @@
       <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="461" y="209" key="SettingsEditor/0.23.1920.1100@0.23.1920.1100" timestamp="1615934384093" />
-    <state x="690" y="417" key="Vcs.Push.Dialog.v2" timestamp="1619146086582">
-      <screen x="0" y="23" width="1920" height="1100" />
+    <state x="690" y="415" key="Vcs.Push.Dialog.v2" timestamp="1619393581116">
+      <screen x="0" y="23" width="1920" height="1095" />
     </state>
+    <state x="690" y="415" key="Vcs.Push.Dialog.v2/0.23.1920.1095@0.23.1920.1095" timestamp="1619393581116" />
     <state x="690" y="416" key="Vcs.Push.Dialog.v2/0.23.1920.1098@0.23.1920.1098" timestamp="1618885556724" />
     <state x="690" y="417" key="Vcs.Push.Dialog.v2/0.23.1920.1100@0.23.1920.1100" timestamp="1619146086582" />
     <state x="690" y="418" key="Vcs.Push.Dialog.v2/0.23.1920.1102@0.23.1920.1102" timestamp="1617922981865" />
@@ -545,11 +536,11 @@
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
     <state width="480" height="547" key="XDebugger.FullValuePopup/0.23.1920.1095@0.23.1920.1095" timestamp="1619390057312" />
-    <state x="744" y="430" width="574" height="490" key="find.popup" timestamp="1619393426754">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state x="744" y="431" width="574" height="491" key="find.popup" timestamp="1619399675766">
+      <screen x="0" y="23" width="1920" height="1098" />
     </state>
-    <state x="744" y="430" width="574" height="490" key="find.popup/0.23.1920.1095@0.23.1920.1095" timestamp="1619393426754" />
-    <state x="744" y="431" width="574" height="491" key="find.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1617757713897" />
+    <state x="744" y="430" width="574" height="490" key="find.popup/0.23.1920.1095@0.23.1920.1095" timestamp="1619398722068" />
+    <state x="744" y="431" width="574" height="491" key="find.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1619399675766" />
     <state x="744" y="432" width="574" height="490" key="find.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1618269234412" />
     <state x="744" y="433" width="574" height="491" key="find.popup/0.23.1920.1102@0.23.1920.1102" timestamp="1617753385181" />
     <state x="744" y="433" width="574" height="492" key="find.popup/0.23.1920.1104@0.23.1920.1104" timestamp="1618189037606" />
@@ -560,11 +551,11 @@
     </state>
     <state width="300" height="230" key="javadoc.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1617584320902" />
     <state width="600" height="428" key="javadoc.popup/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1615778886447" />
-    <state x="1030" y="266" width="670" height="675" key="search.everywhere.popup" timestamp="1619393369693">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state x="1030" y="267" width="670" height="676" key="search.everywhere.popup" timestamp="1619395955709">
+      <screen x="0" y="23" width="1920" height="1098" />
     </state>
-    <state x="1030" y="266" width="670" height="675" key="search.everywhere.popup/0.23.1920.1095@0.23.1920.1095" timestamp="1619393369693" />
-    <state x="1030" y="267" width="670" height="676" key="search.everywhere.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1619392131926" />
+    <state x="1030" y="266" width="670" height="675" key="search.everywhere.popup/0.23.1920.1095@0.23.1920.1095" timestamp="1619393996506" />
+    <state x="1030" y="267" width="670" height="676" key="search.everywhere.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1619395955709" />
     <state x="1030" y="267" width="670" height="678" key="search.everywhere.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1619144069349" />
     <state x="1030" y="268" width="670" height="679" key="search.everywhere.popup/0.23.1920.1102@0.23.1920.1102" timestamp="1617921059982" />
     <state x="2060" y="479" width="1340" height="1265" key="search.everywhere.popup/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618271831369" />

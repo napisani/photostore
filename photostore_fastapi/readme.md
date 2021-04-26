@@ -7,3 +7,10 @@ PYTHONPATH=`pwd` alembic upgrade head
 PYTHONPATH=`pwd` alembic revision --autogenerate -m "init"
 
 PYTHONPATH=`pwd` pytest  app/tests -s
+
+
+
+
+
+ PYTHONPATH=`pwd` alembic revision --autogenerate -m "init" --version-path alembic/versions_sqlit
+ e
