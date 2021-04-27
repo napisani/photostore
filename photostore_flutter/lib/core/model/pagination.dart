@@ -6,6 +6,8 @@ class Pagination<T> extends Equatable {
   final int total;
   final int page;
 
+  bool isEmpty()=> items == null || items.length  == 0;
+
   int get remainingPages => ((total - (page * perPage)) / perPage).ceil();
 
   bool get hasMorePages => this.page == 0 || remainingPages > 0;

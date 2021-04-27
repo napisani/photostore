@@ -16,9 +16,7 @@ class PhotoGalleryViewModel extends AbstractPhotoPageModel {
         super(
             photoPageService: mediaSource == "MOBILE"
                 ? locator<MobileMediaService>()
-                : locator<ServerMediaService>()) {
-    this.initialize();
-  }
+                : locator<ServerMediaService>());
 
   int nextPageNumber() {
     return (photoPage?.page ?? 0) + 1;
@@ -34,8 +32,9 @@ class PhotoGalleryViewModel extends AbstractPhotoPageModel {
       loadNextPage();
     }
   }
-  void initialize() {
-    super.initialize();
+  @override
+  void initializeIfEmpty() {
+    super.initializeIfEmpty();
     if (this.photoPageService.hasPhotosLoaded) {
       this.screenStatus = ScreenStatus.success();
       this.notifyListeners();

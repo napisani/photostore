@@ -3,6 +3,7 @@ import 'package:photostore_flutter/core/model/app_settings.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
 import 'package:photostore_flutter/locator.dart';
 
+const ACCESS_TOKEN_KEY = "access_token";
 class HTTPService {
   Dio _httpClient;
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
@@ -29,11 +30,11 @@ class HTTPService {
   Dio getHttpClient() => _httpClient;
 
   BaseOptions _getBaseOptions(AppSettings appSettings) => BaseOptions(
-        connectTimeout: appSettings.connectTimeout * 1000,
-        //seconds to milliseconds
-        receiveTimeout:
-            appSettings.receiveTimeout * 1000, //seconds to milliseconds
-      );
+      connectTimeout: appSettings.connectTimeout * 1000,
+      //seconds to milliseconds
+      receiveTimeout:
+          appSettings.receiveTimeout * 1000, //seconds to milliseconds
+      headers: {ACCESS_TOKEN_KEY: appSettings.apiKey});
 
   dispose() {
     try {

@@ -28,13 +28,17 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
     _registerAppSettingsListener();
     _registerCurrentPhotoPageListener();
     _registerEventListener();
-    this.initialize();
+    this.initializeIfEmpty();
   }
 
   void _registerAppSettingsListener() {
-    addSubscription(this.appSettingsService.appSettingsAsStream.listen((event) {
-      this.initialize();
-      // this.reset();
+    addSubscription(this
+        .appSettingsService
+        .appSettingsAsStream
+        .skip(1) //skip first because you dont need to reset
+        // unless the app settings CHANGES (not including initial value)
+        .listen((event) {
+      this.reset();
     }));
   }
 
@@ -103,8 +107,11 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
   @protected
   bool isScreenEnabled() => this.appSettingsService.currentAppSettings != null;
 
-  void initialize() {
-    this.reset();
+  @protected
+  void initializeIfEmpty() {
+    if (!this.photoPageService.hasPhotosLoaded) {
+      reset();
+    }
   }
 
   void loadPage(int pageNumber) {

@@ -33,6 +33,7 @@ class _ThumbnailWidgetState extends State<ThumbnailWidget> {
             // print('grid tile build - returning image.network');
             return Image.network(
               (snapshot.data as MediaURLContents).url,
+              headers: (snapshot.data as MediaURLContents).headers,
               loadingBuilder: (BuildContext context, Widget child,
                   ImageChunkEvent loadingProgress) {
                 if (loadingProgress == null) return child;

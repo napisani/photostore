@@ -40,7 +40,7 @@ class Photo extends AgnosticMedia {
       latitude: latitude,
       filename: filename);
 
-  factory Photo.fromJson(Map<String, dynamic> item, String url) {
+  factory Photo.fromJson(Map<String, dynamic> item, String url, Map<String, String> headers) {
     return Photo(
         id: item['id'].toString(),
         checksum: item['checksum'],
@@ -55,9 +55,9 @@ class Photo extends AgnosticMedia {
         creationDate: DateTime.parse(item['creation_date']),
         modifiedDate: DateTime.parse(item['modified_date']),
         getThumbnailProviderOfSize: (double width, double height) =>
-            NetworkImage(url),
-        thumbnailProvider:  NetworkImage(url),
-        getThumbnail: ()=>Future.value(MediaContents.url(url)),
+            NetworkImage(url, headers: headers),
+        thumbnailProvider:  NetworkImage(url, headers: headers),
+        getThumbnail: ()=>Future.value(MediaContents.url(url, headers: headers)),
         mimeType: item['mime_type']);
   }
 

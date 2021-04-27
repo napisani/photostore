@@ -85,10 +85,7 @@ class __PhotoStoreAppState extends State<_PhotoStoreApp> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SettingsScreen()),
-                          ).then((_) {
-                            print('resetting tab items');
-                            state.resetTabItems();
-                          });
+                          );
                         }
                       },
                       child: Icon(Icons.settings),

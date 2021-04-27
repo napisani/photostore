@@ -19,5 +19,7 @@ class MobileMediaPageModel extends AbstractPhotoPageModel
   void onTabActivated() {
     super.onTabActivated();
     print('activated mobile');
+    initializeIfEmpty();
+
   }
 }

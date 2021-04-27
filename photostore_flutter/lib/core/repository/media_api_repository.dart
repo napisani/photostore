@@ -166,6 +166,6 @@ class MediaAPIRepository extends MediaRepository<Photo> {
 
   Photo mapResponseToPhoto(Map<String, dynamic> item) {
     final String url = "${_getBaseURL()}/thumbnail/${item['id']}";
-    return Photo.fromJson(item, url);
+    return Photo.fromJson(item, url, {ACCESS_TOKEN_KEY: settings.apiKey});
   }
 }

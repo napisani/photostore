@@ -21,6 +21,11 @@ class BackupService {
 
   BackupService();
 
+  void _resetLocalPages() {
+    _serverMediaService.reset();
+    _mobileMediaService.reset();
+  }
+
   Future<BackupStats> getPhotoBackupStats() async {
     Photo photo = await this._serverMediaService.getLastBackedUpPhoto();
     int backupCount = await this._serverMediaService.getPhotoCount();
@@ -35,6 +40,7 @@ class BackupService {
 
   Future<List<MobilePhoto>> getBackupQueueUsingDate(DateTime lastBackedUpDate,
       {canceller: CancelNotifier}) async {
+    this._resetLocalPages();
     Pagination<AgnosticMedia> queuedPhotos = Pagination<AgnosticMedia>();
     while (queuedPhotos.hasMorePages) {
       if (canceller != null && canceller.hasBeenCancelled) {
@@ -63,6 +69,8 @@ class BackupService {
   Future<List<MobilePhoto>> getFullBackupQueue(
       {canceller: CancelNotifier}) async {
     List<AgnosticMedia> queuedPhotos = [];
+    this._resetLocalPages();
+
     // Pagination<MobilePhoto> queuedPhotos = Pagination<MobilePhoto>();
     for (int page = 1; page > 0; page++) {
       if (canceller != null && canceller.hasBeenCancelled) {

@@ -34,6 +34,8 @@ class ServerMediaPageModel extends AbstractPhotoPageModel
   void onTabActivated() {
     super.onTabActivated();
     print('activated server');
+    initializeIfEmpty();
+
     _refinementButtonService.setRefinementOnPressedFunction((context) {
       Navigator.push(
           context,
