@@ -1,5 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:photostore_flutter/core/model/photo_diff_request.dart';
+import 'package:photostore_flutter/core/utils/api_key_utils.dart';
 
 import 'agnostic_media.dart';
 import 'media_contents.dart';
@@ -40,7 +41,16 @@ class Photo extends AgnosticMedia {
       latitude: latitude,
       filename: filename);
 
-  factory Photo.fromJson(Map<String, dynamic> item, String url, Map<String, String> headers) {
+  factory Photo.fromJson(Map<String, dynamic> item, String url,
+      Map<String, String> headers) {
+    if (kIsWeb) {
+      // current required for photos to load on flutter web platform
+      // photos currently will not be requested with headers
+      // (probably using <img> tags under the hood)
+      url = APIKeyUtils.appendAPIKeyToURL(url, headers);
+      headers.remove(ACCESS_TOKEN_KEY);
+    }
+
     return Photo(
         id: item['id'].toString(),
         checksum: item['checksum'],
@@ -56,11 +66,11 @@ class Photo extends AgnosticMedia {
         modifiedDate: DateTime.parse(item['modified_date']),
         getThumbnailProviderOfSize: (double width, double height) =>
             NetworkImage(url, headers: headers),
-        thumbnailProvider:  NetworkImage(url, headers: headers),
-        getThumbnail: ()=>Future.value(MediaContents.url(url, headers: headers)),
+        thumbnailProvider: NetworkImage(url, headers: headers),
+        getThumbnail: () =>
+            Future.value(MediaContents.url(url, headers: headers)),
         mimeType: item['mime_type']);
   }
-
 
 
   @override

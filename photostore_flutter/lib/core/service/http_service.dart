@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:photostore_flutter/core/model/app_settings.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
+import 'package:photostore_flutter/core/utils/api_key_utils.dart';
 import 'package:photostore_flutter/locator.dart';
 
-const ACCESS_TOKEN_KEY = "access_token";
 class HTTPService {
   Dio _httpClient;
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
