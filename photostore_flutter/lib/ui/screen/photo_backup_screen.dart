@@ -119,7 +119,15 @@ class _PhotoBackupScreenState extends State<_PhotoBackupScreen> {
                             (state.status as LoadingScreenStatus).progressText,
                         onCancel: state.cancelNotifier == null
                             ? null
-                            : () => state.cancelNotifier?.cancel()),
+                            : () => state.cancelNotifier?.cancel(),
+                        onPause: state.pauseNotifier == null
+                            ? null
+                            : () => state.pauseNotifier?.pause(),
+                        onResume: state.pauseNotifier == null
+                            ? null
+                            : () => state.pauseNotifier?.resume(),
+                        isPaused: state.pauseNotifier != null &&
+                            state.pauseNotifier.hasBeenPaused),
                     _buildBackupLog(context, state.progressLog)
                   ])));
     });

@@ -3,6 +3,7 @@ import 'package:photostore_flutter/core/model/backup_stats.dart';
 import 'package:photostore_flutter/core/model/cancel_notifier.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
+import 'package:photostore_flutter/core/model/pause_notifier.dart';
 import 'package:photostore_flutter/core/model/photo.dart';
 import 'package:photostore_flutter/core/model/photo_diff_result.dart';
 import 'package:photostore_flutter/core/model/progress_log.dart';
@@ -101,13 +102,15 @@ class BackupService {
     ProgressStats stats = ProgressStats(
         id: media.id,
         status: "Backup in Progress...",
-        details: "Currently backing up photo ID: ${media.id} at ${DateTime.now()}");
+        details:
+            "Currently backing up photo ID: ${media.id} at ${DateTime.now()}");
     return stats;
   }
 
   Future<void> doBackup(List<MobilePhoto> queueIn,
       {BackupProgressHandler progressNotify,
       CancelNotifier canceller,
+      PauseNotifier pauseNotifier,
       ProgressLog progressLog}) async {
     final BackupProgressHandler progressNotifySafe = (orig, newCnt) {
       if (progressNotify != null) {
@@ -135,6 +138,10 @@ class BackupService {
         if (canceller != null && canceller.hasBeenCancelled) {
           print('cancelled doBackup');
           return;
+        }
+        while (pauseNotifier != null && pauseNotifier.hasBeenPaused) {
+          print('paused sleeping for 2 seconds...');
+          await new Future.delayed(const Duration(seconds: 2));
         }
         await _backupBatch(batch, progressLog: progressLog);
         uploadCount += batch.length;
@@ -166,7 +173,8 @@ class BackupService {
 
         stats.forEach((stat) {
           stat.updateStatus("DONE",
-              details: "Finished backing up photo ID: ${stat.id} at ${DateTime.now()}");
+              details:
+                  "Finished backing up photo ID: ${stat.id} at ${DateTime.now()}");
         });
       } catch (e, s) {
         print('an error occurred uploading photo e: $e stack: $s ');

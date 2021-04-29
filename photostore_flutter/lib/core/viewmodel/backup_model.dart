@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:photostore_flutter/core/model/backup_stats.dart';
 import 'package:photostore_flutter/core/model/cancel_notifier.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
+import 'package:photostore_flutter/core/model/pause_notifier.dart';
 import 'package:photostore_flutter/core/model/progress_log.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/model/tab_navigation_item.dart';
@@ -23,6 +24,7 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
   final ProgressLog progressLog = new ProgressLog();
   bool backupFinished = false;
   CancelNotifier cancelNotifier;
+  PauseNotifier pauseNotifier;
 
   final BackupService _backupService = locator<BackupService>();
   final MobileMediaService _mobileMediaService = locator<MobileMediaService>();
@@ -141,8 +143,11 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
     notifyListeners();
     try {
       this.cancelNotifier = CancelNotifier();
+      this.pauseNotifier = PauseNotifier();
       await _backupService.doBackup(queuedPhotos,
-          canceller: cancelNotifier, progressLog: this.progressLog,
+          canceller: cancelNotifier,
+          pauseNotifier: pauseNotifier,
+          progressLog: this.progressLog,
           progressNotify: (int orig, int newCnt) {
         print('inside progressNotify');
         final String progressText = 'Backed up ${orig - newCnt} of $orig total';
@@ -162,6 +167,7 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
       print('[BackupModel] got error in doBackup ${err.toString()}, stack: $s');
       this.screenStatus = ScreenStatus.error(err.toString());
       this.cancelNotifier = null;
+      this.pauseNotifier = null;
     }
     _lockoutService.clearLockout();
     Wakelock.toggle(enable: false);

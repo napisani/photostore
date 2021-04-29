@@ -44,6 +44,8 @@ async def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull
     photo_full.thumbnail_path = create_thumbnail(filename=photo_full.filename,
                                                  path=photo_full.path,
                                                  media_type=photo_full.media_type)
+    photo_full.file_size = os.path.getsize(photo_full.path) / 1024
+    photo_full.thumbnail_file_size = os.path.getsize(photo_full.thumbnail_path) / 1024
     mime = magic.Magic(mime=True)
     photo_full.mime_type = mime.from_file(photo_full.path)
     try:
@@ -155,4 +157,8 @@ async def count_photos(db: Session, device_id: str) -> int:
 async def get_devices(db: Session) -> List[DeviceResultSchema]:
     devices = await PhotoRepo.get_devices(db)
     logger.info(devices)
-    return devices;
+    logger.debug('get_devices photo: {}', devices)
+    results = [DeviceResultSchema(device_id=device_id, count=cnt, file_size_total=size_total,
+                                  thumbnail_file_size_total=thumb_total) for device_id, cnt, size_total, thumb_total in
+               devices]
+    return results

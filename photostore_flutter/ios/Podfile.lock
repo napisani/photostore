@@ -6,6 +6,7 @@ PODS:
     - Flutter
   - photo_manager (0.0.1):
     - Flutter
+    - FlutterMacOS
   - shared_preferences (0.0.1):
     - Flutter
   - wakelock (0.0.1):
@@ -37,7 +38,7 @@ SPEC CHECKSUMS:
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   photo_gallery: 9f95e57747cd22c10676ece3660d1ffe6c603ee5
-  photo_manager: f7c619c2cc8c2adb8d85c63363babac477de9c67
+  photo_manager: a8db3597a3b44e17ecb331fa099731c99b849496
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 

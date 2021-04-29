@@ -34,10 +34,18 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     final response = await _httpService
         .getHttpClient()
         .delete("${_getBaseURL()}/delete_by_device/$deviceId");
+    _checkForCorrectAuth(response);
     if (response.statusCode != 200) {
       final Exception ex = Exception('error deleting photos by device id');
       print("MediaAPIRepository.deletePhotosByDeviceID $ex");
       throw ex;
+    }
+  }
+
+  void _checkForCorrectAuth(Response response) {
+    if (response.statusCode == 403 || response.statusCode == 401) {
+      throw Exception(
+          "The server denied access, please check your API Key settings.");
     }
   }
 
@@ -74,16 +82,23 @@ class MediaAPIRepository extends MediaRepository<Photo> {
       "direction": "desc",
       ...(filters != null ? filters : {})
     });
+
+    _checkForCorrectAuth(response);
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = response.data;
-      print(data);
-      return Pagination<Photo>(
-          page: data['page'],
-          perPage: data['per_page'],
-          total: data['total'],
-          items: (data['items'] as List<dynamic>)
-              .map((item) => mapResponseToPhoto(item))
-              .toList());
+
+      try {
+        return Pagination<Photo>(
+            page: data['page'],
+            perPage: data['per_page'],
+            total: data['total'],
+            items: (data['items'] as List<dynamic>)
+                .map((item) => mapResponseToPhoto(item))
+                .toList());
+      } catch (ex, s) {
+        print("MediaAPIRepository.getPhotosByPage - ex: $ex, stack: $s ");
+        throw Exception('Failed to parse getPhotosByPage response');
+      }
     } else {
       final Exception ex = Exception('error fetching photos');
       print("MediaAPIRepository.getPhotosByPage $ex");
@@ -95,14 +110,20 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     print("MediaAPIRepository getLastBackedUpPhoto baseUrl: ${_getBaseURL()}");
     final String url = "${_getBaseURL()}/latest/${settings.deviceID}";
     final response = await _httpService.getHttpClient().get(url);
+    _checkForCorrectAuth(response);
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = response.data;
 
-      return data != null && data.containsKey('id')
-          ? mapResponseToPhoto(data)
-          :
-          //no photos currently backed up
-          Photo(id: null, creationDate: DateTime.utc(1100, 1, 1));
+      try {
+        return data != null && data.containsKey('id')
+            ? mapResponseToPhoto(data)
+            :
+            //no photos currently backed up
+            Photo(id: null, creationDate: DateTime.utc(1100, 1, 1));
+      } catch (ex, s) {
+        print("MediaAPIRepository.getLastBackedUpPhoto - ex: $ex, stack: $s ");
+        throw Exception('Failed to parse getLastBackedUpPhoto response');
+      }
     } else {
       final Exception ex = Exception('error getting latest backed up photo');
       print("MediaAPIRepository.getLastBackedUpPhoto $ex");
@@ -114,6 +135,7 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     print("MediaAPIRepository getPhotoCount baseUrl: ${_getBaseURL()}");
     final String url = "${_getBaseURL()}/count/${settings.deviceID}";
     final response = await _httpService.getHttpClient().get(url);
+    _checkForCorrectAuth(response);
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -128,15 +150,22 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     final String url = "${_getBaseURL()}/devices";
 
     final response = await _httpService.getHttpClient().get(url);
+    _checkForCorrectAuth(response);
     if (response.statusCode == 200) {
       final List<dynamic> data = response.data;
-      return data
-          .map<MediaDevice>((jsonData) => MediaDevice.fromJson(jsonData))
-          .toList();
+      try {
+        return data
+            .map<MediaDevice>((jsonData) => MediaDevice.fromJson(jsonData))
+            .toList();
+      } catch (ex, s) {
+        print("MediaAPIRepository.getDevices - ex: $ex, stack: $s ");
+        throw Exception('Failed to parse getDevices response');
+      }
     } else {
-      final Exception ex =
-          Exception('error getting the list of media devices from the server');
-      print("MediaAPIRepository.getDevices $ex");
+      final Exception ex = Exception(
+          'error getting the list of media devices from the server statusCode: ${response.statusCode}, message: ${response.statusMessage}');
+      print(
+          "MediaAPIRepository.getDevices - statusCode: ${response.statusCode}, message: ${response.statusMessage}");
       throw ex;
     }
   }
@@ -151,12 +180,19 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     final response = await _httpService
         .getHttpClient()
         .post(url, data: json.encoder.convert(reqs));
+    _checkForCorrectAuth(response);
     if (response.statusCode == 200) {
       final List<dynamic> data = response.data;
-      return data
-          .map<PhotoDiffResult>(
-              (jsonData) => PhotoDiffResult.fromJson(jsonData))
-          .toList();
+
+      try {
+        return data
+            .map<PhotoDiffResult>(
+                (jsonData) => PhotoDiffResult.fromJson(jsonData))
+            .toList();
+      } catch (ex, s) {
+        print("MediaAPIRepository.diffPhotos - ex: $ex, stack: $s ");
+        throw Exception('Failed to parse diffPhotos response');
+      }
     } else {
       final Exception ex = Exception(
           'error getting photo differences between the mobile device and the server');
@@ -166,7 +202,9 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   }
 
   Photo mapResponseToPhoto(Map<String, dynamic> item) {
-    final String url = "${_getBaseURL()}/thumbnail/${item['id']}";
-    return Photo.fromJson(item, url, {ACCESS_TOKEN_KEY: settings.apiKey});
+    final String thumbnailUrl = "${_getBaseURL()}/thumbnail/${item['id']}";
+    final String fullSizeUrl = "${_getBaseURL()}/fullsize/${item['id']}";
+    return Photo.fromJson(
+        item, thumbnailUrl, fullSizeUrl, {ACCESS_TOKEN_KEY: settings.apiKey});
   }
 }

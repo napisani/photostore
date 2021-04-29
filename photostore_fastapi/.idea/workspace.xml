@@ -20,11 +20,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="bug fixes">
+      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/pause_notifier.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/flutter_service_worker.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/flutter_service_worker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/main.dart.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/main.dart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/buildWeb.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/buildWeb.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/items.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/login.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/users.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/crud/crud_photo.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/crud/crud_photo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/photo_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/photo_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/photo_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/photo_schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/service/photo_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/photo_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/tests/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/tests/service/test_photo_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/service/test_photo_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_api_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_api_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/backup_services.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/backup_services.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/window/web_window_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/window/web_window_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/backup_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/backup_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_backup_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_backup_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_gallery_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/screen/photo_gallery_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/loading_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/loading_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/photo_grid_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/photo_grid_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/thumbnail_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/thumbnail_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +93,7 @@
       <recent name="$PROJECT_DIR$/app/service" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python tests.pytest for test_photo_service.TestPhotoService.test_add_photo">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="photostore_fastapi" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -93,6 +114,23 @@
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_photo_service.TestPhotoService.test_add_photo" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="photostore_fastapi" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_photo_service.TestPhotoService.test_add_photo&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="pytest for test_photo_service.TestPhotoService.test_add_photos_and_get_photos_by_device_id" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
@@ -146,37 +184,20 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_video_file_helper.TestVideoFileHelper.test_get_thumbnail_frame_from_video" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="photostore_fastapi" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_parameters" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_video_file_helper.TestVideoFileHelper.test_get_thumbnail_frame_from_video&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.main" />
-      <item itemvalue="Python tests.pytest for test_video_file_helper.TestVideoFileHelper.test_get_thumbnail_frame_from_video" />
       <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_allowed_filename" />
       <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_delete_photos_by_device" />
       <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_add_photos_and_get_photos_by_device_id" />
+      <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_add_photo" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_add_photo" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_add_photos_and_get_photos_by_device_id" />
         <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_delete_photos_by_device" />
         <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_allowed_filename" />
-        <item itemvalue="Python tests.pytest for test_video_file_helper.TestVideoFileHelper.test_get_thumbnail_frame_from_video" />
       </list>
     </recent_temporary>
   </component>
@@ -196,7 +217,7 @@
       <workItem from="1616628171079" duration="7296000" />
       <workItem from="1617580956708" duration="35968000" />
       <workItem from="1618358588472" duration="27564000" />
-      <workItem from="1619483789404" duration="2375000" />
+      <workItem from="1619483789404" duration="6099000" />
     </task>
     <task id="LOCAL-00001" summary="adding all mobile attirubtes - fixed schemas for Add and Update specific">
       <created>1615777399372</created>
@@ -359,7 +380,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619486647947</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="bug fixes">
+      <created>1619656408456</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1619656408456</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -399,13 +427,13 @@
     <option name="LAST_COMMIT_MESSAGE" value="bug fixes" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1238" y="836" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619388014260">
-      <screen x="0" y="23" width="3840" height="2054" />
+    <state x="619" y="449" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619665347049">
+      <screen x="0" y="23" width="1920" height="1102" />
     </state>
     <state x="447" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1095@0.23.1920.1095" timestamp="1615253853204" />
     <state x="619" y="445" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1098@0.23.1920.1098" timestamp="1617757767867" />
     <state x="619" y="446" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1100@0.23.1920.1100" timestamp="1617761881009" />
-    <state x="619" y="449" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1102@0.23.1920.1102" timestamp="1618270331376" />
+    <state x="619" y="449" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1102@0.23.1920.1102" timestamp="1619665347049" />
     <state x="619" y="451" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1104@0.23.1920.1104" timestamp="1618281895957" />
     <state x="619" y="448" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1106@0.23.1920.1106" timestamp="1615944393040" />
     <state x="619" y="449" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1109@0.23.1920.1109" timestamp="1615946388474" />
@@ -421,13 +449,13 @@
     </state>
     <state x="797" y="415" key="#com.intellij.ide.util.MemberChooser/0.23.1920.1102@0.23.1920.1102" timestamp="1618194209103" />
     <state x="1593" y="754" key="#com.intellij.ide.util.MemberChooser/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1615776631627" />
-    <state width="1312" height="250" key="DebuggerActiveHint" timestamp="1619393109971">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1276" height="252" key="DebuggerActiveHint" timestamp="1619665374112">
+      <screen x="0" y="23" width="1920" height="1102" />
     </state>
     <state width="1131" height="250" key="DebuggerActiveHint/0.23.1920.1095@0.23.1920.1095" timestamp="1619390031913" />
     <state width="1312" height="250" key="DebuggerActiveHint/0.23.1920.1098@0.23.1920.1098" timestamp="1619393109971" />
     <state width="1312" height="251" key="DebuggerActiveHint/0.23.1920.1100@0.23.1920.1100" timestamp="1619390629356" />
-    <state width="1276" height="252" key="DebuggerActiveHint/0.23.1920.1102@0.23.1920.1102" timestamp="1615943377460" />
+    <state width="1276" height="252" key="DebuggerActiveHint/0.23.1920.1102@0.23.1920.1102" timestamp="1619665374112" />
     <state width="1269" height="252" key="DebuggerActiveHint/0.23.1920.1104@0.23.1920.1104" timestamp="1615944679999" />
     <state width="1269" height="254" key="DebuggerActiveHint/0.23.1920.1109@0.23.1920.1109" timestamp="1615946416061" />
     <state width="769" height="466" key="DebuggerActiveHint/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1615146266670" />
@@ -436,101 +464,101 @@
       <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="100" y="123" width="1720" height="894" key="DiffContextDialog/0.23.1920.1100@0.23.1920.1100" timestamp="1618190059441" />
-    <state width="1878" height="312" key="GridCell.Tab.0.bottom" timestamp="1619404368210">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.0.bottom" timestamp="1619665552440">
+      <screen x="0" y="23" width="1920" height="1102" />
     </state>
     <state width="1878" height="312" key="GridCell.Tab.0.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705909" />
     <state width="1878" height="312" key="GridCell.Tab.0.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1619404368210" />
     <state width="1878" height="533" key="GridCell.Tab.0.bottom/0.23.1920.1100@0.23.1920.1100" timestamp="1619391287175" />
-    <state width="1878" height="533" key="GridCell.Tab.0.bottom/0.23.1920.1102@0.23.1920.1102" timestamp="1618362627856" />
+    <state width="1878" height="312" key="GridCell.Tab.0.bottom/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552440" />
     <state width="1878" height="289" key="GridCell.Tab.0.bottom/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897433" />
     <state width="1878" height="492" key="GridCell.Tab.0.bottom/0.23.1920.1106@0.23.1920.1106" timestamp="1615944575483" />
     <state width="1878" height="370" key="GridCell.Tab.0.bottom/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763065" />
     <state width="1878" height="370" key="GridCell.Tab.0.bottom/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
     <state width="3220" height="533" key="GridCell.Tab.0.bottom/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
     <state width="2454" height="312" key="GridCell.Tab.0.bottom/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="312" key="GridCell.Tab.0.center" timestamp="1619404368209">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.0.center" timestamp="1619665552439">
+      <screen x="0" y="23" width="1920" height="1102" />
     </state>
     <state width="1878" height="312" key="GridCell.Tab.0.center/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705908" />
     <state width="1878" height="312" key="GridCell.Tab.0.center/0.23.1920.1098@0.23.1920.1098" timestamp="1619404368209" />
     <state width="1878" height="533" key="GridCell.Tab.0.center/0.23.1920.1100@0.23.1920.1100" timestamp="1619391287175" />
-    <state width="1878" height="533" key="GridCell.Tab.0.center/0.23.1920.1102@0.23.1920.1102" timestamp="1618362627855" />
+    <state width="1878" height="312" key="GridCell.Tab.0.center/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552439" />
     <state width="1878" height="289" key="GridCell.Tab.0.center/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897432" />
     <state width="1878" height="492" key="GridCell.Tab.0.center/0.23.1920.1106@0.23.1920.1106" timestamp="1615944575482" />
     <state width="1878" height="370" key="GridCell.Tab.0.center/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763063" />
     <state width="1878" height="370" key="GridCell.Tab.0.center/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="3220" height="533" key="GridCell.Tab.0.center/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
     <state width="2454" height="312" key="GridCell.Tab.0.center/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="312" key="GridCell.Tab.0.left" timestamp="1619404368209">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.0.left" timestamp="1619665552439">
+      <screen x="0" y="23" width="1920" height="1102" />
     </state>
     <state width="1878" height="312" key="GridCell.Tab.0.left/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705908" />
     <state width="1878" height="312" key="GridCell.Tab.0.left/0.23.1920.1098@0.23.1920.1098" timestamp="1619404368209" />
     <state width="1878" height="533" key="GridCell.Tab.0.left/0.23.1920.1100@0.23.1920.1100" timestamp="1619391287174" />
-    <state width="1878" height="533" key="GridCell.Tab.0.left/0.23.1920.1102@0.23.1920.1102" timestamp="1618362627855" />
+    <state width="1878" height="312" key="GridCell.Tab.0.left/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552439" />
     <state width="1878" height="289" key="GridCell.Tab.0.left/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897432" />
     <state width="1878" height="492" key="GridCell.Tab.0.left/0.23.1920.1106@0.23.1920.1106" timestamp="1615944575481" />
     <state width="1878" height="370" key="GridCell.Tab.0.left/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763063" />
     <state width="1878" height="370" key="GridCell.Tab.0.left/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="3220" height="533" key="GridCell.Tab.0.left/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782627" />
     <state width="2454" height="312" key="GridCell.Tab.0.left/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015876" />
-    <state width="1878" height="312" key="GridCell.Tab.0.right" timestamp="1619404368210">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.0.right" timestamp="1619665552439">
+      <screen x="0" y="23" width="1920" height="1102" />
     </state>
     <state width="1878" height="312" key="GridCell.Tab.0.right/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705909" />
     <state width="1878" height="312" key="GridCell.Tab.0.right/0.23.1920.1098@0.23.1920.1098" timestamp="1619404368210" />
     <state width="1878" height="533" key="GridCell.Tab.0.right/0.23.1920.1100@0.23.1920.1100" timestamp="1619391287175" />
-    <state width="1878" height="533" key="GridCell.Tab.0.right/0.23.1920.1102@0.23.1920.1102" timestamp="1618362627855" />
+    <state width="1878" height="312" key="GridCell.Tab.0.right/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552439" />
     <state width="1878" height="289" key="GridCell.Tab.0.right/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897433" />
     <state width="1878" height="492" key="GridCell.Tab.0.right/0.23.1920.1106@0.23.1920.1106" timestamp="1615944575482" />
     <state width="1878" height="370" key="GridCell.Tab.0.right/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763064" />
     <state width="1878" height="370" key="GridCell.Tab.0.right/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="3220" height="533" key="GridCell.Tab.0.right/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
     <state width="2454" height="312" key="GridCell.Tab.0.right/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="312" key="GridCell.Tab.1.bottom" timestamp="1619404368212">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.1.bottom" timestamp="1619665552441">
+      <screen x="0" y="23" width="1920" height="1102" />
     </state>
     <state width="1878" height="312" key="GridCell.Tab.1.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705910" />
     <state width="1878" height="312" key="GridCell.Tab.1.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1619404368212" />
     <state width="1878" height="312" key="GridCell.Tab.1.bottom/0.23.1920.1100@0.23.1920.1100" timestamp="1619391127877" />
-    <state width="1876" height="370" key="GridCell.Tab.1.bottom/0.23.1920.1102@0.23.1920.1102" timestamp="1615943867861" />
+    <state width="1878" height="312" key="GridCell.Tab.1.bottom/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552441" />
     <state width="1878" height="189" key="GridCell.Tab.1.bottom/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886133" />
     <state width="1878" height="370" key="GridCell.Tab.1.bottom/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763071" />
     <state width="1878" height="370" key="GridCell.Tab.1.bottom/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664747" />
     <state width="2471" height="624" key="GridCell.Tab.1.bottom/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150038" />
     <state width="2454" height="312" key="GridCell.Tab.1.bottom/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019639" />
-    <state width="1878" height="312" key="GridCell.Tab.1.center" timestamp="1619404368211">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.1.center" timestamp="1619665552440">
+      <screen x="0" y="23" width="1920" height="1102" />
     </state>
     <state width="1878" height="312" key="GridCell.Tab.1.center/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705909" />
     <state width="1878" height="312" key="GridCell.Tab.1.center/0.23.1920.1098@0.23.1920.1098" timestamp="1619404368211" />
     <state width="1878" height="312" key="GridCell.Tab.1.center/0.23.1920.1100@0.23.1920.1100" timestamp="1619391127876" />
-    <state width="1876" height="370" key="GridCell.Tab.1.center/0.23.1920.1102@0.23.1920.1102" timestamp="1615943867860" />
+    <state width="1878" height="312" key="GridCell.Tab.1.center/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552440" />
     <state width="1878" height="189" key="GridCell.Tab.1.center/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886132" />
     <state width="1878" height="370" key="GridCell.Tab.1.center/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763068" />
     <state width="1878" height="370" key="GridCell.Tab.1.center/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
     <state width="2471" height="624" key="GridCell.Tab.1.center/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150037" />
     <state width="2454" height="312" key="GridCell.Tab.1.center/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019638" />
-    <state width="1878" height="312" key="GridCell.Tab.1.left" timestamp="1619404368211">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.1.left" timestamp="1619665552440">
+      <screen x="0" y="23" width="1920" height="1102" />
     </state>
     <state width="1878" height="312" key="GridCell.Tab.1.left/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705909" />
     <state width="1878" height="312" key="GridCell.Tab.1.left/0.23.1920.1098@0.23.1920.1098" timestamp="1619404368211" />
     <state width="1878" height="312" key="GridCell.Tab.1.left/0.23.1920.1100@0.23.1920.1100" timestamp="1619391127876" />
-    <state width="1876" height="370" key="GridCell.Tab.1.left/0.23.1920.1102@0.23.1920.1102" timestamp="1615943867860" />
+    <state width="1878" height="312" key="GridCell.Tab.1.left/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552440" />
     <state width="1878" height="189" key="GridCell.Tab.1.left/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886132" />
     <state width="1878" height="370" key="GridCell.Tab.1.left/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763067" />
     <state width="1878" height="370" key="GridCell.Tab.1.left/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
     <state width="2471" height="624" key="GridCell.Tab.1.left/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150036" />
     <state width="2454" height="312" key="GridCell.Tab.1.left/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019636" />
-    <state width="1878" height="312" key="GridCell.Tab.1.right" timestamp="1619404368212">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="312" key="GridCell.Tab.1.right" timestamp="1619665552440">
+      <screen x="0" y="23" width="1920" height="1102" />
     </state>
     <state width="1878" height="312" key="GridCell.Tab.1.right/0.23.1920.1095@0.23.1920.1095" timestamp="1619398705910" />
     <state width="1878" height="312" key="GridCell.Tab.1.right/0.23.1920.1098@0.23.1920.1098" timestamp="1619404368212" />
     <state width="1878" height="312" key="GridCell.Tab.1.right/0.23.1920.1100@0.23.1920.1100" timestamp="1619391127876" />
-    <state width="1876" height="370" key="GridCell.Tab.1.right/0.23.1920.1102@0.23.1920.1102" timestamp="1615943867861" />
+    <state width="1878" height="312" key="GridCell.Tab.1.right/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552440" />
     <state width="1878" height="189" key="GridCell.Tab.1.right/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886133" />
     <state width="1878" height="370" key="GridCell.Tab.1.right/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763070" />
     <state width="1878" height="370" key="GridCell.Tab.1.right/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
@@ -540,8 +568,12 @@
       <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="461" y="209" key="SettingsEditor/0.23.1920.1100@0.23.1920.1100" timestamp="1615934384093" />
-    <state x="690" y="416" key="Vcs.Push.Dialog.v2" timestamp="1619486649380">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state x="690" y="309" width="540" height="524" key="StructurePopup" timestamp="1619665895104">
+      <screen x="0" y="23" width="1920" height="1102" />
+    </state>
+    <state x="690" y="309" width="540" height="524" key="StructurePopup/0.23.1920.1102@0.23.1920.1102" timestamp="1619665895104" />
+    <state x="1380" y="758" key="Vcs.Push.Dialog.v2" timestamp="1619656409770">
+      <screen x="0" y="23" width="3840" height="2054" />
     </state>
     <state x="690" y="415" key="Vcs.Push.Dialog.v2/0.23.1920.1095@0.23.1920.1095" timestamp="1619483983182" />
     <state x="690" y="416" key="Vcs.Push.Dialog.v2/0.23.1920.1098@0.23.1920.1098" timestamp="1619486649380" />
@@ -551,17 +583,18 @@
     <state x="690" y="419" key="Vcs.Push.Dialog.v2/0.23.1920.1106@0.23.1920.1106" timestamp="1617238626892" />
     <state x="690" y="420" key="Vcs.Push.Dialog.v2/0.23.1920.1109@0.23.1920.1109" timestamp="1615950062360" />
     <state x="1380" y="758" key="Vcs.Push.Dialog.v2/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275310422" />
+    <state x="1380" y="758" key="Vcs.Push.Dialog.v2/0.23.3840.2054@0.23.3840.2054" timestamp="1619656409770" />
     <state width="480" height="547" key="XDebugger.FullValuePopup" timestamp="1619390057312">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
     <state width="480" height="547" key="XDebugger.FullValuePopup/0.23.1920.1095@0.23.1920.1095" timestamp="1619390057312" />
-    <state x="744" y="431" width="574" height="491" key="find.popup" timestamp="1619399675766">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state x="744" y="433" width="574" height="491" key="find.popup" timestamp="1619665899878">
+      <screen x="0" y="23" width="1920" height="1102" />
     </state>
     <state x="744" y="430" width="574" height="490" key="find.popup/0.23.1920.1095@0.23.1920.1095" timestamp="1619398722068" />
     <state x="744" y="431" width="574" height="491" key="find.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1619399675766" />
     <state x="744" y="432" width="574" height="490" key="find.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1618269234412" />
-    <state x="744" y="433" width="574" height="491" key="find.popup/0.23.1920.1102@0.23.1920.1102" timestamp="1617753385181" />
+    <state x="744" y="433" width="574" height="491" key="find.popup/0.23.1920.1102@0.23.1920.1102" timestamp="1619665899878" />
     <state x="744" y="433" width="574" height="492" key="find.popup/0.23.1920.1104@0.23.1920.1104" timestamp="1618189037606" />
     <state x="744" y="435" width="568" height="495" key="find.popup/0.23.1920.1109@0.23.1920.1109" timestamp="1616466673530" />
     <state x="1487" y="786" width="586" height="490" key="find.popup/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618271798096" />
@@ -570,13 +603,14 @@
     </state>
     <state width="300" height="230" key="javadoc.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1617584320902" />
     <state width="600" height="428" key="javadoc.popup/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1615778886447" />
-    <state x="1030" y="266" width="670" height="675" key="search.everywhere.popup" timestamp="1619401921796">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state x="1030" y="268" width="670" height="681" key="search.everywhere.popup" timestamp="1619663989171">
+      <screen x="0" y="23" width="1920" height="1104" />
     </state>
     <state x="1030" y="266" width="670" height="675" key="search.everywhere.popup/0.23.1920.1095@0.23.1920.1095" timestamp="1619401921796" />
     <state x="1030" y="267" width="670" height="676" key="search.everywhere.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1619395955709" />
     <state x="1030" y="267" width="670" height="678" key="search.everywhere.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1619144069349" />
     <state x="1030" y="268" width="670" height="679" key="search.everywhere.popup/0.23.1920.1102@0.23.1920.1102" timestamp="1617921059982" />
+    <state x="1030" y="268" width="670" height="681" key="search.everywhere.popup/0.23.1920.1104@0.23.1920.1104" timestamp="1619663989171" />
     <state x="2060" y="479" width="1340" height="1265" key="search.everywhere.popup/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618271831369" />
   </component>
   <component name="XDebuggerManager">
@@ -584,12 +618,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>153</line>
+          <line>156</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>154</line>
+          <line>157</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -634,17 +668,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>178</line>
+          <line>181</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>175</line>
+          <line>178</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>163</line>
+          <line>166</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -669,12 +703,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>167</line>
+          <line>170</line>
           <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>238</line>
+          <line>241</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
       </breakpoints>
@@ -709,7 +743,7 @@
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_health.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_health Coverage Results" MODIFIED="1615255517345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_unique_filename.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_unique_filename Coverage Results" MODIFIED="1615250552981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService.coverage" NAME="pytest for test_photo_service.TestPhotoService Coverage Results" MODIFIED="1615254183563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_photo.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_photo Coverage Results" MODIFIED="1617754770298" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_photo.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_photo Coverage Results" MODIFIED="1619665349145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_get_thumbnail.coverage" NAME="pytest in app/tests Coverage Results" MODIFIED="1615777540985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$main.coverage" NAME="main Coverage Results" MODIFIED="1619392976537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_delete_photos_by_device.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_delete_photos_by_device Coverage Results" MODIFIED="1618359782617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

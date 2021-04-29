@@ -143,9 +143,8 @@ async def api_delete_photos_by_id(device_id: str, api_key: APIKey = Depends(get_
 async def api_get_devices(api_key: APIKey = Depends(get_api_key),
                           db=Depends(deps.get_async_db)) -> List[DeviceResultSchema]:
     logger.debug('inside api_get_devices')
-    device_list = await get_devices(db=db)
-    logger.debug('api_get_devices photo: {}', device_list)
-    results = [DeviceResultSchema(device_id=device_id, count=cnt) for device_id, cnt in device_list]
+    results = await get_devices(db=db)
+
     logger.debug('api_get_devices results: {}', results)
 
     return results

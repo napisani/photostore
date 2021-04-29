@@ -14,7 +14,13 @@ class WebWindowService extends WindowService {
   @override
   int getDefaultAPIPort() {
     print('defaulting to Port: ${html.window.location.port}');
-    return int.parse(html.window.location.port);
+    try {
+      return int.parse(html.window.location.port);
+    } catch (e) {
+      int port = this.isDefaultProtocolHTTPS() ? 443 : 80;
+      print('failed to parse Port from window location using:$port');
+      return port;
+    }
   }
 
   @override

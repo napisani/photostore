@@ -2,8 +2,11 @@
 
 PYTHONPATH=`pwd`/app uvicorn main:app --reload
 
+#apply generated sql
 PYTHONPATH=`pwd` alembic upgrade head
 
+
+#generate sql
 PYTHONPATH=`pwd` alembic revision --autogenerate -m "init"
 
 PYTHONPATH=`pwd` pytest  app/tests -s

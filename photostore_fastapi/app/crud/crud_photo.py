@@ -61,8 +61,12 @@ class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
 
     async def get_devices(self, db: Session):
         result_itr = await (
-            db.execute(select(self.model.device_id, func.count(self.model.device_id))
-                       .group_by(self.model.device_id))
+            db.execute(select(
+                self.model.device_id,
+                func.count(self.model.device_id),
+                func.sum(self.model.file_size),
+                func.sum(self.model.thumbnail_file_size)
+            ).group_by(self.model.device_id))
         )
         return result_itr.all()
 

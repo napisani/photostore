@@ -24,6 +24,17 @@ class PhotoGridWidget extends StatelessWidget {
         this._onRefresh = onRefresh,
         super(key: key);
 
+  int _getImageCount(BuildContext context) {
+    int count = (MediaQuery.of(context).size.width / 125).floor();
+    if (count == 0) {
+      count = 1;
+    }
+    if (count >= 6) {
+      count = 6;
+    }
+    return count;
+  }
+
   @override
   Widget build(BuildContext context) {
     // WidgetsBinding.instance.addPostFrameCallback((_) => {_scrollController.jumpTo(this.currentScrollPosition)});
@@ -35,10 +46,7 @@ class PhotoGridWidget extends StatelessWidget {
           // reverse: true,
           // shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount:
-                  (MediaQuery.of(context).orientation == Orientation.portrait)
-                      ? 3
-                      : 4),
+              crossAxisCount: _getImageCount(context)),
           itemBuilder: (context, index) => new Card(
             child: new GridTile(
               // footer: new Text(this.photos.items[index].id.toString()),

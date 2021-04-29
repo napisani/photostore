@@ -42,8 +42,7 @@ class _PhotoGalleryScreen extends StatelessWidget {
         // Future.delayed(Duration.zero, () => _adjustScrollOffset());
         return Scaffold(
           appBar: AppBar(
-            title: Text(
-                "Photo View: ${state.photoIndex} of ${state.photoPage.total}"),
+            title: Text("Photo View"),
           ),
           // add this body tag with container and photoview widget
           body: PhotoViewGallery.builder(
@@ -52,6 +51,7 @@ class _PhotoGalleryScreen extends StatelessWidget {
               state.handlePhotoPageSwipe(newPage);
             },
             itemCount: state.photoPage.total,
+
             builder: (context, index) {
               return PhotoViewGalleryPageOptions(
                 imageProvider: state.photoPage.items[index]

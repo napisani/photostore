@@ -41,14 +41,17 @@ class Photo extends AgnosticMedia {
       latitude: latitude,
       filename: filename);
 
-  factory Photo.fromJson(Map<String, dynamic> item, String url,
+  factory Photo.fromJson(Map<String, dynamic> item, String thumbnailUrl,
+      String fullSizeUrl,
       Map<String, String> headers) {
     if (kIsWeb) {
       // current required for photos to load on flutter web platform
       // photos currently will not be requested with headers
       // (probably using <img> tags under the hood)
-      url = APIKeyUtils.appendAPIKeyToURL(url, headers);
+      thumbnailUrl = APIKeyUtils.appendAPIKeyToURL(thumbnailUrl, headers);
+      fullSizeUrl= APIKeyUtils.appendAPIKeyToURL(fullSizeUrl, headers);
       headers.remove(ACCESS_TOKEN_KEY);
+
     }
 
     return Photo(
@@ -65,10 +68,10 @@ class Photo extends AgnosticMedia {
         creationDate: DateTime.parse(item['creation_date']),
         modifiedDate: DateTime.parse(item['modified_date']),
         getThumbnailProviderOfSize: (double width, double height) =>
-            NetworkImage(url, headers: headers),
-        thumbnailProvider: NetworkImage(url, headers: headers),
+            NetworkImage(fullSizeUrl, headers: headers),
+        thumbnailProvider: NetworkImage(thumbnailUrl, headers: headers),
         getThumbnail: () =>
-            Future.value(MediaContents.url(url, headers: headers)),
+            Future.value(MediaContents.url(thumbnailUrl, headers: headers)),
         mimeType: item['mime_type']);
   }
 

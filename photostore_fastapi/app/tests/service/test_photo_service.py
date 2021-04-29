@@ -69,15 +69,18 @@ class TestPhotoService:
         assert saved_photo.checksum
         assert saved_photo.id
         assert saved_photo.id > 0
-        assert os.path.exists(photo.path)
-        assert os.path.exists(photo.thumbnail_path)
-        assert photo.checksum == get_file_checksum(photo.path)
-        assert photo.mime_type
-        assert photo.native_id
-        assert photo.device_id
-        assert photo.width > 0
-        assert photo.height > 0
-        assert photo.media_type == MediaType.IMAGE
+        assert saved_photo.file_size > 0
+        assert saved_photo.thumbnail_file_size > 0
+        assert os.path.exists(saved_photo.path)
+        assert os.path.exists(saved_photo.thumbnail_path)
+        assert photo.checksum == get_file_checksum(saved_photo.path)
+        assert saved_photo.mime_type
+        assert saved_photo.native_id
+        assert saved_photo.device_id
+        assert saved_photo.width > 0
+        assert saved_photo.height > 0
+
+        assert saved_photo.media_type == MediaType.IMAGE
 
     @pytest.mark.asyncio
     async def test_add_and_delete(self, app_settings, db, photo_factory):

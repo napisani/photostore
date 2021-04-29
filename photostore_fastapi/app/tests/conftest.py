@@ -27,6 +27,7 @@ async def db() -> Generator:
 @pytest.fixture(scope="session")
 def test_client(event_loop) -> Generator:
     with TestClient(app) as c:
+        c.headers['access_token'] = settings.API_KEY
         yield c
 
 

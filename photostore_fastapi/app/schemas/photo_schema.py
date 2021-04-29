@@ -39,6 +39,8 @@ class PhotoSchemaFull(PhotoSchema):
     height: Optional[int]
     longitude: Optional[float]
     latitude: Optional[float]
+    file_size: Optional[float]
+    thumbnail_file_size: Optional[float]
 
 
 class PhotoSchemaAdd(PhotoSchema):
@@ -84,3 +86,5 @@ class PhotoDiffResultSchema(BaseModel):
 class DeviceResultSchema(BaseModel):
     device_id: Optional[str]
     count: Optional[str]
+    file_size_total: Optional[float]
+    thumbnail_file_size_total: Optional[float]
