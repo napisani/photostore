@@ -9,6 +9,7 @@ from loguru import logger
 
 from app.core.config import settings
 from app.obj.media_type import MediaType
+from app.schemas.photo_schema import PhotoSchemaFull
 from app.service.video_file_helper import get_thumbnail_frame_from_video
 from app.utils import get_file_extension
 
@@ -77,6 +78,32 @@ def save_photo_file(filename: str, device_id: str, uploaded_file: BytesIO) -> Di
 
 def _create_thumbnail_from_image(photo_path: str, photo_filename: str) -> str:
     pass
+
+
+def get_media_as_png(photo: PhotoSchemaFull) -> BytesIO:
+    try:
+        if MediaType.IMAGE == photo.media_type:
+            if photo.mime_type.lower() in ['image/png']:
+                logger.debug('get_media_as_png photo is already a png - returning that {}', photo)
+                with open(photo.path, 'rb') as f:
+                    buf = BytesIO(f.read())
+                return buf
+            p = photo.path
+        else:
+            logger.debug('get_media_as_png its a video  {} - returning the thumbnail', photo)
+            with open(photo.thumbnail_path, 'rb') as f:
+                buf = BytesIO(f.read())
+            return buf
+
+        image = Image.open(p)
+        output = BytesIO()
+        image.save(output, format="PNG")
+        output.seek(0)
+        return output
+
+    except:
+        raise
+        raise PhotoExceptions.failed_to_get_image_as_png()
 
 
 def create_thumbnail(path: str, filename: str, device_id: str, media_type: MediaType) -> str:

@@ -203,8 +203,11 @@ class MediaAPIRepository extends MediaRepository<Photo> {
 
   Photo mapResponseToPhoto(Map<String, dynamic> item) {
     final String thumbnailUrl = "${_getBaseURL()}/thumbnail/${item['id']}";
-    final String fullSizeUrl = "${_getBaseURL()}/fullsize/${item['id']}";
-    return Photo.fromJson(
-        item, thumbnailUrl, fullSizeUrl, {ACCESS_TOKEN_KEY: settings.apiKey});
+    final String fullSizeAsPngUrl =
+        "${_getBaseURL()}/fullsize_photo_as_png/${item['id']}";
+    final String fullSizeUrl = "${_getBaseURL()}/fullsize_photo/${item['id']}";
+
+    return Photo.fromJson(item, thumbnailUrl, fullSizeUrl, fullSizeAsPngUrl,
+        {ACCESS_TOKEN_KEY: settings.apiKey});
   }
 }

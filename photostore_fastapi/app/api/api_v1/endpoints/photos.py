@@ -12,6 +12,7 @@ from starlette.responses import StreamingResponse
 from app.api import deps
 from app.api.deps import get_api_key
 from app.exception.photo_exceptions import PhotoExceptions
+from app.obj.media_type import MediaType
 from app.obj.photo_sort_attribute import PhotoSortAttribute
 from app.obj.sort_direction import SortDirection
 from app.schemas.health_schema import HealthSchema
@@ -19,7 +20,7 @@ from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull, PhotoDiffRequestSchema, PhotoDiffResultSchema, \
     DeviceResultSchema
 from app.service.photo_service import get_photos, add_photo, get_photo, diff_photos, get_latest_photo, \
-    count_photos, allowed_file, delete_photos_by_device, get_devices
+    count_photos, allowed_file, delete_photos_by_device, get_devices, get_fullsize_photo_as_png
 
 router = APIRouter()
 
@@ -87,14 +88,38 @@ async def api_upload_photo(
     return added_photo
 
 
-@router.get('/fullsize/{photo_id}')
-async def api_get_fullsize_image(photo_id: int,
+@router.get('/fullsize_photo/{photo_id}')
+async def api_get_fullsize_photo(photo_id: int,
                                  api_key: APIKey = Depends(get_api_key),
                                  db: Session = Depends(deps.get_async_db)):
     photo = await get_photo(db, photo_id=photo_id)
     logger.debug('view_get_fullsize photo: {}', photo)
+    p = photo.path
+    mime = photo.mime_type
+    if photo.media_type == MediaType.VIDEO:
+        p = photo.thumbnail_path
+        mime = 'image/png'
+    with open(p, 'rb') as f:
+        return StreamingResponse(io.BytesIO(f.read()), media_type=mime)
+
+
+@router.get('/original_file/{photo_id}')
+async def api_get_original_file(photo_id: int,
+                                api_key: APIKey = Depends(get_api_key),
+                                db: Session = Depends(deps.get_async_db)):
+    photo = await get_photo(db, photo_id=photo_id)
+    logger.debug('api_get_original_file photo: {}', photo)
     with open(photo.path, 'rb') as f:
         return StreamingResponse(io.BytesIO(f.read()), media_type=photo.mime_type)
+
+
+@router.get('/fullsize_photo_as_png/{photo_id}')
+async def api_get_fullsize_photo_as_png(photo_id: int,
+                                        api_key: APIKey = Depends(get_api_key),
+                                        db: Session = Depends(deps.get_async_db)):
+    logger.debug('api_get_fullsize_photo_as_png photo_id: {}', photo_id)
+    photo_bytes = await get_fullsize_photo_as_png(db, photo_id=photo_id)
+    return StreamingResponse(photo_bytes, media_type='image/png')
 
 
 @router.get('/thumbnail/{photo_id}')

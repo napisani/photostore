@@ -20,14 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="bug fixes">
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/assets/icon/icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/assets/icon/icon_no_bg.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/exception/photo_exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/exception/photo_exceptions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/service/image_file_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/image_file_helper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/service/photo_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/photo_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/tests/service/test_image_file_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/service/test_image_file_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/res/mipmap-hdpi/launcher_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/res/mipmap-hdpi/launcher_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/res/mipmap-mdpi/launcher_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/res/mipmap-mdpi/launcher_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/res/mipmap-xhdpi/launcher_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/res/mipmap-xhdpi/launcher_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/res/mipmap-xxhdpi/launcher_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/res/mipmap-xxhdpi/launcher_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/res/mipmap-xxxhdpi/launcher_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/res/mipmap-xxxhdpi/launcher_icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png" afterDir="false" />
@@ -43,10 +45,8 @@
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/notes.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_api_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_api_repository.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,7 +218,7 @@
       <workItem from="1616628171079" duration="7296000" />
       <workItem from="1617580956708" duration="35968000" />
       <workItem from="1618358588472" duration="27564000" />
-      <workItem from="1619483789404" duration="10059000" />
+      <workItem from="1619483789404" duration="13400000" />
     </task>
     <task id="LOCAL-00001" summary="adding all mobile attirubtes - fixed schemas for Add and Update specific">
       <created>1615777399372</created>
@@ -627,12 +627,12 @@
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
     <state width="480" height="547" key="XDebugger.FullValuePopup/0.23.1920.1095@0.23.1920.1095" timestamp="1619390057312" />
-    <state x="744" y="433" width="574" height="491" key="find.popup" timestamp="1619665899878">
-      <screen x="0" y="23" width="1920" height="1102" />
+    <state x="744" y="432" width="574" height="490" key="find.popup" timestamp="1619747779040">
+      <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="744" y="430" width="574" height="490" key="find.popup/0.23.1920.1095@0.23.1920.1095" timestamp="1619398722068" />
     <state x="744" y="431" width="574" height="491" key="find.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1619399675766" />
-    <state x="744" y="432" width="574" height="490" key="find.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1618269234412" />
+    <state x="744" y="432" width="574" height="490" key="find.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1619747779040" />
     <state x="744" y="433" width="574" height="491" key="find.popup/0.23.1920.1102@0.23.1920.1102" timestamp="1619665899878" />
     <state x="744" y="433" width="574" height="492" key="find.popup/0.23.1920.1104@0.23.1920.1104" timestamp="1618189037606" />
     <state x="744" y="435" width="568" height="495" key="find.popup/0.23.1920.1109@0.23.1920.1109" timestamp="1616466673530" />
@@ -642,11 +642,11 @@
     </state>
     <state width="300" height="230" key="javadoc.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1617584320902" />
     <state width="600" height="428" key="javadoc.popup/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1615778886447" />
-    <state x="1030" y="268" width="670" height="681" key="search.everywhere.popup" timestamp="1619663989171">
-      <screen x="0" y="23" width="1920" height="1104" />
+    <state x="1030" y="267" width="670" height="676" key="search.everywhere.popup" timestamp="1619746674420">
+      <screen x="0" y="23" width="1920" height="1098" />
     </state>
     <state x="1030" y="266" width="670" height="675" key="search.everywhere.popup/0.23.1920.1095@0.23.1920.1095" timestamp="1619401921796" />
-    <state x="1030" y="267" width="670" height="676" key="search.everywhere.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1619395955709" />
+    <state x="1030" y="267" width="670" height="676" key="search.everywhere.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1619746674420" />
     <state x="1030" y="267" width="670" height="678" key="search.everywhere.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1619144069349" />
     <state x="1030" y="268" width="670" height="679" key="search.everywhere.popup/0.23.1920.1102@0.23.1920.1102" timestamp="1617921059982" />
     <state x="1030" y="268" width="670" height="681" key="search.everywhere.popup/0.23.1920.1104@0.23.1920.1104" timestamp="1619663989171" />
@@ -737,7 +737,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/service/image_file_helper.py</url>
-          <line>99</line>
+          <line>126</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

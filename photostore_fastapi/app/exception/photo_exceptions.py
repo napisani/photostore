@@ -23,6 +23,9 @@ class PhotoExceptions(APIError):
     def failed_to_save_photo_file(cls):
         return cls(**cls._template("failed to save photo file to disk", code=500))
 
+    @classmethod
+    def failed_to_get_image_as_png(cls):
+        return cls(**cls._template("failed to convert to png", code=500))
 
     @classmethod
     def failed_to_create_thumbnail(cls):

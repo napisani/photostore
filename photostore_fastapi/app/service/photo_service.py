@@ -1,4 +1,5 @@
 import os
+from io import BytesIO
 from typing import Optional, List
 
 import magic
@@ -18,7 +19,7 @@ from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchemaFull, PhotoSchemaAdd, PhotoSchemaUpdate, PhotoDiffRequestSchema, \
     PhotoDiffResultSchema, DeviceResultSchema
 from app.service.image_file_helper import save_photo_file, create_thumbnail, get_allowed_extensions, \
-    get_media_type_by_extension
+    get_media_type_by_extension, get_media_as_png
 from app.utils import get_file_checksum, get_file_extension
 
 register_heif_opener()
@@ -92,6 +93,14 @@ async def delete_photo(db: Session, photo_id: int):
 
 async def get_photo(db: Session, photo_id: int) -> PhotoSchemaFull:
     return PhotoSchemaFull.from_orm(await PhotoRepo.get_by_id(db, id=photo_id))
+
+
+async def get_fullsize_photo_as_png(db: Session, photo_id: int) -> BytesIO:
+    photo = await get_photo(db, photo_id=photo_id)
+    logger.debug('get_fullsize_photo_as_png photo: {}', photo)
+    return get_media_as_png(photo)
+
+
 
 
 async def get_latest_photo(db: Session, device_id: str) -> Optional[PhotoSchemaFull]:
