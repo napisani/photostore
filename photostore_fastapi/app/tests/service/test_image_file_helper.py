@@ -14,5 +14,5 @@ class TestPhotoService:
             return True
 
         mocker.patch('app.service.image_file_helper.os.path.exists', side_effect=mock_exists)
-        unique_filename = _get_unique_filename('photo_0.PNG')
+        unique_filename = _get_unique_filename('photo_0.PNG', 'dev1')
         assert unique_filename == 'photo_0_(4).PNG'

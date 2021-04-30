@@ -34,7 +34,7 @@ async def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull
     # photo.id = None
     base_path, filename = os.path.split(photo.filename)
     photo.filename = filename
-    save_file_return = save_photo_file(photo.filename, file)
+    save_file_return = save_photo_file(photo.filename, photo.device_id, file)
     logger.debug('in add_photo save_file_return :{}', save_file_return)
     photo_full = PhotoSchemaFull.parse_obj(photo.dict())
     photo_full.media_type = get_media_type_by_extension(photo.filename)
@@ -43,6 +43,7 @@ async def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull
     photo_full.checksum = get_file_checksum(photo_full.path)
     photo_full.thumbnail_path = create_thumbnail(filename=photo_full.filename,
                                                  path=photo_full.path,
+                                                 device_id=photo.device_id,
                                                  media_type=photo_full.media_type)
     photo_full.file_size = os.path.getsize(photo_full.path) / 1024
     photo_full.thumbnail_file_size = os.path.getsize(photo_full.thumbnail_path) / 1024

@@ -33,8 +33,11 @@ def secure_filename(uploaded_file_name: str) -> str:
     return uploaded_file_name  # todo
 
 
-def _get_destination_path(filename: str, thumbnail=False) -> str:
+def _get_destination_path(filename: str, device_id: str, thumbnail=False) -> str:
     d = settings.SAVE_PHOTO_DIR
+    device_dir = re.sub(r'\W+', '_', device_id)
+    d = os.path.join(d, device_dir)
+
     if thumbnail:
         d = os.path.join(d, 'thumb')
     if not os.path.exists(d):
@@ -43,26 +46,26 @@ def _get_destination_path(filename: str, thumbnail=False) -> str:
     return destination_file
 
 
-def _get_unique_filename(filename: str) -> str:
-    if not os.path.exists(_get_destination_path(filename)):
+def _get_unique_filename(filename: str, device_id: str) -> str:
+    if not os.path.exists(_get_destination_path(filename, device_id)):
         return filename
     filename_split = os.path.splitext(filename)
 
     match = re.search('_\\([0-9]+\\)$', filename_split[0])
     if not match:
-        return _get_unique_filename(f'{filename_split[0]}_(1){filename_split[1]}')
+        return _get_unique_filename(f'{filename_split[0]}_(1){filename_split[1]}', device_id)
     else:
         match_text = match.group(0)
         idx = int(match_text[2:-1]) + 1
         filename_pre = re.sub('_\\([0-9]+\\)$', f'_({idx})', filename_split[0])
-        return _get_unique_filename(f'{filename_pre}{filename_split[1]}')
+        return _get_unique_filename(f'{filename_pre}{filename_split[1]}', device_id)
 
 
-def save_photo_file(filename: str, uploaded_file: BytesIO) -> Dict[str, str]:
+def save_photo_file(filename: str, device_id: str, uploaded_file: BytesIO) -> Dict[str, str]:
     try:
         filename = secure_filename(filename)
-        filename = _get_unique_filename(filename)
-        destination_file = _get_destination_path(filename)
+        filename = _get_unique_filename(filename, device_id)
+        destination_file = _get_destination_path(filename, device_id)
         # uploaded_file.save(destination_file)
         with open(destination_file, 'wb') as dest_file:
             shutil.copyfileobj(uploaded_file, dest_file)
@@ -76,10 +79,10 @@ def _create_thumbnail_from_image(photo_path: str, photo_filename: str) -> str:
     pass
 
 
-def create_thumbnail(path: str, filename: str, media_type: MediaType) -> str:
+def create_thumbnail(path: str, filename: str, device_id: str, media_type: MediaType) -> str:
     try:
         if MediaType.IMAGE == media_type:
-            thumb_path = _get_destination_path(filename, thumbnail=True)
+            thumb_path = _get_destination_path(filename, device_id, thumbnail=True)
             filename_only, file_extension = os.path.splitext(path)
             if file_extension.lower() in ['.heic']:
                 logger.debug('create_thumbnail working on HEIC IMAGE file {}', path)
@@ -96,7 +99,7 @@ def create_thumbnail(path: str, filename: str, media_type: MediaType) -> str:
             logger.debug('create_thumbnail working on VIDEO file {}', path)
             generated_video_thumb = get_thumbnail_frame_from_video(path)
             generated_thumb_filename = os.path.basename(generated_video_thumb)
-            thumb_path = _get_destination_path(generated_thumb_filename, thumbnail=True)
+            thumb_path = _get_destination_path(generated_thumb_filename, device_id, thumbnail=True)
             shutil.copyfile(generated_video_thumb, thumb_path)
         return thumb_path
     except:

@@ -1,5 +1,5 @@
 name: photostore_flutter
-description: A new Flutter project.
+description: A self-hosted photo/video backup solution.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -51,9 +51,16 @@ dependencies:
 
   shared_preferences: ^2.0.5
 dev_dependencies:
-
+  flutter_launcher_icons: "^0.8.0"
+  flutter_launcher_name: "^0.0.1"
   flutter_test:
     sdk: flutter
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
+flutter_launcher_name:
+  name: "Photostore"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
