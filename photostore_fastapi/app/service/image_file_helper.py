@@ -42,7 +42,7 @@ def _get_destination_path(filename: str, device_id: str, thumbnail=False) -> str
     if thumbnail:
         d = os.path.join(d, 'thumb')
     if not os.path.exists(d):
-        os.mkdir(d)
+        os.makedirs(d)
     destination_file = os.path.join(d, filename)
     return destination_file
 

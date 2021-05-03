@@ -16,4 +16,8 @@ PYTHONPATH=`pwd` pytest  app/tests -s
 
 
  PYTHONPATH=`pwd` alembic revision --autogenerate -m "init" --version-path alembic/versions_sqlit
- e
+ 
+ 
+ 
+ 
+ python -m PyInstaller -y --clean main.spec

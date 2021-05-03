@@ -4,9 +4,26 @@ import datetime
 import os
 
 from app.core.config import settings
+from app.models.album_model import Album
 from app.models.photo_model import Photo
 from app.obj.media_type import MediaType
 from app.utils import get_file_checksum
+
+
+class _TestAlbumFactory:
+
+    def __init__(self):
+        self.cnt = 1
+        self._generators = {
+            'name': (lambda n: 'album_{0}'.format(n)),
+        }
+
+    def generate(self):
+        a = Album()
+        for attr, value in self._generators.items():
+            setattr(a, attr, value(self.cnt))
+        self.cnt += 1
+        return a
 
 
 class _TestPhotoFactory:
@@ -64,6 +81,11 @@ class _TestPhotoFactory:
             setattr(p, attr, value(self.cnt))
         self.cnt += 1
         return p
+
+
+def make_album_factory():
+    fact = _TestAlbumFactory()
+    return fact.generate
 
 
 def make_photo_factory():

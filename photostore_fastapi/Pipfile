@@ -33,6 +33,7 @@ aiosqlite = "*"
 [dev-packages]
 pytest-mock = "*"
 faker = "*"
+pyinstaller = "*"
 
 [requires]
 python_version = "3.8"

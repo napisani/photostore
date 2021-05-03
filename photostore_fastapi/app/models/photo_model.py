@@ -1,7 +1,7 @@
 import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Column, Integer, String, DateTime, Float
+from sqlalchemy import Column, Integer, String, DateTime, Float, UniqueConstraint
 
 from ..db.base_class import Base
 from ..obj.media_type import MediaType
@@ -31,3 +31,5 @@ class Photo(Base):
     latitude = Column(Float, unique=False, nullable=False, default=0.0)
     file_size = Column(Float, unique=False, nullable=True, default=0.0)
     thumbnail_file_size = Column(Float, unique=False, nullable=True, default=0.0)
+    UniqueConstraint('native_id', 'device_id', name='native_device_ids_idx')
+
