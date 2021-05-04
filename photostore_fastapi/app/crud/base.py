@@ -2,7 +2,7 @@ from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 from loguru import logger
 from pydantic import BaseModel
-from sqlalchemy import select, func, delete
+from sqlalchemy import select, delete
 from sqlalchemy.orm import Session, Query
 
 from app.db.base_class import Base
@@ -66,13 +66,14 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         obj = await db.execute(select(self.model).where(self.model.id == id))
         await db.execute(delete(self.model).where(self.model.id == id))
         await db.commit()
-        return obj
+        return obj.scalars().first()
 
     async def delete_all(self, db: Session):
         await db.execute(delete(self.model))
         await db.commit()
 
-    async def _paginate(self, db: Session, query: Query, total_query: Query, model: BaseModel, page=None, per_page=None, error_out=True,
+    async def _paginate(self, db: Session, query: Query, total_query: Query, model: BaseModel, page=None, per_page=None,
+                        error_out=True,
                         max_per_page=None):
         """Returns ``per_page`` items from page ``page``.
 

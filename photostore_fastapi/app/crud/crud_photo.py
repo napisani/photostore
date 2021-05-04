@@ -42,6 +42,7 @@ class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
         result_itr = await db.execute(select(self.model).where(cond))
         return result_itr.scalars().all()
 
+
     async def get_latest_photo(self, db: Session, device_id: str) -> Optional[Photo]:
         result_itr = await (db.execute(select(self.model)
                                        .filter_by(device_id=device_id)

@@ -14,6 +14,7 @@ from app.main import app
 from .factories import make_photo_factory, make_video_factory, make_album_factory
 # import sys
 # sys.path.insert(0, "/Users/nick/PycharmProjects/photostore-mono/photostore_fastapi")
+from ..crud.crud_album import AlbumRepo
 from ..crud.crud_photo import PhotoRepo
 
 
@@ -66,6 +67,7 @@ async def run_before_each_test(db: Session, event_loop):
 
     logger.info('run_before_each_test')
     await PhotoRepo.delete_all(db=db)
+    await AlbumRepo.delete_all(db=db)
     # A test function will be run at this point
     yield
 

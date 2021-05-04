@@ -9,6 +9,7 @@ from sqlalchemy import engine_from_config, pool
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 from app.core.config import settings
+from app.models.album_model import Album
 
 config = context.config
 

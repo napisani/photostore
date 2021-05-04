@@ -57,14 +57,14 @@ class TestPhotosAPI:
         resp = test_client.get(url)
         assert resp
 
-    def test_get_fullsize(self, mocker, test_client, photo_factory):
+    def test_get_original_file(self, mocker, test_client, photo_factory):
         photo = photo_factory()
         schema = PhotoSchemaFull(filename=photo.filename, device_id=photo.device_id, native_id=photo.native_id,
                                  path=photo.path, thumbnail_path=photo.thumbnail_path)
         photo.id = 1
         mocker.patch('app.api.api_v1.endpoints.photos.get_photo', return_value=schema)
-        url = f'/api/v1/photos/fullsize/{photo.id}'
-        logger.debug('test_get_fullsize url {}', url)
+        url = f'/api/v1/photos/original_file/{photo.id}'
+        logger.debug('test_get_original_file url {}', url)
         logger.debug('photo.path  {}', photo.path)
         logger.debug('photo.thumbnail_path  {}', photo.thumbnail_path)
         resp = test_client.get(url)
