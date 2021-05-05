@@ -32,7 +32,12 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     async def get_multi(
             self, db: Session, *, skip: int = 0, limit: int = 100
     ) -> List[ModelType]:
-        return await db.execute(select(self.model)).offset(skip).limit(limit)
+        r = await db.execute(select(self.model)).offset(skip).limit(limit)
+        return r.scalars().all()
+
+    async def get_all(self, db: Session) -> List[ModelType]:
+        r = await db.execute(select(self.model))
+        return r.scalars().all()
 
     async def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
         obj_in_data = obj_in.dict()
