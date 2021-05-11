@@ -129,11 +129,7 @@ class BackupService {
     List<MobilePhoto> batch = [];
     int uploadCount = 0;
     for (MobilePhoto photo in queue) {
-      // if (photo.assetType != 1) {
-      // print('not a photo - skipping');
-      // } else {
       batch.add(photo);
-      // }
       if (batch.length == batchSize) {
         if (canceller != null && canceller.hasBeenCancelled) {
           print('cancelled doBackup');

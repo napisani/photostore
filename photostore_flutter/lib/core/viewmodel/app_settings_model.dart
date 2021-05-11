@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:photostore_flutter/core/model/app_settings.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
-import 'package:photostore_flutter/core/viewmodel/viewmodel_ticker_provider.dart';
 import 'package:photostore_flutter/locator.dart';
 
 import 'abstract_view_model.dart';

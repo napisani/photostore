@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:photo_gallery/photo_gallery.dart';
 import 'package:photostore_flutter/core/model/backup_stats.dart';
 import 'package:photostore_flutter/core/model/cancel_notifier.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
@@ -7,6 +8,7 @@ import 'package:photostore_flutter/core/model/pause_notifier.dart';
 import 'package:photostore_flutter/core/model/progress_log.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/model/tab_navigation_item.dart';
+import 'package:photostore_flutter/core/service/album_backup_service.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
 import 'package:photostore_flutter/core/service/backup_services.dart';
 import 'package:photostore_flutter/core/service/lockout_service.dart';
@@ -27,6 +29,8 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
   PauseNotifier pauseNotifier;
 
   final BackupService _backupService = locator<BackupService>();
+  final AlbumBackupService _albumBackupService = locator<AlbumBackupService>();
+
   final MobileMediaService _mobileMediaService = locator<MobileMediaService>();
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
   final LockoutService _lockoutService = locator<LockoutService>();
@@ -155,6 +159,7 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
             percent: ((orig - newCnt)) / orig, progressText: progressText);
         notifyListeners();
       });
+      await _albumBackupService.doAlbumBackup();
       if (cancelNotifier.hasBeenCancelled) {
         reinit();
       } else {

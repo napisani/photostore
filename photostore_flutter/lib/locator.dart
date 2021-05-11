@@ -1,13 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
-import 'package:photostore_flutter/core/repository/media_api_repository.dart';
-import 'package:photostore_flutter/core/repository/media_mobile_repositoryV2.dart';
+import 'package:photostore_flutter/core/repository/album/album_mobile_repository.dart';
+import 'package:photostore_flutter/core/service/album_backup_service.dart';
 import 'package:photostore_flutter/core/service/backup_services.dart';
 import 'package:photostore_flutter/core/service/lockout_service.dart';
 import 'package:photostore_flutter/core/service/server_refinement_service.dart';
 import 'package:photostore_flutter/core/service/tab_service.dart';
 import 'package:photostore_flutter/core/service/window/abstract_window_service.dart';
 
+import 'core/repository/album/album_api_repository.dart';
+import 'core/repository/photo/media_api_repository.dart';
+import 'core/repository/photo/media_mobile_repository.dart';
 import 'core/repository/settings_repository.dart';
 import 'core/service/app_settings_service.dart';
 import 'core/service/http_service.dart';
@@ -55,14 +58,28 @@ void setupLocator() {
         () => MediaAPIRepository(),
         dispose: (service) => service.dispose());
 
+    locator.registerLazySingleton<AlbumAPIRepository>(
+        () => AlbumAPIRepository(),
+        dispose: (service) => service.dispose());
+
     if (!kIsWeb) {
+      locator.registerLazySingleton<BackupService>(() => BackupService(),
+          dispose: (service) => service.dispose());
+
+      locator.registerLazySingleton<AlbumBackupService>(
+          () => AlbumBackupService(),
+          dispose: (service) => service.dispose());
+
       locator.registerLazySingleton<MobileMediaService>(
           () => MobileMediaService(),
           dispose: (service) => service.dispose());
-      locator.registerLazySingleton<BackupService>(() => BackupService(),
+
+      locator.registerLazySingleton<MediaMobileRepository>(
+          () => MediaMobileRepository(),
           dispose: (service) => service.dispose());
-      locator.registerLazySingleton<MediaMobileRepositoryV2>(
-          () => MediaMobileRepositoryV2(),
+
+      locator.registerLazySingleton<AlbumMobileRepository>(
+          () => AlbumMobileRepository(),
           dispose: (service) => service.dispose());
     }
   }

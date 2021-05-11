@@ -1,6 +1,11 @@
 import 'dart:io';
 
+import 'package:photo_manager/photo_manager.dart';
+
 import 'agnostic_media.dart';
+import 'app_settings.dart';
+import 'future_memory_image.dart';
+import 'media_contents.dart';
 
 typedef FileGetterFunction = Future<File> Function();
 
@@ -44,6 +49,37 @@ class MobilePhoto extends AgnosticMedia {
             latitude: latitude,
             filename: filename,
             assetType: assetType);
+
+  factory MobilePhoto.fromAssetPathEntity(
+          AssetEntity item, AppSettings settings) =>
+      MobilePhoto(
+          id: item.id,
+          checksum: '',
+          gphotoId: '',
+          assetType: item.typeInt,
+          filename: item.title,
+          creationDate: item.createDateTime,
+          modifiedDate: item.modifiedDateTime,
+          width: item.width,
+          height: item.height,
+          longitude: item.longitude,
+          latitude: item.latitude,
+          nativeId: item.id,
+          deviceId: settings.deviceID,
+          // originFile: ()=> item.loadFile(isOrigin: false),
+          getOriginFile: () => item.originFile,
+          getThumbnailProviderOfSize: (double width, double height) =>
+              FutureMemoryImage(() => item
+                  .thumbDataWithSize(width.round(), height.round())
+                  .asStream()
+                  .first),
+          thumbnailProvider:
+              FutureMemoryImage(() => item.thumbData.asStream().first),
+          getThumbnail: () => item.thumbData
+              .asStream()
+              .map((bin) => MediaContents.memory(bin))
+              .first,
+          mimeType: '');
 
   @override
   List<Object> get props => [...super.props, checksum, gphotoId, mimeType];

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:photostore_flutter/core/model/agnostic_media.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
-import 'package:photostore_flutter/core/repository/media_repository.dart';
+import 'package:photostore_flutter/core/repository/photo/media_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class AbstractPhotoPageService {
@@ -10,9 +10,6 @@ abstract class AbstractPhotoPageService {
   final BehaviorSubject<Pagination<AgnosticMedia>> _photoPage =
       BehaviorSubject.seeded(Pagination<AgnosticMedia>());
 
-  //
-  // final BehaviorSubject<Pagination<AgnosticMedia>> _photoPageFake =
-  //     BehaviorSubject.seeded(Pagination<AgnosticMedia>());
 
   AbstractPhotoPageService({@required this.mediaRepo});
 
@@ -39,7 +36,8 @@ abstract class AbstractPhotoPageService {
       _photoPage.add(_photoPage.value);
       return _photoPage.value;
     } else {
-      final photos = await this.mediaRepo.getPhotosByPage(pageNumber, filters: filters);
+      final photos =
+          await this.mediaRepo.getPhotosByPage(pageNumber, filters: filters);
       print("got photos: $photos");
       final newPhotos = Pagination.combineWith(_photoPage.value, photos);
       _photoPage.add(newPhotos);

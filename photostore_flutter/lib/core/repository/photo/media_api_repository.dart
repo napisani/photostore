@@ -8,33 +8,23 @@ import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo.dart';
 import 'package:photostore_flutter/core/model/photo_diff_request.dart';
 import 'package:photostore_flutter/core/model/photo_diff_result.dart';
-import 'package:photostore_flutter/core/service/http_service.dart';
 import 'package:photostore_flutter/core/utils/api_key_utils.dart';
-import 'package:photostore_flutter/locator.dart';
 
+import '../api_repository_mixin.dart';
 import 'media_repository.dart';
 
-class MediaAPIRepository extends MediaRepository<Photo> {
-  final HTTPService _httpService = locator<HTTPService>();
-
-  String _getBaseURL() {
-    if (this.settings != null) {
-      return "${settings.https ? "https" : "http"}://${settings.serverIP}:${settings.serverPort}/api/v1/photos";
-    }
-    throw new Exception("Server settings are not configured");
-  }
-
+class MediaAPIRepository extends MediaRepository<Photo>
+    with APIRepositoryMixin {
   Future<void> deletePhotosByDeviceID({String deviceId}) async {
     if (deviceId == null || deviceId == '') {
       deviceId = settings.deviceID;
     }
     deviceId = Uri.encodeFull(deviceId);
     print(
-        "MediaAPIRepository deletePhotosByDeviceID baseUrl: ${_getBaseURL()} ");
-    final response = await _httpService
-        .getHttpClient()
-        .delete("${_getBaseURL()}/delete_by_device/$deviceId");
-    _checkForCorrectAuth(response);
+        "MediaAPIRepository deletePhotosByDeviceID baseUrl: ${getBaseURL(settings)} ");
+    final response = await httpService.getHttpClient().delete(
+        "${getBaseURL(settings)}/photos/delete_by_device/${urlEncode(deviceId)}");
+    checkForCorrectAuth(response);
     if (response.statusCode != 200) {
       final Exception ex = Exception('error deleting photos by device id');
       print("MediaAPIRepository.deletePhotosByDeviceID $ex");
@@ -42,16 +32,9 @@ class MediaAPIRepository extends MediaRepository<Photo> {
     }
   }
 
-  void _checkForCorrectAuth(Response response) {
-    if (response.statusCode == 403 || response.statusCode == 401) {
-      throw Exception(
-          "The server denied access, please check your API Key settings.");
-    }
-  }
-
   Future<Photo> uploadPhoto(MobilePhoto photo) async {
     print(
-        "MediaAPIRepository uploadPhoto baseUrl: ${_getBaseURL()} photo: $photo");
+        "MediaAPIRepository uploadPhoto baseUrl: ${getBaseURL(settings)} photo: $photo");
     final Map<String, dynamic> jsonData = photo.toJson();
     jsonData['device_id'] = settings.deviceID;
     final File originFile = (await photo.getOriginFile());
@@ -62,9 +45,9 @@ class MediaAPIRepository extends MediaRepository<Photo> {
       "file": MultipartFile.fromFileSync(originFile.path,
           filename: originFile.path),
     });
-    Response res = await _httpService
+    Response res = await httpService
         .getHttpClient()
-        .post('${_getBaseURL()}/upload', data: formData);
+        .post('${getBaseURL(settings)}/photos/upload', data: formData);
     // final Map<String, dynamic> data = json.decode(response.body);
     // print(data);
     return null;
@@ -73,17 +56,17 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   Future<Pagination<Photo>> getPhotosByPage(int page,
       {Map<String, String> filters}) async {
     print(
-        "MediaAPIRepository getPhotosByPage baseUrl: ${_getBaseURL()} page: $page");
-    final response = await _httpService
+        "MediaAPIRepository getPhotosByPage baseUrl: ${getBaseURL(settings)} page: $page");
+    final response = await httpService
         .getHttpClient()
-        .get("${_getBaseURL()}/page/$page", queryParameters: {
+        .get("${getBaseURL(settings)}/photos/page/$page", queryParameters: {
       "per_page": itemsPerPage,
       "sort": "modified_date",
       "direction": "desc",
       ...(filters != null ? filters : {})
     });
 
-    _checkForCorrectAuth(response);
+    checkForCorrectAuth(response);
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = response.data;
 
@@ -107,10 +90,12 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   }
 
   Future<Photo> getLastBackedUpPhoto() async {
-    print("MediaAPIRepository getLastBackedUpPhoto baseUrl: ${_getBaseURL()}");
-    final String url = "${_getBaseURL()}/latest/${settings.deviceID}";
-    final response = await _httpService.getHttpClient().get(url);
-    _checkForCorrectAuth(response);
+    print(
+        "MediaAPIRepository getLastBackedUpPhoto baseUrl: ${getBaseURL(settings)}");
+    final String url =
+        "${getBaseURL(settings)}/photos/latest/${urlEncode(settings.deviceID)}";
+    final response = await httpService.getHttpClient().get(url);
+    checkForCorrectAuth(response);
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = response.data;
 
@@ -132,10 +117,11 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   }
 
   Future<int> getPhotoCount() async {
-    print("MediaAPIRepository getPhotoCount baseUrl: ${_getBaseURL()}");
-    final String url = "${_getBaseURL()}/count/${settings.deviceID}";
-    final response = await _httpService.getHttpClient().get(url);
-    _checkForCorrectAuth(response);
+    print("MediaAPIRepository getPhotoCount baseUrl: ${getBaseURL(settings)}");
+    final String url =
+        "${getBaseURL(settings)}/photos/count/${urlEncode(settings.deviceID)}";
+    final response = await httpService.getHttpClient().get(url);
+    checkForCorrectAuth(response);
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -146,11 +132,11 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   }
 
   Future<List<MediaDevice>> getDevices() async {
-    print("MediaAPIRepository getDevices baseUrl: ${_getBaseURL()}");
-    final String url = "${_getBaseURL()}/devices";
+    print("MediaAPIRepository getDevices baseUrl: ${getBaseURL(settings)}");
+    final String url = "${getBaseURL(settings)}/photos/devices";
 
-    final response = await _httpService.getHttpClient().get(url);
-    _checkForCorrectAuth(response);
+    final response = await httpService.getHttpClient().get(url);
+    checkForCorrectAuth(response);
     if (response.statusCode == 200) {
       final List<dynamic> data = response.data;
       try {
@@ -172,15 +158,15 @@ class MediaAPIRepository extends MediaRepository<Photo> {
 
   Future<List<PhotoDiffResult>> diffPhotos(
       List<PhotoDiffRequest> photoDiffReqs) async {
-    print("MediaAPIRepository diffPhotos baseUrl: ${_getBaseURL()}");
-    final String url = "${_getBaseURL()}/diff";
+    print("MediaAPIRepository diffPhotos baseUrl: ${getBaseURL(settings)}");
+    final String url = "${getBaseURL(settings)}/photos/diff";
     final List<Map<String, dynamic>> reqs =
         photoDiffReqs.map<Map<String, dynamic>>((req) => req.toJson()).toList();
 
-    final response = await _httpService
+    final response = await httpService
         .getHttpClient()
         .post(url, data: json.encoder.convert(reqs));
-    _checkForCorrectAuth(response);
+    checkForCorrectAuth(response);
     if (response.statusCode == 200) {
       final List<dynamic> data = response.data;
 
@@ -202,10 +188,12 @@ class MediaAPIRepository extends MediaRepository<Photo> {
   }
 
   Photo mapResponseToPhoto(Map<String, dynamic> item) {
-    final String thumbnailUrl = "${_getBaseURL()}/thumbnail/${item['id']}";
+    final String thumbnailUrl =
+        "${getBaseURL(settings)}/photos/thumbnail/${item['id']}";
     final String fullSizeAsPngUrl =
-        "${_getBaseURL()}/fullsize_photo_as_png/${item['id']}";
-    final String fullSizeUrl = "${_getBaseURL()}/fullsize_photo/${item['id']}";
+        "${getBaseURL(settings)}/fullsize_photo_as_png/$item['id']}";
+    final String fullSizeUrl =
+        "${getBaseURL(settings)}/photos/fullsize_photo/${item['id']}";
 
     return Photo.fromJson(item, thumbnailUrl, fullSizeUrl, fullSizeAsPngUrl,
         {ACCESS_TOKEN_KEY: settings.apiKey});

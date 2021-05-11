@@ -19,6 +19,16 @@ class LoadingWidget extends StatelessWidget {
       this.onResume,
       this.isPaused});
 
+  double getPercent(double percent) {
+    if (percent > 0) {
+      return percent;
+    }
+    if (animationController.value > 0) {
+      return animationController.value;
+    }
+    return 1;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -32,7 +42,7 @@ class LoadingWidget extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
           CircularProgressIndicator(
-            value: percent < 0 ? animationController.value : percent,
+            value: getPercent(percent),
             semanticsLabel: 'Loading',
           ),
           Row(
