@@ -161,7 +161,7 @@ async def api_get_photo_count(device_id: str, api_key: APIKey = Depends(get_api_
 async def api_delete_photos_by_id(device_id: str, api_key: APIKey = Depends(get_api_key),
                                   db=Depends(deps.get_async_db)):
     await delete_photos_by_device(db=db, device_id=device_id)
-    logger.debug('api_delete_photos_by_id  {}')
+    logger.debug('api_delete_photos_by_id  {}', device_id)
 
 
 @router.get('/devices', response_model=List[DeviceResultSchema])

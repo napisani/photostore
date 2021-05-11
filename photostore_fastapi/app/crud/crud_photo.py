@@ -1,9 +1,10 @@
 from typing import Optional, List
 
-from sqlalchemy import or_, and_, select, func
+from sqlalchemy import or_, and_, select, func, delete
 from sqlalchemy.orm import Session
 
 from .base import CRUDBase
+from ..models.album_to_photo_table import album_to_photo_table
 from ..models.pagination import Pagination
 from ..models.photo_model import Photo
 from ..obj.photo_sort_attribute import PhotoSortAttribute
@@ -71,5 +72,10 @@ class CRUDPhoto(CRUDBase[Photo, PhotoSchemaAdd, PhotoSchemaUpdate]):
         )
         return result_itr.all()
 
-
+    # async def remove(self, db: Session, *, id: int) -> Photo:
+    #     # await db.execute(delete(album_to_photo_table).where(album_to_photo_table.photo_id == id))
+    #     # obj = await db.execute(select(self.model).where(self.model.id == id))
+    #     # await db.execute(delete(self.model).where(self.model.id == id))
+    #     # await db.commit()
+    #     return super().remove(db=db, id=id)
 PhotoRepo = CRUDPhoto(Photo)

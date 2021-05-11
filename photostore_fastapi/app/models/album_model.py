@@ -9,4 +9,9 @@ class Album(Base):
     __name__ = 'album'
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(1024), unique=True, nullable=False, default='')
-    photos = relationship('Photo', secondary=album_to_photo_table, backref=backref('album'), lazy='joined')
+    photos = relationship('Photo',
+                          secondary=album_to_photo_table,
+                          backref=backref('albums', uselist=True,
+                                          # lazy='joined'
+                                          ),
+                          lazy='joined')

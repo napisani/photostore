@@ -1,7 +1,7 @@
 import datetime
 
 from sqlalchemy import Column, Integer, String, DateTime, Float, UniqueConstraint
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 # from .album_to_photo_table import album_to_photo_table
 from .album_to_photo_table import album_to_photo_table
@@ -32,4 +32,8 @@ class Photo(Base):
     thumbnail_file_size = Column(Float, unique=False, nullable=True, default=0.0)
     # albums = relationship('Album', secondary=album_to_photo_table, backref='Photo', lazy='dynamic')
 
+    # albums = relationship('Album',
+    #                       secondary=album_to_photo_table,
+    #                       backref=backref('photo'),
+    #                       lazy='joined',  cascade="all, delete")
     UniqueConstraint('native_id', 'device_id', name='native_device_ids_idx')

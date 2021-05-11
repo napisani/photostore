@@ -9,6 +9,8 @@ from sqlalchemy.orm import Session
 
 # from werkzeug.utils import secure_filename
 # register to support .HEIC files
+from sqlalchemy.util import concurrency
+
 from app.crud.crud_photo import PhotoRepo
 from app.exception.photo_exceptions import PhotoExceptions
 from app.models.pagination import Pagination
@@ -61,33 +63,34 @@ async def add_photo(db: Session, photo: PhotoSchemaAdd, file) -> PhotoSchemaFull
 
 
 async def delete_photos_by_device(db: Session, device_id: str):
-    for photo in await PhotoRepo.get_photos_by_device_id(db, device_id):
+    photos = await PhotoRepo.get_photos_by_device_id(db=db, device_id=device_id)
+    logger.debug('delete_photos_by_device photo with photos: {}', photos)
+    for photo in photos:
         try:
+            logger.debug('deleting photo with id: {}', photo.id)
             await delete_photo(db, photo.id)
         except Exception as e:
             logger.warning(f"failed to delete photo with id: {photo.id} - {e}")
 
 
 async def delete_photo(db: Session, photo_id: int):
-    photo = await get_photo(db, photo_id)
+    photo = await PhotoRepo.get_by_id(db, id=photo_id)
     if not photo:
         raise PhotoExceptions.photo_not_found()
     if os.path.exists(photo.path):
         try:
             os.remove(photo.path)
         except:
-            raise
             raise PhotoExceptions.failed_to_delete_photo_file()
     if os.path.exists(photo.thumbnail_path):
         try:
             os.remove(photo.thumbnail_path)
         except:
-            raise
             raise PhotoExceptions.failed_to_delete_thumbnail_file()
     try:
         await PhotoRepo.remove(db, id=photo.id)
-    except:
-        raise
+    except Exception as e:
+        logger.error(f'delete_photo error:  {e}')
         raise PhotoExceptions.failed_to_delete_photo_from_db()
 
 
@@ -99,8 +102,6 @@ async def get_fullsize_photo_as_png(db: Session, photo_id: int) -> BytesIO:
     photo = await get_photo(db, photo_id=photo_id)
     logger.debug('get_fullsize_photo_as_png photo: {}', photo)
     return get_media_as_png(photo)
-
-
 
 
 async def get_latest_photo(db: Session, device_id: str) -> Optional[PhotoSchemaFull]:

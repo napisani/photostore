@@ -29,7 +29,7 @@ async def get_all_albums(db: Session) -> List[AlbumSchemaFull]:
 
 
 async def get_album(db: Session, album_id: int) -> AlbumSchemaFull:
-    logger.debug('in get_album id :{}', id)
+    logger.debug('in get_album album_id :{}', id)
     album = await AlbumRepo.get_by_id(db=db, id=album_id)
     photo_ids = [p.id for p in album.photos]
     return AlbumSchemaFull(name=album.name, photo_ids=photo_ids, id=album.id)
@@ -41,7 +41,7 @@ async def remove_photo_associations_by_device_id(db: Session, name: str, device_
     album = await AlbumRepo.get_by_name(db=db, name=name)
     photos_to_remove = [p for p in album.photos if p.device_id == device_id]
     await AlbumRepo.remove_photos(db=db, album=album, photos=photos_to_remove)
-    return await get_album(db=db, id=album.id)
+    return await get_album(db=db, album_id=album.id)
 
 
 async def associate_photos_with_album(db: Session, photo_refs: List[AlbumSchemaAssociate]) -> AlbumSchemaFull:
