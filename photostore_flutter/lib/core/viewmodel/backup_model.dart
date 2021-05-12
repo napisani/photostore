@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:photo_gallery/photo_gallery.dart';
 import 'package:photostore_flutter/core/model/backup_stats.dart';
 import 'package:photostore_flutter/core/model/cancel_notifier.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
@@ -148,18 +147,23 @@ class BackupModel extends AbstractViewModel with TabViewModelMixin {
     try {
       this.cancelNotifier = CancelNotifier();
       this.pauseNotifier = PauseNotifier();
-      await _backupService.doBackup(queuedPhotos,
-          canceller: cancelNotifier,
-          pauseNotifier: pauseNotifier,
-          progressLog: this.progressLog,
-          progressNotify: (int orig, int newCnt) {
+      BackupProgressHandler progressNotifyFnc = (int orig, int newCnt) {
         print('inside progressNotify');
         final String progressText = 'Backed up ${orig - newCnt} of $orig total';
         this.screenStatus = ScreenStatus.loading(this,
             percent: ((orig - newCnt)) / orig, progressText: progressText);
         notifyListeners();
-      });
-      await _albumBackupService.doAlbumBackup();
+      };
+      await _backupService.doBackup(queuedPhotos,
+          canceller: cancelNotifier,
+          pauseNotifier: pauseNotifier,
+          progressLog: this.progressLog,
+          progressNotify: progressNotifyFnc);
+      await _albumBackupService.doAlbumBackup(
+          canceller: cancelNotifier,
+          pauseNotifier: pauseNotifier,
+          progressLog: this.progressLog,
+          progressNotify: progressNotifyFnc);
       if (cancelNotifier.hasBeenCancelled) {
         reinit();
       } else {
