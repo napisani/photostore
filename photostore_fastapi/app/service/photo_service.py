@@ -7,10 +7,6 @@ from loguru import logger
 from pyheif_pillow_opener import register_heif_opener
 from sqlalchemy.orm import Session
 
-# from werkzeug.utils import secure_filename
-# register to support .HEIC files
-from sqlalchemy.util import concurrency
-
 from app.crud.crud_photo import PhotoRepo
 from app.exception.photo_exceptions import PhotoExceptions
 from app.models.pagination import Pagination
@@ -23,6 +19,9 @@ from app.schemas.photo_schema import PhotoSchemaFull, PhotoSchemaAdd, PhotoSchem
 from app.service.image_file_helper import save_photo_file, create_thumbnail, get_allowed_extensions, \
     get_media_type_by_extension, get_media_as_png
 from app.utils import get_file_checksum, get_file_extension
+
+# from werkzeug.utils import secure_filename
+# register to support .HEIC files
 
 register_heif_opener()
 
@@ -88,6 +87,11 @@ async def delete_photo(db: Session, photo_id: int):
         except:
             raise PhotoExceptions.failed_to_delete_thumbnail_file()
     try:
+        # sync wrapper to support lazy loading with async db session
+        def remove_photos_from_albums(sync_db_session):
+            photo.albums = []
+            sync_db_session.commit()
+        await db.run_sync(remove_photos_from_albums)
         await PhotoRepo.remove(db, id=photo.id)
     except Exception as e:
         logger.error(f'delete_photo error:  {e}')
