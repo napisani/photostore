@@ -2,16 +2,16 @@ import 'package:photostore_flutter/core/model/cancel_notifier.dart';
 import 'package:photostore_flutter/core/model/pause_notifier.dart';
 import 'package:photostore_flutter/core/model/photo_album.dart';
 import 'package:photostore_flutter/core/model/progress_log.dart';
-import 'package:photostore_flutter/core/repository/album/album_api_repository.dart';
-import 'package:photostore_flutter/core/repository/album/album_mobile_repository.dart';
+import 'package:photostore_flutter/core/service/album/album_api_service.dart';
+import 'package:photostore_flutter/core/service/album/album_mobile_service.dart';
 import 'package:photostore_flutter/locator.dart';
 
 import 'backup_services.dart';
 
 class AlbumBackupService {
-  final AlbumAPIRepository _albumAPIRepo = locator<AlbumAPIRepository>();
-  final AlbumMobileRepository _albumMobileRepo =
-      locator<AlbumMobileRepository>();
+  final AlbumAPIService _albumAPIService = locator<AlbumAPIService>();
+  final AlbumMobileService _albumMobileService =
+      locator<AlbumMobileService>();
 
   ProgressStats _buildProgressStatForAlbum(PhotoAlbum album) {
     ProgressStats stats = ProgressStats(
@@ -48,7 +48,7 @@ class AlbumBackupService {
     progressLog?.add(comparingAlbumProgressStats);
     Map<String, PhotoAlbum> apiAlbumsMap;
     try {
-      apiAlbumsMap = Map.fromIterable(await _albumAPIRepo.getAllAlbums(),
+      apiAlbumsMap = Map.fromIterable(await _albumAPIService.getAllAlbums(),
           key: (v) => v.name.toLowerCase(), value: (v) => v);
     } catch (ex, s) {
       print('Error getting Alums from API  $ex, Stack: $s');
@@ -59,7 +59,7 @@ class AlbumBackupService {
     }
     List<PhotoAlbum> mobileAlbums;
     try {
-      mobileAlbums = await _albumMobileRepo.getAllAlbums();
+      mobileAlbums = await _albumMobileService.getAllAlbums();
     } catch (ex, s) {
       print('Error getting Alums from mobile phone  $ex, Stack: $s');
       comparingAlbumProgressStats.updateStatus("ERROR",
@@ -83,11 +83,11 @@ class AlbumBackupService {
       progressLog?.add(albumStats);
       try {
         if (!apiAlbumsMap.containsKey(album.name.toLowerCase())) {
-          PhotoAlbum apiAlbum = await _albumAPIRepo.addAlbum(album);
+          PhotoAlbum apiAlbum = await _albumAPIService.addAlbum(album);
           apiAlbumsMap[apiAlbum.name] = apiAlbum;
         } else {
-          await _albumAPIRepo.removePhotosFromAlbum(album);
-          await _albumAPIRepo.addPhotosToAlbum(album, album.photos);
+          await _albumAPIService.removePhotosFromAlbum(album);
+          await _albumAPIService.addPhotosToAlbum(album, album.photos);
         }
 
         albumStats.updateStatus("DONE",

@@ -1,3 +1,4 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
@@ -21,28 +22,75 @@ class _ServerRefinementScreen extends StatelessWidget {
       Widget inner;
       if (state?.status != null && state?.status is SuccessScreenStatus) {
         inner = ListView(children: [
-          Container(
-              padding: EdgeInsets.all(10),
-              child: Center(
-                  child: Text(
-                'Device Filter',
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ))),
-          ToggleButtons(
-            direction: Axis.vertical,
-            children: <Widget>[
-              ...state.deviceOptions
-                  .map((device) => Text(device.deviceId))
-                  .toList()
-            ],
-            onPressed: (int index) {
-              state.selectDevice(state.deviceOptions[index]);
-            },
-            isSelected: state.deviceOptions
-                .map((e) => e == state.selectedDevice)
-                .toList(),
+          ExpandablePanel(
+            header: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Device Filter',
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+            ),
+            collapsed: Text(
+              'View device filters...',
+            ),
+            expanded: Container(
+              width: MediaQuery.of(context).size.width,
+              child: ToggleButtons(
+                direction: Axis.vertical,
+                children: <Widget>[
+                  ...state.deviceOptions
+                      .map((device) => Text(device.deviceId))
+                      .toList()
+                ],
+                onPressed: (int index) {
+                  state.selectDevice(state.deviceOptions[index]);
+                },
+                isSelected: state.deviceOptions
+                    .map((e) => e == state.selectedDevice)
+                    .toList(),
+              ),
+            ),
+            // tapHeaderToExpand: true,
+            // hasIcon: true,
           ),
+
+          ExpandablePanel(
+            header: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Albums',
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+            ),
+            collapsed: Text(
+              'View albums...',
+            ),
+            expanded: Container(
+              width: MediaQuery.of(context).size.width,
+              child: ToggleButtons(
+                direction: Axis.vertical,
+                children: <Widget>[
+                  ...state.albumOptions
+                      .map((album) => Text(album.name))
+                      .toList()
+                ],
+                onPressed: (int index) {
+                  state.selectAlbum(state.albumOptions[index]);
+                },
+                isSelected: state.albumOptions
+                    .map((e) => e == state.selectedAlbum)
+                    .toList(),
+              ),
+            ),
+            // tapHeaderToExpand: true,
+            // hasIcon: true,
+          ),
+
+
         ]);
       } else {
         inner = CommonStatusWidget(

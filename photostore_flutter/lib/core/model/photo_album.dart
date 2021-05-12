@@ -8,12 +8,11 @@ class PhotoAlbum {
   final String id;
   final String name;
   final List<AgnosticMedia> photos;
+  final isAll;
 
-  const PhotoAlbum({
-    this.id,
-    this.name,
-    this.photos,
-  });
+  const PhotoAlbum({this.id, this.name, this.photos, this.isAll = false});
+
+  factory PhotoAlbum.allOption() => PhotoAlbum(name: "All", isAll: true);
 
   factory PhotoAlbum.fromJson(Map<String, dynamic> item) {
     return PhotoAlbum(id: item['id'].toString(), name: item['name']);

@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:photostore_flutter/core/repository/album/album_mobile_repository.dart';
+import 'package:photostore_flutter/core/service/album/album_api_service.dart';
+import 'package:photostore_flutter/core/service/album/album_mobile_service.dart';
 import 'package:photostore_flutter/core/service/album_backup_service.dart';
 import 'package:photostore_flutter/core/service/backup_services.dart';
 import 'package:photostore_flutter/core/service/lockout_service.dart';
@@ -61,7 +63,8 @@ void setupLocator() {
     locator.registerLazySingleton<AlbumAPIRepository>(
         () => AlbumAPIRepository(),
         dispose: (service) => service.dispose());
-
+    locator.registerLazySingleton<AlbumAPIService>(() => AlbumAPIService(),
+        dispose: (service) => service.dispose());
     if (!kIsWeb) {
       locator.registerLazySingleton<BackupService>(() => BackupService(),
           dispose: (service) => service.dispose());
@@ -80,6 +83,9 @@ void setupLocator() {
 
       locator.registerLazySingleton<AlbumMobileRepository>(
           () => AlbumMobileRepository(),
+          dispose: (service) => service.dispose());
+      locator.registerLazySingleton<AlbumMobileService>(
+          () => AlbumMobileService(),
           dispose: (service) => service.dispose());
     }
   }
