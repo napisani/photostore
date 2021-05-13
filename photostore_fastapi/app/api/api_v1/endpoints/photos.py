@@ -1,5 +1,6 @@
 import io
 import json
+from datetime import datetime
 from typing import List
 
 from fastapi import APIRouter, Depends
@@ -18,9 +19,9 @@ from app.obj.sort_direction import SortDirection
 from app.schemas.health_schema import HealthSchema
 from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull, PhotoDiffRequestSchema, PhotoDiffResultSchema, \
-    DeviceResultSchema
+    DeviceResultSchema, PhotoDateRangeSchema
 from app.service.photo_service import get_photos, add_photo, get_photo, diff_photos, get_latest_photo, \
-    count_photos, allowed_file, delete_photos_by_device, get_devices, get_fullsize_photo_as_png
+    count_photos, allowed_file, delete_photos_by_device, get_devices, get_fullsize_photo_as_png, get_photo_date_ranges
 
 router = APIRouter()
 
@@ -48,13 +49,15 @@ async def api_get_photos(
         per_page: int = 10,
         sort: PhotoSortAttribute = PhotoSortAttribute.creation_date,
         direction: SortDirection = SortDirection.desc,
-        device_id: str = None
+        device_id: str = None,
+        album_name: str = None,
+        before_modified_date: datetime = None
 ) -> PaginationSchema[PhotoSchemaFull]:
     """
     Retrieve photos by page.
     """
     logger.debug(f'in api_get_photos page: {page}, per_page:{per_page}, device_id: {device_id}')
-    pagination = await get_photos(db, page, per_page, sort, direction, device_id)
+    pagination = await get_photos(db, page, per_page, sort, direction, device_id, album_name, before_modified_date)
     return pagination
 
 
@@ -172,4 +175,13 @@ async def api_get_devices(api_key: APIKey = Depends(get_api_key),
 
     logger.debug('api_get_devices results: {}', results)
 
+    return results
+
+
+@router.get('/dates', response_model=PhotoDateRangeSchema)
+async def api_get_date_ranges(api_key: APIKey = Depends(get_api_key),
+                              db=Depends(deps.get_async_db)) -> PhotoDateRangeSchema:
+    logger.debug('inside api_get_date_ranges')
+    results = await get_photo_date_ranges(db=db)
+    logger.debug('api_get_date_ranges results: {}', results)
     return results

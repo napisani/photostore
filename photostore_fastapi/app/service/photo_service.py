@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from io import BytesIO
 from typing import Optional, List
 
@@ -15,7 +16,7 @@ from app.obj.photo_sort_attribute import PhotoSortAttribute
 from app.obj.sort_direction import SortDirection
 from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchemaFull, PhotoSchemaAdd, PhotoSchemaUpdate, PhotoDiffRequestSchema, \
-    PhotoDiffResultSchema, DeviceResultSchema
+    PhotoDiffResultSchema, DeviceResultSchema, PhotoDateRangeSchema
 from app.service.image_file_helper import save_photo_file, create_thumbnail, get_allowed_extensions, \
     get_media_type_by_extension, get_media_as_png
 from app.utils import get_file_checksum, get_file_extension
@@ -91,6 +92,7 @@ async def delete_photo(db: Session, photo_id: int):
         def remove_photos_from_albums(sync_db_session):
             photo.albums = []
             sync_db_session.commit()
+
         await db.run_sync(remove_photos_from_albums)
         await PhotoRepo.remove(db, id=photo.id)
     except Exception as e:
@@ -130,13 +132,18 @@ async def get_photos(db: Session,
                      per_page: int = 10,
                      order_by=PhotoSortAttribute.modified_date,
                      direction=SortDirection.desc,
-                     device_id: str = None) -> Pagination:
+                     device_id: str = None,
+                     album_name: str = None,
+                     before_modified_date: datetime = None
+                     ) -> Pagination:
     photos = await PhotoRepo.get_photos(db,
                                         page=page,
                                         per_page=per_page,
                                         order_by=order_by,
                                         direction=direction,
-                                        device_id=device_id)
+                                        device_id=device_id,
+                                        album_name=album_name,
+                                        before_modified_date=before_modified_date)
     pagination = PaginationSchema.from_orm(photos)
     pagination.items = [PhotoSchemaFull.from_orm(p) for p in photos.items]
     return pagination
@@ -176,4 +183,15 @@ async def get_devices(db: Session) -> List[DeviceResultSchema]:
     results = [DeviceResultSchema(device_id=device_id, count=cnt, file_size_total=size_total,
                                   thumbnail_file_size_total=thumb_total) for device_id, cnt, size_total, thumb_total in
                devices]
+    return results
+
+
+async def get_photo_date_ranges(db: Session) -> PhotoDateRangeSchema:
+    ranges = await PhotoRepo.get_photo_date_range(db)
+
+    mod_min, mod_max, create_min, create_max = ranges[0]
+    results = PhotoDateRangeSchema(modified_date_start=mod_min,
+                                   modified_date_end=mod_max,
+                                   create_date_start=create_min,
+                                   create_date_end=create_max)
     return results

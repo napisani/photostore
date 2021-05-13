@@ -88,3 +88,10 @@ class DeviceResultSchema(BaseModel):
     count: Optional[str]
     file_size_total: Optional[float]
     thumbnail_file_size_total: Optional[float]
+
+
+class PhotoDateRangeSchema(BaseModel):
+    modified_date_start: Optional[datetime.datetime]
+    modified_date_end: Optional[datetime.datetime]
+    create_date_start: Optional[datetime.datetime]
+    create_date_end: Optional[datetime.datetime]

@@ -20,34 +20,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="adding album apis">
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo_album.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/album/album_api_repository.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/album/album_mobile_repository.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/album/album_repository.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/api_repository_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/mobile_repository_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/album_backup_service.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo_date_ranges.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/crud/crud_photo.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/crud/crud_photo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/album_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/album_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/album_to_photo_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/album_to_photo_table.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/photo_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/photo_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/service/album_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/album_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/photo_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/photo_schema.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/service/photo_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/photo_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/mobile_photo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/mobile_photo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_api_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/photo/media_api_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_mobile_repositoryV2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/photo/media_mobile_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/media_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/photo/media_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/mock_media_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/photo/mock_media_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/backup_services.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/backup_services.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/abstract_photo_page_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/abstract_photo_page_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/mobile_media_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/mobile_media_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/photo/media_api_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/photo/media_api_repository.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/server_media_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/server_media_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/app_settings_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/app_settings_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/backup_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/backup_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/locator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/locator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/loading_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/ui/widget/loading_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/server_refinement_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/server_refinement_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/mobile_media_page_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/mobile_media_page_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/server_refinement_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/server_refinement_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +208,7 @@
       <workItem from="1619483789404" duration="13793000" />
       <workItem from="1620000763685" duration="19258000" />
       <workItem from="1620175955474" duration="6848000" />
-      <workItem from="1620262767107" duration="6941000" />
+      <workItem from="1620262767107" duration="15391000" />
     </task>
     <task id="LOCAL-00001" summary="adding all mobile attirubtes - fixed schemas for Add and Update specific">
       <created>1615777399372</created>
@@ -420,7 +406,28 @@
       <option name="project" value="LOCAL" />
       <updated>1620182287647</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="adding album apis">
+      <created>1620702969579</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1620702969580</updated>
+    </task>
+    <task id="LOCAL-00030" summary="adding album apis">
+      <created>1620781541719</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1620781541719</updated>
+    </task>
+    <task id="LOCAL-00031" summary="adding album apis">
+      <created>1620781584356</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1620781584356</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -517,11 +524,11 @@
     <state x="797" y="413" key="#com.intellij.ide.util.MemberChooser/0.23.1920.1095@0.23.1920.1095" timestamp="1620088278205" />
     <state x="797" y="415" key="#com.intellij.ide.util.MemberChooser/0.23.1920.1102@0.23.1920.1102" timestamp="1618194209103" />
     <state x="1593" y="754" key="#com.intellij.ide.util.MemberChooser/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1615776631627" />
-    <state width="1131" height="250" key="DebuggerActiveHint" timestamp="1620702022749">
+    <state width="1131" height="250" key="DebuggerActiveHint" timestamp="1620864675179">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1131" height="250" key="DebuggerActiveHint/0.23.1920.1095@0.23.1920.1095" timestamp="1620702022749" />
-    <state width="1312" height="250" key="DebuggerActiveHint/0.23.1920.1098@0.23.1920.1098" timestamp="1620701078351" />
+    <state width="1131" height="250" key="DebuggerActiveHint/0.23.1920.1095@0.23.1920.1095" timestamp="1620864675179" />
+    <state width="1312" height="250" key="DebuggerActiveHint/0.23.1920.1098@0.23.1920.1098" timestamp="1620864300800" />
     <state width="1312" height="251" key="DebuggerActiveHint/0.23.1920.1100@0.23.1920.1100" timestamp="1620699899302" />
     <state width="1276" height="252" key="DebuggerActiveHint/0.23.1920.1102@0.23.1920.1102" timestamp="1619665374112" />
     <state width="1269" height="252" key="DebuggerActiveHint/0.23.1920.1104@0.23.1920.1104" timestamp="1615944679999" />
@@ -532,11 +539,11 @@
       <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="100" y="123" width="1720" height="894" key="DiffContextDialog/0.23.1920.1100@0.23.1920.1100" timestamp="1618190059441" />
-    <state width="1878" height="311" key="GridCell.Tab.0.bottom" timestamp="1620702807887">
+    <state width="1878" height="311" key="GridCell.Tab.0.bottom" timestamp="1620868773001">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="311" key="GridCell.Tab.0.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1620702807887" />
-    <state width="1878" height="311" key="GridCell.Tab.0.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1620700471982" />
+    <state width="1878" height="311" key="GridCell.Tab.0.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773001" />
+    <state width="1878" height="311" key="GridCell.Tab.0.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1620864413222" />
     <state width="1878" height="311" key="GridCell.Tab.0.bottom/0.23.1920.1100@0.23.1920.1100" timestamp="1620699844044" />
     <state width="1878" height="312" key="GridCell.Tab.0.bottom/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552440" />
     <state width="1878" height="289" key="GridCell.Tab.0.bottom/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897433" />
@@ -545,11 +552,11 @@
     <state width="1878" height="370" key="GridCell.Tab.0.bottom/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
     <state width="3220" height="533" key="GridCell.Tab.0.bottom/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
     <state width="2454" height="312" key="GridCell.Tab.0.bottom/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="311" key="GridCell.Tab.0.center" timestamp="1620702807886">
+    <state width="1878" height="311" key="GridCell.Tab.0.center" timestamp="1620868773000">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="311" key="GridCell.Tab.0.center/0.23.1920.1095@0.23.1920.1095" timestamp="1620702807886" />
-    <state width="1878" height="311" key="GridCell.Tab.0.center/0.23.1920.1098@0.23.1920.1098" timestamp="1620700471982" />
+    <state width="1878" height="311" key="GridCell.Tab.0.center/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773000" />
+    <state width="1878" height="311" key="GridCell.Tab.0.center/0.23.1920.1098@0.23.1920.1098" timestamp="1620864413221" />
     <state width="1878" height="311" key="GridCell.Tab.0.center/0.23.1920.1100@0.23.1920.1100" timestamp="1620699844043" />
     <state width="1878" height="312" key="GridCell.Tab.0.center/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552439" />
     <state width="1878" height="289" key="GridCell.Tab.0.center/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897432" />
@@ -558,11 +565,11 @@
     <state width="1878" height="370" key="GridCell.Tab.0.center/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="3220" height="533" key="GridCell.Tab.0.center/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
     <state width="2454" height="312" key="GridCell.Tab.0.center/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="311" key="GridCell.Tab.0.left" timestamp="1620702807885">
+    <state width="1878" height="311" key="GridCell.Tab.0.left" timestamp="1620868772998">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="311" key="GridCell.Tab.0.left/0.23.1920.1095@0.23.1920.1095" timestamp="1620702807885" />
-    <state width="1878" height="311" key="GridCell.Tab.0.left/0.23.1920.1098@0.23.1920.1098" timestamp="1620700471981" />
+    <state width="1878" height="311" key="GridCell.Tab.0.left/0.23.1920.1095@0.23.1920.1095" timestamp="1620868772998" />
+    <state width="1878" height="311" key="GridCell.Tab.0.left/0.23.1920.1098@0.23.1920.1098" timestamp="1620864413220" />
     <state width="1878" height="311" key="GridCell.Tab.0.left/0.23.1920.1100@0.23.1920.1100" timestamp="1620699844043" />
     <state width="1878" height="312" key="GridCell.Tab.0.left/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552439" />
     <state width="1878" height="289" key="GridCell.Tab.0.left/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897432" />
@@ -571,11 +578,11 @@
     <state width="1878" height="370" key="GridCell.Tab.0.left/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="3220" height="533" key="GridCell.Tab.0.left/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782627" />
     <state width="2454" height="312" key="GridCell.Tab.0.left/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015876" />
-    <state width="1878" height="311" key="GridCell.Tab.0.right" timestamp="1620702807886">
+    <state width="1878" height="311" key="GridCell.Tab.0.right" timestamp="1620868773000">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="311" key="GridCell.Tab.0.right/0.23.1920.1095@0.23.1920.1095" timestamp="1620702807886" />
-    <state width="1878" height="311" key="GridCell.Tab.0.right/0.23.1920.1098@0.23.1920.1098" timestamp="1620700471982" />
+    <state width="1878" height="311" key="GridCell.Tab.0.right/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773000" />
+    <state width="1878" height="311" key="GridCell.Tab.0.right/0.23.1920.1098@0.23.1920.1098" timestamp="1620864413221" />
     <state width="1878" height="311" key="GridCell.Tab.0.right/0.23.1920.1100@0.23.1920.1100" timestamp="1620699844043" />
     <state width="1878" height="312" key="GridCell.Tab.0.right/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552439" />
     <state width="1878" height="289" key="GridCell.Tab.0.right/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897433" />
@@ -584,11 +591,11 @@
     <state width="1878" height="370" key="GridCell.Tab.0.right/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="3220" height="533" key="GridCell.Tab.0.right/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
     <state width="2454" height="312" key="GridCell.Tab.0.right/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="311" key="GridCell.Tab.1.bottom" timestamp="1620702782903">
+    <state width="1878" height="311" key="GridCell.Tab.1.bottom" timestamp="1620868773002">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="311" key="GridCell.Tab.1.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1620702782903" />
-    <state width="1878" height="311" key="GridCell.Tab.1.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1620700471983" />
+    <state width="1878" height="311" key="GridCell.Tab.1.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773002" />
+    <state width="1878" height="311" key="GridCell.Tab.1.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1620864422367" />
     <state width="1878" height="311" key="GridCell.Tab.1.bottom/0.23.1920.1100@0.23.1920.1100" timestamp="1620699867323" />
     <state width="1878" height="312" key="GridCell.Tab.1.bottom/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552441" />
     <state width="1878" height="189" key="GridCell.Tab.1.bottom/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886133" />
@@ -596,11 +603,11 @@
     <state width="1878" height="370" key="GridCell.Tab.1.bottom/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664747" />
     <state width="2471" height="624" key="GridCell.Tab.1.bottom/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150038" />
     <state width="2454" height="312" key="GridCell.Tab.1.bottom/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019639" />
-    <state width="1878" height="311" key="GridCell.Tab.1.center" timestamp="1620702782902">
+    <state width="1878" height="311" key="GridCell.Tab.1.center" timestamp="1620868773001">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="311" key="GridCell.Tab.1.center/0.23.1920.1095@0.23.1920.1095" timestamp="1620702782902" />
-    <state width="1878" height="311" key="GridCell.Tab.1.center/0.23.1920.1098@0.23.1920.1098" timestamp="1620700471983" />
+    <state width="1878" height="311" key="GridCell.Tab.1.center/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773001" />
+    <state width="1878" height="311" key="GridCell.Tab.1.center/0.23.1920.1098@0.23.1920.1098" timestamp="1620864422365" />
     <state width="1878" height="311" key="GridCell.Tab.1.center/0.23.1920.1100@0.23.1920.1100" timestamp="1620699867322" />
     <state width="1878" height="312" key="GridCell.Tab.1.center/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552440" />
     <state width="1878" height="189" key="GridCell.Tab.1.center/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886132" />
@@ -608,11 +615,11 @@
     <state width="1878" height="370" key="GridCell.Tab.1.center/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
     <state width="2471" height="624" key="GridCell.Tab.1.center/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150037" />
     <state width="2454" height="312" key="GridCell.Tab.1.center/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019638" />
-    <state width="1878" height="311" key="GridCell.Tab.1.left" timestamp="1620702782901">
+    <state width="1878" height="311" key="GridCell.Tab.1.left" timestamp="1620868773001">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="311" key="GridCell.Tab.1.left/0.23.1920.1095@0.23.1920.1095" timestamp="1620702782901" />
-    <state width="1878" height="311" key="GridCell.Tab.1.left/0.23.1920.1098@0.23.1920.1098" timestamp="1620700471983" />
+    <state width="1878" height="311" key="GridCell.Tab.1.left/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773001" />
+    <state width="1878" height="311" key="GridCell.Tab.1.left/0.23.1920.1098@0.23.1920.1098" timestamp="1620864422365" />
     <state width="1878" height="311" key="GridCell.Tab.1.left/0.23.1920.1100@0.23.1920.1100" timestamp="1620699867321" />
     <state width="1878" height="312" key="GridCell.Tab.1.left/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552440" />
     <state width="1878" height="189" key="GridCell.Tab.1.left/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886132" />
@@ -620,11 +627,11 @@
     <state width="1878" height="370" key="GridCell.Tab.1.left/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
     <state width="2471" height="624" key="GridCell.Tab.1.left/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150036" />
     <state width="2454" height="312" key="GridCell.Tab.1.left/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019636" />
-    <state width="1878" height="311" key="GridCell.Tab.1.right" timestamp="1620702782903">
+    <state width="1878" height="311" key="GridCell.Tab.1.right" timestamp="1620868773002">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state width="1878" height="311" key="GridCell.Tab.1.right/0.23.1920.1095@0.23.1920.1095" timestamp="1620702782903" />
-    <state width="1878" height="311" key="GridCell.Tab.1.right/0.23.1920.1098@0.23.1920.1098" timestamp="1620700471983" />
+    <state width="1878" height="311" key="GridCell.Tab.1.right/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773002" />
+    <state width="1878" height="311" key="GridCell.Tab.1.right/0.23.1920.1098@0.23.1920.1098" timestamp="1620864422366" />
     <state width="1878" height="311" key="GridCell.Tab.1.right/0.23.1920.1100@0.23.1920.1100" timestamp="1620699867322" />
     <state width="1878" height="312" key="GridCell.Tab.1.right/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552440" />
     <state width="1878" height="189" key="GridCell.Tab.1.right/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886133" />
@@ -641,10 +648,10 @@
     </state>
     <state x="690" y="308" width="540" height="523" key="StructurePopup/0.23.1920.1098@0.23.1920.1098" timestamp="1620700515774" />
     <state x="690" y="309" width="540" height="524" key="StructurePopup/0.23.1920.1102@0.23.1920.1102" timestamp="1619665895104" />
-    <state x="690" y="415" key="Vcs.Push.Dialog.v2" timestamp="1620182289964">
+    <state x="690" y="415" key="Vcs.Push.Dialog.v2" timestamp="1620781586552">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state x="690" y="415" key="Vcs.Push.Dialog.v2/0.23.1920.1095@0.23.1920.1095" timestamp="1620182289964" />
+    <state x="690" y="415" key="Vcs.Push.Dialog.v2/0.23.1920.1095@0.23.1920.1095" timestamp="1620781586552" />
     <state x="690" y="416" key="Vcs.Push.Dialog.v2/0.23.1920.1098@0.23.1920.1098" timestamp="1620010347057" />
     <state x="690" y="417" key="Vcs.Push.Dialog.v2/0.23.1920.1100@0.23.1920.1100" timestamp="1619403809788" />
     <state x="690" y="418" key="Vcs.Push.Dialog.v2/0.23.1920.1102@0.23.1920.1102" timestamp="1619666455945" />
@@ -790,14 +797,9 @@
           <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/service/photo_service.py</url>
-          <line>65</line>
-          <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/service/photo_service.py</url>
-          <line>76</line>
-          <option name="timeStamp" value="75" />
+          <url>file://$PROJECT_DIR$/app/crud/crud_photo.py</url>
+          <line>99</line>
+          <option name="timeStamp" value="80" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -815,10 +817,6 @@
         <watch expression="self.__dict__" language="Python" />
         <watch expression="str(select_query)" language="Python" />
         <watch expression="added_album.id" language="Python" />
-      </configuration>
-      <configuration name="PythonConfigurationType">
-        <watch expression="photo.albums" language="Python" />
-        <watch expression="await photo.albums" language="Python" />
       </configuration>
     </watches-manager>
   </component>
@@ -840,7 +838,7 @@
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_album_service_TestAlbumService.coverage" NAME="pytest for test_album_service.TestAlbumService Coverage Results" MODIFIED="1620178797915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_photo.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_photo Coverage Results" MODIFIED="1619665349145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_get_thumbnail.coverage" NAME="pytest in app/tests Coverage Results" MODIFIED="1615777540985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$main.coverage" NAME="main Coverage Results" MODIFIED="1620702769498" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$main.coverage" NAME="main Coverage Results" MODIFIED="1620864698799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_delete_photos_by_device.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_delete_photos_by_device Coverage Results" MODIFIED="1618359782617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_post_diff.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_post_diff Coverage Results" MODIFIED="1615944763025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$fake_data_importer.coverage" NAME="fake_data_importer Coverage Results" MODIFIED="1615779292056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
