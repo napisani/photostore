@@ -13,6 +13,9 @@ class MobileMediaPageModel extends AbstractPhotoPageModel
   }
 
   @override
+  bool isScreenEnabled() => true;
+
+  @override
   TabName getTabName() => TabName.MOBILE;
 
   @override
@@ -20,6 +23,5 @@ class MobileMediaPageModel extends AbstractPhotoPageModel
     super.onTabActivated();
     print('activated mobile');
     initializeIfEmpty();
-
   }
 }

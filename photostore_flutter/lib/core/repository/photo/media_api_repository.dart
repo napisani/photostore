@@ -6,6 +6,7 @@ import 'package:photostore_flutter/core/model/media_device.dart';
 import 'package:photostore_flutter/core/model/mobile_photo.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo.dart';
+import 'package:photostore_flutter/core/model/photo_date_ranges.dart';
 import 'package:photostore_flutter/core/model/photo_diff_request.dart';
 import 'package:photostore_flutter/core/model/photo_diff_result.dart';
 import 'package:photostore_flutter/core/utils/api_key_utils.dart';
@@ -127,6 +128,22 @@ class MediaAPIRepository extends MediaRepository<Photo>
     } else {
       final Exception ex = Exception('error getting photo count from server');
       print("MediaAPIRepository.getPhotoCount $ex");
+      throw ex;
+    }
+  }
+
+  Future<PhotoDateRanges> getPhotoDateRanges() async {
+    print(
+        "MediaAPIRepository getPhotoDateRanges baseUrl: ${getBaseURL(settings)}");
+    final String url = "${getBaseURL(settings)}/photos/dates";
+    final response = await httpService.getHttpClient().get(url);
+    checkForCorrectAuth(response);
+    if (response.statusCode == 200) {
+      return PhotoDateRanges.fromJson(response.data);
+    } else {
+      final Exception ex =
+          Exception('error getting photo date ranges from server');
+      print("MediaAPIRepository.getPhotoDateRanges $ex");
       throw ex;
     }
   }

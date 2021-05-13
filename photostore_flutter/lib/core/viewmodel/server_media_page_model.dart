@@ -56,6 +56,15 @@ class ServerMediaPageModel extends AbstractPhotoPageModel
       filters[DEVICE_ID_FILTER] =
           _serverRefinementService.getDeviceFilter().deviceId;
     }
+    if (_serverRefinementService.getDateFilter() != null) {
+      filters[MODIFIED_DATE_FILTER] =
+          _serverRefinementService.getDateFilter().toString();
+    }
+
+    if (!_serverRefinementService.getAlbumFilter().isAll) {
+      filters[ALBUM_FILTER] = _serverRefinementService.getAlbumFilter().name;
+    }
+
     print(
         'inside [ServerMediaPageModel][loadPageOfPhotosInternal] filters: $filters');
 

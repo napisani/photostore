@@ -69,8 +69,8 @@ class Photo extends AgnosticMedia {
         latitude: item['latitude'],
         nativeId: item['native_id'],
         deviceId: item['device_id'],
-        creationDate: DateTime.parse(item['creation_date']),
-        modifiedDate: DateTime.parse(item['modified_date']),
+        creationDate: DateTime.tryParse(item['creation_date'] ?? ''),
+        modifiedDate: DateTime.tryParse(item['modified_date'] ?? ''),
         getThumbnailProviderOfSize: (double width, double height) =>
             NetworkImage(fullUrlToUse, headers: headers),
         thumbnailProvider: NetworkImage(thumbnailUrl, headers: headers),

@@ -1,5 +1,6 @@
 import 'package:photostore_flutter/core/model/media_device.dart';
 import 'package:photostore_flutter/core/model/photo_album.dart';
+import 'package:photostore_flutter/core/model/photo_date_ranges.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/service/album/album_api_service.dart';
 import 'package:photostore_flutter/core/service/app_settings_service.dart';
@@ -11,6 +12,7 @@ import 'package:photostore_flutter/locator.dart';
 class ServerRefinementModel extends AbstractViewModel {
   List<MediaDevice> deviceOptions = [];
   List<PhotoAlbum> albumOptions = [];
+  PhotoDateRanges dateRanges = PhotoDateRanges();
 
   final ServerMediaService _serverMediaService = locator<ServerMediaService>();
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
@@ -32,9 +34,16 @@ class ServerRefinementModel extends AbstractViewModel {
     notifyListeners();
   }
 
+  selectDate(DateTime dateTime) {
+    this._serverRefinementService.setDateTimeFilter(dateTime);
+    notifyListeners();
+  }
+
   get selectedDevice => _serverRefinementService.getDeviceFilter();
 
   get selectedAlbum => _serverRefinementService.getAlbumFilter();
+
+  get selectedDate => _serverRefinementService.getDateFilter();
 
   void reinit() async {
     this.screenStatus = ScreenStatus.uninitialized();
@@ -52,6 +61,7 @@ class ServerRefinementModel extends AbstractViewModel {
     try {
       await _loadDeviceOptions();
       await _loadAlbumOptions();
+      await _loadPhotoDateRanges();
       this.screenStatus = ScreenStatus.success();
     } catch (err, s) {
       print(
@@ -76,5 +86,10 @@ class ServerRefinementModel extends AbstractViewModel {
     this.albumOptions = await this._albumAPIService.getAllAlbums();
     this.albumOptions = [PhotoAlbum.allOption(), ...albumOptions];
     print('built album options $albumOptions');
+  }
+
+  Future<void> _loadPhotoDateRanges() async {
+    this.dateRanges = await this._serverMediaService.getPhotoDateRanges();
+    print('got photo date ranges  $dateRanges');
   }
 }

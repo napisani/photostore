@@ -1,6 +1,8 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; //for date format
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/server_refinement_model.dart';
 import 'package:photostore_flutter/ui/widget/common_status_widget.dart';
@@ -28,7 +30,8 @@ class _ServerRefinementScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Device Filter',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
             ),
@@ -55,14 +58,14 @@ class _ServerRefinementScreen extends StatelessWidget {
             // tapHeaderToExpand: true,
             // hasIcon: true,
           ),
-
           ExpandablePanel(
             header: Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Albums',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
             ),
@@ -89,8 +92,57 @@ class _ServerRefinementScreen extends StatelessWidget {
             // tapHeaderToExpand: true,
             // hasIcon: true,
           ),
-
-
+          ExpandablePanel(
+              header: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Modified Date',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                ),
+              ),
+              collapsed: Text(
+                'Filter by modified date...',
+              ),
+              expanded: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (state.dateRanges.modifiedDateStart != null &&
+                      state.dateRanges.modifiedDateEnd != null &&
+                      state.selectedDate == null)
+                    ElevatedButton(
+                        onPressed: () {
+                          showMonthPicker(
+                            context: context,
+                            firstDate: state.dateRanges.modifiedDateStart,
+                            lastDate: state.dateRanges.modifiedDateEnd,
+                            initialDate: state.selectedDate ?? DateTime.now(),
+                            locale: Locale("en"),
+                          ).then((date) {
+                            if (date != null) {
+                              state.selectDate(date);
+                            }
+                          });
+                        },
+                        child: Text("Select Date"))
+                  else if (state.selectedDate != null) ...[
+                    Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                            'Older than: ${DateFormat.yMMMM('en_US').format(state.selectedDate)}')),
+                    ElevatedButton(
+                        child: Text("Clear"),
+                        onPressed: () {
+                          state.selectDate(null);
+                        })
+                  ]
+                ],
+              )
+              // tapHeaderToExpand: true,
+              // hasIcon: true,
+              ),
         ]);
       } else {
         inner = CommonStatusWidget(
