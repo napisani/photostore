@@ -15,6 +15,7 @@ import 'core/repository/photo/media_api_repository.dart';
 import 'core/repository/photo/media_mobile_repository.dart';
 import 'core/repository/settings_repository.dart';
 import 'core/service/app_settings_service.dart';
+import 'core/service/download/abstract_download_service.dart';
 import 'core/service/http_service.dart';
 import 'core/service/media/mobile_media_service.dart';
 import 'core/service/media/server_media_service.dart';
@@ -54,6 +55,11 @@ void setupLocator() {
         dispose: (service) => service.dispose());
     locator.registerLazySingleton<WindowService>(() => WindowService.instance,
         dispose: (service) => service.dispose());
+
+    locator.registerLazySingleton<DownloadService>(
+        () => DownloadService.instance,
+        dispose: (service) => service.dispose());
+
     locator.registerLazySingleton<HTTPService>(() => HTTPService(),
         dispose: (service) => service.dispose());
     locator.registerLazySingleton<MediaAPIRepository>(

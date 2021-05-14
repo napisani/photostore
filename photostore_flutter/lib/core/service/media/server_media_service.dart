@@ -38,4 +38,13 @@ class ServerMediaService extends AbstractPhotoPageService {
   Future<PhotoDateRanges> getPhotoDateRanges() async {
     return await (mediaRepo as MediaAPIRepository).getPhotoDateRanges();
   }
+
+  String getOriginalFileURL(String photoId) => (mediaRepo as MediaAPIRepository)
+      .getOriginalFileURL(photoId, withAPIKey: true);
+
+  String getFullsizePNGURL(String photoId) => (mediaRepo as MediaAPIRepository)
+      .getFullsizePNGURL(photoId, withAPIKey: true);
+
+  String getThumbnailURL(String photoId) => (mediaRepo as MediaAPIRepository)
+      .getThumbnailURL(photoId, withAPIKey: true);
 }

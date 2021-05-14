@@ -208,11 +208,30 @@ class MediaAPIRepository extends MediaRepository<Photo>
     final String thumbnailUrl =
         "${getBaseURL(settings)}/photos/thumbnail/${item['id']}";
     final String fullSizeAsPngUrl =
-        "${getBaseURL(settings)}/fullsize_photo_as_png/$item['id']}";
+        "${getBaseURL(settings)}/photos/fullsize_photo_as_png/${item['id']}";
     final String fullSizeUrl =
         "${getBaseURL(settings)}/photos/fullsize_photo/${item['id']}";
 
     return Photo.fromJson(item, thumbnailUrl, fullSizeUrl, fullSizeAsPngUrl,
         {ACCESS_TOKEN_KEY: settings.apiKey});
+  }
+
+  String getOriginalFileURL(String photoId, {bool withAPIKey = false}) =>
+      _getPhotoUrl(photoId, 'original_file', withAPIKey: withAPIKey);
+
+  String getFullsizePNGURL(String photoId, {bool withAPIKey = false}) =>
+      _getPhotoUrl(photoId, 'fullsize_photo_as_png', withAPIKey: withAPIKey);
+
+  String getThumbnailURL(String photoId, {bool withAPIKey = false}) =>
+      _getPhotoUrl(photoId, 'thumbnail', withAPIKey: withAPIKey);
+
+  String _getPhotoUrl(String photoId, String subpath,
+      {bool withAPIKey = false}) {
+    String url =
+        "${getBaseURL(settings)}/photos/$subpath/${urlEncode(photoId)}";
+    return withAPIKey
+        ? APIKeyUtils.appendAPIKeyToURL(
+            url, {ACCESS_TOKEN_KEY: settings.apiKey})
+        : url;
   }
 }

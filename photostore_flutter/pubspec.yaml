@@ -52,6 +52,7 @@ dependencies:
   shared_preferences: ^2.0.5
   expandable: ^5.0.1
   month_picker_dialog: ^0.4.0
+  image_downloader: ^0.30.0
 dev_dependencies:
   flutter_launcher_icons: "^0.8.0"
   flutter_launcher_name: "^0.0.1"

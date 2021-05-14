@@ -116,8 +116,7 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
             err: (state.status as ErrorScreenStatus).error,
             onDismiss: () => state.reset(),
           ));
-        }
-        else if (state.status.type == ScreenStatusType.SUCCESS ||
+        } else if (state.status.type == ScreenStatusType.SUCCESS ||
             state.status.type == ScreenStatusType.LOADING) {
           if ((state.photoPage?.items == null ||
               state.photoPage.items.isEmpty)) {
@@ -173,7 +172,9 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
       context,
       MaterialPageRoute(
         builder: (context) => PhotoGalleryScreen(
-            mediaSource: this.getMediaSource(), photoIndex: index),
+            isAPIPhotos: getMediaSource() != 'MOBILE',
+            mediaSource: this.getMediaSource(),
+            photoIndex: index),
       ),
     );
 
