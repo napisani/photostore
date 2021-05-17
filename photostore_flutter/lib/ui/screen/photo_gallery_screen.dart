@@ -1,9 +1,12 @@
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/photo_gallery_view_model.dart';
+import 'package:photostore_flutter/ui/widget/alert_message.dart';
 import 'package:photostore_flutter/ui/widget/common_status_widget.dart';
 import 'package:photostore_flutter/ui/widget/download_dialog_widget.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +41,27 @@ class _PhotoGalleryScreen extends StatelessWidget {
             ));
   }
 
+  void _showAlertDialog(BuildContext context, PhotoGalleryViewModel state) {
+    // set up the buttons
+    LinkedHashMap<String, Function> actions = LinkedHashMap();
+    actions["NO"] = () => null;
+    actions["YES"] = () async {
+      await state.handleDeleteSinglePhoto();
+      Navigator.of(context).pop();
+    };
+    AlertMessage alert = AlertMessage(
+        actions: actions,
+        header: "Delete Photo",
+        message: "Are you sure you want to delete this photo?");
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   Widget _offsetPopup(context, PhotoGalleryViewModel state) =>
       PopupMenuButton<int>(
           itemBuilder: (context) => [
@@ -62,6 +86,8 @@ class _PhotoGalleryScreen extends StatelessWidget {
             print('selected value: $value');
             if (value == 1) {
               _downloadPopup(context, state);
+            } else if (value == 2) {
+              _showAlertDialog(context, state);
             }
           },
           // icon: Icon(Icons.more_horiz),

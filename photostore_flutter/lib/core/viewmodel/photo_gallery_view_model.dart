@@ -76,6 +76,12 @@ class PhotoGalleryViewModel extends AbstractPhotoPageModel {
     return null;
   }
 
+  Future<void> handleDeleteSinglePhoto() async {
+    if (this.isAPIPhotos && getCurrentPhoto() != null) {
+      await this._serverMediaService.deletePhotosByID(id: getCurrentPhoto().id);
+    }
+  }
+
   void dispose() {
     super.dispose();
   }

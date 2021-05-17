@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
@@ -6,6 +8,7 @@ import 'package:photostore_flutter/core/viewmodel/mobile_media_page_model.dart';
 import 'package:photostore_flutter/core/viewmodel/server_media_page_model.dart';
 import 'package:photostore_flutter/ui/screen/photo_gallery_screen.dart';
 import 'package:photostore_flutter/ui/screen/photo_page_notifier_mixin.dart';
+import 'package:photostore_flutter/ui/widget/alert_message.dart';
 import 'package:photostore_flutter/ui/widget/download_dialog_widget.dart';
 import 'package:photostore_flutter/ui/widget/loading_widget.dart';
 import 'package:photostore_flutter/ui/widget/photo_grid_widget.dart';
@@ -98,6 +101,26 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
             ));
   }
 
+  void _showAlertDialog(BuildContext context, AbstractPhotoPageModel state) {
+    // set up the buttons
+    LinkedHashMap<String, Function> actions = LinkedHashMap();
+    actions["NO"] = () => null;
+    actions["YES"] = () async {
+      await state.handleMultiDelete();
+    };
+    AlertMessage alert = AlertMessage(
+        actions: actions,
+        header: "Delete Selected Photos",
+        message: "Are you sure you want to delete all of the selected photos?");
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   Widget _offsetPopup(context, AbstractPhotoPageModel state) =>
       PopupMenuButton<int>(
           itemBuilder: (context) => [
@@ -133,7 +156,7 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
             if (value == 1) {
               _downloadPopup(context, state);
             } else if (value == 2) {
-              state.handleMultiDelete();
+              _showAlertDialog(context, state);
             } else if (value == 3) {
               state.handleUnselectAll();
             }
