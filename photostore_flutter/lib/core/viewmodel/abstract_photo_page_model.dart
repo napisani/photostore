@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:photostore_flutter/core/model/agnostic_media.dart';
+import 'package:photostore_flutter/core/model/download_type.dart';
 import 'package:photostore_flutter/core/model/pagination.dart';
 import 'package:photostore_flutter/core/model/photo_page_event.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
@@ -15,6 +17,7 @@ import 'abstract_view_model.dart';
 
 abstract class AbstractPhotoPageModel extends AbstractViewModel {
   Pagination<AgnosticMedia> photoPage;
+  Set<int> selectedPhotos = new HashSet<int>();
   Subject<PhotoPageEvent> _eventStream = PublishSubject();
 
   @protected
@@ -95,6 +98,7 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
   }
 
   void reset() {
+    this.selectedPhotos = new HashSet<int>();
     if (this.isScreenEnabled()) {
       this._eventStream.add(PhotoPageResetEvent());
       Future.delayed(Duration(milliseconds: 120), () => loadPage(1));
@@ -114,10 +118,48 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
     }
   }
 
+  bool canMultiSelect() => false;
+
+  bool canDelete() => false;
+
+  bool canDownload() => false;
+
+  Future<void> handleMultiDownload(DownloadType type) async {}
+
+  Future<void> handleMultiDelete() async {}
+
   void loadPage(int pageNumber) {
     print('in loadPage: $pageNumber');
     _eventStream.add(PhotoPageFetchEvent(pageNumber));
   }
+
+  void handleMultiPhotoSelect(int index) {
+    if (canMultiSelect()) {
+      if (this.selectedPhotos.contains(index)) {
+        this.selectedPhotos.remove(index);
+      } else {
+        this.selectedPhotos.add(index);
+      }
+      notifyListeners();
+    }
+  }
+
+  void handleUnselectAll() {
+    this.selectedPhotos.clear();
+    notifyListeners();
+  }
+
+  @protected
+  List<AgnosticMedia> getSelectedPhotos() => this
+      .selectedPhotos
+      .map((idx) {
+        if (idx > -1 && idx < photoPage.items.length) {
+          return photoPage.items[idx];
+        }
+        return null;
+      })
+      .where((photo) => photo != null)
+      .toList();
 
   void dispose() {
     super.dispose();

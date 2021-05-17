@@ -6,8 +6,10 @@ import 'package:photostore_flutter/ui/widget/thumbnail_widget.dart';
 
 class PhotoGridWidget extends StatelessWidget {
   final Pagination<AgnosticMedia> photos;
+  final Iterable<int> selectedPhotos;
   final ScrollController _scrollController;
   final ValueChanged<int> _onPress;
+  final ValueChanged<int> _onLongPress;
   final Function _onRefresh;
 
   final double currentScrollPosition;
@@ -18,10 +20,13 @@ class PhotoGridWidget extends StatelessWidget {
       scrollController,
       onPress,
       onRefresh,
-      this.currentScrollPosition})
+      this.currentScrollPosition,
+      onLongPress,
+      @required this.selectedPhotos})
       : this._scrollController = scrollController,
         this._onPress = onPress,
         this._onRefresh = onRefresh,
+        this._onLongPress = onLongPress,
         super(key: key);
 
   int _getImageCount(BuildContext context) {
@@ -35,13 +40,14 @@ class PhotoGridWidget extends StatelessWidget {
     return count;
   }
 
+
   @override
   Widget build(BuildContext context) {
     // WidgetsBinding.instance.addPostFrameCallback((_) => {_scrollController.jumpTo(this.currentScrollPosition)});
 
     return RefreshIndicator(
         child: GridView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           itemCount: this.photos.items.length,
           // reverse: true,
           // shrinkWrap: true,
@@ -52,7 +58,11 @@ class PhotoGridWidget extends StatelessWidget {
               // footer: new Text(this.photos.items[index].id.toString()),
               child: GestureDetector(
                   onTap: () => _onPress(index),
-                  child: ThumbnailWidget(photo: photos.items[index])),
+                  onLongPress: () => _onLongPress(index),
+                  child: ThumbnailWidget(
+                    photo: photos.items[index],
+                    selected: selectedPhotos.contains(index),
+                  )),
             ),
           ),
           controller: _scrollController,

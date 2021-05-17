@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photostore_flutter/core/model/agnostic_media.dart';
+import 'package:photostore_flutter/core/model/download_type.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/model/tab_navigation_item.dart';
 import 'package:photostore_flutter/core/service/download/abstract_download_service.dart';
@@ -52,12 +53,12 @@ class PhotoGalleryViewModel extends AbstractPhotoPageModel {
   @override
   TabName getTabName() => TabName.SERVER;
 
-  Future<void> download(String type) async {
+  Future<void> download(DownloadType type) async {
     if (this.isAPIPhotos && getCurrentPhoto() != null) {
       String url = '';
-      if (type == 'thumb') {
+      if (type == DownloadType.THUMB) {
         url = this._serverMediaService.getThumbnailURL(getCurrentPhoto().id);
-      } else if (type == 'full_png') {
+      } else if (type == DownloadType.FULL_PNG) {
         url = this._serverMediaService.getFullsizePNGURL(getCurrentPhoto().id);
       } else {
         url = this._serverMediaService.getOriginalFileURL(getCurrentPhoto().id);

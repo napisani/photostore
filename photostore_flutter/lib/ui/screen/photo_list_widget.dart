@@ -6,6 +6,7 @@ import 'package:photostore_flutter/core/viewmodel/mobile_media_page_model.dart';
 import 'package:photostore_flutter/core/viewmodel/server_media_page_model.dart';
 import 'package:photostore_flutter/ui/screen/photo_gallery_screen.dart';
 import 'package:photostore_flutter/ui/screen/photo_page_notifier_mixin.dart';
+import 'package:photostore_flutter/ui/widget/download_dialog_widget.dart';
 import 'package:photostore_flutter/ui/widget/loading_widget.dart';
 import 'package:photostore_flutter/ui/widget/photo_grid_widget.dart';
 import 'package:photostore_flutter/ui/widget/screen_error_widget.dart';
@@ -28,9 +29,6 @@ class PhotoListTabWidget extends StatelessWidget {
             create: (context) => ServerMediaPageModel(),
             child: PhotoListWidget(mediaSource: mediaSource),
           );
-
-    print('working on mediaSource: $mediaSource');
-    return PhotoListWidget(mediaSource: mediaSource);
   }
 }
 
@@ -92,6 +90,68 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
     _scrollController.jumpTo(_curOffset);
   }
 
+  void _downloadPopup(context, AbstractPhotoPageModel state) {
+    showDialog(
+        context: context,
+        builder: (context) => DownloadDialogWidget(
+              onDownload: (type) => state.handleMultiDownload(type),
+            ));
+  }
+
+  Widget _offsetPopup(context, AbstractPhotoPageModel state) =>
+      PopupMenuButton<int>(
+          itemBuilder: (context) => [
+                if (state.canDelete())
+                  PopupMenuItem(
+                    value: 1,
+                    child: Text(
+                      "Download",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                if (state.canDelete())
+                  PopupMenuItem(
+                    value: 2,
+                    child: Text(
+                      "Delete",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                PopupMenuItem(
+                  value: 3,
+                  child: Text(
+                    "Unselect All",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ],
+          onSelected: (value) {
+            print('selected value: $value');
+            if (value == 1) {
+              _downloadPopup(context, state);
+            } else if (value == 2) {
+              state.handleMultiDelete();
+            } else if (value == 3) {
+              state.handleUnselectAll();
+            }
+          },
+          // icon: Icon(Icons.more_horiz),
+          // backgroundColor: Colors.blue,
+          icon: Container(
+            child: Icon(Icons.more_horiz, color: Colors.white),
+            height: double.infinity,
+            width: double.infinity,
+            decoration: ShapeDecoration(
+                color: Colors.blue,
+                shape: StadiumBorder(
+                  side: BorderSide(color: Colors.white, width: 2),
+                )),
+            //child: Icon(Icons.menu, color: Colors.white), <-- You can give your icon here
+          ));
+
   @override
   Widget build(BuildContext context) {
     return getBlockBuilder(
@@ -143,15 +203,22 @@ class _PhotoListWidgetState extends State<PhotoListWidget>
             }
           }
           // Future.delayed(Duration.zero, () => _adjustScrollOffset());
-          return PhotoGridWidget(
-            photos: state.photoPage,
-            scrollController: _scrollController,
-            currentScrollPosition: _curOffset,
-            onPress: (photo) => _handlePhotoSelected(photo),
-            onRefresh: () {
-              print('refresh called!');
-              state.reset();
-            },
+          return Scaffold(
+            floatingActionButton: state.selectedPhotos.isNotEmpty
+                ? _offsetPopup(context, state)
+                : null,
+            body: PhotoGridWidget(
+              photos: state.photoPage,
+              selectedPhotos: state.selectedPhotos,
+              scrollController: _scrollController,
+              currentScrollPosition: _curOffset,
+              onPress: (photoIdx) => _handlePhotoSelected(photoIdx),
+              onLongPress: (photoIdx) => state.handleMultiPhotoSelect(photoIdx),
+              onRefresh: () {
+                print('refresh called!');
+                state.reset();
+              },
+            ),
           );
         } else if (state.status is DisabledScreenStatus) {
           return Center(

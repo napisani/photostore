@@ -5,6 +5,7 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:photostore_flutter/core/model/screen_status.dart';
 import 'package:photostore_flutter/core/viewmodel/photo_gallery_view_model.dart';
 import 'package:photostore_flutter/ui/widget/common_status_widget.dart';
+import 'package:photostore_flutter/ui/widget/download_dialog_widget.dart';
 import 'package:provider/provider.dart';
 
 class PhotoGalleryScreen extends StatelessWidget {
@@ -32,41 +33,8 @@ class _PhotoGalleryScreen extends StatelessWidget {
   void _downloadPopup(context, PhotoGalleryViewModel state) {
     showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-              title: Text('Download'),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: [
-                    ElevatedButton(
-                        child: Text('Thumbnail'),
-                        onPressed: () async {
-                          await state.download('thumbnail');
-                          Navigator.of(context).pop();
-                        }),
-                    ElevatedButton(
-                        child: Text('Full size PNG'),
-                        onPressed: () async {
-                          await state.download('full_png');
-
-                          Navigator.of(context).pop();
-                        }),
-                    ElevatedButton(
-                        child: Text('Original File'),
-                        onPressed: () async {
-                          await state.download('original');
-                          Navigator.of(context).pop();
-                        })
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
+        builder: (context) => DownloadDialogWidget(
+              onDownload: (type) => state.download(type),
             ));
   }
 
@@ -84,7 +52,7 @@ class _PhotoGalleryScreen extends StatelessWidget {
                 PopupMenuItem(
                   value: 2,
                   child: Text(
-                    "Share",
+                    "Delete",
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.w700),
                   ),

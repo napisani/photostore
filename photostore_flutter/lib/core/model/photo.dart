@@ -54,7 +54,10 @@ class Photo extends AgnosticMedia {
       // photos currently will not be requested with headers
       // (probably using <img> tags under the hood)
       thumbnailUrl = APIKeyUtils.appendAPIKeyToURL(thumbnailUrl, headers);
-      fullUrlToUse = APIKeyUtils.appendAPIKeyToURL(fullSizeAsPngUrl, headers);
+      //temporarily setting the web 'full' image to
+      // the thumbnail because converting to png on the fly is expensive and slow
+      // fullUrlToUse = APIKeyUtils.appendAPIKeyToURL(fullSizeAsPngUrl, headers);
+      fullUrlToUse = thumbnailUrl;
       headers.remove(ACCESS_TOKEN_KEY);
     }
 

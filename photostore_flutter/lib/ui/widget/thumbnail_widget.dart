@@ -5,8 +5,10 @@ import 'package:photostore_flutter/core/model/media_contents.dart';
 
 class ThumbnailWidget extends StatefulWidget {
   final AgnosticMedia photo;
+  final bool selected;
 
-  const ThumbnailWidget({Key key, @required this.photo}) : super(key: key);
+  const ThumbnailWidget({Key key, @required this.photo, this.selected = false})
+      : super(key: key);
 
   @override
   _ThumbnailWidgetState createState() => _ThumbnailWidgetState();
@@ -29,9 +31,10 @@ class _ThumbnailWidgetState extends State<ThumbnailWidget> {
       builder: (context, AsyncSnapshot<MediaContents> snapshot) {
         if (snapshot.hasData) {
           // print('grid tile build - hasData');
+          Widget img;
           if (snapshot.data is MediaURLContents) {
             // print('grid tile build - returning image.network');
-            return Image.network(
+            img = Image.network(
               (snapshot.data as MediaURLContents).url,
               headers: (snapshot.data as MediaURLContents).headers,
               loadingBuilder: (BuildContext context, Widget child,
@@ -39,7 +42,8 @@ class _ThumbnailWidgetState extends State<ThumbnailWidget> {
                 if (loadingProgress == null) return child;
                 return Center(
                   child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null && loadingProgress.expectedTotalBytes != 0
+                    value: loadingProgress.expectedTotalBytes != null &&
+                            loadingProgress.expectedTotalBytes != 0
                         ? loadingProgress.cumulativeBytesLoaded /
                             loadingProgress.expectedTotalBytes
                         : null,
@@ -49,8 +53,20 @@ class _ThumbnailWidgetState extends State<ThumbnailWidget> {
             );
           } else {
             // print('grid tile build - returning image.memory');
-            return Image.memory((snapshot.data as MediaMemoryContents).binary);
+            img = Image.memory((snapshot.data as MediaMemoryContents).binary);
           }
+          return Stack(
+            children: <Widget>[
+              Center(child: img),
+              if (widget.selected)
+                Positioned(
+                  bottom: 5,
+                  right: 5,
+                  //give the values according to your requirement
+                  child: Icon(Icons.check_circle, color: Colors.green),
+                ),
+            ],
+          );
         } else {
           return CircularProgressIndicator();
         }

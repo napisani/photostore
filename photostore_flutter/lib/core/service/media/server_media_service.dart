@@ -26,6 +26,11 @@ class ServerMediaService extends AbstractPhotoPageService {
         .deletePhotosByDeviceID(deviceId: deviceId);
   }
 
+  Future<void> deletePhotosByID({String id}) async {
+    return await (mediaRepo as MediaAPIRepository)
+        .deletePhoto(id: id);
+  }
+
   Future<List<PhotoDiffResult>> diffPhotos(List<AgnosticMedia> photos) async {
     return await (mediaRepo as MediaAPIRepository).diffPhotos(
         photos.map<PhotoDiffRequest>((p) => p.toDiffRequest()).toList());

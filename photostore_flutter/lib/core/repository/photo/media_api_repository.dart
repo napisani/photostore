@@ -24,11 +24,27 @@ class MediaAPIRepository extends MediaRepository<Photo>
     print(
         "MediaAPIRepository deletePhotosByDeviceID baseUrl: ${getBaseURL(settings)} ");
     final response = await httpService.getHttpClient().delete(
-        "${getBaseURL(settings)}/photos/delete_by_device/${urlEncode(deviceId)}");
+        "${getBaseURL(settings)}/photos/delete_by_device/$deviceId");
     checkForCorrectAuth(response);
     if (response.statusCode != 200) {
       final Exception ex = Exception('error deleting photos by device id');
       print("MediaAPIRepository.deletePhotosByDeviceID $ex");
+      throw ex;
+    }
+  }
+
+
+  Future<void> deletePhoto({String id}) async {
+
+    id = Uri.encodeFull(id);
+    print(
+        "MediaAPIRepository deletePhoto baseUrl: ${getBaseURL(settings)} ");
+    final response = await httpService.getHttpClient().delete(
+        "${getBaseURL(settings)}/photos/delete_by_id/$id");
+    checkForCorrectAuth(response);
+    if (response.statusCode != 200) {
+      final Exception ex = Exception('error deleting photos by photo id');
+      print("MediaAPIRepository.deletePhoto $ex");
       throw ex;
     }
   }
