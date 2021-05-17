@@ -19,21 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="adding album apis">
-      <change afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo_date_ranges.dart" afterDir="false" />
+    <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="working on filters">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/crud/crud_photo.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/crud/crud_photo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/photo_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/photo_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/service/photo_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/photo_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/model/photo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/photo/media_api_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/photo/media_api_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/server_media_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/media/server_media_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/server_refinement_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/service/server_refinement_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/mobile_media_page_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/mobile_media_page_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/server_refinement_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/viewmodel/server_refinement_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/.last_build_id" beforeDir="false" afterPath="$PROJECT_DIR$/static/.last_build_id" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/assets/NOTICES" beforeDir="false" afterPath="$PROJECT_DIR$/static/assets/NOTICES" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/flutter_service_worker.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/flutter_service_worker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/main.dart.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/main.dart.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +201,7 @@
       <workItem from="1619483789404" duration="13793000" />
       <workItem from="1620000763685" duration="19258000" />
       <workItem from="1620175955474" duration="6848000" />
-      <workItem from="1620262767107" duration="15391000" />
+      <workItem from="1620262767107" duration="16827000" />
     </task>
     <task id="LOCAL-00001" summary="adding all mobile attirubtes - fixed schemas for Add and Update specific">
       <created>1615777399372</created>
@@ -427,7 +420,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620781584356</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="working on filters">
+      <created>1620869841979</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1620869841979</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -496,7 +496,8 @@
     <MESSAGE value="bug fixes" />
     <MESSAGE value="working on albums" />
     <MESSAGE value="adding album apis" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding album apis" />
+    <MESSAGE value="working on filters" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on filters" />
   </component>
   <component name="WindowStateProjectService">
     <state x="447" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1620180711686">
@@ -648,10 +649,10 @@
     </state>
     <state x="690" y="308" width="540" height="523" key="StructurePopup/0.23.1920.1098@0.23.1920.1098" timestamp="1620700515774" />
     <state x="690" y="309" width="540" height="524" key="StructurePopup/0.23.1920.1102@0.23.1920.1102" timestamp="1619665895104" />
-    <state x="690" y="415" key="Vcs.Push.Dialog.v2" timestamp="1620781586552">
+    <state x="690" y="415" key="Vcs.Push.Dialog.v2" timestamp="1620869845834">
       <screen x="0" y="23" width="1920" height="1095" />
     </state>
-    <state x="690" y="415" key="Vcs.Push.Dialog.v2/0.23.1920.1095@0.23.1920.1095" timestamp="1620781586552" />
+    <state x="690" y="415" key="Vcs.Push.Dialog.v2/0.23.1920.1095@0.23.1920.1095" timestamp="1620869845834" />
     <state x="690" y="416" key="Vcs.Push.Dialog.v2/0.23.1920.1098@0.23.1920.1098" timestamp="1620010347057" />
     <state x="690" y="417" key="Vcs.Push.Dialog.v2/0.23.1920.1100@0.23.1920.1100" timestamp="1619403809788" />
     <state x="690" y="418" key="Vcs.Push.Dialog.v2/0.23.1920.1102@0.23.1920.1102" timestamp="1619666455945" />

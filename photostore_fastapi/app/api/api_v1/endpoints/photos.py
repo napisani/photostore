@@ -21,7 +21,8 @@ from app.schemas.pagination_schema import PaginationSchema
 from app.schemas.photo_schema import PhotoSchemaAdd, PhotoSchemaFull, PhotoDiffRequestSchema, PhotoDiffResultSchema, \
     DeviceResultSchema, PhotoDateRangeSchema
 from app.service.photo_service import get_photos, add_photo, get_photo, diff_photos, get_latest_photo, \
-    count_photos, allowed_file, delete_photos_by_device, get_devices, get_fullsize_photo_as_png, get_photo_date_ranges
+    count_photos, allowed_file, delete_photos_by_device, get_devices, get_fullsize_photo_as_png, get_photo_date_ranges, \
+    delete_photo
 
 router = APIRouter()
 
@@ -106,7 +107,7 @@ async def api_get_fullsize_photo(photo_id: int,
         return StreamingResponse(io.BytesIO(f.read()), media_type=mime)
 
 
-@router.get('/original_file/{photo_id}')
+@router.get('/?/{photo_id}')
 async def api_get_original_file(photo_id: int,
                                 api_key: APIKey = Depends(get_api_key),
                                 db: Session = Depends(deps.get_async_db)):
@@ -161,10 +162,17 @@ async def api_get_photo_count(device_id: str, api_key: APIKey = Depends(get_api_
 
 
 @router.delete('/delete_by_device/{device_id}')
-async def api_delete_photos_by_id(device_id: str, api_key: APIKey = Depends(get_api_key),
-                                  db=Depends(deps.get_async_db)):
+async def api_delete_photos_by_device_id(device_id: str, api_key: APIKey = Depends(get_api_key),
+                                         db=Depends(deps.get_async_db)):
     await delete_photos_by_device(db=db, device_id=device_id)
-    logger.debug('api_delete_photos_by_id  {}', device_id)
+    logger.debug('api_delete_photos_by_device_id  {}', device_id)
+
+
+@router.delete('/delete_by_id/{photo_id}')
+async def api_delete_photos_by_id(photo_id: int, api_key: APIKey = Depends(get_api_key),
+                                  db=Depends(deps.get_async_db)):
+    await delete_photo(db=db, photo_id=photo_id)
+    logger.debug('api_delete_photos_by_id  {}', photo_id)
 
 
 @router.get('/devices', response_model=List[DeviceResultSchema])
