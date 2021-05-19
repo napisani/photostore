@@ -7,7 +7,8 @@ import 'media_contents.dart';
 typedef MediaContentsGetterFunction = Future<MediaContents> Function();
 
 typedef ThumbnailGetterFunction = ImageProvider Function(
-    double width, double height);
+    double width, double height,
+    {BuildContext context, bool precache});
 
 abstract class AgnosticMedia extends Equatable {
   final String id;
@@ -19,7 +20,8 @@ abstract class AgnosticMedia extends Equatable {
   final DateTime modifiedDate;
   final MediaContentsGetterFunction getThumbnail;
   final ImageProvider thumbnailProvider;
-  final ThumbnailGetterFunction getThumbnailProviderOfSize;
+  final ImageProvider thumbnailOfDeviceSizeProvider;
+  // final ThumbnailGetterFunction getThumbnailProviderOfSize;
   final int width;
   final int height;
   final double longitude;
@@ -33,7 +35,8 @@ abstract class AgnosticMedia extends Equatable {
     this.filename,
     this.getThumbnail,
     this.thumbnailProvider,
-    this.getThumbnailProviderOfSize,
+    this.thumbnailOfDeviceSizeProvider,
+    // this.getThumbnailProviderOfSize,
     this.width,
     this.height,
     this.longitude,

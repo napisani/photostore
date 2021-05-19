@@ -3,6 +3,7 @@ import 'package:photostore_flutter/core/service/tab_service.dart';
 import 'package:photostore_flutter/ui/screen/settings_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'core/service/app_settings_service.dart';
 import 'core/viewmodel/app_model.dart';
 import 'locator.dart';
 
@@ -34,10 +35,16 @@ class _PhotoStoreApp extends StatefulWidget {
 }
 
 class __PhotoStoreAppState extends State<_PhotoStoreApp> {
+  final AppSettingsService appSettingsService = locator<AppSettingsService>();
+
   void initState() {
     super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => locator<TabService>().setTabIndex(0));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      appSettingsService.loadSettings(MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height);
+      locator<TabService>().setTabIndex(0);
+    });
   }
 
   Widget _buildBottomNavBar(AppModel state) {

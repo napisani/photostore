@@ -9,13 +9,13 @@ class AppSettingsService {
   BehaviorSubject<AppSettings>();
 
   AppSettingsService() {
-    this.loadSettings();
   }
 
   AppSettings get currentAppSettings => _currentSettings.value;
 
-  Future<AppSettings> loadSettings() async {
-    final AppSettings settings = await this._settingsRepository.getSettings();
+  Future<AppSettings> loadSettings(double width, double height) async {
+    AppSettings settings = await this._settingsRepository.getSettings();
+    settings = settings.cloneWith(deviceWidth: width, deviceHeight: height);
     this._currentSettings.sink.add(settings);
     return settings;
   }

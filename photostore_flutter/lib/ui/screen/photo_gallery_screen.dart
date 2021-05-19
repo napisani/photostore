@@ -32,7 +32,12 @@ class PhotoGalleryScreen extends StatelessWidget {
   }
 }
 
-class _PhotoGalleryScreen extends StatelessWidget {
+class _PhotoGalleryScreen extends StatefulWidget {
+  @override
+  __PhotoGalleryScreenState createState() => __PhotoGalleryScreenState();
+}
+
+class __PhotoGalleryScreenState extends State<_PhotoGalleryScreen> {
   void _downloadPopup(context, PhotoGalleryViewModel state) {
     showDialog(
         context: context,
@@ -127,15 +132,19 @@ class _PhotoGalleryScreen extends StatelessWidget {
           body: PhotoViewGallery.builder(
             pageController: state.pageController,
             onPageChanged: (newPage) {
-              state.handlePhotoPageSwipe(newPage);
+              state.handlePhotoPageSwipe(newPage, context);
             },
+            loadingBuilder: (ctx, _) => Center(child: CircularProgressIndicator()),
             itemCount: state.photoPage.total,
             builder: (context, index) {
               return PhotoViewGalleryPageOptions(
-                imageProvider: state.photoPage.items[index]
-                    .getThumbnailProviderOfSize(
-                        (MediaQuery.of(context).size.width),
-                        (MediaQuery.of(context).size.height)),
+                imageProvider:
+                    state.getCurrentPhoto()?.thumbnailOfDeviceSizeProvider,
+                // state.photoPage.items[index].getThumbnailProviderOfSize(
+                //         (MediaQuery.of(context).size.width),
+                //         (MediaQuery.of(context).size.height),
+                //         context: context,
+                //         precache: true)
                 minScale: PhotoViewComputedScale.contained * 0.8,
                 maxScale: PhotoViewComputedScale.covered * 2,
               );

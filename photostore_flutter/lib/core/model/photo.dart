@@ -20,7 +20,9 @@ class Photo extends AgnosticMedia {
       filename,
       getThumbnail,
       thumbnailProvider,
-      getThumbnailProviderOfSize,
+      thumbnailOfDeviceSizeProvider,
+      // getThumbnailProviderOfSize,
+
       nativeId,
       deviceId,
       width,
@@ -32,7 +34,8 @@ class Photo extends AgnosticMedia {
             creationDate: creationDate,
             getThumbnail: getThumbnail,
             thumbnailProvider: thumbnailProvider,
-            getThumbnailProviderOfSize: getThumbnailProviderOfSize,
+            thumbnailOfDeviceSizeProvider: thumbnailOfDeviceSizeProvider,
+            // getThumbnailProviderOfSize: getThumbnailProviderOfSize,
             modifiedDate: modifiedDate,
             nativeId: nativeId,
             deviceId: deviceId,
@@ -74,7 +77,15 @@ class Photo extends AgnosticMedia {
         deviceId: item['device_id'],
         creationDate: DateTime.tryParse(item['creation_date'] ?? ''),
         modifiedDate: DateTime.tryParse(item['modified_date'] ?? ''),
-        getThumbnailProviderOfSize: (double width, double height) =>
+        // getThumbnailProviderOfSize: (double width, double height,
+        //     {BuildContext context, bool precache}) {
+        //   NetworkImage img = NetworkImage(fullUrlToUse, headers: headers);
+        //   if (context != null && precache) {
+        //     precacheImage(img, context);
+        //   }
+        //   return img;
+        // },
+        thumbnailOfDeviceSizeProvider:
             NetworkImage(fullUrlToUse, headers: headers),
         thumbnailProvider: NetworkImage(thumbnailUrl, headers: headers),
         getThumbnail: () =>

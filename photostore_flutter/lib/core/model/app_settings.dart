@@ -14,17 +14,23 @@ class AppSettings extends Equatable {
   final int connectTimeout; // in seconds
   final int receiveTimeout; // in seconds
 
-  const AppSettings(
-      {this.serverIP,
-      this.serverPort,
-      this.https,
-      this.deviceID,
-      this.apiKey,
-      this.batchSize,
-      this.itemsPerPage,
-      this.uploadRetryAttempts,
-      this.connectTimeout,
-      this.receiveTimeout});
+  final double deviceWidth;
+  final double deviceHeight;
+
+  const AppSettings({
+    this.serverIP,
+    this.serverPort,
+    this.https,
+    this.deviceID,
+    this.apiKey,
+    this.batchSize,
+    this.itemsPerPage,
+    this.uploadRetryAttempts,
+    this.connectTimeout,
+    this.receiveTimeout,
+    this.deviceWidth,
+    this.deviceHeight,
+  });
 
   AppSettings cloneWith(
       {String serverIP,
@@ -36,7 +42,9 @@ class AppSettings extends Equatable {
       int itemsPerPage,
       int uploadRetryAttempts,
       int connectTimeout,
-      int receiveTimeout}) {
+      int receiveTimeout,
+      double deviceWidth,
+      double deviceHeight}) {
     bool newHttpsVal = this.https;
     if (https != null) {
       newHttpsVal = https;
@@ -51,7 +59,9 @@ class AppSettings extends Equatable {
         itemsPerPage: itemsPerPage ?? this.itemsPerPage,
         uploadRetryAttempts: uploadRetryAttempts ?? this.uploadRetryAttempts,
         connectTimeout: connectTimeout ?? this.connectTimeout,
-        receiveTimeout: receiveTimeout ?? this.receiveTimeout);
+        receiveTimeout: receiveTimeout ?? this.receiveTimeout,
+        deviceWidth: deviceWidth ?? this.deviceWidth,
+        deviceHeight: deviceHeight ?? this.deviceHeight);
   }
 
   @override
@@ -65,6 +75,8 @@ class AppSettings extends Equatable {
         itemsPerPage,
         uploadRetryAttempts,
         connectTimeout,
-        receiveTimeout
+        receiveTimeout,
+        deviceWidth,
+        deviceHeight
       ];
 }

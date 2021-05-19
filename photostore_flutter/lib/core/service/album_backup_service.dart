@@ -87,8 +87,9 @@ class AlbumBackupService {
           apiAlbumsMap[apiAlbum.name] = apiAlbum;
         } else {
           await _albumAPIService.removePhotosFromAlbum(album);
-          await _albumAPIService.addPhotosToAlbum(album, album.photos);
         }
+        await _albumAPIService.addPhotosToAlbum(album, album.photos);
+
 
         albumStats.updateStatus("DONE",
             details:

@@ -26,7 +26,8 @@ class MobilePhoto extends AgnosticMedia {
     filename,
     getThumbnail,
     thumbnailProvider,
-    getThumbnailProviderOfSize,
+    thumbnailOfDeviceSizeProvider,
+    // getThumbnailProviderOfSize,
     this.getOriginFile,
     nativeId,
     deviceId,
@@ -39,7 +40,8 @@ class MobilePhoto extends AgnosticMedia {
             creationDate: creationDate,
             getThumbnail: getThumbnail,
             thumbnailProvider: thumbnailProvider,
-            getThumbnailProviderOfSize: getThumbnailProviderOfSize,
+            thumbnailOfDeviceSizeProvider: thumbnailOfDeviceSizeProvider,
+            // getThumbnailProviderOfSize: getThumbnailProviderOfSize,
             nativeId: nativeId,
             deviceId: deviceId,
             modifiedDate: modifiedDate,
@@ -68,11 +70,18 @@ class MobilePhoto extends AgnosticMedia {
           deviceId: settings.deviceID,
           // originFile: ()=> item.loadFile(isOrigin: false),
           getOriginFile: () => item.originFile,
-          getThumbnailProviderOfSize: (double width, double height) =>
-              FutureMemoryImage(() => item
-                  .thumbDataWithSize(width.round(), height.round())
-                  .asStream()
-                  .first),
+          // getThumbnailProviderOfSize: (double width, double height,
+          //         {BuildContext context, bool precache}) =>
+          //     FutureMemoryImage(() => item
+          //         .thumbDataWithSize(width.round(), height.round())
+          //         .asStream()
+          //         .first),
+
+          thumbnailOfDeviceSizeProvider: FutureMemoryImage(() => item
+              .thumbDataWithSize(
+                  settings.deviceWidth.round(), settings.deviceHeight.round())
+              .asStream()
+              .first),
           thumbnailProvider:
               FutureMemoryImage(() => item.thumbData.asStream().first),
           getThumbnail: () => item.thumbData

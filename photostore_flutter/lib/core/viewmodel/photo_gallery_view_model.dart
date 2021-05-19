@@ -22,9 +22,9 @@ class PhotoGalleryViewModel extends AbstractPhotoPageModel {
       {this.photoIndex = 0})
       : pageController = PageController(initialPage: photoIndex),
         super(
-            photoPageService: mediaSource == "MOBILE"
-                ? locator<MobileMediaService>()
-                : locator<ServerMediaService>());
+          photoPageService: mediaSource == "MOBILE"
+              ? locator<MobileMediaService>()
+              : locator<ServerMediaService>());
 
   int nextPageNumber() {
     return (photoPage?.page ?? 0) + 1;
@@ -34,11 +34,13 @@ class PhotoGalleryViewModel extends AbstractPhotoPageModel {
     loadPage(nextPageNumber());
   }
 
-  void handlePhotoPageSwipe(int newPage) {
+  void handlePhotoPageSwipe(int newPage, BuildContext context) {
     photoIndex = newPage;
     if (photoIndex >= photoPage.items.length - 1) {
       loadNextPage();
     }
+    doPrecache(context);
+    notifyListeners();
   }
 
   @override
@@ -67,14 +69,35 @@ class PhotoGalleryViewModel extends AbstractPhotoPageModel {
     }
   }
 
-  AgnosticMedia getCurrentPhoto() {
+  AgnosticMedia _getPhotoAtIndexSafe(int idx) {
     if (photoPage != null &&
         photoPage.items != null &&
-        photoIndex < photoPage.items.length) {
-      return photoPage.items[photoIndex];
+        idx < photoPage.items.length &&
+        idx > -1) {
+      return photoPage.items[idx];
     }
     return null;
   }
+
+  // @override
+  // void processLoadedPhotoPage(Pagination<AgnosticMedia> newPage) {
+  //   super.processLoadedPhotoPage(newPage);
+  // }
+
+  void doPrecache(BuildContext context) async {
+    [0, 1,  2, -2, 3, -3].map((offset) => _getPhotoAtIndexSafe(photoIndex + offset))
+        .where((element) => element != null)
+        .forEach((element) {
+      print('doing precache: $element');
+      precacheImage(element.thumbnailOfDeviceSizeProvider, context);
+    });
+  }
+
+  AgnosticMedia getCurrentPhoto() => _getPhotoAtIndexSafe(photoIndex);
+
+  AgnosticMedia getPreviousPhoto() => _getPhotoAtIndexSafe(photoIndex - 1);
+
+  AgnosticMedia getNextPhoto() => _getPhotoAtIndexSafe(photoIndex + 1);
 
   Future<void> handleDeleteSinglePhoto() async {
     if (this.isAPIPhotos && getCurrentPhoto() != null) {

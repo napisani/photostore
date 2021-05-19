@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; //for date format
@@ -23,22 +22,77 @@ class _ServerRefinementScreen extends StatelessWidget {
     return Consumer<ServerRefinementModel>(builder: (context, state, child) {
       Widget inner;
       if (state?.status != null && state?.status is SuccessScreenStatus) {
-        inner = ListView(children: [
-          ExpandablePanel(
-            header: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Device Filter',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16),
+        inner = _buildPanel(context, state);
+      } else {
+        inner = CommonStatusWidget(
+          status: state.status,
+          onInit: () => state.reinit(),
+          onErrorDismiss: () => state.reinit(),
+        );
+      }
+      return Scaffold(
+          appBar: AppBar(title: const Text('Filters')),
+          body: ListView(children: [
+            Center(
+                child: Wrap(children: [
+              if (state.isDeviceSelected())
+                ActionChip(
+                  onPressed: () => state.clearDevice(),
+                  avatar: CircleAvatar(
+                    backgroundColor: Colors.grey.shade800,
+                    child: const Icon(Icons.clear),
+                  ),
+                  label: Text("Device: ${state.selectedDevice.deviceId}"),
                 ),
-              ),
-            ),
-            collapsed: Text(
-              'View device filters...',
-            ),
-            expanded: Container(
+              if (state.isAlbumSelected())
+                ActionChip(
+                  onPressed: () => state.clearAlbum(),
+                  avatar: CircleAvatar(
+                    backgroundColor: Colors.grey.shade800,
+                    child: Icon(Icons.clear),
+                  ),
+                  label: Text("Album: ${state.selectedAlbum.name}"),
+                ),
+              if (state.isDateSelected())
+                ActionChip(
+                  onPressed: () => state.clearDate(),
+                  avatar: CircleAvatar(
+                    backgroundColor: Colors.grey.shade800,
+                    child: const Icon(Icons.clear),
+                  ),
+                  label: Text(
+                      "Date: ${DateFormat.yMMMM('en_US').format(state.selectedDate)}"),
+                )
+            ])),
+            inner
+          ]));
+    });
+  }
+
+  Widget _buildPanel(BuildContext context, ServerRefinementModel state) {
+    return ExpansionPanelList(
+        expansionCallback: (int index, bool isExpanded) {
+          switch (index) {
+            case 0:
+              state.toggleExpandDevice();
+              break;
+            case 1:
+              state.toggleExpandAlbum();
+              break;
+            case 2:
+              state.toggleExpandDate();
+              break;
+          }
+        },
+        children: [
+          ExpansionPanel(
+            headerBuilder: (BuildContext context, bool isExpanded) {
+              return ListTile(
+                title: Text('Device'),
+              );
+            },
+            body: ListTile(
+                subtitle: Container(
               width: MediaQuery.of(context).size.width,
               child: ToggleButtons(
                 direction: Axis.vertical,
@@ -54,25 +108,17 @@ class _ServerRefinementScreen extends StatelessWidget {
                     .map((e) => e == state.selectedDevice)
                     .toList(),
               ),
-            ),
-            // tapHeaderToExpand: true,
-            // hasIcon: true,
+            )),
+            isExpanded: state.deviceExpanded,
           ),
-          ExpandablePanel(
-            header: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Albums',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-            ),
-            collapsed: Text(
-              'View albums...',
-            ),
-            expanded: Container(
+          ExpansionPanel(
+            headerBuilder: (BuildContext context, bool isExpanded) {
+              return ListTile(
+                title: Text('Album'),
+              );
+            },
+            body: ListTile(
+                subtitle: Container(
               width: MediaQuery.of(context).size.width,
               child: ToggleButtons(
                 direction: Axis.vertical,
@@ -88,71 +134,52 @@ class _ServerRefinementScreen extends StatelessWidget {
                     .map((e) => e == state.selectedAlbum)
                     .toList(),
               ),
-            ),
-            // tapHeaderToExpand: true,
-            // hasIcon: true,
+            )),
+            isExpanded: state.albumExpanded,
           ),
-          ExpandablePanel(
-              header: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Modified Date',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ),
-              ),
-              collapsed: Text(
-                'Filter by modified date...',
-              ),
-              expanded: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (state.dateRanges.modifiedDateStart != null &&
-                      state.dateRanges.modifiedDateEnd != null &&
-                      state.selectedDate == null)
-                    ElevatedButton(
-                        onPressed: () {
-                          showMonthPicker(
-                            context: context,
-                            firstDate: state.dateRanges.modifiedDateStart,
-                            lastDate: state.dateRanges.modifiedDateEnd,
-                            initialDate: state.selectedDate ?? DateTime.now(),
-                            locale: Locale("en"),
-                          ).then((date) {
-                            if (date != null) {
-                              state.selectDate(date);
-                            }
-                          });
-                        },
-                        child: Text("Select Date"))
-                  else if (state.selectedDate != null) ...[
-                    Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            'Older than: ${DateFormat.yMMMM('en_US').format(state.selectedDate)}')),
-                    ElevatedButton(
-                        child: Text("Clear"),
-                        onPressed: () {
-                          state.selectDate(null);
-                        })
-                  ]
-                ],
-              )
-              // tapHeaderToExpand: true,
-              // hasIcon: true,
-              ),
+          ExpansionPanel(
+            headerBuilder: (BuildContext context, bool isExpanded) {
+              return ListTile(
+                title: Text('Date'),
+              );
+            },
+            body: ListTile(
+                subtitle: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (state.dateRanges.modifiedDateStart != null &&
+                    state.dateRanges.modifiedDateEnd != null &&
+                    state.selectedDate == null)
+                  ElevatedButton(
+                      onPressed: () {
+                        showMonthPicker(
+                          context: context,
+                          firstDate: state.dateRanges.modifiedDateStart,
+                          lastDate: state.dateRanges.modifiedDateEnd,
+                          initialDate: state.selectedDate ?? DateTime.now(),
+                          locale: Locale("en"),
+                        ).then((date) {
+                          if (date != null) {
+                            state.selectDate(date);
+                          }
+                        });
+                      },
+                      child: Text("Select Date"))
+                else if (state.selectedDate != null) ...[
+                  Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                          'Older than: ${DateFormat.yMMMM('en_US').format(state.selectedDate)}')),
+                  ElevatedButton(
+                      child: Text("Clear"),
+                      onPressed: () {
+                        state.selectDate(null);
+                      })
+                ]
+              ],
+            )),
+            isExpanded: state.dateExpanded,
+          ),
         ]);
-      } else {
-        inner = CommonStatusWidget(
-          status: state.status,
-          onInit: () => state.reinit(),
-          onErrorDismiss: () => state.reinit(),
-        );
-      }
-      return Scaffold(
-          appBar: AppBar(title: Text('Refinement Filters')), body: inner);
-    });
   }
 }

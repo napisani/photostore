@@ -14,6 +14,10 @@ class ServerRefinementModel extends AbstractViewModel {
   List<PhotoAlbum> albumOptions = [];
   PhotoDateRanges dateRanges = PhotoDateRanges();
 
+  bool _deviceExpanded = false;
+  bool _albumExpanded = false;
+  bool _dateExpanded = false;
+
   final ServerMediaService _serverMediaService = locator<ServerMediaService>();
   final AppSettingsService _appSettingsService = locator<AppSettingsService>();
   final ServerRefinementService _serverRefinementService =
@@ -23,6 +27,47 @@ class ServerRefinementModel extends AbstractViewModel {
   ServerRefinementModel() {
     reinit();
   }
+
+  void toggleExpandDate() {
+    this._dateExpanded = !this._dateExpanded;
+    notifyListeners();
+  }
+
+  void toggleExpandAlbum() {
+    this._albumExpanded = !this._albumExpanded;
+    notifyListeners();
+  }
+
+  void toggleExpandDevice() {
+    this._deviceExpanded = !this._deviceExpanded;
+    notifyListeners();
+  }
+
+  bool get deviceExpanded => _deviceExpanded;
+
+  bool get dateExpanded => _dateExpanded;
+
+  bool get albumExpanded => _albumExpanded;
+
+  bool isAlbumSelected() =>
+      _serverRefinementService.getAlbumFilter() != PhotoAlbum.allOption();
+
+  bool isDeviceSelected() =>
+      _serverRefinementService.getDeviceFilter() != MediaDevice.allOption(0);
+
+  bool isDateSelected() => _serverRefinementService.getDateFilter() != null;
+
+  void clearAll() {
+    clearDevice();
+    clearDate();
+    clearAlbum();
+  }
+
+  void clearDevice() => selectDevice(MediaDevice.allOption(0));
+
+  void clearAlbum() => selectAlbum(PhotoAlbum.allOption());
+
+  void clearDate() => selectDate(null);
 
   selectDevice(MediaDevice mediaDevice) {
     this._serverRefinementService.setDeviceFilter(mediaDevice);
@@ -39,11 +84,11 @@ class ServerRefinementModel extends AbstractViewModel {
     notifyListeners();
   }
 
-  get selectedDevice => _serverRefinementService.getDeviceFilter();
+  MediaDevice get selectedDevice => _serverRefinementService.getDeviceFilter();
 
-  get selectedAlbum => _serverRefinementService.getAlbumFilter();
+  PhotoAlbum get selectedAlbum => _serverRefinementService.getAlbumFilter();
 
-  get selectedDate => _serverRefinementService.getDateFilter();
+  DateTime get selectedDate => _serverRefinementService.getDateFilter();
 
   void reinit() async {
     this.screenStatus = ScreenStatus.uninitialized();

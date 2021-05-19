@@ -16,6 +16,7 @@ import 'package:rxdart/rxdart.dart';
 import 'abstract_view_model.dart';
 
 abstract class AbstractPhotoPageModel extends AbstractViewModel {
+  Set<int> _pagesBeingLoaded = new HashSet<int>();
   Pagination<AgnosticMedia> photoPage;
   Set<int> selectedPhotos = new HashSet<int>();
   Subject<PhotoPageEvent> _eventStream = PublishSubject();
@@ -47,12 +48,17 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
 
   void _registerCurrentPhotoPageListener() {
     addSubscription(photoPageService.currentPhotoPageAsStream.listen((event) {
-      print('currentPhotoPageAsStream.subscription page:${event?.page} '
-          'total: ${event?.total} '
-          'hasMorePages:${event?.hasMorePages} ');
-      photoPage = event;
-      notifyListeners();
+      processLoadedPhotoPage(event);
     }));
+  }
+
+  @protected
+  void processLoadedPhotoPage(Pagination<AgnosticMedia> newPage) {
+    print('currentPhotoPageAsStream.subscription page:${newPage?.page} '
+        'total: ${newPage?.total} '
+        'hasMorePages:${newPage?.hasMorePages} ');
+    photoPage = newPage;
+    notifyListeners();
   }
 
   void _registerEventListener() {
@@ -67,6 +73,9 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
           return false;
         })
         .debounceTime(const Duration(milliseconds: 50))
+        .where((event) =>
+            !(event is PhotoPageFetchEvent) ||
+            !_pagesBeingLoaded.contains((event as PhotoPageFetchEvent).page))
         .listen((PhotoPageEvent event) async {
           if (!this.isScreenEnabled()) {
             status = ScreenStatus.disabled(DISABLED_SERVER_FEATURE_TEXT);
@@ -75,6 +84,7 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
             status = ScreenStatus.uninitialized();
             photoPageService.reset();
           } else if (event is PhotoPageFetchEvent) {
+            this._pagesBeingLoaded.add(event.page);
             status = ScreenStatus.loading(this);
             try {
               print('in loadPage process started: ${event.page}');
@@ -86,6 +96,8 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
               print(
                   "AbstractPhotoPageModel:_registerEventListener failed to load loadPage: $err, $s");
               notifyListeners();
+            } finally {
+              this._pagesBeingLoaded.remove(event.page);
             }
           }
         });
@@ -94,6 +106,7 @@ abstract class AbstractPhotoPageModel extends AbstractViewModel {
   @protected
   Future<Pagination<AgnosticMedia>> loadPageOfPhotosInternal(
       int pageNumber) async {
+    print('inside loadPageOfPhotosInternal ${this.runtimeType}');
     return await photoPageService.loadPage(pageNumber);
   }
 

@@ -35,6 +35,11 @@ class ServerRefinementService {
 
   DateTime getDateFilter() => _dateFilter.value;
 
+  bool hasFilter() =>
+      getDateFilter() != null ||
+      getAlbumFilter() != PhotoAlbum.allOption() ||
+      getDeviceFilter() != MediaDevice.allOption(0);
+
   void dispose() {
     _deviceFilter.close();
     _albumFilter.close();

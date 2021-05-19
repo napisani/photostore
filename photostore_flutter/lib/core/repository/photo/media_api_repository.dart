@@ -23,8 +23,9 @@ class MediaAPIRepository extends MediaRepository<Photo>
     deviceId = Uri.encodeFull(deviceId);
     print(
         "MediaAPIRepository deletePhotosByDeviceID baseUrl: ${getBaseURL(settings)} ");
-    final response = await httpService.getHttpClient().delete(
-        "${getBaseURL(settings)}/photos/delete_by_device/$deviceId");
+    final response = await httpService
+        .getHttpClient()
+        .delete("${getBaseURL(settings)}/photos/delete_by_device/$deviceId");
     checkForCorrectAuth(response);
     if (response.statusCode != 200) {
       final Exception ex = Exception('error deleting photos by device id');
@@ -33,14 +34,12 @@ class MediaAPIRepository extends MediaRepository<Photo>
     }
   }
 
-
   Future<void> deletePhoto({String id}) async {
-
     id = Uri.encodeFull(id);
-    print(
-        "MediaAPIRepository deletePhoto baseUrl: ${getBaseURL(settings)} ");
-    final response = await httpService.getHttpClient().delete(
-        "${getBaseURL(settings)}/photos/delete_by_id/$id");
+    print("MediaAPIRepository deletePhoto baseUrl: ${getBaseURL(settings)} ");
+    final response = await httpService
+        .getHttpClient()
+        .delete("${getBaseURL(settings)}/photos/delete_by_id/$id");
     checkForCorrectAuth(response);
     if (response.statusCode != 200) {
       final Exception ex = Exception('error deleting photos by photo id');

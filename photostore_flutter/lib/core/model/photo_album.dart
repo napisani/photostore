@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 import 'agnostic_media.dart';
 import 'app_settings.dart';
 import 'mobile_photo.dart';
 
-class PhotoAlbum {
+class PhotoAlbum extends Equatable {
   final String id;
   final String name;
   final List<AgnosticMedia> photos;
@@ -31,4 +32,7 @@ class PhotoAlbum {
   Map<String, dynamic> toJsonData() {
     return {'name': this.name};
   }
+
+  @override
+  List<Object> get props => [id, isAll, name];
 }
