@@ -1,4 +1,3 @@
-# @pytest.mark.unit
 import pytest
 from loguru import logger
 from werkzeug.datastructures import FileStorage

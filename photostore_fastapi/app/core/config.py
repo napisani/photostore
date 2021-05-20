@@ -2,7 +2,8 @@ import secrets
 from typing import Any, Dict, List, Optional, Union
 
 from pydantic import AnyHttpUrl, BaseSettings, validator
-
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv(raise_error_if_not_found=True), verbose=True)
 
 def assemble_db_connection(v: Optional[str], values: Dict[str, Any], is_async=False) -> Any:
     if isinstance(v, str):
@@ -22,7 +23,7 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = secrets.token_urlsafe(32)
 
-    API_KEY: str
+    API_KEY: Optional[str]
     PROJECT_ROOT: str
     PROJECT_NAME: str
     # 60 minutes * 24 hours * 8 days = 8 days
@@ -42,11 +43,11 @@ class Settings(BaseSettings):
         raise ValueError(v)
 
     DB_TYPE: str
-    SQLITE_FILE: str
-    POSTGRES_SERVER: str
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str
+    SQLITE_FILE: Optional[str]
+    POSTGRES_SERVER: Optional[str]
+    POSTGRES_USER: Optional[str]
+    POSTGRES_PASSWORD: Optional[str]
+    POSTGRES_DB: Optional[str]
     DATABASE_URI_ASYNC: Optional[str] = None
     DATABASE_URI: Optional[str] = None
 
@@ -58,7 +59,7 @@ class Settings(BaseSettings):
     def assemble_db_uri(cls, v: Optional[str], values: Dict[str, Any]):
         return assemble_db_connection(v, values, False)
 
-    GOOGLE_PHOTOS_OAUTH_FILE: str
+    GOOGLE_PHOTOS_OAUTH_FILE: Optional[str]
     SAVE_PHOTO_DIR: str
 
     THUMBNAIL_HEIGHT: int
@@ -66,7 +67,7 @@ class Settings(BaseSettings):
 
     class Config:
         case_sensitive = True
-        env_file = '.env'
+        env_file = 'env_example_sqlite'
 
 
 settings = Settings()

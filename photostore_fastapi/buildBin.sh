@@ -1,0 +1,2 @@
+#!/bin/bash
+PYTHONPATH=`pwd` python -m nuitka  --follow-imports  --include-package=pydantic --include-package=fastapi --include-package=sqlalchemy  --include-module=uvicorn.logging --include-module=uvicorn.protocols.http --include-module=uvicorn.loops --include-module=uvicorn.lifespan --include-module=uvicorn.protocols.websockets --include-module=sqlalchemy.sql --include-module=sqlalchemy.ext app/main.py

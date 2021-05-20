@@ -20,13 +20,327 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="working on filters">
+      <change afterPath="$PROJECT_DIR$/../LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/buildBin.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photostore_flutter/web/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photostore_flutter/web/icons/icon-192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photostore_flutter/web/icons/icon-512.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Pipfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Pipfile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/.prettierignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/CapacitorPhotoLibrary.podspec" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/.npmignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/src/androidTest/java/com/getcapacitor/android/ExampleInstrumentedTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/src/main/java/com/napisani/plugin/photolib/PhotoLibrary.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/src/main/res/layout/bridge_layout_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/src/main/res/values/colors.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/src/main/res/values/styles.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/android/src/test/java/com/getcapacitor/ExampleUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Plugin.xcodeproj/project.pbxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Plugin.xcodeproj/project.xcworkspace/contents.xcworkspacedata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Plugin.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Plugin.xcodeproj/xcshareddata/xcschemes/PluginTests2.xcscheme" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Plugin.xcworkspace/contents.xcworkspacedata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Plugin.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Plugin/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Plugin/Info.plistbk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Plugin/Plugin.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Plugin/Plugin.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Plugin/Plugin.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/PluginTests/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/PluginTests/PluginTests.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Podfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/Podfile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/notes.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/test_app_try1/Assets.xcassets/AccentColor.colorset/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/test_app_try1/Assets.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/test_app_try1/Assets.xcassets/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/test_app_try1/ContentView.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/test_app_try1/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/test_app_try1/Preview Content/Preview Assets.xcassets/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/test_app_try1/test_app_try1App.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/test_app_try1Tests/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/test_app_try1Tests/test_app_try1Tests.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/test_app_try1UITests/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/ios/test_app_try1UITests/test_app_try1UITests.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/rollup.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/src/definitions.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/src/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/src/web.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../capacitor-photo-library/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/Pipfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/Pipfile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/README.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/autoapp.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/config/client_secret_791730180320-prlc18448h7oqt13h2queumcqv3ita7g.apps.googleusercontent.com.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/config/gphoto_oauth.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/config/gphoto_oauth_unapproved.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/config/photoslibrary_v1.token" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/config/photoslibrary_v1.token_bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/dev.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/migrations/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/migrations/alembic.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/migrations/script.py.mako" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/migrations/versions/9018d8ca8fb8_.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/commands.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/database.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/extensions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/google/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/google/ghoto_importer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/google/gphoto_authorizer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/google/gphoto_service.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/pagination_schema.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/photos/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/photos/photo_exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/photos/photo_model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/photos/photo_schema.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/photos/photo_service.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/photos/photo_views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/photostore/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/pytest.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/cases/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/cases/google/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/cases/google/test_gphoto_auth.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/cases/google/test_gphoto_service.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/cases/photo/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/cases/photo/test_fake_importer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/cases/photo/test_gphoto_import.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/cases/photo/test_photo_model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/cases/photo/test_photo_service.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/cases/photo/test_photo_views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/cases/test_config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/conftest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/factories.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/resources/photo_0.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/resources/photo_1.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/resources/photo_10.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/resources/photo_2.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/resources/photo_3.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/resources/photo_4.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/resources/photo_5.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/resources/photo_6.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/resources/photo_7.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/resources/photo_8.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-api/tests/resources/photo_9.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/.browserslistrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/angular.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/capacitor.config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/e2e/protractor.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/e2e/src/app.e2e-spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/e2e/src/app.po.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/e2e/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ionic.config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App.xcodeproj/project.pbxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App.xcodeproj/project.xcworkspace/contents.xcworkspacedata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App.xcworkspace/contents.xcworkspacedata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/AppDelegate.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@1x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@2x-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@3x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@1x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@2x-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@3x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@1x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@2x-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@3x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-60x60@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-60x60@3x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-76x76@1x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-76x76@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-83.5x83.5@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/Splash.imageset/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Base.lproj/LaunchScreen.storyboard" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Base.lproj/Main.storyboard" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/capacitor.config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/App/config.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/ios/App/Podfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/karma.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/notes.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/proxy.conf.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/app-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/app.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/app.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/app.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/app.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/app.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/explore-container/explore-container.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/explore-container/explore-container.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/explore-container/explore-container.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/explore-container/explore-container.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/explore-container/explore-container.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-local-tab/gallery-local-tab-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-local-tab/gallery-local-tab.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-local-tab/gallery-local-tab.page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-local-tab/gallery-local-tab.page.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-local-tab/gallery-local-tab.page.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-local-tab/gallery-local-tab.page.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-tab/gallery-tab-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-tab/gallery-tab.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-tab/gallery-tab.page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-tab/gallery-tab.page.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-tab/gallery-tab.page.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/gallery-tab/gallery-tab.page.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/fullsize-photo.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/fullsize-photo.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/fullsize-photo.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/fullsize-photo.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/gallery-type.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/gallery.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/gallery.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/gallery.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/gallery.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/image-preloader.directive.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/image-preloader.directive.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/mobile-photo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/pagination.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-api.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-api.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-mobile-media.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-mobile-media.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-mobile-roll.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-mobile-roll.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-section.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-section.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-section.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-section.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-section.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo-section.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photos-store.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photos-store.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/photos.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/single-photo-modal.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/single-photo-modal.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/single-photo-modal.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/single-photo-modal.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/single-photo.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/single-photo.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/single-photo.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/single-photo.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/thumbnail.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/thumbnail.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/thumbnail.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/photos/thumbnail.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/shared/auth.interceptor.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/shared/auth.interceptor.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/shared/http-api.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/shared/http-api.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/shared/shared.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab2/tab2-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab2/tab2.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab2/tab2.page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab2/tab2.page.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab2/tab2.page.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab2/tab2.page.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab3/tab3-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab3/tab3.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab3/tab3.page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab3/tab3.page.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab3/tab3.page.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tab3/tab3.page.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tabs/tabs-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tabs/tabs.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tabs/tabs.page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tabs/tabs.page.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tabs/tabs.page.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/app/tabs/tabs.page.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/assets/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/assets/icon/favicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/assets/preloader.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/assets/shapes.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/environments/environment.prod.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/environments/environment.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/main.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/polyfills.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/styles.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/src/theme/variables.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/tsconfig.app.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/tsconfig.spec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore-ionic2/tslint.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.docker" beforeDir="false" afterPath="$PROJECT_DIR$/.env.docker" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.hooks/hook-aiosqlite.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.hooks/hook-fastapi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.hooks/hook-uvicorn.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alembic/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/alembic/env.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/api_v1/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/api_v1/api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/api_v1/endpoints/photos.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/.last_build_id" beforeDir="false" afterPath="$PROJECT_DIR$/static/.last_build_id" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/fake_data_importer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/fake_data_importer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/tests/service/test_album_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/service/test_album_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/tests/service/test_image_file_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/service/test_image_file_helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/tests/service/test_photo_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/service/test_photo_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/client_secret_791730180320-prlc18448h7oqt13h2queumcqv3ita7g.apps.googleusercontent.com.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/gphoto_oauth.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/gphoto_oauth_unapproved.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/photoslibrary_v1.token" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/photoslibrary_v1.token_bk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prestart.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/format-imports.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/format.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/lint.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/test-cov-html.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/test.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/start_docker_container.sh" beforeDir="false" afterPath="$PROJECT_DIR$/start_docker_container.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/assets/NOTICES" beforeDir="false" afterPath="$PROJECT_DIR$/static/assets/NOTICES" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/flutter_service_worker.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/flutter_service_worker.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/main.dart.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/main.dart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests-start.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/web/favicon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/web/favicon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/web/icons/Icon-192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/web/icons/Icon-512.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +372,7 @@
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.documentation.PythonDocumentationConfigurable" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -74,7 +388,7 @@
       <recent name="$PROJECT_DIR$/app/service" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python tests.pytest for test_photos.TestPhotosAPI.test_get_original_file">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="photostore_fastapi" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -119,7 +433,7 @@
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -148,7 +462,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_photo_service.TestPhotoService.test_add_photos_and_get_photos_by_device_id" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_photos.TestPhotosAPI.test_get_original_file" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="photostore_fastapi" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -161,24 +475,24 @@
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_parameters" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_photo_service.TestPhotoService.test_add_photos_and_get_photos_by_device_id&quot;" />
+      <option name="_new_target" value="&quot;test_photos.TestPhotosAPI.test_get_original_file&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Python.main" />
-      <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_add_photos_and_get_photos_by_device_id" />
       <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_add_photo" />
       <item itemvalue="Python tests.pytest for test_album_service.TestAlbumService" />
       <item itemvalue="Python tests.pytest for test_albums.TestAlbumAPI" />
+      <item itemvalue="Python tests.pytest for test_photos.TestPhotosAPI.test_get_original_file" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for test_photos.TestPhotosAPI.test_get_original_file" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python tests.pytest for test_albums.TestAlbumAPI" />
         <item itemvalue="Python tests.pytest for test_album_service.TestAlbumService" />
         <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_add_photo" />
-        <item itemvalue="Python tests.pytest for test_photo_service.TestPhotoService.test_add_photos_and_get_photos_by_device_id" />
       </list>
     </recent_temporary>
   </component>
@@ -201,7 +515,10 @@
       <workItem from="1619483789404" duration="13793000" />
       <workItem from="1620000763685" duration="19258000" />
       <workItem from="1620175955474" duration="6848000" />
-      <workItem from="1620262767107" duration="16827000" />
+      <workItem from="1620262767107" duration="16910000" />
+      <workItem from="1621268737032" duration="216000" />
+      <workItem from="1621361757825" duration="954000" />
+      <workItem from="1621362947188" duration="18332000" />
     </task>
     <task id="LOCAL-00001" summary="adding all mobile attirubtes - fixed schemas for Add and Update specific">
       <created>1615777399372</created>
@@ -427,7 +744,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620869841979</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="working on filters">
+      <created>1621268675968</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1621268675968</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -500,11 +824,11 @@
     <option name="LAST_COMMIT_MESSAGE" value="working on filters" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="447" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1620180711686">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state x="619" y="445" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1621473893825">
+      <screen x="0" y="23" width="1920" height="1098" />
     </state>
     <state x="447" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1095@0.23.1920.1095" timestamp="1620180711686" />
-    <state x="619" y="445" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1098@0.23.1920.1098" timestamp="1617757767867" />
+    <state x="619" y="445" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1098@0.23.1920.1098" timestamp="1621473893825" />
     <state x="619" y="446" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1100@0.23.1920.1100" timestamp="1617761881009" />
     <state x="619" y="449" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1102@0.23.1920.1102" timestamp="1619665347049" />
     <state x="619" y="451" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1104@0.23.1920.1104" timestamp="1618281895957" />
@@ -512,12 +836,13 @@
     <state x="619" y="449" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1109@0.23.1920.1109" timestamp="1615946388474" />
     <state x="1238" y="836" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359488321" />
     <state x="1238" y="836" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.3840.2054@0.23.3840.2054" timestamp="1619388014260" />
-    <state x="672" y="375" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1620008230889">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state x="672" y="376" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1621474879285">
+      <screen x="0" y="23" width="1920" height="1098" />
     </state>
     <state x="672" y="375" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1095@0.23.1920.1095" timestamp="1620008230889" />
-    <state x="672" y="376" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1098@0.23.1920.1098" timestamp="1619737288551" />
+    <state x="672" y="376" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1098@0.23.1920.1098" timestamp="1621474879285" />
     <state x="672" y="377" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1100@0.23.1920.1100" timestamp="1618271016067" />
+    <state x="672" y="377" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1102@0.23.1920.1102" timestamp="1621448638475" />
     <state x="672" y="379" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1106@0.23.1920.1106" timestamp="1617236993392" />
     <state x="797" y="413" key="#com.intellij.ide.util.MemberChooser" timestamp="1620088278205">
       <screen x="0" y="23" width="1920" height="1095" />
@@ -540,60 +865,60 @@
       <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="100" y="123" width="1720" height="894" key="DiffContextDialog/0.23.1920.1100@0.23.1920.1100" timestamp="1618190059441" />
-    <state width="1878" height="311" key="GridCell.Tab.0.bottom" timestamp="1620868773001">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state width="1878" height="322" key="GridCell.Tab.0.bottom" timestamp="1621474848519">
+      <screen x="0" y="23" width="1920" height="1098" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.0.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773001" />
-    <state width="1878" height="311" key="GridCell.Tab.0.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1620864413222" />
+    <state width="1878" height="322" key="GridCell.Tab.0.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1621474848519" />
     <state width="1878" height="311" key="GridCell.Tab.0.bottom/0.23.1920.1100@0.23.1920.1100" timestamp="1620699844044" />
     <state width="1878" height="312" key="GridCell.Tab.0.bottom/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552440" />
     <state width="1878" height="289" key="GridCell.Tab.0.bottom/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897433" />
     <state width="1878" height="492" key="GridCell.Tab.0.bottom/0.23.1920.1106@0.23.1920.1106" timestamp="1615944575483" />
     <state width="1878" height="370" key="GridCell.Tab.0.bottom/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763065" />
     <state width="1878" height="370" key="GridCell.Tab.0.bottom/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
-    <state width="3220" height="533" key="GridCell.Tab.0.bottom/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
+    <state width="1878" height="476" key="GridCell.Tab.0.bottom/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732213" />
     <state width="2454" height="312" key="GridCell.Tab.0.bottom/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="311" key="GridCell.Tab.0.center" timestamp="1620868773000">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state width="1878" height="322" key="GridCell.Tab.0.center" timestamp="1621474848518">
+      <screen x="0" y="23" width="1920" height="1098" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.0.center/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773000" />
-    <state width="1878" height="311" key="GridCell.Tab.0.center/0.23.1920.1098@0.23.1920.1098" timestamp="1620864413221" />
+    <state width="1878" height="322" key="GridCell.Tab.0.center/0.23.1920.1098@0.23.1920.1098" timestamp="1621474848518" />
     <state width="1878" height="311" key="GridCell.Tab.0.center/0.23.1920.1100@0.23.1920.1100" timestamp="1620699844043" />
     <state width="1878" height="312" key="GridCell.Tab.0.center/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552439" />
     <state width="1878" height="289" key="GridCell.Tab.0.center/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897432" />
     <state width="1878" height="492" key="GridCell.Tab.0.center/0.23.1920.1106@0.23.1920.1106" timestamp="1615944575482" />
     <state width="1878" height="370" key="GridCell.Tab.0.center/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763063" />
     <state width="1878" height="370" key="GridCell.Tab.0.center/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
-    <state width="3220" height="533" key="GridCell.Tab.0.center/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
+    <state width="1878" height="476" key="GridCell.Tab.0.center/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732213" />
     <state width="2454" height="312" key="GridCell.Tab.0.center/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="311" key="GridCell.Tab.0.left" timestamp="1620868772998">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state width="1878" height="322" key="GridCell.Tab.0.left" timestamp="1621474848518">
+      <screen x="0" y="23" width="1920" height="1098" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.0.left/0.23.1920.1095@0.23.1920.1095" timestamp="1620868772998" />
-    <state width="1878" height="311" key="GridCell.Tab.0.left/0.23.1920.1098@0.23.1920.1098" timestamp="1620864413220" />
+    <state width="1878" height="322" key="GridCell.Tab.0.left/0.23.1920.1098@0.23.1920.1098" timestamp="1621474848518" />
     <state width="1878" height="311" key="GridCell.Tab.0.left/0.23.1920.1100@0.23.1920.1100" timestamp="1620699844043" />
     <state width="1878" height="312" key="GridCell.Tab.0.left/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552439" />
     <state width="1878" height="289" key="GridCell.Tab.0.left/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897432" />
     <state width="1878" height="492" key="GridCell.Tab.0.left/0.23.1920.1106@0.23.1920.1106" timestamp="1615944575481" />
     <state width="1878" height="370" key="GridCell.Tab.0.left/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763063" />
     <state width="1878" height="370" key="GridCell.Tab.0.left/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
-    <state width="3220" height="533" key="GridCell.Tab.0.left/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782627" />
+    <state width="1878" height="476" key="GridCell.Tab.0.left/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732212" />
     <state width="2454" height="312" key="GridCell.Tab.0.left/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015876" />
-    <state width="1878" height="311" key="GridCell.Tab.0.right" timestamp="1620868773000">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state width="1878" height="322" key="GridCell.Tab.0.right" timestamp="1621474848518">
+      <screen x="0" y="23" width="1920" height="1098" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.0.right/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773000" />
-    <state width="1878" height="311" key="GridCell.Tab.0.right/0.23.1920.1098@0.23.1920.1098" timestamp="1620864413221" />
+    <state width="1878" height="322" key="GridCell.Tab.0.right/0.23.1920.1098@0.23.1920.1098" timestamp="1621474848518" />
     <state width="1878" height="311" key="GridCell.Tab.0.right/0.23.1920.1100@0.23.1920.1100" timestamp="1620699844043" />
     <state width="1878" height="312" key="GridCell.Tab.0.right/0.23.1920.1102@0.23.1920.1102" timestamp="1619665552439" />
     <state width="1878" height="289" key="GridCell.Tab.0.right/0.23.1920.1104@0.23.1920.1104" timestamp="1618281897433" />
     <state width="1878" height="492" key="GridCell.Tab.0.right/0.23.1920.1106@0.23.1920.1106" timestamp="1615944575482" />
     <state width="1878" height="370" key="GridCell.Tab.0.right/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763064" />
     <state width="1878" height="370" key="GridCell.Tab.0.right/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
-    <state width="3220" height="533" key="GridCell.Tab.0.right/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618359782628" />
+    <state width="1878" height="476" key="GridCell.Tab.0.right/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732213" />
     <state width="2454" height="312" key="GridCell.Tab.0.right/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="311" key="GridCell.Tab.1.bottom" timestamp="1620868773002">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state width="1878" height="311" key="GridCell.Tab.1.bottom" timestamp="1621268732203">
+      <screen x="0" y="23" width="3840" height="2054" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.1.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773002" />
     <state width="1878" height="311" key="GridCell.Tab.1.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1620864422367" />
@@ -602,10 +927,10 @@
     <state width="1878" height="189" key="GridCell.Tab.1.bottom/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886133" />
     <state width="1878" height="370" key="GridCell.Tab.1.bottom/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763071" />
     <state width="1878" height="370" key="GridCell.Tab.1.bottom/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664747" />
-    <state width="2471" height="624" key="GridCell.Tab.1.bottom/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150038" />
+    <state width="1878" height="311" key="GridCell.Tab.1.bottom/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732203" />
     <state width="2454" height="312" key="GridCell.Tab.1.bottom/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019639" />
-    <state width="1878" height="311" key="GridCell.Tab.1.center" timestamp="1620868773001">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state width="1878" height="311" key="GridCell.Tab.1.center" timestamp="1621268732202">
+      <screen x="0" y="23" width="3840" height="2054" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.1.center/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773001" />
     <state width="1878" height="311" key="GridCell.Tab.1.center/0.23.1920.1098@0.23.1920.1098" timestamp="1620864422365" />
@@ -614,10 +939,10 @@
     <state width="1878" height="189" key="GridCell.Tab.1.center/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886132" />
     <state width="1878" height="370" key="GridCell.Tab.1.center/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763068" />
     <state width="1878" height="370" key="GridCell.Tab.1.center/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
-    <state width="2471" height="624" key="GridCell.Tab.1.center/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150037" />
+    <state width="1878" height="311" key="GridCell.Tab.1.center/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732202" />
     <state width="2454" height="312" key="GridCell.Tab.1.center/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019638" />
-    <state width="1878" height="311" key="GridCell.Tab.1.left" timestamp="1620868773001">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state width="1878" height="311" key="GridCell.Tab.1.left" timestamp="1621268732202">
+      <screen x="0" y="23" width="3840" height="2054" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.1.left/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773001" />
     <state width="1878" height="311" key="GridCell.Tab.1.left/0.23.1920.1098@0.23.1920.1098" timestamp="1620864422365" />
@@ -626,10 +951,10 @@
     <state width="1878" height="189" key="GridCell.Tab.1.left/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886132" />
     <state width="1878" height="370" key="GridCell.Tab.1.left/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763067" />
     <state width="1878" height="370" key="GridCell.Tab.1.left/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
-    <state width="2471" height="624" key="GridCell.Tab.1.left/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150036" />
+    <state width="1878" height="311" key="GridCell.Tab.1.left/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732202" />
     <state width="2454" height="312" key="GridCell.Tab.1.left/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019636" />
-    <state width="1878" height="311" key="GridCell.Tab.1.right" timestamp="1620868773002">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state width="1878" height="311" key="GridCell.Tab.1.right" timestamp="1621268732203">
+      <screen x="0" y="23" width="3840" height="2054" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.1.right/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773002" />
     <state width="1878" height="311" key="GridCell.Tab.1.right/0.23.1920.1098@0.23.1920.1098" timestamp="1620864422366" />
@@ -638,19 +963,20 @@
     <state width="1878" height="189" key="GridCell.Tab.1.right/0.23.1920.1104@0.23.1920.1104" timestamp="1618281886133" />
     <state width="1878" height="370" key="GridCell.Tab.1.right/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763070" />
     <state width="1878" height="370" key="GridCell.Tab.1.right/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
-    <state width="2471" height="624" key="GridCell.Tab.1.right/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275150037" />
+    <state width="1878" height="311" key="GridCell.Tab.1.right/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732203" />
     <state width="2454" height="312" key="GridCell.Tab.1.right/0.23.3840.2054@0.23.3840.2054" timestamp="1619388019638" />
-    <state x="461" y="209" key="SettingsEditor" timestamp="1615934384093">
-      <screen x="0" y="23" width="1920" height="1100" />
+    <state x="461" y="208" key="SettingsEditor" timestamp="1621363477190">
+      <screen x="0" y="23" width="1920" height="1095" />
     </state>
+    <state x="461" y="208" key="SettingsEditor/0.23.1920.1095@0.23.1920.1095" timestamp="1621363477190" />
     <state x="461" y="209" key="SettingsEditor/0.23.1920.1100@0.23.1920.1100" timestamp="1615934384093" />
     <state x="690" y="308" width="540" height="523" key="StructurePopup" timestamp="1620700515774">
       <screen x="0" y="23" width="1920" height="1098" />
     </state>
     <state x="690" y="308" width="540" height="523" key="StructurePopup/0.23.1920.1098@0.23.1920.1098" timestamp="1620700515774" />
     <state x="690" y="309" width="540" height="524" key="StructurePopup/0.23.1920.1102@0.23.1920.1102" timestamp="1619665895104" />
-    <state x="690" y="415" key="Vcs.Push.Dialog.v2" timestamp="1620869845834">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state x="1380" y="758" key="Vcs.Push.Dialog.v2" timestamp="1621268679043">
+      <screen x="0" y="23" width="3840" height="2054" />
     </state>
     <state x="690" y="415" key="Vcs.Push.Dialog.v2/0.23.1920.1095@0.23.1920.1095" timestamp="1620869845834" />
     <state x="690" y="416" key="Vcs.Push.Dialog.v2/0.23.1920.1098@0.23.1920.1098" timestamp="1620010347057" />
@@ -659,7 +985,7 @@
     <state x="690" y="418" key="Vcs.Push.Dialog.v2/0.23.1920.1104@0.23.1920.1104" timestamp="1618362617008" />
     <state x="690" y="419" key="Vcs.Push.Dialog.v2/0.23.1920.1106@0.23.1920.1106" timestamp="1617238626892" />
     <state x="690" y="420" key="Vcs.Push.Dialog.v2/0.23.1920.1109@0.23.1920.1109" timestamp="1615950062360" />
-    <state x="1380" y="758" key="Vcs.Push.Dialog.v2/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618275310422" />
+    <state x="1380" y="758" key="Vcs.Push.Dialog.v2/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268679043" />
     <state x="1380" y="758" key="Vcs.Push.Dialog.v2/0.23.3840.2054@0.23.3840.2054" timestamp="1619656409770" />
     <state width="480" height="547" key="XDebugger.FullValuePopup" timestamp="1619390057312">
       <screen x="0" y="23" width="1920" height="1095" />
@@ -669,12 +995,12 @@
       <screen x="0" y="23" width="1920" height="1098" />
     </state>
     <state x="608" y="191" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1920.1098@0.23.1920.1098" timestamp="1620699428534" />
-    <state x="744" y="430" width="574" height="490" key="find.popup" timestamp="1620089265439">
-      <screen x="0" y="23" width="1920" height="1095" />
+    <state x="744" y="432" width="574" height="490" key="find.popup" timestamp="1621478809791">
+      <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="744" y="430" width="574" height="490" key="find.popup/0.23.1920.1095@0.23.1920.1095" timestamp="1620089265439" />
-    <state x="744" y="431" width="574" height="491" key="find.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1619399675766" />
-    <state x="744" y="432" width="574" height="490" key="find.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1619747779040" />
+    <state x="744" y="431" width="574" height="491" key="find.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1621475122746" />
+    <state x="744" y="432" width="574" height="490" key="find.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1621478809791" />
     <state x="744" y="433" width="574" height="491" key="find.popup/0.23.1920.1102@0.23.1920.1102" timestamp="1619665899878" />
     <state x="744" y="433" width="574" height="492" key="find.popup/0.23.1920.1104@0.23.1920.1104" timestamp="1618189037606" />
     <state x="744" y="435" width="568" height="495" key="find.popup/0.23.1920.1109@0.23.1920.1109" timestamp="1616466673530" />
@@ -684,13 +1010,13 @@
     </state>
     <state width="300" height="230" key="javadoc.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1617584320902" />
     <state width="600" height="428" key="javadoc.popup/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1615778886447" />
-    <state x="1030" y="268" width="670" height="679" key="search.everywhere.popup" timestamp="1620697019119">
-      <screen x="0" y="23" width="1920" height="1102" />
+    <state x="1030" y="267" width="670" height="678" key="search.everywhere.popup" timestamp="1621479019070">
+      <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="1030" y="266" width="670" height="675" key="search.everywhere.popup/0.23.1920.1095@0.23.1920.1095" timestamp="1620088933254" />
-    <state x="1030" y="267" width="670" height="676" key="search.everywhere.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1620092534932" />
-    <state x="1030" y="267" width="670" height="678" key="search.everywhere.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1619144069349" />
-    <state x="1030" y="268" width="670" height="679" key="search.everywhere.popup/0.23.1920.1102@0.23.1920.1102" timestamp="1620697019119" />
+    <state x="1030" y="267" width="670" height="676" key="search.everywhere.popup/0.23.1920.1098@0.23.1920.1098" timestamp="1621473481182" />
+    <state x="1030" y="267" width="670" height="678" key="search.everywhere.popup/0.23.1920.1100@0.23.1920.1100" timestamp="1621479019070" />
+    <state x="1030" y="268" width="670" height="679" key="search.everywhere.popup/0.23.1920.1102@0.23.1920.1102" timestamp="1621448747214" />
     <state x="1030" y="268" width="670" height="681" key="search.everywhere.popup/0.23.1920.1104@0.23.1920.1104" timestamp="1619663989171" />
     <state x="2060" y="479" width="1340" height="1265" key="search.everywhere.popup/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1618271831369" />
   </component>
@@ -699,12 +1025,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>156</line>
+          <line>155</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>157</line>
+          <line>156</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -744,27 +1070,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$USER_HOME$/.pyenv/versions/photostore-fastapi/lib/python3.8/site-packages/pydantic/main.py</url>
-          <line>620</line>
+          <line>626</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>181</line>
+          <line>180</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>178</line>
+          <line>177</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>166</line>
+          <line>165</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>66</line>
+          <line>65</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -779,12 +1105,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>170</line>
+          <line>169</line>
           <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/tests/service/test_photo_service.py</url>
-          <line>241</line>
+          <line>240</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -838,6 +1164,7 @@
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_albums_TestAlbumAPI.coverage" NAME="pytest for test_albums.TestAlbumAPI Coverage Results" MODIFIED="1620182266676" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_album_service_TestAlbumService.coverage" NAME="pytest for test_album_service.TestAlbumService Coverage Results" MODIFIED="1620178797915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_photo.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_photo Coverage Results" MODIFIED="1619665349145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_get_original_file.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_get_original_file Coverage Results" MODIFIED="1621473895105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_get_thumbnail.coverage" NAME="pytest in app/tests Coverage Results" MODIFIED="1615777540985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$main.coverage" NAME="main Coverage Results" MODIFIED="1620864698799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_delete_photos_by_device.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_delete_photos_by_device Coverage Results" MODIFIED="1618359782617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

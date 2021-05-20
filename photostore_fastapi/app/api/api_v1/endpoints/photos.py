@@ -1,4 +1,3 @@
-import io
 import json
 from datetime import datetime
 from typing import List
@@ -8,7 +7,7 @@ from fastapi import File, UploadFile
 from fastapi.openapi.models import APIKey
 from loguru import logger
 from sqlalchemy.orm import Session
-from starlette.responses import StreamingResponse
+from starlette.responses import StreamingResponse, FileResponse
 
 from app.api import deps
 from app.api.deps import get_api_key
@@ -103,18 +102,17 @@ async def api_get_fullsize_photo(photo_id: int,
     if photo.media_type == MediaType.VIDEO:
         p = photo.thumbnail_path
         mime = 'image/png'
-    with open(p, 'rb') as f:
-        return StreamingResponse(io.BytesIO(f.read()), media_type=mime)
+
+    return FileResponse(p, media_type=mime)
 
 
-@router.get('/?/{photo_id}')
+@router.get('/original_file/{photo_id}')
 async def api_get_original_file(photo_id: int,
                                 api_key: APIKey = Depends(get_api_key),
                                 db: Session = Depends(deps.get_async_db)):
     photo = await get_photo(db, photo_id=photo_id)
     logger.debug('api_get_original_file photo: {}', photo)
-    with open(photo.path, 'rb') as f:
-        return StreamingResponse(io.BytesIO(f.read()), media_type=photo.mime_type)
+    return FileResponse(photo.path, media_type=photo.mime_type)
 
 
 @router.get('/fullsize_photo_as_png/{photo_id}')
@@ -131,8 +129,7 @@ async def api_get_thumbnail_image(photo_id: int, db: Session = Depends(deps.get_
                                   api_key: APIKey = Depends(get_api_key)):
     photo = await get_photo(db, photo_id=photo_id)
     logger.debug('view_get_fullsize photo: {}', photo)
-    with open(photo.thumbnail_path, 'rb') as f:
-        return StreamingResponse(io.BytesIO(f.read()), media_type="image/png")
+    return FileResponse(photo.thumbnail_path, media_type="image/png")
 
 
 @router.post('/diff', response_model=List[PhotoDiffResultSchema])

@@ -8,7 +8,6 @@ from sqlalchemy import engine_from_config, pool
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
-from app.core.config import settings
 from app.models.album_model import Album
 
 config = context.config
@@ -29,7 +28,9 @@ target_metadata = Base.metadata
 
 from dotenv import load_dotenv, find_dotenv
 
-load_dotenv(find_dotenv(), verbose=True)
+load_dotenv(find_dotenv(raise_error_if_not_found=True), verbose=True)
+
+from app.core.config import settings
 
 
 # other values from the config, defined by the needs of env.py,

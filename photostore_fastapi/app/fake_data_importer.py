@@ -6,15 +6,15 @@ from PIL import Image
 from loguru import logger
 from werkzeug.datastructures import FileStorage
 
-from app.db.session import SessionLocal
+from app.db.session import SessionLocalAsync
 from app.schemas.photo_schema import PhotoSchemaAdd
 from app.service.photo_service import add_photo
 
 
 def init() -> None:
-    db = SessionLocal()
+    db = SessionLocalAsync()
 
-    def generate_fake_image(width=1920, height=1080):
+    async def generate_fake_image(width=1920, height=1080):
         width = int(width)
         height = int(height)
         # rgb_array = numpy.random.rand(height, width, 3) * 255
@@ -36,7 +36,7 @@ def init() -> None:
         photo = PhotoSchemaAdd()
         photo.filename = filename
         photo.creation_date = datetime.datetime.now()
-        saved_photo = add_photo(db, file=file, photo=photo)
+        saved_photo = await add_photo(db, file=file, photo=photo)
         logger.debug('saved photo {}', saved_photo)
 
 

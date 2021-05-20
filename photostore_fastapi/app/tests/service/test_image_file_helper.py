@@ -1,10 +1,8 @@
-import pytest
 from loguru import logger
 
 from app.service.image_file_helper import _get_unique_filename
 
 
-# @pytest.mark.unit
 class TestPhotoService:
     def test_unique_filename(self, mocker, db):
         def mock_exists(filename):

@@ -13,7 +13,6 @@ from app.service.photo_service import add_photo, delete_photo, get_photo, update
 from app.utils import get_file_checksum
 
 
-# @pytest.mark.unit
 class TestPhotoService:
     @pytest.mark.asyncio
     async def test_delete_photos_by_device(self, photo_factory, db):
