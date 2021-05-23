@@ -17,6 +17,7 @@ import 'media_repository.dart';
 class MediaAPIRepository extends MediaRepository<Photo>
     with APIRepositoryMixin {
   Future<void> deletePhotosByDeviceID({String deviceId}) async {
+
     if (deviceId == null || deviceId == '') {
       deviceId = settings.deviceID;
     }

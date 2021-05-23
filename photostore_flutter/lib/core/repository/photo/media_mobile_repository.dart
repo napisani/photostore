@@ -13,7 +13,10 @@ class MediaMobileRepository extends MediaRepository<MobilePhoto>
     this.requestPermission();
   }
 
+
+
   Future<AssetPathEntity> getAllAlbum({includeVideos = true}) async {
+    await ensurePermissionGranted();
     if (this._allPath == null) {
       this._allPath = (await PhotoManager.getAssetPathList(
               onlyAll: true,
@@ -24,12 +27,14 @@ class MediaMobileRepository extends MediaRepository<MobilePhoto>
   }
 
   Future<int> getPhotoCount() async {
+    await ensurePermissionGranted();
     AssetPathEntity allAlbum = await this.getAllAlbum();
     return allAlbum.assetCount;
   }
 
   Future<Pagination<MobilePhoto>> getPhotosByPage(int page,
       {Map<String, String> filters}) async {
+    await ensurePermissionGranted();
     AssetPathEntity allAlbum = await this.getAllAlbum();
     int perPageOrRemaining = allAlbum.assetCount - ((page - 1) * itemsPerPage);
     if (perPageOrRemaining > itemsPerPage) {
