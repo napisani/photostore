@@ -1,6 +1,0 @@
-flutter pub global run devtools
-
-generate mobile images
-flutter pub run flutter_launcher_icons:main
-set app names
-flutter pub run flutter_launcher_name:main

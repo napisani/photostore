@@ -20,15 +20,9 @@ to the server and view all of the photos that are currently stored out on the se
 
 ## Licensing
 
-This project is currently independently developed and licensed under the GPLv3 License. 
-This license gives the public the right to download, compile, manipulate and distribute the application freely. 
-However, I have submitted the Apps to the Apple App Store and the Google Play Store as paid apps (one-time fee, no in app purchase).
-
-If you plan to use the app as it exists (including future updates), in other words - without making personalized changes, 
-I would like to encourage to you please support the Photostore by purchasing the app directly from the respective app store marketplace.
-Also, I would like to kindly request that folks refrain from submitting these apps as to the App Store or Google Play Store as their own.
+This project is currently independently developed and licensed under the GPLv3 License.
 
 #TODO
 links to the app store 
-screen shots
+screenshots
 links to video

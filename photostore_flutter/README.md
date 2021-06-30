@@ -79,9 +79,9 @@ flutter build ipa
 
 ## Building a release version of the Photostore Android app
 ```bash
+#use bundletool cli to produce APKs
 flutter build appbundle
 
-#use bundletool cli to produce APKs
 ```
 
 ## Additional helpful commands

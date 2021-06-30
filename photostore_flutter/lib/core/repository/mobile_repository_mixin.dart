@@ -20,7 +20,7 @@ mixin MobileRepositoryMixin {
     bool allowed = await requestPermission(openSettings: openSettings);
     if (!allowed) {
       throw Exception(
-          "Permission to access photos must be granted in order to use Photostore");
+          "Permission to access photos must be granted in order to use Photostore.");
     }
   }
 }

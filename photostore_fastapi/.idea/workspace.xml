@@ -20,15 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc6cf3e4-68c1-4176-82e0-09c0c958985c" name="Default Changelist" comment="working on filters">
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../photostore_flutter/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/ios/Runner/Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/mobile_repository_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../photostore_flutter/lib/core/repository/mobile_repository_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../photostore_flutter/notes.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,6 +179,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -206,7 +202,8 @@
       <workItem from="1620262767107" duration="16910000" />
       <workItem from="1621268737032" duration="216000" />
       <workItem from="1621361757825" duration="954000" />
-      <workItem from="1621362947188" duration="21460000" />
+      <workItem from="1621362947188" duration="22056000" />
+      <workItem from="1623118417912" duration="1032000" />
     </task>
     <task id="LOCAL-00001" summary="adding all mobile attirubtes - fixed schemas for Add and Update specific">
       <created>1615777399372</created>
@@ -443,7 +440,7 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -553,8 +550,8 @@
       <screen x="0" y="23" width="1920" height="1100" />
     </state>
     <state x="100" y="123" width="1720" height="894" key="DiffContextDialog/0.23.1920.1100@0.23.1920.1100" timestamp="1618190059441" />
-    <state width="1878" height="322" key="GridCell.Tab.0.bottom" timestamp="1621474848519">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="322" key="GridCell.Tab.0.bottom" timestamp="1622237643186">
+      <screen x="0" y="23" width="3840" height="2054" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.0.bottom/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773001" />
     <state width="1878" height="322" key="GridCell.Tab.0.bottom/0.23.1920.1098@0.23.1920.1098" timestamp="1621474848519" />
@@ -565,9 +562,9 @@
     <state width="1878" height="370" key="GridCell.Tab.0.bottom/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763065" />
     <state width="1878" height="370" key="GridCell.Tab.0.bottom/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664746" />
     <state width="1878" height="476" key="GridCell.Tab.0.bottom/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732213" />
-    <state width="2454" height="312" key="GridCell.Tab.0.bottom/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="322" key="GridCell.Tab.0.center" timestamp="1621474848518">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="322" key="GridCell.Tab.0.bottom/0.23.3840.2054@0.23.3840.2054" timestamp="1622237643185" />
+    <state width="1878" height="322" key="GridCell.Tab.0.center" timestamp="1622237643177">
+      <screen x="0" y="23" width="3840" height="2054" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.0.center/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773000" />
     <state width="1878" height="322" key="GridCell.Tab.0.center/0.23.1920.1098@0.23.1920.1098" timestamp="1621474848518" />
@@ -578,9 +575,9 @@
     <state width="1878" height="370" key="GridCell.Tab.0.center/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763063" />
     <state width="1878" height="370" key="GridCell.Tab.0.center/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="1878" height="476" key="GridCell.Tab.0.center/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732213" />
-    <state width="2454" height="312" key="GridCell.Tab.0.center/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
-    <state width="1878" height="322" key="GridCell.Tab.0.left" timestamp="1621474848518">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="322" key="GridCell.Tab.0.center/0.23.3840.2054@0.23.3840.2054" timestamp="1622237643176" />
+    <state width="1878" height="322" key="GridCell.Tab.0.left" timestamp="1622237643169">
+      <screen x="0" y="23" width="3840" height="2054" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.0.left/0.23.1920.1095@0.23.1920.1095" timestamp="1620868772998" />
     <state width="1878" height="322" key="GridCell.Tab.0.left/0.23.1920.1098@0.23.1920.1098" timestamp="1621474848518" />
@@ -591,9 +588,9 @@
     <state width="1878" height="370" key="GridCell.Tab.0.left/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763063" />
     <state width="1878" height="370" key="GridCell.Tab.0.left/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="1878" height="476" key="GridCell.Tab.0.left/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732212" />
-    <state width="2454" height="312" key="GridCell.Tab.0.left/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015876" />
-    <state width="1878" height="322" key="GridCell.Tab.0.right" timestamp="1621474848518">
-      <screen x="0" y="23" width="1920" height="1098" />
+    <state width="1878" height="322" key="GridCell.Tab.0.left/0.23.3840.2054@0.23.3840.2054" timestamp="1622237643168" />
+    <state width="1878" height="322" key="GridCell.Tab.0.right" timestamp="1622237643180">
+      <screen x="0" y="23" width="3840" height="2054" />
     </state>
     <state width="1878" height="311" key="GridCell.Tab.0.right/0.23.1920.1095@0.23.1920.1095" timestamp="1620868773000" />
     <state width="1878" height="322" key="GridCell.Tab.0.right/0.23.1920.1098@0.23.1920.1098" timestamp="1621474848518" />
@@ -604,7 +601,7 @@
     <state width="1878" height="370" key="GridCell.Tab.0.right/0.23.1920.1108@0.23.1920.1108" timestamp="1615944763064" />
     <state width="1878" height="370" key="GridCell.Tab.0.right/0.23.1920.1109@0.23.1920.1109" timestamp="1615946664745" />
     <state width="1878" height="476" key="GridCell.Tab.0.right/0.23.3840.2054/-1920.1046.1920.1177@0.23.3840.2054" timestamp="1621268732213" />
-    <state width="2454" height="312" key="GridCell.Tab.0.right/0.23.3840.2054@0.23.3840.2054" timestamp="1619388015877" />
+    <state width="1878" height="322" key="GridCell.Tab.0.right/0.23.3840.2054@0.23.3840.2054" timestamp="1622237643180" />
     <state width="1878" height="311" key="GridCell.Tab.1.bottom" timestamp="1621268732203">
       <screen x="0" y="23" width="3840" height="2054" />
     </state>
@@ -836,29 +833,29 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_two_and_get_latest.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_two_and_get_latest Coverage Results" MODIFIED="1618269851408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_and_delete.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_and_delete Coverage Results" MODIFIED="1617759144556" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_and_update.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_and_update Coverage Results" MODIFIED="1615253770134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_gphoto_auth_test_gphoto_auth_succeeds.coverage" NAME="pytest for test_gphoto_auth.test_gphoto_auth_succeeds Coverage Results" MODIFIED="1615256119025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_get_fullsize.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_get_fullsize Coverage Results" MODIFIED="1615337534324" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_video_file_helper_TestVideoFileHelper_test_get_thumbnail_frame_from_video.coverage" NAME="pytest for test_video_file_helper.TestVideoFileHelper.test_get_thumbnail_frame_from_video Coverage Results" MODIFIED="1618271218183" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_allowed_filename.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_allowed_filename Coverage Results" MODIFIED="1618281897421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_view_upload_photo.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_view_upload_photo Coverage Results" MODIFIED="1615775572998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_diff_photos.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_diff_photos Coverage Results" MODIFIED="1617755177442" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_photos_and_get_photos.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_photos_and_get_photos Coverage Results" MODIFIED="1615254163228" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_health.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_health Coverage Results" MODIFIED="1615255517345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_unique_filename.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_unique_filename Coverage Results" MODIFIED="1615250552981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService.coverage" NAME="pytest for test_photo_service.TestPhotoService Coverage Results" MODIFIED="1615254183563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_albums_TestAlbumAPI.coverage" NAME="pytest for test_albums.TestAlbumAPI Coverage Results" MODIFIED="1620182266676" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_get_original_file.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_get_original_file Coverage Results" MODIFIED="1621473895105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_photos_and_get_photos_by_device_id.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_photos_and_get_photos_by_device_id Coverage Results" MODIFIED="1619391127858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_video_file_helper_TestVideoFileHelper_test_get_thumbnail_frame_from_video.coverage" NAME="pytest for test_video_file_helper.TestVideoFileHelper.test_get_thumbnail_frame_from_video Coverage Results" MODIFIED="1618271218183" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_gphoto_auth_test_gphoto_auth_succeeds.coverage" NAME="pytest for test_gphoto_auth.test_gphoto_auth_succeeds Coverage Results" MODIFIED="1615256119025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$fake_data_importer.coverage" NAME="fake_data_importer Coverage Results" MODIFIED="1615779292056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_view_upload_photo.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_view_upload_photo Coverage Results" MODIFIED="1615775572998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_health.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_health Coverage Results" MODIFIED="1615255517345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_get_thumbnail.coverage" NAME="pytest in app/tests Coverage Results" MODIFIED="1615777540985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_diff_photos.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_diff_photos Coverage Results" MODIFIED="1617755177442" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$main.coverage" NAME="main Coverage Results" MODIFIED="1620864698799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_post_diff.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_post_diff Coverage Results" MODIFIED="1615944763025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_photos_and_get_photos.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_photos_and_get_photos Coverage Results" MODIFIED="1615254163228" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_and_delete.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_and_delete Coverage Results" MODIFIED="1617759144556" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_unique_filename.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_unique_filename Coverage Results" MODIFIED="1615250552981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_album_service_TestAlbumService.coverage" NAME="pytest for test_album_service.TestAlbumService Coverage Results" MODIFIED="1620178797915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_photo.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_photo Coverage Results" MODIFIED="1619665349145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_get_original_file.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_get_original_file Coverage Results" MODIFIED="1621473895105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_get_thumbnail.coverage" NAME="pytest in app/tests Coverage Results" MODIFIED="1615777540985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$main.coverage" NAME="main Coverage Results" MODIFIED="1620864698799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_delete_photos_by_device.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_delete_photos_by_device Coverage Results" MODIFIED="1618359782617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photos_TestPhotosAPI_test_post_diff.coverage" NAME="pytest for test_photos.TestPhotosAPI.test_post_diff Coverage Results" MODIFIED="1615944763025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$fake_data_importer.coverage" NAME="fake_data_importer Coverage Results" MODIFIED="1615779292056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_model_TestPhotoModel_test_add_and_get_photo.coverage" NAME="pytest for test_photo_model.TestPhotoModel.test_add_and_get_photo Coverage Results" MODIFIED="1617760688937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_photos_and_get_photos_by_device_id.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_photos_and_get_photos_by_device_id Coverage Results" MODIFIED="1619391127858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_albums_TestAlbumAPI.coverage" NAME="pytest for test_albums.TestAlbumAPI Coverage Results" MODIFIED="1620182266676" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_and_update.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_and_update Coverage Results" MODIFIED="1615253770134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_allowed_filename.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_allowed_filename Coverage Results" MODIFIED="1618281897421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_delete_photos_by_device.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_delete_photos_by_device Coverage Results" MODIFIED="1618359782617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/photostore_fastapi$pytest_for_test_photo_service_TestPhotoService_test_add_two_and_get_latest.coverage" NAME="pytest for test_photo_service.TestPhotoService.test_add_two_and_get_latest Coverage Results" MODIFIED="1618269851408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
