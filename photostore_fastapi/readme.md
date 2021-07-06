@@ -100,6 +100,16 @@ docker-compose up
 ```
 
 
+## Pulling docker image (instead of building from source)
+information: https://hub.docker.com/r/napisani/photostore
+```bash
+# then pull the image
+docker pull napisani/photostore:latest
+# and run the image using your custom .env file as volume mount and forwarding port 8000 to your localhost
+docker run   -p 8000:8000 -v "$(pwd)/.env":"/code/.env"   napisani/photostore:latest
+```
+
+
 ## API Endpoints / Documentation
 Once the app is running (either natively or via docker)
 navigate to [http://localhost:8000/docs](http://localhost:8000/docs)
